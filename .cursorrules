@@ -1,0 +1,57 @@
+# Cursor Rules for OnePic Android Project
+
+## Tech Stack
+- **Language**: Kotlin
+- **UI Framework**: Jetpack Compose (Material3)
+- **Build System**: Gradle (Kotlin DSL)
+- **Architecture**: MVVM (Model-View-ViewModel) pattern (implied, strict adherence recommended)
+
+## Code Style & Conventions
+
+### Naming
+- **Constants**: MUST be uppercase with underscores (e.g., `MAX_RETRY_COUNT`, `DEFAULT_TIMEOUT`).
+- **Functions**: Use camelCase (e.g., `calculateScore`, `sliceImage`).
+- **Classes/Interfaces**: Use PascalCase (e.g., `LevelConfig`, `ImageSlicer`).
+- **Composables**: Use PascalCase (e.g., `GameScreen`, `LevelSelectScreen`).
+
+### Kotlin Best Practices
+- Use `val` for immutable variables whenever possible.
+- Use Kotlin's null safety features (`?`, `?.`, `?:`, `!!` only when absolutely necessary).
+- Prefer data classes for holding data (e.g., `LevelConfig`, `PuzzlePiece`).
+- Use `object` for singletons (e.g., `ImageSlicer`).
+- Use extension functions to keep classes clean where appropriate.
+
+### Jetpack Compose
+- Separate UI structure from logic (hoist state).
+- Use `Modifier` as the first optional argument in Composables.
+- Break down complex UIs into smaller, reusable Composable functions.
+- Use `Preview` annotations to verify UI components.
+
+### Project Structure
+- `site.aiok.onepic.model`: Data classes and domain models.
+- `site.aiok.onepic.ui`: Composable screens and UI components.
+- `site.aiok.onepic.logic`: Game logic and helper objects.
+- `site.aiok.onepic.data`: Repositories and data sources.
+- `site.aiok.onepic.view`: Custom Android Views (if any, though Compose is preferred).
+
+## Game Logic Rules
+
+### Puzzle Logic
+- **Group ID**: Use `groupId` to manage connected pieces. All connected pieces MUST share the same `groupId`.
+- **Movement**: When dragging, ALL pieces with the same `groupId` MUST move together.
+- **Snapping**: 
+  - Allow snapping only when pieces are neighbors (row/col diff is 1).
+  - Snapping threshold: Strict alignment required (e.g., 15% main axis, 5% cross axis) to prevent "corner snapping".
+- **Swapping/Squeezing**:
+  - **Preserve Groups**: Swapping should NEVER break an existing group. If a swap target is part of a group, the ENTIRE group must be considered the target.
+  - **Space Check**: Before swapping, ensure the target group fits into the source group's original location.
+  - **Alignment**: Align by CENTER points, not top-left, to handle irregular shapes correctly.
+
+## Documentation
+- Add KDoc comments for complex logic or public APIs.
+- Keep README.md up-to-date with setup instructions and feature lists.
+
+## Specific User Rules
+- **Language**: Always respond in Chinese (Simplified).
+- **Constants**: UPPER_CASE_WITH_UNDERSCORES.
+- **Functions**: camelCase.
