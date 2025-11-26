@@ -35,6 +35,21 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     // Particle System
     private val particleSystem = ParticleSystem()
+    
+    // Callback for puzzle completion
+    var onPuzzleComplete: ((timeInSeconds: Int) -> Unit)? = null
+    
+    // Callback for score changes (merge: +score, unmerge: -score)
+    var onScoreChange: ((scoreDelta: Int) -> Unit)? = null
+    
+    // Track which groups have been scored (to prevent duplicate scoring)
+    // Key: groupId, Value: score earned for this merge
+    private val scoredGroups = mutableMapOf<Int, Int>()
+    
+    // Timer
+    private var startTime: Long = 0
+    private var elapsedSeconds: Int = 0
+    private var isTimerRunning = false
 
     // Paint for borders
     private val borderPaint = Paint().apply {
@@ -118,6 +133,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     fun setPieces(newPieces: List<PuzzlePiece>) {
         pieces.clear()
+        scoredGroups.clear()  // Reset score tracking for new game
         
         // Infer grid dimensions first to enable shuffling
         if (newPieces.isNotEmpty()) {
@@ -148,13 +164,23 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         pieces.addAll(newPieces)
         pieces.sortBy { it.zIndex }
         
-        Log.d(TAG, "setPieces: ${pieces.size} pieces (Grid: ${gridRows}x${gridCols})")
+        // Start timer
+        startTime = System.currentTimeMillis()
+        elapsedSeconds = 0
+        isTimerRunning = true
         
         // Trigger layout update if we already have dimensions
         if (width > 0 && height > 0) {
             updateLayout(width, height)
         }
         invalidate()
+    }
+    
+    fun getElapsedSeconds(): Int {
+        if (isTimerRunning) {
+            elapsedSeconds = ((System.currentTimeMillis() - startTime) / 1000).toInt()
+        }
+        return elapsedSeconds
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -221,16 +247,21 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             if (candidate != null) {
                 val groupPieces = pieces.filter { it.groupId == candidate.groupId }
                 if (groupPieces.size > 1) {
-                    Log.d(TAG, "Double tap detected: Unmerging group ${candidate.groupId} with ${groupPieces.size} pieces")
+                    val groupId = candidate.groupId
+                    Log.d(TAG, "Double tap detected: Unmerging group $groupId with ${groupPieces.size} pieces")
+                    
+                    // Check if this group was scored, and deduct points if so
+                    // When unmerging, we deduct the total score for this group
+                    // This prevents cheating by repeatedly merging/unmerging
+                    val scoreToDeduct = scoredGroups.remove(groupId)
+                    if (scoreToDeduct != null && scoreToDeduct > 0) {
+                        onScoreChange?.invoke(-scoreToDeduct)
+                        Log.d(TAG, "onDoubleTap: Deducted $scoreToDeduct points for unmerging group $groupId")
+                    }
                     
                     // Unmerge: Assign a new unique ID to EACH piece
-                    // We need to ensure IDs are unique. We can use the piece's own ID as the base, 
-                    // or generate new IDs. Since piece IDs are unique, let's use them as group IDs initially?
-                    // No, groupId is int. piece.id is int.
-                    // Let's just assign a new random ID or increment a counter?
-                    // Or simply: piece.groupId = piece.id (assuming piece IDs are unique and suitable for group IDs)
-                    // Yes, initially groupId == id. So reverting to that is safe.
-                    
+                    // Revert each piece to its own ID as groupId
+                    // Also clear any score tracking for individual pieces (they're now separate)
                     groupPieces.forEach { piece ->
                         piece.groupId = piece.id
                         // Also bring them to front slightly to indicate change?
@@ -529,9 +560,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     pieces.any { piece -> 
                         piece.groupId !in excludeGroups && 
                         GridCell(piece.row, piece.col) == cell 
-                    }
-                }
-                
+                                }
+                            }
+                            
                 if (blockedCells.isNotEmpty()) {
                     // 找到阻挡的组
                     val blockingGroupIds = blockedCells.mapNotNull { cell ->
@@ -670,7 +701,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 // Remove used cells from pool
                 val usedCells = offsetGridCells(groupCells, validDelta.first, validDelta.second)
                 vacatedCells.removeAll(usedCells)
-            } else {
+                        } else {
                 Log.d(TAG, "  Swap blocked: Group $groupId does not fit into vacated space")
                 return false
             }
@@ -695,8 +726,8 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             }
             
             moveGroupToGridCells(group, newPos)
-        }
-        
+                    }
+                    
         // Move Moved Group
         moveGroupToGridCells(movedGroup, targetCells)
         
@@ -757,8 +788,8 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                             val groupPieces = pieces.filter { it.groupId == piece.groupId }
                             groupPieces.forEach { 
                                 Log.d(TAG, "      piece[${it.id}] snapped back to (${it.currentX}, ${it.currentY}) Grid(${it.row}, ${it.col})")
-                            }
-    }
+            }
+        }
 
     private fun tryGridSnap(piece: PuzzlePiece, group: List<PuzzlePiece>): Boolean {
         // 基于网格的对齐逻辑
@@ -1180,7 +1211,12 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         
         if (allSameGroup && !particleSystem.isFireworksMode) {
             particleSystem.isFireworksMode = true
+            isTimerRunning = false
             invalidate()
+            // Notify completion with elapsed time (ensure on main thread)
+            post {
+                onPuzzleComplete?.invoke(elapsedSeconds)
+            }
         }
     }
 
@@ -1311,14 +1347,8 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             bringGroupToFront(movedPiece.groupId)
         }
         
-        // Final check: Do we have 1 big group? Win!
-        val firstGroupId = pieces[0].groupId
-        val allSameGroup = pieces.all { it.groupId == firstGroupId }
-        
-        if (allSameGroup && !particleSystem.isFireworksMode) {
-            particleSystem.isFireworksMode = true
-            invalidate()
-        } else if (hasMergedAny) {
+        if (hasMergedAny) {
+            checkForWin()
             invalidate()
         }
         
@@ -1608,6 +1638,24 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     mergedEdges++
                 }
             }
+        }
+        
+        // Calculate and award score for this merge
+        // Score: 1 point per merged edge (only count NEW edges created by this merge)
+        // The mergedEdges count represents the NEW connections between source and target groups
+        if (mergedEdges > 0) {
+            // Always score new edges created by this merge operation
+            // Remove old group scores (they're now part of the merged group)
+            val oldSourceScore = scoredGroups.remove(sourceGroupId) ?: 0
+            val oldTargetScore = scoredGroups.remove(targetGroupId) ?: 0
+            
+            // The new group's score = old scores + new edges from this merge
+            val newTotalScore = oldSourceScore + oldTargetScore + mergedEdges
+            scoredGroups[targetGroupId] = newTotalScore
+            
+            // Only award points for the NEW edges (mergedEdges)
+            onScoreChange?.invoke(mergedEdges)
+            Log.d(TAG, "mergeGroups: Awarded $mergedEdges points for merging groups $sourceGroupId+$targetGroupId -> $targetGroupId (new edges: $mergedEdges, group total: $newTotalScore)")
         }
         
         return mergedEdges

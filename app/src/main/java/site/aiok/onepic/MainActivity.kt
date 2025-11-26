@@ -25,12 +25,18 @@ class MainActivity : ComponentActivity() {
                     // Simple Navigation State
                     var currentScreen by remember { mutableStateOf("level_select") }
                     var selectedLevel by remember { mutableStateOf<site.aiok.onepic.model.LevelConfig?>(null) }
+                    var levelCompleteCallback by remember { mutableStateOf<(() -> Unit)?>(null) }
+                    var levelIndex by remember { mutableStateOf(0) }
+                    var levelMode by remember { mutableStateOf("classic") } // classic or gallery
 
                     when (currentScreen) {
                         "level_select" -> {
                             site.aiok.onepic.ui.LevelSelectScreen(
-                                onLevelSelected = { level ->
+                                onLevelSelected = { level, index, mode, onComplete ->
                                     selectedLevel = level
+                                    levelIndex = index
+                                    levelMode = mode
+                                    levelCompleteCallback = onComplete
                                     currentScreen = "game"
                                 }
                             )
@@ -39,8 +45,13 @@ class MainActivity : ComponentActivity() {
                             selectedLevel?.let { level ->
                                 site.aiok.onepic.ui.GameScreen(
                                     levelConfig = level,
+                                    levelIndex = levelIndex,
+                                    levelMode = levelMode,
                                     onBack = {
                                         currentScreen = "level_select"
+                                    },
+                                    onLevelComplete = {
+                                        levelCompleteCallback?.invoke()
                                     }
                                 )
                             }

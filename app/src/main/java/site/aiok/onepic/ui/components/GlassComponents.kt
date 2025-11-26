@@ -24,15 +24,32 @@ fun MeshGradientBackground(content: @Composable BoxScope.() -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.verticalGradient(
+                brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFFE0F7FA), // Light Cyan
-                        Color(0xFFE1BEE7), // Light Purple
-                        Color(0xFFF8BBD0)  // Light Pink
-                    )
+                        Color(0xFFB39DDB), // 淡紫色中心
+                        Color(0xFF90CAF9), // 淡蓝色
+                        Color(0xFF80CBC4), // 青绿色
+                        Color(0xFFCE93D8)  // 粉紫色边缘
+                    ),
+                    center = androidx.compose.ui.geometry.Offset(0.3f, 0.3f),
+                    radius = 1500f
                 )
             )
     ) {
+        // 添加一层柔和的渐变覆盖
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                            Color(0xFFE1F5FE).copy(alpha = 0.3f), // 浅蓝
+                            Color(0xFFF3E5F5).copy(alpha = 0.4f), // 浅紫
+                            Color(0xFFFCE4EC).copy(alpha = 0.3f)  // 浅粉
+                    )
+                )
+            )
+        )
         content()
     }
 }
@@ -42,12 +59,13 @@ fun MeshGradientBackground(content: @Composable BoxScope.() -> Unit) {
 fun GlassBox(
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 16.dp,
+    backgroundColor: Color = Color.White.copy(alpha = 0.4f),
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(cornerRadius))
-            .background(Color.White.copy(alpha = 0.4f))
+            .background(backgroundColor)
             .border(
                 width = 1.dp,
                 color = Color.White.copy(alpha = 0.5f),
