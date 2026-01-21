@@ -14,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.*
 import site.aiok.onepic.model.LevelConfig
 import site.aiok.onepic.ui.theme.OnepicTheme
+import site.aiok.onepic.ui.components.BottomNavigationBar
+import site.aiok.onepic.ui.components.BottomNavItem
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,18 +23,82 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OnepicTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // Simple Navigation State
-                    var currentScreen by remember { mutableStateOf("level_select") }
-                    var selectedLevel by remember { mutableStateOf<site.aiok.onepic.model.LevelConfig?>(null) }
-                    var levelCompleteCallback by remember { mutableStateOf<(() -> Unit)?>(null) }
-                    var levelIndex by remember { mutableStateOf(0) }
-                    var levelMode by remember { mutableStateOf("classic") } // classic or gallery
+                // 底部导航栏的当前路由
+                var currentBottomNavRoute by remember { mutableStateOf(BottomNavItem.Home.route) }
+                // 游戏相关的导航状态
+                var currentScreen by remember { mutableStateOf("level_select") }
+                var selectedLevel by remember { mutableStateOf<site.aiok.onepic.model.LevelConfig?>(null) }
+                var levelCompleteCallback by remember { mutableStateOf<(() -> Unit)?>(null) }
+                var levelIndex by remember { mutableStateOf(0) }
+                var levelMode by remember { mutableStateOf("classic") } // classic or gallery
+                // 用于触发关卡选择页面重新检查滚动
+                var levelSelectKey by remember { mutableStateOf(0) }
+                // 保存进入游戏前的 completedLevels，用于检测是否完成了新关卡
+                var completedLevelsBeforeGame by remember { mutableStateOf<Set<Int>>(emptySet()) }
 
-                    when (currentScreen) {
-                        "level_select" -> {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        // 只在非游戏页面显示底部导航栏
+                        if (currentScreen != "game") {
+                            BottomNavigationBar(
+                                currentRoute = currentBottomNavRoute,
+                                onNavigate = { route ->
+                                    currentBottomNavRoute = route
+                                    // 如果切换到首页，确保显示关卡选择页面
+                                    if (route == BottomNavItem.Home.route) {
+                                        currentScreen = "level_select"
+                                    }
+                                }
+                            )
+                        }
+                    }
+                ) { innerPadding ->
+                    // 根据底部导航栏路由和游戏状态显示不同页面
+                    when {
+                        // 游戏页面（优先级最高）
+                        currentScreen == "game" -> {
+                            selectedLevel?.let { level ->
+                                site.aiok.onepic.ui.GameScreen(
+                                    levelConfig = level,
+                                    levelIndex = levelIndex,
+                                    levelMode = levelMode,
+                                    onBack = {
+                                        // 返回到之前的底部导航页面（通常是首页）
+                                        currentScreen = "level_select"
+                                        currentBottomNavRoute = BottomNavItem.Home.route
+                                        
+                                        // 检查是否完成了关卡（通过检查 completedLevels 是否增加）
+                                        val context = this@MainActivity
+                                        val completedLevels = site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(context)
+                                        
+                                        // 检查是否有新完成的关卡
+                                        val newCompletedLevels = completedLevels - completedLevelsBeforeGame
+                                        
+                                        // 如果有新完成的关卡，增加 key 以触发动画滚动到下一关
+                                        if (newCompletedLevels.isNotEmpty()) {
+                                            levelSelectKey++
+                                        }
+                                    },
+                                    onLevelComplete = {
+                                        // 只执行完成回调，不在这里触发动画
+                                        levelCompleteCallback?.invoke()
+                                    }
+                                )
+                            }
+                        }
+                        // 底部导航栏页面
+                        currentBottomNavRoute == BottomNavItem.Home.route -> {
                             site.aiok.onepic.ui.LevelSelectScreen(
+                                scrollTriggerKey = levelSelectKey, // 用于触发滚动的 key
+                                completedLevelsBeforeGame = completedLevelsBeforeGame, // 传入进入游戏前的 completedLevels
                                 onLevelSelected = { level, index, mode, onComplete ->
+                                    // 保存最后玩的关卡索引
+                                    site.aiok.onepic.data.LevelProgressManager.saveLastPlayedLevel(
+                                        this@MainActivity, index
+                                    )
+                                    // 保存进入游戏前的 completedLevels
+                                    completedLevelsBeforeGame = site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(this@MainActivity)
                                     selectedLevel = level
                                     levelIndex = index
                                     levelMode = mode
@@ -41,20 +107,11 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        "game" -> {
-                            selectedLevel?.let { level ->
-                                site.aiok.onepic.ui.GameScreen(
-                                    levelConfig = level,
-                                    levelIndex = levelIndex,
-                                    levelMode = levelMode,
-                                    onBack = {
-                                        currentScreen = "level_select"
-                                    },
-                                    onLevelComplete = {
-                                        levelCompleteCallback?.invoke()
-                                    }
-                                )
-                            }
+                        currentBottomNavRoute == BottomNavItem.CheckIn.route -> {
+                            site.aiok.onepic.ui.CheckInScreen()
+                        }
+                        currentBottomNavRoute == BottomNavItem.More.route -> {
+                            site.aiok.onepic.ui.MoreScreen()
                         }
                     }
                 }

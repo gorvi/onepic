@@ -4,11 +4,15 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import site.aiok.onepic.model.PuzzlePiece
+import site.aiok.onepic.audio.SoundManager
+import site.aiok.onepic.audio.SoundType
 import kotlin.math.abs
 
 class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
@@ -32,6 +36,10 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     // Puzzle boundaries for clamping drag
     private var puzzleBounds = android.graphics.RectF()
+    
+    // 暴露图片的实际渲染高度，用于调整白色边框
+    var actualImageHeight: Float = 0f
+        private set
 
     // Particle System
     private val particleSystem = ParticleSystem()
@@ -51,14 +59,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     private var elapsedSeconds: Int = 0
     private var isTimerRunning = false
 
-    // Paint for borders
-    private val borderPaint = Paint().apply {
-        color = Color.BLACK
-        style = Paint.Style.STROKE
-        strokeWidth = 4f
-    }
-
-
+    // Handler for delayed callbacks
+    private val handler = Handler(Looper.getMainLooper())
+    
+    // Sound Manager
+    private val soundManager by lazy { SoundManager.getInstance(context) }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -81,8 +86,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         val gridRows = maxRow + 1
         val gridCols = maxCol + 1
 
-        // 2. Calculate Layout
-        val padding = 32f
+        // 2. Calculate Layout - 减少padding，让拼图填充更多空间
+        // 调试：分析为什么白框没有完全包围图片
+        // 问题1: GameBoardView内部有padding = 16f，导致图片内容不填满整个View
+        // 问题2: AndroidView有padding(horizontal = 4.dp, vertical = 1.dp)，进一步缩小了内容区域
+        // 问题3: Box有padding(horizontal = 8.dp)，也会影响布局
+        // 解决方案：将GameBoardView的padding设为0，让图片完全填满View
+        val padding = 0f  // 改为0，让图片完全填满View
         val availableWidth = viewWidth - padding * 2
         val availableHeight = viewHeight - padding * 2
         
@@ -101,16 +111,18 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         val finalWidth = totalOriginalWidth * scale
         val finalHeight = totalOriginalHeight * scale
         
-        val offsetX = (viewWidth - finalWidth) / 2
-        val offsetY = (viewHeight - finalHeight) / 2
+        // 保存图片的实际渲染高度，用于调整白色边框
+        actualImageHeight = finalHeight
+        
+        // 修改：让图片从顶部开始对齐，而不是居中，这样白色边框可以紧贴上边缘
+        val offsetX = (viewWidth - finalWidth) / 2  // 水平居中
+        val offsetY = 0f  // 从顶部开始，紧贴上边缘
         
         // Define puzzle bounds
         puzzleBounds.set(offsetX, offsetY, offsetX + finalWidth, offsetY + finalHeight)
         
         val newPieceWidth = finalWidth / gridCols
         val newPieceHeight = finalHeight / gridRows
-        
-        Log.d(TAG, "updateLayout: puzzleBounds=$puzzleBounds, cellSize=($newPieceWidth x $newPieceHeight)")
         
         // Update all pieces based on their CURRENT grid position
         pieces.forEach { piece ->
@@ -196,9 +208,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 piece.currentY + piece.height
             )
             canvas.drawBitmap(piece.bitmap, null, dstRect, null)
-            
-            // Draw dynamic borders
-            drawDynamicBorders(canvas, piece)
         }
         
         // Update and draw particles
@@ -211,26 +220,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         }
     }
 
-    private fun drawDynamicBorders(canvas: Canvas, piece: PuzzlePiece) {
-        // Find neighbors in the SAME group
-        val groupMembers = pieces.filter { it.groupId == piece.groupId }
-        
-        val hasTop = groupMembers.any { it.row == piece.row - 1 && it.col == piece.col }
-        val hasBottom = groupMembers.any { it.row == piece.row + 1 && it.col == piece.col }
-        val hasLeft = groupMembers.any { it.row == piece.row && it.col == piece.col - 1 }
-        val hasRight = groupMembers.any { it.row == piece.row && it.col == piece.col + 1 }
-
-        val x = piece.currentX
-        val y = piece.currentY
-        val w = piece.width.toFloat()
-        val h = piece.height.toFloat()
-
-        // Draw lines where there is NO neighbor
-        if (!hasTop) canvas.drawLine(x, y, x + w, y, borderPaint)
-        if (!hasBottom) canvas.drawLine(x, y + h, x + w, y + h, borderPaint)
-        if (!hasLeft) canvas.drawLine(x, y, x, y + h, borderPaint)
-        if (!hasRight) canvas.drawLine(x + w, y, x + w, y + h, borderPaint)
-    }
 
     private val gestureDetector = android.view.GestureDetector(context, object : android.view.GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean {
@@ -248,7 +237,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 val groupPieces = pieces.filter { it.groupId == candidate.groupId }
                 if (groupPieces.size > 1) {
                     val groupId = candidate.groupId
-                    Log.d(TAG, "Double tap detected: Unmerging group $groupId with ${groupPieces.size} pieces")
                     
                     // Check if this group was scored, and deduct points if so
                     // When unmerging, we deduct the total score for this group
@@ -256,7 +244,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     val scoreToDeduct = scoredGroups.remove(groupId)
                     if (scoreToDeduct != null && scoreToDeduct > 0) {
                         onScoreChange?.invoke(-scoreToDeduct)
-                        Log.d(TAG, "onDoubleTap: Deducted $scoreToDeduct points for unmerging group $groupId")
                     }
                     
                     // Unmerge: Assign a new unique ID to EACH piece
@@ -298,7 +285,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
                 if (candidate != null) {
                     selectedPiece = candidate
-                    Log.d(TAG, "ACTION_DOWN: Selected piece[${candidate.id}] at (${candidate.currentX}, ${candidate.currentY}) groupId=${candidate.groupId}")
                     
                     bringGroupToFront(candidate.groupId)
                     
@@ -306,7 +292,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     dragStartStates.clear()
                     pieces.filter { it.groupId == candidate.groupId }.forEach { 
                         dragStartStates[it.id] = PieceState(it.currentX, it.currentY, it.row, it.col)
-                        Log.d(TAG, "  Drag start: piece[${it.id}] at (${it.currentX}, ${it.currentY}) Grid(${it.row}, ${it.col})")
                     }
                     
                     lastTouchX = x
@@ -365,7 +350,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             }
             MotionEvent.ACTION_UP -> {
                 selectedPiece?.let { piece ->
-                    Log.d(TAG, "ACTION_UP: piece[${piece.id}] at (${piece.currentX}, ${piece.currentY})")
                     
                     handleActionUp(piece)
                     
@@ -391,7 +375,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     private fun handleActionUp(piece: PuzzlePiece) {
         // 1. Check Snapping (Merge)
         if (checkNeighborSnapping(piece)) {
-            Log.d(TAG, "handleActionUp: Merged with neighbor.")
             return
         }
 
@@ -426,7 +409,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         val myGroupId = movedGroup[0].groupId
         
         if (areGridCellsInBounds(intendedCells) && areGridCellsFree(intendedCells, setOf(myGroupId))) {
-             Log.d(TAG, "handleActionUp: Intended grid slot is free. Snapping.")
              tryGridSnap(piece, movedGroup)
              checkNeighborSnapping(piece)
              return
@@ -437,11 +419,8 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         
         // 3. Try Interaction (Push / Swap)
         if (overlapTargets.isNotEmpty()) {
-            Log.d(TAG, "handleActionUp: Overlap detected with ${overlapTargets.size} pieces. Attempting interaction.")
-            
             // A. Try PUSH first (Chain Push)
             if (tryPushInteraction(movedGroup, overlapTargets, dragDx, dragDy)) {
-                Log.d(TAG, "handleActionUp: Push successful.")
                 checkNeighborSnapping(piece)
                 return
             }
@@ -449,7 +428,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             
         // B. Try SMART SWAP second (Grid-based vacancy filling, works even without precise overlap)
         if (trySwapInteraction(movedGroup, dragDx, dragDy)) {
-            Log.d(TAG, "handleActionUp: Swap successful.")
             checkNeighborSnapping(piece)
             return
         }
@@ -457,7 +435,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         // C. No Interaction or Interaction Failed -> Try simple placement
         // No overlap, checking for valid placement
         if (isValidPlacement(movedGroup)) {
-             Log.d(TAG, "handleActionUp: Valid placement in empty space.")
              // Try to align to grid for neatness even if valid
              tryGridSnap(piece, movedGroup)
              checkNeighborSnapping(piece) // Check snapping after placement
@@ -467,13 +444,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         // If slightly overlapping or misaligned (but not significantly enough to trigger Swap/Push),
         // try to snap to nearest grid
         if (tryGridSnap(piece, movedGroup)) {
-            Log.d(TAG, "handleActionUp: Snapped to nearest grid slot.")
             checkNeighborSnapping(piece)
             return
         }
 
         // 4. Revert
-        Log.d(TAG, "handleActionUp: Action failed. Reverting.")
         revertMove(piece)
     }
 
@@ -517,14 +492,10 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         dragDy: Float
     ): Boolean {
         // 基于网格的推挤逻辑
-        Log.d(TAG, "tryPushInteraction: Attempting GRID-BASED push")
-        
         // 1. 确定推挤方向（网格级别）
         val isHorizontal = abs(dragDx) > abs(dragDy)
         val deltaRow = if (!isHorizontal) (if (dragDy > 0) 1 else -1) else 0
         val deltaCol = if (isHorizontal) (if (dragDx > 0) 1 else -1) else 0
-        
-        Log.d(TAG, "  Push direction: deltaRow=$deltaRow, deltaCol=$deltaCol")
         
         // 2. 获取所有参与交互的组
         val targetGroupIds = targets.map { it.groupId }.distinct()
@@ -583,11 +554,8 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         }
         
         if (depth >= MAX_CHAIN_DEPTH) {
-            Log.d(TAG, "tryPushInteraction: Chain too deep, aborting")
             return false
         }
-        
-        Log.d(TAG, "  Push chain depth: ${pushChain.size} groups")
                             
         // 4. 验证整个推挤链的最终位置
         // 从链条末尾开始检查（最远的那个必须能移动到空格子）
@@ -598,14 +566,12 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             
             // 检查边界
             if (!areGridCellsInBounds(newOccupancy)) {
-                Log.d(TAG, "  Push blocked: Group out of bounds")
                 return false
             }
             
             // 检查空间（排除推挤链中的所有组）
             val excludeInCheck = pushChain.flatMap { it.map { p -> p.groupId } }.toSet() + movedGroup[0].groupId
             if (!areGridCellsFree(newOccupancy, excludeInCheck)) {
-                Log.d(TAG, "  Push blocked: Target cells occupied")
                 return false
             }
         }
@@ -619,7 +585,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             moveGroupToGridCells(groupToPush, newOccupancy)
         }
         
-        Log.d(TAG, "tryPushInteraction: SUCCESS - Pushed ${pushChain.size} groups")
+        // 播放推挤音效
+        soundManager.playSound(SoundType.PUSH, 0.6f)
+        
         resetZIndex()
         return true
     }
@@ -629,8 +597,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         dragDx: Float,
         dragDy: Float
     ): Boolean {
-        Log.d(TAG, "trySwapInteraction: Attempting SMART GRID swap")
-        
         val cellW = pieces[0].width
         val cellH = pieces[0].height
         
@@ -639,7 +605,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         val deltaRow = kotlin.math.round(dragDy / cellH).toInt()
         
         if (deltaCol == 0 && deltaRow == 0) {
-             Log.d(TAG, "  Swap blocked: No grid movement detected")
              return false
         }
 
@@ -649,7 +614,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         
         // 3. Boundary Check
         if (!areGridCellsInBounds(targetCells)) {
-            Log.d(TAG, "  Swap blocked: Target out of bounds")
             return false
         }
         
@@ -662,7 +626,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         }
         
         if (conflictingPieces.isEmpty()) {
-             Log.d(TAG, "  Swap converted to Move: Target is empty")
              moveGroupToGridCells(movedGroup, targetCells)
              resetZIndex()
              return true
@@ -680,9 +643,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         // Paranoid check: Explicitly ensure no target cells are in vacated list
         val vacatedCells = originCells.filter { !targetCells.contains(it) }.toMutableSet()
         
-        Log.d(TAG, "  Origin: ${originCells.size}, Target: ${targetCells.size}, Vacated: ${vacatedCells.size}")
         if (vacatedCells.isEmpty()) {
-             Log.d(TAG, "  Swap blocked: No vacated cells available (Full overlap?)")
              return false
         }
         
@@ -702,14 +663,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 val usedCells = offsetGridCells(groupCells, validDelta.first, validDelta.second)
                 vacatedCells.removeAll(usedCells)
                         } else {
-                Log.d(TAG, "  Swap blocked: Group $groupId does not fit into vacated space")
                 return false
             }
         }
         
         // 8. Execute Swap
-        Log.d(TAG, "  Swapping: MovedGroup -> Target, ConflictingGroups -> Vacated Slots")
-        
         // Move Conflicting Groups
         groupMoves.forEach { (groupId, delta) ->
             val group = pieces.filter { it.groupId == groupId }
@@ -730,6 +688,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     
         // Move Moved Group
         moveGroupToGridCells(movedGroup, targetCells)
+        
+        // 播放交换音效
+        soundManager.playSound(SoundType.SWAP, 0.7f)
         
         resetZIndex()
         return true
@@ -775,30 +736,23 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     }
 
     private fun revertMove(piece: PuzzlePiece) {
-                            dragStartStates.forEach { (id, state) ->
-                                val p = pieces.find { it.id == id }
-                                if (p != null) {
-                                    p.currentX = state.x
-                                    p.currentY = state.y
-                                    p.row = state.row
-                                    p.col = state.col
-                                }
-                            }
-                            
-                            val groupPieces = pieces.filter { it.groupId == piece.groupId }
-                            groupPieces.forEach { 
-                                Log.d(TAG, "      piece[${it.id}] snapped back to (${it.currentX}, ${it.currentY}) Grid(${it.row}, ${it.col})")
+        dragStartStates.forEach { (id, state) ->
+            val p = pieces.find { it.id == id }
+            if (p != null) {
+                p.currentX = state.x
+                p.currentY = state.y
+                p.row = state.row
+                p.col = state.col
             }
         }
+        // 播放回退音效
+        soundManager.playSound(SoundType.REVERT, 0.5f)
+    }
 
     private fun tryGridSnap(piece: PuzzlePiece, group: List<PuzzlePiece>): Boolean {
         // 基于网格的对齐逻辑
-        Log.d(TAG, "tryGridSnap: Attempting GRID-BASED snap")
-        
         // 1. 计算组的当前网格位置
         val currentCells = getCurrentGridPosition(group)
-        
-        Log.d(TAG, "  Current grid cells: $currentCells")
         
         // 2. 检查这些格子是否为空（排除自己）
         val excludeGroups = setOf(group[0].groupId)
@@ -806,384 +760,14 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         if (areGridCellsInBounds(currentCells) && areGridCellsFree(currentCells, excludeGroups)) {
             // 3. 移动到最近的网格对齐位置
             moveGroupToGridCells(group, currentCells)
-            Log.d(TAG, "  Grid snap SUCCESS")
-        return true
-    }
+            return true
+        }
 
-        Log.d(TAG, "  Grid snap FAILED (cells occupied or out of bounds)")
         return false
     }
 
     // LEGACY: 旧的基于 RectF 的交互逻辑（已被网格逻辑替代）
-    /* 
-    private fun tryInteraction(touchedPiece: PuzzlePiece): Boolean {
-        val movedGroup = pieces.filter { it.groupId == touchedPiece.groupId }
-        
-        // Calculate bounding box of moved group
-        val movedMinX = movedGroup.minOf { it.currentX }
-        val movedMinY = movedGroup.minOf { it.currentY }
-        val movedMaxX = movedGroup.maxOf { it.currentX + it.width }
-        val movedMaxY = movedGroup.maxOf { it.currentY + it.height }
-        
-        // Find ALL pieces that overlap with the moved group
-        val overlappedPieces = mutableListOf<Pair<PuzzlePiece, Float>>()
-        
-        for (piece in pieces) {
-            if (piece.groupId == touchedPiece.groupId) continue
-            
-            // Check if there's any overlap
-            val overlapLeft = maxOf(movedMinX, piece.currentX)
-            val overlapTop = maxOf(movedMinY, piece.currentY)
-            val overlapRight = minOf(movedMaxX, piece.currentX + piece.width)
-            val overlapBottom = minOf(movedMaxY, piece.currentY + piece.height)
-            
-            if (overlapRight > overlapLeft && overlapBottom > overlapTop) {
-                val area = (overlapRight - overlapLeft) * (overlapBottom - overlapTop)
-                overlappedPieces.add(Pair(piece, area))
-            }
-        }
-        
-        if (overlappedPieces.isEmpty()) {
-            return false
-        }
-        
-        // Identify significant targets.
-        //  - 如果移动的大块覆盖了目标的小块，就必须把这些小块全部纳入“目标组”，否则会导致碰撞。
-        //  - 对于“仅覆盖部分”的情况，将阈值降低到 5%，并且只要有一定面积（例如 50px²）也要算。
-        val significantTargets = overlappedPieces.filter { (piece, area) ->
-            val pieceArea = piece.width * piece.height
-            val overlapRatio = area / pieceArea
-            overlapRatio > 0.05f || area > 50f
-        }.map { it.first }
-        
-        val targetPieces: List<PuzzlePiece>
-        
-        if (significantTargets.isNotEmpty()) {
-            val targetGroupIds = significantTargets.map { it.groupId }.distinct()
-            targetPieces = pieces.filter { it.groupId in targetGroupIds }
-            Log.d(TAG, "tryInteraction: Targeted ${targetGroupIds.size} Groups (${targetPieces.size} pieces) for Interaction")
-        } else {
-            // Fallback: Pick the single piece with maximum overlap area
-            val maxOverlap = overlappedPieces.maxByOrNull { it.second }
-            if (maxOverlap != null && maxOverlap.second / (maxOverlap.first.width * maxOverlap.first.height) > 0.2f) {
-                val targetGroupId = maxOverlap.first.groupId
-                targetPieces = pieces.filter { it.groupId == targetGroupId }
-                Log.d(TAG, "tryInteraction: No significant targets, fallback to Group $targetGroupId (>20% overlap)")
-            } else {
-                return false
-            }
-        }
-        
-        if (targetPieces.isEmpty()) return false
-        
-        
-        
-        Log.d(TAG, "tryInteraction: SWAP DETECTED")
-        Log.d(TAG, "  Moved group has ${movedGroup.size} pieces, bounds: ($movedMinX, $movedMinY) to ($movedMaxX, $movedMaxY)")
-        Log.d(TAG, "  Swapping with ${targetPieces.size} pieces from ${targetPieces.map { it.groupId }.distinct().size} different groups")
-        
-        // Calculate bounding box of target pieces
-        val targetMinX = targetPieces.minOf { it.currentX }
-        val targetMinY = targetPieces.minOf { it.currentY }
-        val targetMaxX = targetPieces.maxOf { it.currentX + it.width }
-        val targetMaxY = targetPieces.maxOf { it.currentY + it.height }
-        
-        val targetWidth = targetMaxX - targetMinX
-        val targetHeight = targetMaxY - targetMinY
-        
-        // Calculate bounding box of moved group at ORIGINAL position
-        val movedGroupOriginalMinX = movedGroup.minOf { dragStartPositions[it.id]?.first ?: it.currentX }
-        val movedGroupOriginalMinY = movedGroup.minOf { dragStartPositions[it.id]?.second ?: it.currentY }
-        val movedGroupOriginalMaxX = movedGroup.maxOf { (dragStartPositions[it.id]?.first ?: it.currentX) + it.width }
-        val movedGroupOriginalMaxY = movedGroup.maxOf { (dragStartPositions[it.id]?.second ?: it.currentY) + it.height }
-        
-        val movedWidth = movedGroupOriginalMaxX - movedGroupOriginalMinX
-        val movedHeight = movedGroupOriginalMaxY - movedGroupOriginalMinY
-        
-        // Calculate deltas for traditional position exchange
-        // Moved group moves to Target's current position (top-left aligned)
-        val deltaX_MtoT = targetMinX - movedMinX
-        val deltaY_MtoT = targetMinY - movedMinY
-        
-        // Target group moves to Moved group's ORIGINAL position (top-left aligned)
-        // CRITICAL CHANGE: Instead of simply aligning top-left to top-left,
-        // we need to intelligently fit the target group into the bounding box of the moved group's original hole.
-        
-        // 1. If the target group fits within the hole dimensions, centered alignment or top-left alignment works.
-        // 2. BUT, if the shapes are irregular, a simple bounding box swap might cause collision with neighbors
-        //    even if they are just swapping "slots".
-        
-        // To robustly solve "Squeezing", we should check if the target group can fit into the moved group's original footprint.
-        // Since we are in a grid, and assuming we are swapping adjacent logical "blocks", 
-        // we try to align the target group's bounding box to the moved group's original bounding box.
-        
-        // Determine drag direction for intelligent alignment
-        val dragDx = movedMinX - movedGroupOriginalMinX
-        val dragDy = movedMinY - movedGroupOriginalMinY
-        val isHorizontalDrag = abs(dragDx) > abs(dragDy)
-
-        var deltaX_Target = 0f
-        var deltaY_Target = 0f
-
-        val movedOriginalCenterX = movedGroupOriginalMinX + movedWidth / 2f
-        val movedOriginalCenterY = movedGroupOriginalMinY + movedHeight / 2f
-        val targetCenterX = targetMinX + targetWidth / 2f
-        val targetCenterY = targetMinY + targetHeight / 2f
-
-        if (isHorizontalDrag) {
-            if (dragDx > 0) { // Moving Right -> Target goes to Left of Origin
-                // Align Target's Left to Origin's Left
-                deltaX_Target = movedGroupOriginalMinX - targetMinX
-                // Y aligns Center
-                deltaY_Target = movedOriginalCenterY - targetCenterY 
-            } else { // Moving Left -> Target goes to Right of Origin
-                // Align Target's Right to Origin's Right
-                deltaX_Target = (movedGroupOriginalMaxX - targetWidth) - targetMinX
-                deltaY_Target = movedOriginalCenterY - targetCenterY
-            }
-        } else {
-            if (dragDy > 0) { // Moving Down -> Target goes to Top of Origin
-                // Align Target's Top to Origin's Top
-                deltaX_Target = movedOriginalCenterX - targetCenterX
-                deltaY_Target = movedGroupOriginalMinY - targetMinY
-            } else { // Moving Up -> Target goes to Bottom of Origin
-                // Align Target's Bottom to Origin's Bottom
-                deltaX_Target = movedOriginalCenterX - targetCenterX
-                deltaY_Target = (movedGroupOriginalMaxY - targetHeight) - targetMinY
-            }
-        }
-        
-        // Refinement: If groups are equal size, perfect Top-Left alignment is always safest.
-        // This handles floating point noise better than center alignment.
-        val sizeTolerance = 10f
-        if (abs(movedWidth - targetWidth) < sizeTolerance && 
-            abs(movedHeight - targetHeight) < sizeTolerance && 
-            movedGroup.size == targetPieces.size) {
-             deltaX_Target = movedGroupOriginalMinX - targetMinX
-             deltaY_Target = movedGroupOriginalMinY - targetMinY
-             Log.d(TAG, "checkSwap: Equal size & count groups detected. Using Top-Left alignment.")
-        }
-
-        // --- PUSH LOGIC (Try to push target to empty space first) ---
-        // Determine direction of drag based on where the moved group is relative to its origin
-        // Only consider push if we are overlapping.
-        
-        // (dragDx, dragDy, isHorizontalDrag already calculated above for alignment logic)
-        
-        // Calculate PUSH delta (Target -> Pushed Position)
-        // If dragging right, we push target further right? No, if I drag A onto B (A is Left of B), I want to push B to the Right.
-        // If I drag A onto B (A is Right of B), I want to push B to the Left.
-        // Actually, the user drags A *onto* B. 
-        // If A was left of B, and I drag A right onto B, I want B to move Right (to empty space).
-        // If A was right of B, and I drag A left onto B, I want B to move Left.
-        
-        // So the push direction is roughly the same as the drag direction.
-        var pushDeltaX = 0f
-        var pushDeltaY = 0f
-        
-        // We need to push by roughly the size of the moved group (or target group?)
-        // Usually grid size. Let's estimate grid size from piece width.
-        val pieceSizeX = pieces[0].width.toFloat()
-        val pieceSizeY = pieces[0].height.toFloat()
-        
-        if (isHorizontalDrag) {
-            if (dragDx > 0) pushDeltaX = pieceSizeX * (movedWidth / pieceSizeX).coerceAtLeast(1f) // Push Right
-            else pushDeltaX = -pieceSizeX * (movedWidth / pieceSizeX).coerceAtLeast(1f) // Push Left
-        } else {
-            if (dragDy > 0) pushDeltaY = pieceSizeY * (movedHeight / pieceSizeY).coerceAtLeast(1f) // Push Down
-            else pushDeltaY = -pieceSizeY * (movedHeight / pieceSizeY).coerceAtLeast(1f) // Push Up
-        }
-        
-        // Check if PUSH is valid (Target moves to Target + PushDelta)
-        // REPLACED: val canPush = isPositionValid(targetPieces, pushDeltaX, pushDeltaY)
-        // WITH: Recursive Chain Push logic
-        
-        val pushTransaction = mutableMapOf<PuzzlePiece, Pair<Float, Float>>()
-        val visitedGroups = mutableSetOf<Int>()
-        
-        // Pre-add the moved group to transaction (with 0 delta) so they are considered "moving"
-        // and don't block the push (though they are physically at the push origin)
-        movedGroup.forEach { pushTransaction[it] = Pair(0f, 0f) }
-        
-        val canPush = tryChainPush(targetPieces, pushDeltaX, pushDeltaY, pushTransaction, visitedGroups, 0)
-        
-        if (canPush) {
-            Log.d(TAG, "checkSwap: CHAIN PUSH detected! Moving ${pushTransaction.size - movedGroup.size} pieces.")
-            
-            // Apply all moves in transaction (except movedGroup which has 0 delta)
-            pushTransaction.forEach { (piece, delta) ->
-                if (delta.first != 0f || delta.second != 0f) {
-                    piece.currentX += delta.first
-                    piece.currentY += delta.second
-                }
-            }
-            
-            // Reset Z-indices
-            pieces.forEachIndexed { index, piece -> piece.zIndex = index }
-            pieces.sortBy { it.zIndex }
-            
-            return true // Push successful, no need to proceed to Swap
-        } else {
-            Log.d(TAG, "checkSwap: Push invalid (blocked/out of bounds), falling back to SWAP.")
-        }
-        
-        // If Push failed, we fall back to SWAP logic below...
-        
-        val deltaX_TtoNew = deltaX_Target
-        val deltaY_TtoNew = deltaY_Target
-        
-        // --- BOUNDARY CHECK START ---
-
-        // Verify if the move would put any piece out of bounds
-        val gameWidth = width.toFloat()
-        val gameHeight = height.toFloat()
-        val padding = 20f // Keep pieces slightly away from the absolute edge
-        // Note: We removed the extra bottomPadding constraint for swap logic to be symmetric
-        
-        // Simulate moved group at new position
-        for (piece in movedGroup) {
-            val newX = piece.currentX + deltaX_MtoT
-            val newY = piece.currentY + deltaY_MtoT
-            // STRICT BOUNDARY CHECK for Swap:
-            // NO TOLERANCE. Must be strictly inside puzzleBounds.
-            // Floating point errors might need a tiny epsilon (e.g. 1f), but effectively 0.
-            
-            // Use puzzleBounds instead of gameWidth/Height for strict playable area compliance
-            // Or at least ensure it doesn't go off screen.
-            // Let's use puzzleBounds for strictness if available, or 0..width/height
-            
-            // Since we already clamp drag to puzzleBounds, swap should also respect it.
-            // But puzzleBounds is private and calculated in updateLayout.
-            // Let's assume puzzleBounds is the playable area.
-            
-            val tolerance = 1f // Minimal tolerance for float rounding
-            
-            if (newX < puzzleBounds.left - tolerance || 
-                newY < puzzleBounds.top - tolerance || 
-                newX + piece.width > puzzleBounds.right + tolerance || 
-                newY + piece.height > puzzleBounds.bottom + tolerance) {
-                
-                Log.d(TAG, "checkSwap: ABORT - Moved piece[${piece.id}] would be out of bounds at ($newX, $newY)")
-                return false
-            }
-        }
-        
-        // Simulate target group at new position (Either Origin or Pushed)
-        for (piece in targetPieces) {
-            val newX = piece.currentX + deltaX_TtoNew
-            val newY = piece.currentY + deltaY_TtoNew
-            
-            val tolerance = 1f
-            if (newX < puzzleBounds.left - tolerance || 
-                newY < puzzleBounds.top - tolerance || 
-                newX + piece.width > puzzleBounds.right + tolerance || 
-                newY + piece.height > puzzleBounds.bottom + tolerance) {
-                
-                Log.d(TAG, "checkSwap: ABORT - Target piece[${piece.id}] would be out of bounds at ($newX, $newY)")
-                return false
-            }
-        }
-        // --- BOUNDARY CHECK END ---
-        
-        // --- COLLISION CHECK START ---
-        // Verify if the move would cause overlap with any other pieces (stationary or moving)
-        // This prevents swapping groups of different sizes into spaces that don't fit
-        
-        val allMovingPieces = movedGroup + targetPieces
-        val stationaryPieces = pieces.filter { !allMovingPieces.contains(it) }
-        
-        // Define new positions for moving pieces
-        val newPositions = mutableListOf<Pair<PuzzlePiece, android.graphics.RectF>>()
-        
-        movedGroup.forEach { piece ->
-            val newX = piece.currentX + deltaX_MtoT
-            val newY = piece.currentY + deltaY_MtoT
-            // Shrink slightly to avoid touching edge collisions
-            // Using a larger shrink value (e.g., 5f) makes it more forgiving for "squeezing"
-            newPositions.add(Pair(piece, android.graphics.RectF(newX + 5, newY + 5, newX + piece.width - 5, newY + piece.height - 5)))
-        }
-        
-        targetPieces.forEach { piece ->
-            val newX = piece.currentX + deltaX_TtoNew
-            val newY = piece.currentY + deltaY_TtoNew
-            newPositions.add(Pair(piece, android.graphics.RectF(newX + 5, newY + 5, newX + piece.width - 5, newY + piece.height - 5)))
-        }
-        
-        // Check for collisions
-        for ((pieceA, rectA) in newPositions) {
-            // 1. Check against stationary pieces
-            for (stationary in stationaryPieces) {
-                // RELAXED COLLISION CHECK for Swap:
-                // We need to be more forgiving here. If the user is dragging a big block,
-                // and it *slightly* overlaps with a stationary neighbor that isn't the swap target,
-                // we should ignore it if the overlap is minimal (just "grazing").
-                
-                // Increase shrink value significantly for stationary obstacles during swap check.
-                // This acts as a "lubricant" for sliding past neighbors.
-                val shrinkAmount = 10f 
-                val rectB = android.graphics.RectF(
-                    stationary.currentX + shrinkAmount, 
-                    stationary.currentY + shrinkAmount, 
-                    stationary.currentX + stationary.width - shrinkAmount, 
-                    stationary.currentY + stationary.height - shrinkAmount
-                )
-                
-                if (android.graphics.RectF.intersects(rectA, rectB)) {
-                    Log.d(TAG, "checkSwap: ABORT - Collision detected between moving piece[${pieceA.id}] and stationary piece[${stationary.id}]")
-                    return false
-                }
-            }
-            
-            // 2. Check against other moving pieces
-            for ((pieceB, rectB) in newPositions) {
-                if (pieceA.id == pieceB.id) continue // Skip self
-                
-                // Internal collision within moving set should be strict or also relaxed?
-                // Since we move them relative to each other based on grid, they shouldn't overlap unless logic is wrong.
-                // But let's keep it strict-ish (5f) as before.
-                if (android.graphics.RectF.intersects(rectA, rectB)) {
-                     Log.d(TAG, "checkSwap: ABORT - Collision detected between moving piece[${pieceA.id}] and moving piece[${pieceB.id}]")
-                     return false
-                }
-            }
-        }
-        // --- COLLISION CHECK END ---
-        
-        Log.d(TAG, "  Moved group current bounds: ($movedMinX, $movedMinY) to ($movedMaxX, $movedMaxY)")
-        Log.d(TAG, "  Moved group original bounds: ($movedGroupOriginalMinX, $movedGroupOriginalMinY) to ($movedGroupOriginalMaxX, $movedGroupOriginalMaxY)")
-        Log.d(TAG, "  Target bounds: ($targetMinX, $targetMinY) to ($targetMaxX, $targetMaxY)")
-        Log.d(TAG, "  Moving moved group by delta=($deltaX_MtoT, $deltaY_MtoT)")
-        Log.d(TAG, "  Moving target pieces by delta=($deltaX_TtoNew, $deltaY_TtoNew)")
-        
-        // Apply moves to moved group
-        movedGroup.forEach { 
-            val oldX = it.currentX
-            val oldY = it.currentY
-            it.currentX += deltaX_MtoT
-            it.currentY += deltaY_MtoT
-            Log.d(TAG, "    Moved piece[${it.id}] from ($oldX, $oldY) to (${it.currentX}, ${it.currentY})")
-        }
-        
-        // Apply moves to all target pieces
-        targetPieces.forEach { 
-            val oldX = it.currentX
-            val oldY = it.currentY
-            it.currentX += deltaX_TtoNew
-            it.currentY += deltaY_TtoNew
-            Log.d(TAG, "    Target piece[${it.id}] from ($oldX, $oldY) to (${it.currentX}, ${it.currentY})")
-        }
-        
-        
-        // REMOVED: Detach target pieces logic. 
-        // We now swap the ENTIRE group, so no need to detach.
-        // The group structure is preserved.
-        
-        // Reset Z-indices
-        resetZIndex()
-        
-        return true
-    }
-    */
+    // 已删除旧代码块
 
     private fun isValidPlacement(group: List<PuzzlePiece>): Boolean {
         // 基于网格的有效性检查
@@ -1192,13 +776,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         
         val isInBounds = areGridCellsInBounds(currentCells)
         val isFree = areGridCellsFree(currentCells, excludeGroups)
-        
-        if (!isInBounds) {
-            Log.d(TAG, "isValidPlacement: Out of bounds")
-        }
-        if (!isFree) {
-            Log.d(TAG, "isValidPlacement: Cells occupied")
-        }
         
         return isInBounds && isFree
     }
@@ -1212,11 +789,18 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         if (allSameGroup && !particleSystem.isFireworksMode) {
             particleSystem.isFireworksMode = true
             isTimerRunning = false
+            elapsedSeconds = getElapsedSeconds() // Capture final time
+            
+            // 播放完成音效
+            soundManager.playSound(SoundType.COMPLETE, 1.0f)
+            
             invalidate()
-            // Notify completion with elapsed time (ensure on main thread)
-            post {
-                onPuzzleComplete?.invoke(elapsedSeconds)
-            }
+            // 延迟1.5秒后触发完成回调，让用户先看到完成的图片和烟花效果
+            handler.postDelayed({
+                post {
+                    onPuzzleComplete?.invoke(elapsedSeconds)
+                }
+            }, 1500) // 1.5秒延迟
         }
     }
 
@@ -1341,13 +925,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             val textColor = android.graphics.Color.rgb(255, 215, 0) // Gold
             particleSystem.addFloatingText(centerX, centerY, "+$totalMergedEdges", textColor)
             
-            Log.d(TAG, "checkNeighborSnapping: Merged total $totalMergedEdges edges. Triggering celebration.")
-            
             // Bring merged group to front
             bringGroupToFront(movedPiece.groupId)
         }
         
         if (hasMergedAny) {
+            // 播放合并音效
+            soundManager.playSound(SoundType.SNAP, 0.8f)
             checkForWin()
             invalidate()
         }
@@ -1376,89 +960,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     }
 
     // LEGACY: 旧的基于 RectF 的链式推挤逻辑（已被网格逻辑替代）
-    /*
-    private fun tryChainPush(
-        groupToPush: List<PuzzlePiece>,
-        dx: Float,
-        dy: Float,
-        transaction: MutableMap<PuzzlePiece, Pair<Float, Float>>,
-        visitedGroups: MutableSet<Int>,
-        depth: Int
-    ): Boolean {
-        if (depth > 10) return false // Limit recursion depth
-        if (groupToPush.isEmpty()) return true
-
-        // 1. Check Bounds
-        // Use strict bounds similar to isValidPlacement
-        val gameWidth = width.toFloat()
-        val gameHeight = height.toFloat()
-        // Use puzzleBounds if available (but it's private member, we can access it)
-        // puzzleBounds is member of GameBoardView
-        
-        for (piece in groupToPush) {
-            val newX = piece.currentX + dx
-            val newY = piece.currentY + dy
-            
-            // Strict check
-            if (newX < puzzleBounds.left - 1f || 
-                newY < puzzleBounds.top - 1f || 
-                newX + piece.width > puzzleBounds.right + 1f || 
-                newY + piece.height > puzzleBounds.bottom + 1f) {
-                // Log.d(TAG, "tryChainPush: Out of bounds at depth $depth")
-                return false
-            }
-        }
-
-        // 2. Find Obstacles
-        val obstacles = mutableSetOf<PuzzlePiece>()
-        
-        for (piece in groupToPush) {
-            // Predict new position
-            val newRect = android.graphics.RectF(
-                piece.currentX + dx + 2, 
-                piece.currentY + dy + 2, 
-                piece.currentX + piece.width + dx - 2, 
-                piece.currentY + piece.height + dy - 2
-            )
-            
-            for (other in pieces) {
-                if (other in groupToPush) continue
-                if (transaction.containsKey(other)) continue // Already moving in this transaction
-                
-                // Check overlap
-                val otherRect = android.graphics.RectF(
-                    other.currentX + 2, 
-                    other.currentY + 2, 
-                    other.currentX + other.width - 2, 
-                    other.currentY + other.height - 2
-                )
-                
-                if (android.graphics.RectF.intersects(newRect, otherRect)) {
-                    obstacles.add(other)
-                }
-            }
-        }
-
-        // Add current group to transaction
-        groupToPush.forEach { transaction[it] = Pair(dx, dy) }
-        
-        if (obstacles.isEmpty()) {
-            return true
-        }
-
-        // 3. Handle Obstacles (Recursion)
-        val obstacleGroupIds = obstacles.map { it.groupId }.toSet()
-        
-        // Check for cycles or already visited groups in this push chain
-        if (obstacleGroupIds.any { it in visitedGroups }) return false
-        visitedGroups.addAll(obstacleGroupIds)
-        
-        val nextPiecesToPush = pieces.filter { it.groupId in obstacleGroupIds }
-        
-        // Recursive call: Try to push the obstacles in the SAME direction
-        return tryChainPush(nextPiecesToPush, dx, dy, transaction, visitedGroups, depth + 1)
-    }
-    */
+    // 已删除旧代码块
 
     // ===== GRID OCCUPANCY HELPERS =====
     
@@ -1552,7 +1054,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
      */
     private fun moveGroupToGridCells(group: List<PuzzlePiece>, targetCells: Set<GridCell>): Boolean {
         if (group.size != targetCells.size) {
-            Log.d(TAG, "moveGroupToGridCells: Size mismatch (${group.size} pieces vs ${targetCells.size} cells)")
                     return false
                 }
         
@@ -1591,8 +1092,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 // ⚠️ 关键修复: 更新逻辑网格位置
                 piece.row = targetCell.row
                 piece.col = targetCell.col
-                
-                Log.d(TAG, "  Moved piece[${piece.id}] to grid (${targetCell.row}, ${targetCell.col}) at pixel (${piece.currentX}, ${piece.currentY})")
             }
         }
         
@@ -1655,7 +1154,6 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             
             // Only award points for the NEW edges (mergedEdges)
             onScoreChange?.invoke(mergedEdges)
-            Log.d(TAG, "mergeGroups: Awarded $mergedEdges points for merging groups $sourceGroupId+$targetGroupId -> $targetGroupId (new edges: $mergedEdges, group total: $newTotalScore)")
         }
         
         return mergedEdges

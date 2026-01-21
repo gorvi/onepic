@@ -2,19 +2,22 @@ package site.aiok.onepic.ui.components
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
+import androidx.compose.ui.draw.blur
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -27,10 +30,12 @@ fun LevelCompleteDialog(
     stars: Int, // 1-3星
     timeInSeconds: Int,
     scoreGained: Int = 0, // 获得的合并得分（硬币分数）
-    onRestart: () -> Unit,
-    onNextLevel: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    // 弹框滑入动画
+    val slideInOffset = remember { Animatable(1000f) }
+    val alpha = remember { Animatable(0f) }
+    
     // 星星出现动画
     var showStars by remember { mutableStateOf(false) }
     // 分数加成动画
@@ -38,9 +43,22 @@ fun LevelCompleteDialog(
     val scoreAnimation = remember { Animatable(0f) }
     
     LaunchedEffect(Unit) {
+        // 弹框从底部滑入
+        slideInOffset.animateTo(
+            targetValue = 0f,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessMedium
+            )
+        )
+        alpha.animateTo(1f, animationSpec = tween(300))
+        
+        // 延迟显示星星
         kotlinx.coroutines.delay(300)
         showStars = true
-        kotlinx.coroutines.delay(800)
+        
+        // 延迟显示分数
+        kotlinx.coroutines.delay(700)
         showScore = true
         // 分数从0递增到实际值
         scoreAnimation.animateTo(
@@ -49,26 +67,46 @@ fun LevelCompleteDialog(
         )
     }
     
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = androidx.compose.ui.window.DialogProperties(
+            usePlatformDefaultWidth = false
+        )
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(32.dp))
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFFFF9C4),  // 淡黄
-                            Color(0xFFFFE082),  // 金黄
-                            Color(0xFFFFD54F)   // 深金黄
-                        )
-                    )
-                )
+                .fillMaxHeight(0.6f) // 占屏幕高度的60%
+                .offset(y = slideInOffset.value.dp)
+                .alpha(alpha.value)
                 .padding(32.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopCenter
         ) {
+            // 关闭按钮（右上角）
+            IconButton(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(40.dp)
+                    .background(
+                        color = Color.White.copy(alpha = 0.9f),
+                        shape = CircleShape
+                    )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "关闭",
+                    tint = Color(0xFF424242),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp) // 为关闭按钮留出空间
             ) {
                 // 标题
                 Text(
@@ -189,56 +227,6 @@ fun LevelCompleteDialog(
                                     )
                                 ),
                                 color = Color(0xFFFFA000)
-                            )
-                        }
-                    }
-                }
-                
-                // 按钮
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-                ) {
-                    // 重新开始按钮
-                    Button(
-                        onClick = onRestart,
-                        modifier = Modifier.weight(1f).height(56.dp),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White.copy(alpha = 0.9f),
-                            contentColor = Color(0xFFE65100)
-                        )
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "Restart",
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
-                    
-                    // 下一关按钮
-                    Button(
-                        onClick = onNextLevel,
-                        modifier = Modifier.weight(2f).height(56.dp),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFE65100)
-                        )
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Text(
-                                text = "下一关",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowRight,
-                                contentDescription = "Next",
-                                modifier = Modifier.size(28.dp)
                             )
                         }
                     }

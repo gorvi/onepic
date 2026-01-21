@@ -7,13 +7,9 @@ import site.aiok.onepic.model.LevelConfig
 
 object LevelRepository {
 
-    // --- Mode 1: Classic (5 Levels, Generated) ---
+    // --- Mode 1: Classic (1 Level, Generated - Practice/Demo) ---
     val classicLevels = listOf(
-        LevelConfig("c1", "Starter", "Easy", ImageSource.Generated, 3, 3),
-        LevelConfig("c2", "Warm Up", "Easy", ImageSource.Generated, 3, 4),
-        LevelConfig("c3", "Challenge", "Medium", ImageSource.Generated, 4, 5),
-        LevelConfig("c4", "Master", "Hard", ImageSource.Generated, 5, 6),
-        LevelConfig("c5", "Grandmaster", "Expert", ImageSource.Generated, 6, 8)
+        LevelConfig("c1", "Demo", "Practice", ImageSource.Generated, 3, 3)
     )
 
     // Backwards compatibility for existing code accessing 'levels'
@@ -35,11 +31,28 @@ object LevelRepository {
         try {
             // List all files in assets/gallery_levels
             // Note: This requires the folder to exist and have files
-            val images = context.assets.list("gallery_levels")?.sorted() ?: emptyList()
+            val allFiles = context.assets.list("gallery_levels") ?: emptyArray()
             
-            // If no images, return empty or fallback? 
-            // For now, we assume user will populate this folder.
-            // If < 50 images, we loop them.
+            // Filter image files and sort them properly
+            // Handle filenames with parentheses for correct sorting
+            val images = allFiles
+                .filter { 
+                    it.endsWith(".png", ignoreCase = true) || 
+                    it.endsWith(".jpg", ignoreCase = true) ||
+                    it.endsWith(".jpeg", ignoreCase = true)
+                }
+                .sortedWith { a, b ->
+                    // Extract numbers from filenames for natural sorting
+                    // Handles formats like "1 (1).jpg", "1 (2).jpg", etc.
+                    val numA = extractNumber(a)
+                    val numB = extractNumber(b)
+                    when {
+                        numA != null && numB != null -> numA.compareTo(numB)
+                        numA != null -> -1 // Numbers come before non-numbers
+                        numB != null -> 1
+                        else -> a.compareTo(b, ignoreCase = true)
+                    }
+                }
             
             val targetCount = 50
             
@@ -49,7 +62,18 @@ object LevelRepository {
             }
 
             for (i in 1..targetCount) {
-                val imageFileName = images[(i - 1) % images.size]
+                // 图片分配策略：
+                // - 如果图片数量 >= 50，直接一一对应（每张图片用一次）
+                // - 如果图片数量 < 50，使用偏移算法循环使用，避免连续重复
+                val imageIndex = if (images.size >= targetCount) {
+                    // 正好50张或更多，直接对应（关卡1用图片1，关卡2用图片2...）
+                    (i - 1) % images.size
+                } else {
+                    // 少于50张，使用偏移算法让分布更均匀
+                    val offset = (i * 7) % images.size  // 使用质数7作为步长，确保更好的分布
+                    offset
+                }
+                val imageFileName = images[imageIndex]
                 val imagePath = "gallery_levels/$imageFileName"
                 
                 // Difficulty Curve
@@ -67,7 +91,7 @@ object LevelRepository {
                 }
 
                 levels.add(
-                    LevelConfig(
+        LevelConfig(
                         levelId = "g_$i",
                         title = "Level $i",
                         difficulty = diff,
@@ -81,6 +105,17 @@ object LevelRepository {
             e.printStackTrace()
         }
         return levels
+    }
+    
+    /**
+     * 从文件名中提取数字，用于自然排序
+     * 支持格式：1 (1).jpg, 1 (2).jpg, image_1.jpg, 001.png 等
+     */
+    private fun extractNumber(filename: String): Int? {
+        // 尝试提取文件名中的第一个数字序列
+        val regex = Regex("""(\d+)""")
+        val match = regex.find(filename)
+        return match?.value?.toIntOrNull()
     }
 
     // --- Mode 3: Custom (10 Slots, User Uris) ---
@@ -105,7 +140,7 @@ object LevelRepository {
             // If we have a URI for this slot, use it.
             if (i < uris.size) {
                 levels.add(
-                    LevelConfig(
+        LevelConfig(
                         levelId = "cust_$levelNum",
                         title = "Custom $levelNum",
                         difficulty = diff,

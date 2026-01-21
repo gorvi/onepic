@@ -14,6 +14,8 @@ object LevelProgressManager {
     private const val KEY_BEST_TIME_CLASSIC = "best_time_classic_"
     private const val KEY_BEST_TIME_GALLERY = "best_time_gallery_"
     private const val KEY_TOTAL_MERGE_SCORE = "total_merge_score"  // 总合并得分
+    private const val KEY_TOTAL_STARS = "total_stars"  // 总星星数（累计所有关卡的星星）
+    private const val KEY_LAST_PLAYED_LEVEL = "last_played_level"  // 最后玩的关卡索引
 
     private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -142,8 +144,32 @@ object LevelProgressManager {
         getPrefs(context).edit().putInt(KEY_TOTAL_MERGE_SCORE, 0).apply()
     }
     
-    // 计算总分（所有关卡的星星数之和）- 已废弃，改用总合并得分
-    @Deprecated("Use getTotalMergeScore instead")
+    // 保存和获取总星星数（累计所有关卡的最佳星星数）
+    fun saveTotalStars(context: Context, starsDelta: Int) {
+        val prefs = getPrefs(context)
+        val currentTotal = prefs.getInt(KEY_TOTAL_STARS, 0)
+        val newTotal = maxOf(0, currentTotal + starsDelta)  // 确保不为负
+        prefs.edit().putInt(KEY_TOTAL_STARS, newTotal).apply()
+    }
+    
+    fun getTotalStars(context: Context): Int {
+        // 实时计算所有已完成关卡的最佳星星数总和，确保准确性
+        var total = 0
+        // Classic关卡
+        val classicCompleted = getCompletedClassicLevels(context)
+        classicCompleted.forEach { index ->
+            total += getClassicLevelStars(context, index)
+        }
+        // Gallery关卡
+        val galleryCompleted = getCompletedGalleryLevels(context)
+        galleryCompleted.forEach { index ->
+            total += getGalleryLevelStars(context, index)
+        }
+        return total
+    }
+    
+    // 计算总分（所有关卡的星星数之和）- 已废弃，改用getTotalStars
+    @Deprecated("Use getTotalStars instead")
     fun getTotalScore(context: Context): Int {
         var total = 0
         // Classic关卡
@@ -157,6 +183,17 @@ object LevelProgressManager {
             total += getGalleryLevelStars(context, index)
         }
         return total
+    }
+
+    // 保存和获取最后玩的关卡索引
+    fun saveLastPlayedLevel(context: Context, levelIndex: Int) {
+        val prefs = getPrefs(context)
+        prefs.edit().putInt(KEY_LAST_PLAYED_LEVEL, levelIndex).apply()
+    }
+    
+    fun getLastPlayedLevel(context: Context): Int {
+        val prefs = getPrefs(context)
+        return prefs.getInt(KEY_LAST_PLAYED_LEVEL, 0)  // 默认返回0（第一关）
     }
 
     // 重置进度（用于测试）

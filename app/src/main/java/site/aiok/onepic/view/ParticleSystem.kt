@@ -37,7 +37,7 @@ class ParticleSystem {
         set(value) {
             field = value
             if (value) {
-                fireworksBurstsLeft = 5 // Limit to 5 bursts
+                fireworksBurstsLeft = 2 // Limit to 2 bursts
                 fireworksTimer = 20 // Start immediately
             }
         }
