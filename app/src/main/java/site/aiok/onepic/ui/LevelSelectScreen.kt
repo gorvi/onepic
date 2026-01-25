@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import site.aiok.onepic.data.LevelRepository
 import site.aiok.onepic.model.LevelConfig
 import site.aiok.onepic.ui.components.MeshGradientBackground
+import site.aiok.onepic.R
+import androidx.compose.ui.res.stringResource
 
 // 全局共享动画状态 - 避免每个组件创建独立动画
 data class SharedAnimationState(
@@ -557,7 +559,7 @@ fun LevelSelectScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.LocationOn,
-                        contentDescription = "定位到当前关卡",
+                        contentDescription = stringResource(R.string.cd_scroll_to_current),
                         modifier = Modifier.size(28.dp)
                     )
                 }

@@ -11,15 +11,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import site.aiok.onepic.R
 
 sealed class BottomNavItem(
     val route: String,
-    val title: String,
+    val titleResId: Int,
     val icon: ImageVector
 ) {
-    object Home : BottomNavItem("home", "首页", Icons.Default.Home)
-    object CheckIn : BottomNavItem("checkin", "打卡", Icons.Default.CheckCircle)
-    object More : BottomNavItem("more", "个人中心", Icons.Default.Person)
+    object Home : BottomNavItem("home", R.string.nav_home, Icons.Default.Home)
+    object CheckIn : BottomNavItem("checkin", R.string.nav_checkin, Icons.Default.CheckCircle)
+    object More : BottomNavItem("more", R.string.nav_personal_center, Icons.Default.Person)
 }
 
 @Composable
@@ -37,8 +40,8 @@ fun BottomNavigationBar(
     NavigationBar(modifier = modifier) {
         items.forEach { item ->
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = item.title) },
-                label = { Text(item.title) },
+                icon = { Icon(item.icon, contentDescription = stringResource(item.titleResId)) },
+                label = { Text(stringResource(item.titleResId)) },
                 selected = currentRoute == item.route,
                 onClick = { onNavigate(item.route) }
             )

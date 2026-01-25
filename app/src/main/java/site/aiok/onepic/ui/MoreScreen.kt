@@ -2,6 +2,8 @@ package site.aiok.onepic.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +15,8 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.window.Dialog
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,10 +32,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import site.aiok.onepic.data.LevelProgressManager
 import site.aiok.onepic.ui.components.MeshGradientBackground
+import site.aiok.onepic.audio.SoundManager
+import site.aiok.onepic.utils.LocaleHelper
+import site.aiok.onepic.R
+import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,6 +69,10 @@ fun MoreScreen() {
     val prefs = context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE)
     val consecutiveDays = prefs.getInt("consecutive_days", 0)
     
+    // 设置对话框状态
+    var showSettingsDialog by remember { mutableStateOf(false) }
+    var showAboutDialog by remember { mutableStateOf(false) }
+    
     MeshGradientBackground {
         Column(
             modifier = Modifier
@@ -69,7 +83,7 @@ fun MoreScreen() {
             
             // 标题
             Text(
-                text = "个人中心",
+                text = stringResource(R.string.personal_center),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -114,7 +128,7 @@ fun MoreScreen() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Person,
-                            contentDescription = "头像",
+                            contentDescription = stringResource(R.string.cd_avatar),
                             modifier = Modifier.size(48.dp),
                             tint = Color.White
                         )
@@ -126,7 +140,7 @@ fun MoreScreen() {
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = "拼图大师",
+                            text = stringResource(R.string.puzzle_master),
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
@@ -154,7 +168,7 @@ fun MoreScreen() {
                     StatCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.CheckCircle,
-                        title = "完成",
+                        title = stringResource(R.string.completed),
                         value = "$totalCompleted",
                         unit = null,
                         gradientColors = listOf(Color(0xFF4CAF50), Color(0xFF66BB6A))
@@ -163,7 +177,7 @@ fun MoreScreen() {
                     StatCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.Star,
-                        title = "星星",
+                        title = stringResource(R.string.stars),
                         value = "$totalStars",
                         unit = null,
                         gradientColors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
@@ -178,7 +192,7 @@ fun MoreScreen() {
                     StatCard(
                         modifier = Modifier.weight(1f),
                         icon = null,
-                        title = "金币",
+                        title = stringResource(R.string.coins),
                         value = "$totalCoins",
                         unit = "🪙",
                         gradientColors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
@@ -187,9 +201,9 @@ fun MoreScreen() {
                     StatCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.CheckCircle,
-                        title = "打卡",
+                        title = stringResource(R.string.check_in),
                         value = "$consecutiveDays",
-                        unit = "天",
+                        unit = stringResource(R.string.days),
                         gradientColors = listOf(Color(0xFF2196F3), Color(0xFF42A5F5))
                     )
                 }
@@ -214,7 +228,7 @@ fun MoreScreen() {
                 ) {
                     StatItemWithIcon(
                         icon = Icons.Default.CheckCircle,
-                        title = "解锁", // 用CheckCircle表示已解锁，更直观
+                        title = stringResource(R.string.unlocked),
                         value = "$totalUnlocked",
                         iconColor = Color(0xFF2196F3)
                     )
@@ -225,7 +239,7 @@ fun MoreScreen() {
                     )
                     StatItemWithIcon(
                         icon = Icons.Default.CheckCircle,
-                        title = "完成率", // 用CheckCircle表示完成，更直观
+                        title = stringResource(R.string.completion_rate),
                         value = if (totalUnlocked > 0) {
                             "${(totalCompleted * 100 / totalUnlocked).coerceAtMost(100)}"
                         } else {
@@ -240,7 +254,7 @@ fun MoreScreen() {
                     )
                     StatItemWithIcon(
                         icon = Icons.Default.Star,
-                        title = "经典", // 使用完整中文，更直观
+                        title = stringResource(R.string.classic),
                         value = "$classicCompleted",
                         iconColor = Color(0xFFFFD700)
                     )
@@ -251,7 +265,7 @@ fun MoreScreen() {
                     )
                     StatItemWithIcon(
                         icon = Icons.Default.CheckCircle,
-                        title = "画廊", // 使用完整中文，更直观
+                        title = stringResource(R.string.gallery),
                         value = "$galleryCompleted",
                         iconColor = Color(0xFF66BB6A)
                     )
@@ -276,14 +290,14 @@ fun MoreScreen() {
                 ) {
                     MenuItem(
                         icon = Icons.Default.Settings,
-                        title = "设置",
-                        onClick = { /* TODO: 打开设置 */ }
+                        title = stringResource(R.string.settings),
+                        onClick = { showSettingsDialog = true }
                     )
                     Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp)
                     MenuItem(
                         icon = Icons.Default.Info,
-                        title = "关于",
-                        onClick = { /* TODO: 打开关于 */ }
+                        title = stringResource(R.string.about),
+                        onClick = { showAboutDialog = true }
                     )
                 }
             }
@@ -299,6 +313,20 @@ fun MoreScreen() {
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
+        }
+        
+        // 设置对话框
+        if (showSettingsDialog) {
+            SettingsDialog(
+                onDismiss = { showSettingsDialog = false }
+            )
+        }
+        
+        // 关于对话框
+        if (showAboutDialog) {
+            AboutDialog(
+                onDismiss = { showAboutDialog = false }
             )
         }
     }
@@ -513,5 +541,424 @@ fun MenuItem(
             modifier = Modifier.size(20.dp),
             tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
         )
+    }
+}
+
+// 设置对话框
+@Composable
+fun SettingsDialog(
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    val soundManager = remember { SoundManager.getInstance(context) }
+    var soundEnabled by remember { 
+        mutableStateOf(soundManager.isEnabled()) 
+    }
+    
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                // 标题
+                Text(
+                    text = stringResource(R.string.settings),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                
+                Divider()
+                
+                // 声音开关
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = if (soundEnabled) 
+                                MaterialTheme.colorScheme.primary 
+                            else 
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                        )
+                        Column {
+                            Text(
+                                text = stringResource(R.string.sound_effects),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = stringResource(R.string.sound_effects_desc),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                    }
+                    
+                    Switch(
+                        checked = soundEnabled,
+                        onCheckedChange = { enabled ->
+                            soundEnabled = enabled
+                            soundManager.setEnabled(enabled)
+                        }
+                    )
+                }
+                
+                Divider()
+                
+                // 语言设置
+                val languagePrefs = context.getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE)
+                var currentLanguage by remember { 
+                    mutableStateOf(LocaleHelper.getSavedLanguage(context))
+                }
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Column {
+                            Text(
+                                text = stringResource(R.string.language),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = if (currentLanguage == "zh") 
+                                    stringResource(R.string.language_chinese) 
+                                else 
+                                    stringResource(R.string.language_english),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                    }
+                    
+                    // 语言选择按钮
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        TextButton(
+                            onClick = {
+                                currentLanguage = "zh"
+                                LocaleHelper.saveLanguage(context, "zh")
+                                // 重新创建 Activity 以应用语言更改
+                                val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+                                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                                (context as? android.app.Activity)?.finish()
+                            },
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = if (currentLanguage == "zh") 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        ) {
+                            Text(stringResource(R.string.language_chinese), fontSize = 14.sp)
+                        }
+                        TextButton(
+                            onClick = {
+                                currentLanguage = "en"
+                                LocaleHelper.saveLanguage(context, "en")
+                                // 重新创建 Activity 以应用语言更改
+                                val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+                                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                                (context as? android.app.Activity)?.finish()
+                            },
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = if (currentLanguage == "en") 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        ) {
+                            Text(stringResource(R.string.language_english), fontSize = 14.sp)
+                        }
+                    }
+                }
+                
+                Divider()
+                
+                // 清除数据
+                var showClearDataConfirm by remember { mutableStateOf(false) }
+                
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { showClearDataConfirm = true },
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Column {
+                            Text(
+                                text = stringResource(R.string.clear_data),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                            Text(
+                                text = stringResource(R.string.clear_data_desc),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                    }
+                    
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+                }
+                
+                // 清除数据确认对话框
+                if (showClearDataConfirm) {
+                    AlertDialog(
+                        onDismissRequest = { showClearDataConfirm = false },
+                        title = { Text(stringResource(R.string.clear_data_confirm_title), color = MaterialTheme.colorScheme.error) },
+                        text = { 
+                            Text(
+                                stringResource(R.string.clear_data_confirm_message),
+                                textAlign = TextAlign.Start
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    // 清除所有数据
+                                    LevelProgressManager.resetProgress(context)
+                                    // 清除打卡数据
+                                    context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE)
+                                        .edit().clear().apply()
+                                    // 清除合并得分（如果单独存储）
+                                    context.getSharedPreferences("level_progress", android.content.Context.MODE_PRIVATE)
+                                        .edit().clear().apply()
+                                    
+                                    showClearDataConfirm = false
+                                    onDismiss() // 关闭设置对话框
+                                },
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.error
+                                )
+                            ) {
+                                Text(stringResource(R.string.clear_data_confirm))
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showClearDataConfirm = false }) {
+                                Text(stringResource(R.string.cancel))
+                            }
+                        }
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // 关闭按钮
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.close),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+// 关于对话框
+@Composable
+fun AboutDialog(
+    onDismiss: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // 标题
+                Text(
+                    text = stringResource(R.string.about_title),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                
+                Divider()
+                
+                // 应用信息
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    InfoRow(stringResource(R.string.version), "1.0.0")
+                    InfoRow(stringResource(R.string.build_number), "1")
+                    InfoRow(stringResource(R.string.developer), "OnePic Team")
+                    InfoRow(stringResource(R.string.release_date), "2026-01-22")
+                }
+                
+                Divider()
+                
+                // 应用描述
+                Text(
+                    text = stringResource(R.string.app_description_title),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = stringResource(R.string.app_description),
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    lineHeight = 20.sp
+                )
+                
+                Divider()
+                
+                // 更新日志
+                Text(
+                    text = stringResource(R.string.changelog_title),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    UpdateLogItem(
+                        stringResource(R.string.changelog_v1_0_0), 
+                        listOf(
+                            stringResource(R.string.changelog_item_1),
+                            stringResource(R.string.changelog_item_2),
+                            stringResource(R.string.changelog_item_3),
+                            stringResource(R.string.changelog_item_4),
+                            stringResource(R.string.changelog_item_5)
+                        )
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // 关闭按钮
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.close),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun InfoRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+        )
+        Text(
+            text = value,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
+fun UpdateLogItem(version: String, items: List<String>) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Text(
+            text = version,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+        items.forEach { item ->
+            Text(
+                text = item,
+                fontSize = 13.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
     }
 }

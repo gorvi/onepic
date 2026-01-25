@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">إغلاق</string>
+    <string name="cancel">إلغاء</string>
+    <string name="confirm">تأكيد</string>
+    <string name="settings">الإعدادات</string>
+    <string name="about">حول</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">التأثيرات الصوتية</string>
+    <string name="sound_effects_desc">تمكين/تعطيل التأثيرات الصوتية للعبة</string>
+    <string name="language">اللغة</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">مسح البيانات</string>
+    <string name="clear_data_desc">إعادة تعيين جميع تقدم اللعبة</string>
+    <string name="clear_data_confirm_title">مسح البيانات</string>
+    <string name="clear_data_confirm_message">هل أنت متأكد أنك تريد مسح جميع بيانات اللعبة؟\n\nسيتم حذف:\n• جميع تقدم المستويات\n• النجوم والعملات\n• سجلات تسجيل الدخول\n• أفضل الأوقات\n\nلا يمكن التراجع عن هذا الإجراء!</string>
+    <string name="clear_data_confirm">مسح</string>
+    
+    <!-- About -->
+    <string name="about_title">حول OnePic</string>
+    <string name="version">الإصدار</string>
+    <string name="build_number">رقم البناء</string>
+    <string name="developer">المطور</string>
+    <string name="release_date">تاريخ الإصدار</string>
+    <string name="app_description_title">وصف التطبيق</string>
+    <string name="app_description">OnePic هي لعبة ألغاز جميلة تقدم أوضاع لعب متعددة وتحديات مستوى غنية. أكمل ألغاز الصور الجميلة عن طريق السحب ودمج قطع الألغاز.</string>
+    <string name="changelog_title">سجل التغييرات</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">المركز الشخصي</string>
+    <string name="puzzle_master">سيد الألغاز</string>
+    <string name="completed">مكتمل</string>
+    <string name="stars">نجوم</string>
+    <string name="coins">عملات</string>
+    <string name="check_in">تسجيل الدخول</string>
+    <string name="days">أيام</string>
+    <string name="unlocked">مفتوح</string>
+    <string name="completion_rate">معدل الإكمال</string>
+    <string name="classic">كلاسيكي</string>
+    <string name="gallery">المعرض</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_checkin">تسجيل الدخول</string>
+    <string name="nav_personal_center">الملف الشخصي</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">تسجيل الدخول اليومي</string>
+    <string name="checked_in_today">تم تسجيل الدخول اليوم</string>
+    <string name="earned">حصلت</string>
+    <string name="click_to_check_in">اضغط لتسجيل الدخول</string>
+    <string name="daily_reward_desc">احصل على عملات يومياً</string>
+    <string name="check_in_now">سجل الدخول الآن</string>
+    <string name="consecutive_check_in">أيام متتالية</string>
+    <string name="today_reward">مكافأة اليوم</string>
+    <string name="check_in_reward_title">💡 مكافآت تسجيل الدخول</string>
+    <string name="check_in_reward_desc">احصل على 10-50 عملة يومياً\nكلما زادت الأيام المتتالية، زادت المكافآت!</string>
+    <string name="week_check_in_history">سجل تسجيل الدخول لـ 7 أيام</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">مثالي!</string>
+    <string name="great">رائع!</string>
+    <string name="keep_going">استمر!</string>
+    <string name="points">نقطة</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• الإصدار الأول</string>
+    <string name="changelog_item_2">• أوضاع الكلاسيكية والمعرض</string>
+    <string name="changelog_item_3">• ميزة تسجيل الدخول اليومي</string>
+    <string name="changelog_item_4">• التأثيرات الصوتية وردود الفعل اللمسية</string>
+    <string name="changelog_item_5">• دعم متعدد اللغات (الصينية/الإنجليزية)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">الصورة الرمزية</string>
+    <string name="cd_check_in">تسجيل الدخول</string>
+    <string name="cd_checked_in">تم تسجيل الدخول</string>
+    <string name="cd_restart">إعادة التشغيل</string>
+    <string name="cd_next">التالي</string>
+    <string name="cd_scroll_to_current">انتقل إلى المستوى الحالي</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">الأحد</string>
+    <string name="weekday_monday">الاثنين</string>
+    <string name="weekday_tuesday">الثلاثاء</string>
+    <string name="weekday_wednesday">الأربعاء</string>
+    <string name="weekday_thursday">الخميس</string>
+    <string name="weekday_friday">الجمعة</string>
+    <string name="weekday_saturday">السبت</string>
+</resources>

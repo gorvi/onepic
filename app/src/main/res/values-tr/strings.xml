@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Kapat</string>
+    <string name="cancel">İptal</string>
+    <string name="confirm">Onayla</string>
+    <string name="settings">Ayarlar</string>
+    <string name="about">Hakkında</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Ses efektleri</string>
+    <string name="sound_effects_desc">Oyun ses efektlerini aç/kapat</string>
+    <string name="language">Dil</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Verileri temizle</string>
+    <string name="clear_data_desc">Tüm oyun ilerlemesini sıfırla</string>
+    <string name="clear_data_confirm_title">Verileri temizle</string>
+    <string name="clear_data_confirm_message">Tüm oyun verilerini silmek istediğinizden emin misiniz?\n\nBu şunları silecek:\n• Tüm seviye ilerlemesi\n• Yıldızlar ve paralar\n• Giriş kayıtları\n• En iyi süreler\n\nBu işlem geri alınamaz!</string>
+    <string name="clear_data_confirm">Temizle</string>
+    
+    <!-- About -->
+    <string name="about_title">OnePic Hakkında</string>
+    <string name="version">Sürüm</string>
+    <string name="build_number">Yapı numarası</string>
+    <string name="developer">Geliştirici</string>
+    <string name="release_date">Yayın tarihi</string>
+    <string name="app_description_title">Uygulama açıklaması</string>
+    <string name="app_description">OnePic, birden fazla oyun modu ve zengin seviye zorlukları sunan güzel bir bulmaca oyunudur. Bulmaca parçalarını sürükleyip birleştirerek güzel resim bulmacalarını tamamlayın.</string>
+    <string name="changelog_title">Değişiklik günlüğü</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Kişisel merkez</string>
+    <string name="puzzle_master">Bulmaca ustası</string>
+    <string name="completed">Tamamlandı</string>
+    <string name="stars">Yıldızlar</string>
+    <string name="coins">Paralar</string>
+    <string name="check_in">Giriş</string>
+    <string name="days">Günler</string>
+    <string name="unlocked">Kilidi açıldı</string>
+    <string name="completion_rate">Tamamlanma oranı</string>
+    <string name="classic">Klasik</string>
+    <string name="gallery">Galeri</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Ana sayfa</string>
+    <string name="nav_checkin">Giriş</string>
+    <string name="nav_personal_center">Profil</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Günlük giriş</string>
+    <string name="checked_in_today">Bugün giriş yapıldı</string>
+    <string name="earned">Kazanıldı</string>
+    <string name="click_to_check_in">Giriş yapmak için dokunun</string>
+    <string name="daily_reward_desc">Günlük para kazanın</string>
+    <string name="check_in_now">Şimdi giriş yap</string>
+    <string name="consecutive_check_in">Ardışık günler</string>
+    <string name="today_reward">Bugünün ödülü</string>
+    <string name="check_in_reward_title">💡 Giriş ödülleri</string>
+    <string name="check_in_reward_desc">Günlük 10-50 para kazanın\nDaha fazla ardışık gün = daha fazla ödül!</string>
+    <string name="week_check_in_history">7 günlük giriş geçmişi</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Mükemmel!</string>
+    <string name="great">Harika!</string>
+    <string name="keep_going">Devam et!</string>
+    <string name="points">puan</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• İlk sürüm</string>
+    <string name="changelog_item_2">• Klasik ve Galeri modları</string>
+    <string name="changelog_item_3">• Günlük giriş özelliği</string>
+    <string name="changelog_item_4">• Ses efektleri ve dokunsal geri bildirim</string>
+    <string name="changelog_item_5">• Çok dilli destek (Çince/İngilizce)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Avatar</string>
+    <string name="cd_check_in">Giriş</string>
+    <string name="cd_checked_in">Giriş yapıldı</string>
+    <string name="cd_restart">Yeniden başlat</string>
+    <string name="cd_next">Sonraki</string>
+    <string name="cd_scroll_to_current">Mevcut seviyeye kaydır</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Paz</string>
+    <string name="weekday_monday">Pzt</string>
+    <string name="weekday_tuesday">Sal</string>
+    <string name="weekday_wednesday">Çar</string>
+    <string name="weekday_thursday">Per</string>
+    <string name="weekday_friday">Cum</string>
+    <string name="weekday_saturday">Cmt</string>
+</resources>

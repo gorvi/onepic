@@ -16,10 +16,16 @@ import site.aiok.onepic.model.LevelConfig
 import site.aiok.onepic.ui.theme.OnepicTheme
 import site.aiok.onepic.ui.components.BottomNavigationBar
 import site.aiok.onepic.ui.components.BottomNavItem
+import site.aiok.onepic.utils.LocaleHelper
+import android.content.res.Configuration
+import android.os.Build
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // 语言设置已在 attachBaseContext 中处理
         enableEdgeToEdge()
         setContent {
             OnepicTheme {
@@ -117,5 +123,32 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    
+    // 注意：updateLocale 方法已不再需要，语言切换通过 attachBaseContext 处理
+    
+    override fun attachBaseContext(newBase: android.content.Context) {
+        val savedLanguage = LocaleHelper.getSavedLanguage(newBase)
+        val locale = when (savedLanguage) {
+            "en" -> Locale.ENGLISH
+            "zh" -> Locale.CHINESE
+            else -> {
+                // 根据系统语言自动选择
+                val systemLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    newBase.resources.configuration.locales[0]
+                } else {
+                    @Suppress("DEPRECATION")
+                    newBase.resources.configuration.locale
+                }
+                when (systemLocale.language) {
+                    "en" -> Locale.ENGLISH
+                    "zh" -> Locale.CHINESE
+                    else -> Locale.CHINESE // 默认中文
+                }
+            }
+        }
+        val config = Configuration(newBase.resources.configuration)
+        config.setLocale(locale)
+        super.attachBaseContext(newBase.createConfigurationContext(config))
     }
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Stäng</string>
+    <string name="cancel">Avbryt</string>
+    <string name="confirm">Bekräfta</string>
+    <string name="settings">Inställningar</string>
+    <string name="about">Om</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Ljudeffekter</string>
+    <string name="sound_effects_desc">Aktivera/inaktivera spellydeffekter</string>
+    <string name="language">Språk</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Rensa data</string>
+    <string name="clear_data_desc">Återställ all spelutveckling</string>
+    <string name="clear_data_confirm_title">Rensa data</string>
+    <string name="clear_data_confirm_message">Är du säker på att du vill radera alla speldata?\n\nDetta kommer att radera:\n• All nivåutveckling\n• Stjärnor och mynt\n• Incheckningsregister\n• Bästa tider\n\nDenna åtgärd kan inte ångras!</string>
+    <string name="clear_data_confirm">Rensa</string>
+    
+    <!-- About -->
+    <string name="about_title">Om OnePic</string>
+    <string name="version">Version</string>
+    <string name="build_number">Buildnummer</string>
+    <string name="developer">Utvecklare</string>
+    <string name="release_date">Releasedatum</string>
+    <string name="app_description_title">Appbeskrivning</string>
+    <string name="app_description">OnePic är ett vackert pusselspel som erbjuder flera spellägen och rika nivåutmaningar. Slutför vackra bildpussel genom att dra och kombinera pusselbitar.</string>
+    <string name="changelog_title">Ändringslogg</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Personligt centrum</string>
+    <string name="puzzle_master">Pusselmästare</string>
+    <string name="completed">Slutförd</string>
+    <string name="stars">Stjärnor</string>
+    <string name="coins">Mynt</string>
+    <string name="check_in">Incheckning</string>
+    <string name="days">Dagar</string>
+    <string name="unlocked">Upplåst</string>
+    <string name="completion_rate">Slutförandegrad</string>
+    <string name="classic">Klassisk</string>
+    <string name="gallery">Galleri</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Hem</string>
+    <string name="nav_checkin">Incheckning</string>
+    <string name="nav_personal_center">Profil</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Daglig incheckning</string>
+    <string name="checked_in_today">Incheckad idag</string>
+    <string name="earned">Tjänat</string>
+    <string name="click_to_check_in">Tryck för att checka in</string>
+    <string name="daily_reward_desc">Tjäna mynt dagligen</string>
+    <string name="check_in_now">Checka in nu</string>
+    <string name="consecutive_check_in">Konsekutiva dagar</string>
+    <string name="today_reward">Dagens belöning</string>
+    <string name="check_in_reward_title">💡 Incheckningsbelöningar</string>
+    <string name="check_in_reward_desc">Tjäna 10-50 mynt dagligen\nFler konsekutiva dagar = fler belöningar!</string>
+    <string name="week_check_in_history">7-dagars incheckningshistorik</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Perfekt!</string>
+    <string name="great">Bravo!</string>
+    <string name="keep_going">Fortsätt!</string>
+    <string name="points">poäng</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Första utgåvan</string>
+    <string name="changelog_item_2">• Klassiska och gallerilägen</string>
+    <string name="changelog_item_3">• Daglig incheckningsfunktion</string>
+    <string name="changelog_item_4">• Ljudeffekter och haptisk feedback</string>
+    <string name="changelog_item_5">• Flerspråkigt stöd (Kinesiska/Engelska)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Avatar</string>
+    <string name="cd_check_in">Incheckning</string>
+    <string name="cd_checked_in">Incheckad</string>
+    <string name="cd_restart">Starta om</string>
+    <string name="cd_next">Nästa</string>
+    <string name="cd_scroll_to_current">Scrolla till nuvarande nivå</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Sön</string>
+    <string name="weekday_monday">Mån</string>
+    <string name="weekday_tuesday">Tis</string>
+    <string name="weekday_wednesday">Ons</string>
+    <string name="weekday_thursday">Tor</string>
+    <string name="weekday_friday">Fre</string>
+    <string name="weekday_saturday">Lör</string>
+</resources>

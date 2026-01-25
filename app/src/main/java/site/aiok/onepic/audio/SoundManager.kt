@@ -33,7 +33,15 @@ class SoundManager private constructor(private val context: Context) {
     
     private var soundPool: SoundPool? = null
     private val soundMap = mutableMapOf<SoundType, Int>() // 音效类型 -> SoundPool ID
-    private var isEnabled = true // 音效开关
+    private val prefs = context.getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE)
+    
+    private fun getSoundEnabledFromPrefs(): Boolean {
+        return prefs.getBoolean("sound_enabled", true) // 默认开启
+    }
+    
+    private fun setSoundEnabledToPrefs(enabled: Boolean) {
+        prefs.edit().putBoolean("sound_enabled", enabled).apply()
+    }
     
     init {
         initializeSoundPool()
@@ -94,7 +102,7 @@ class SoundManager private constructor(private val context: Context) {
      * @param volume 音量 (0.0f - 1.0f)，默认 0.7f
      */
     fun playSound(soundType: SoundType, volume: Float = 0.7f) {
-        if (!isEnabled) return
+        if (!getSoundEnabledFromPrefs()) return
         
         val soundId = soundMap[soundType] ?: 0
         if (soundId == 0) {
@@ -116,13 +124,13 @@ class SoundManager private constructor(private val context: Context) {
      * 设置音效开关
      */
     fun setEnabled(enabled: Boolean) {
-        isEnabled = enabled
+        setSoundEnabledToPrefs(enabled)
     }
     
     /**
      * 检查音效是否启用
      */
-    fun isEnabled(): Boolean = isEnabled
+    fun isEnabled(): Boolean = getSoundEnabledFromPrefs()
     
     /**
      * 释放资源

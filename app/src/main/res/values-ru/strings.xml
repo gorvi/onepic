@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Закрыть</string>
+    <string name="cancel">Отмена</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Звуковые эффекты</string>
+    <string name="sound_effects_desc">Включить/выключить звуковые эффекты игры</string>
+    <string name="language">Язык</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Очистить данные</string>
+    <string name="clear_data_desc">Сбросить весь прогресс игры</string>
+    <string name="clear_data_confirm_title">Очистить данные</string>
+    <string name="clear_data_confirm_message">Вы уверены, что хотите удалить все данные игры?\n\nЭто удалит:\n• Весь прогресс уровней\n• Звёзды и монеты\n• Записи о входе\n• Лучшие времена\n\nЭто действие нельзя отменить!</string>
+    <string name="clear_data_confirm">Очистить</string>
+    
+    <!-- About -->
+    <string name="about_title">О OnePic</string>
+    <string name="version">Версия</string>
+    <string name="build_number">Номер сборки</string>
+    <string name="developer">Разработчик</string>
+    <string name="release_date">Дата выпуска</string>
+    <string name="app_description_title">Описание приложения</string>
+    <string name="app_description">OnePic — красивая головоломка с несколькими режимами игры и богатыми уровнями. Собирайте красивые пазлы, перетаскивая и комбинируя части головоломки.</string>
+    <string name="changelog_title">Журнал изменений</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Личный центр</string>
+    <string name="puzzle_master">Мастер пазлов</string>
+    <string name="completed">Завершено</string>
+    <string name="stars">Звёзды</string>
+    <string name="coins">Монеты</string>
+    <string name="check_in">Вход</string>
+    <string name="days">Дни</string>
+    <string name="unlocked">Разблокировано</string>
+    <string name="completion_rate">Процент завершения</string>
+    <string name="classic">Классический</string>
+    <string name="gallery">Галерея</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Главная</string>
+    <string name="nav_checkin">Вход</string>
+    <string name="nav_personal_center">Профиль</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Ежедневный вход</string>
+    <string name="checked_in_today">Вошли сегодня</string>
+    <string name="earned">Заработано</string>
+    <string name="click_to_check_in">Нажмите для входа</string>
+    <string name="daily_reward_desc">Зарабатывайте монеты ежедневно</string>
+    <string name="check_in_now">Войти сейчас</string>
+    <string name="consecutive_check_in">Последовательные дни</string>
+    <string name="today_reward">Награда сегодня</string>
+    <string name="check_in_reward_title">💡 Награды за вход</string>
+    <string name="check_in_reward_desc">Зарабатывайте 10-50 монет ежедневно\nБольше последовательных дней = больше наград!</string>
+    <string name="week_check_in_history">История входа за 7 дней</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Идеально!</string>
+    <string name="great">Отлично!</string>
+    <string name="keep_going">Продолжайте!</string>
+    <string name="points">балл</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Первый выпуск</string>
+    <string name="changelog_item_2">• Режимы Классический и Галерея</string>
+    <string name="changelog_item_3">• Функция ежедневного входа</string>
+    <string name="changelog_item_4">• Звуковые эффекты и тактильная обратная связь</string>
+    <string name="changelog_item_5">• Многоязычная поддержка (Китайский/Английский)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Аватар</string>
+    <string name="cd_check_in">Вход</string>
+    <string name="cd_checked_in">Вошли</string>
+    <string name="cd_restart">Перезапустить</string>
+    <string name="cd_next">Далее</string>
+    <string name="cd_scroll_to_current">Прокрутить к текущему уровню</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Вс</string>
+    <string name="weekday_monday">Пн</string>
+    <string name="weekday_tuesday">Вт</string>
+    <string name="weekday_wednesday">Ср</string>
+    <string name="weekday_thursday">Чт</string>
+    <string name="weekday_friday">Пт</string>
+    <string name="weekday_saturday">Сб</string>
+</resources>

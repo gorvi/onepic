@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- 通用 -->
+    <string name="close">關閉</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">確定</string>
+    <string name="settings">設定</string>
+    <string name="about">關於</string>
+    
+    <!-- 設定 -->
+    <string name="sound_effects">音效</string>
+    <string name="sound_effects_desc">開啟/關閉遊戲音效</string>
+    <string name="language">語言</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">清除資料</string>
+    <string name="clear_data_desc">重置所有遊戲進度</string>
+    <string name="clear_data_confirm_title">清除資料</string>
+    <string name="clear_data_confirm_message">確定要清除所有遊戲資料嗎？\n\n這將刪除：\n• 所有關卡進度\n• 星星和金幣\n• 打卡記錄\n• 最佳時間\n\n此操作不可恢復！</string>
+    <string name="clear_data_confirm">確定清除</string>
+    
+    <!-- 關於 -->
+    <string name="about_title">關於 OnePic</string>
+    <string name="version">版本</string>
+    <string name="build_number">構建號</string>
+    <string name="developer">開發者</string>
+    <string name="release_date">發布日期</string>
+    <string name="app_description_title">應用簡介</string>
+    <string name="app_description">OnePic 是一款精美的拼圖遊戲，提供多種遊戲模式和豐富的關卡挑戰。通過拖動和組合拼圖塊，完成美麗的圖片拼圖。</string>
+    <string name="changelog_title">更新日誌</string>
+    
+    <!-- 個人中心 -->
+    <string name="personal_center">個人中心</string>
+    <string name="puzzle_master">拼圖大師</string>
+    <string name="completed">完成</string>
+    <string name="stars">星星</string>
+    <string name="coins">金幣</string>
+    <string name="check_in">打卡</string>
+    <string name="days">天</string>
+    <string name="unlocked">解鎖</string>
+    <string name="completion_rate">完成率</string>
+    <string name="classic">經典</string>
+    <string name="gallery">畫廊</string>
+    
+    <!-- 底部導航 -->
+    <string name="nav_home">首頁</string>
+    <string name="nav_checkin">打卡</string>
+    <string name="nav_personal_center">個人中心</string>
+    
+    <!-- 打卡頁面 -->
+    <string name="daily_check_in">每日打卡</string>
+    <string name="checked_in_today">今日已打卡</string>
+    <string name="earned">獲得</string>
+    <string name="click_to_check_in">點擊打卡</string>
+    <string name="daily_reward_desc">每日可獲得金幣獎勵</string>
+    <string name="check_in_now">立即打卡</string>
+    <string name="consecutive_check_in">連續打卡</string>
+    <string name="today_reward">今日獎勵</string>
+    <string name="check_in_reward_title">💡 打卡獎勵</string>
+    <string name="check_in_reward_desc">每日打卡可獲得 10-50 金幣\n連續打卡天數越多，獎勵越豐厚！</string>
+    <string name="week_check_in_history">近7天打卡記錄</string>
+    
+    <!-- 遊戲完成對話框 -->
+    <string name="perfect">完美！</string>
+    <string name="great">很棒！</string>
+    <string name="keep_going">加油！</string>
+    <string name="points">分</string>
+    
+    <!-- 更新日誌項 -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• 初始版本發布</string>
+    <string name="changelog_item_2">• 支援經典模式和畫廊模式</string>
+    <string name="changelog_item_3">• 每日打卡功能</string>
+    <string name="changelog_item_4">• 音效和震動反饋</string>
+    <string name="changelog_item_5">• 多語言支援（中文/英文）</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">頭像</string>
+    <string name="cd_check_in">打卡</string>
+    <string name="cd_checked_in">已打卡</string>
+    <string name="cd_restart">再來一次</string>
+    <string name="cd_next">下一步</string>
+    <string name="cd_scroll_to_current">定位到當前關卡</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">日</string>
+    <string name="weekday_monday">一</string>
+    <string name="weekday_tuesday">二</string>
+    <string name="weekday_wednesday">三</string>
+    <string name="weekday_thursday">四</string>
+    <string name="weekday_friday">五</string>
+    <string name="weekday_saturday">六</string>
+</resources>

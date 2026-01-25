@@ -58,6 +58,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     private var startTime: Long = 0
     private var elapsedSeconds: Int = 0
     private var isTimerRunning = false
+    
+    // Track if level is already completed to prevent duplicate win triggers
+    private var isLevelCompleted = false
 
     // Handler for delayed callbacks
     private val handler = Handler(Looper.getMainLooper())
@@ -146,6 +149,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     fun setPieces(newPieces: List<PuzzlePiece>) {
         pieces.clear()
         scoredGroups.clear()  // Reset score tracking for new game
+        isLevelCompleted = false  // Reset completion flag for new game
         
         // Infer grid dimensions first to enable shuffling
         if (newPieces.isNotEmpty()) {
@@ -783,10 +787,16 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     private fun checkForWin() {
         if (pieces.isEmpty()) return
         
+        // 如果关卡已经完成，不再重复触发胜利逻辑
+        if (isLevelCompleted) return
+        
         val firstGroupId = pieces[0].groupId
         val allSameGroup = pieces.all { it.groupId == firstGroupId }
         
         if (allSameGroup && !particleSystem.isFireworksMode) {
+            // 标记关卡已完成，防止重复触发
+            isLevelCompleted = true
+            
             particleSystem.isFireworksMode = true
             isTimerRunning = false
             elapsedSeconds = getElapsedSeconds() // Capture final time

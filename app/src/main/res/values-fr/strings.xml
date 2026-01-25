@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Fermer</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirm">Confirmer</string>
+    <string name="settings">Paramètres</string>
+    <string name="about">À propos</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Effets sonores</string>
+    <string name="sound_effects_desc">Activer/désactiver les effets sonores du jeu</string>
+    <string name="language">Langue</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Effacer les données</string>
+    <string name="clear_data_desc">Réinitialiser toute la progression du jeu</string>
+    <string name="clear_data_confirm_title">Effacer les données</string>
+    <string name="clear_data_confirm_message">Êtes-vous sûr de vouloir effacer toutes les données du jeu ?\n\nCela supprimera :\n• Toute la progression des niveaux\n• Les étoiles et les pièces\n• Les enregistrements de connexion\n• Les meilleurs temps\n\nCette action ne peut pas être annulée !</string>
+    <string name="clear_data_confirm">Effacer</string>
+    
+    <!-- About -->
+    <string name="about_title">À propos de OnePic</string>
+    <string name="version">Version</string>
+    <string name="build_number">Numéro de build</string>
+    <string name="developer">Développeur</string>
+    <string name="release_date">Date de sortie</string>
+    <string name="app_description_title">Description de l\'application</string>
+    <string name="app_description">OnePic est un magnifique jeu de puzzle offrant plusieurs modes de jeu et des défis de niveau riches. Complétez de beaux puzzles d\'images en faisant glisser et en combinant des pièces de puzzle.</string>
+    <string name="changelog_title">Journal des modifications</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Centre personnel</string>
+    <string name="puzzle_master">Maître du puzzle</string>
+    <string name="completed">Terminé</string>
+    <string name="stars">Étoiles</string>
+    <string name="coins">Pièces</string>
+    <string name="check_in">Enregistrement</string>
+    <string name="days">Jours</string>
+    <string name="unlocked">Débloqué</string>
+    <string name="completion_rate">Taux d\'achèvement</string>
+    <string name="classic">Classique</string>
+    <string name="gallery">Galerie</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Accueil</string>
+    <string name="nav_checkin">Enregistrement</string>
+    <string name="nav_personal_center">Profil</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Enregistrement quotidien</string>
+    <string name="checked_in_today">Enregistré aujourd\'hui</string>
+    <string name="earned">Gagné</string>
+    <string name="click_to_check_in">Appuyez pour vous enregistrer</string>
+    <string name="daily_reward_desc">Gagnez des pièces quotidiennement</string>
+    <string name="check_in_now">S\'enregistrer maintenant</string>
+    <string name="consecutive_check_in">Jours consécutifs</string>
+    <string name="today_reward">Récompense d\'aujourd\'hui</string>
+    <string name="check_in_reward_title">💡 Récompenses d\'enregistrement</string>
+    <string name="check_in_reward_desc">Gagnez 10-50 pièces par jour\nPlus de jours consécutifs = plus de récompenses !</string>
+    <string name="week_check_in_history">Historique d\'enregistrement de 7 jours</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Parfait !</string>
+    <string name="great">Génial !</string>
+    <string name="keep_going">Continue !</string>
+    <string name="points">pts</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Version initiale</string>
+    <string name="changelog_item_2">• Modes Classique et Galerie</string>
+    <string name="changelog_item_3">• Fonction d\'enregistrement quotidien</string>
+    <string name="changelog_item_4">• Effets sonores et retour haptique</string>
+    <string name="changelog_item_5">• Support multilingue (Chinois/Anglais)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Avatar</string>
+    <string name="cd_check_in">Enregistrement</string>
+    <string name="cd_checked_in">Enregistré</string>
+    <string name="cd_restart">Redémarrer</string>
+    <string name="cd_next">Suivant</string>
+    <string name="cd_scroll_to_current">Faire défiler jusqu\'au niveau actuel</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Dim</string>
+    <string name="weekday_monday">Lun</string>
+    <string name="weekday_tuesday">Mar</string>
+    <string name="weekday_wednesday">Mer</string>
+    <string name="weekday_thursday">Jeu</string>
+    <string name="weekday_friday">Ven</string>
+    <string name="weekday_saturday">Sam</string>
+</resources>

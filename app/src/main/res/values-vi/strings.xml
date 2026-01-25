@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Đóng</string>
+    <string name="cancel">Hủy</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="settings">Cài đặt</string>
+    <string name="about">Giới thiệu</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Hiệu ứng âm thanh</string>
+    <string name="sound_effects_desc">Bật/tắt hiệu ứng âm thanh trò chơi</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Xóa dữ liệu</string>
+    <string name="clear_data_desc">Đặt lại toàn bộ tiến trình trò chơi</string>
+    <string name="clear_data_confirm_title">Xóa dữ liệu</string>
+    <string name="clear_data_confirm_message">Bạn có chắc chắn muốn xóa tất cả dữ liệu trò chơi?\n\nĐiều này sẽ xóa:\n• Toàn bộ tiến trình cấp độ\n• Sao và xu\n• Bản ghi check-in\n• Thời gian tốt nhất\n\nHành động này không thể hoàn tác!</string>
+    <string name="clear_data_confirm">Xóa</string>
+    
+    <!-- About -->
+    <string name="about_title">Giới thiệu về OnePic</string>
+    <string name="version">Phiên bản</string>
+    <string name="build_number">Số bản dựng</string>
+    <string name="developer">Nhà phát triển</string>
+    <string name="release_date">Ngày phát hành</string>
+    <string name="app_description_title">Mô tả ứng dụng</string>
+    <string name="app_description">OnePic là một trò chơi xếp hình đẹp mắt cung cấp nhiều chế độ chơi và thử thách cấp độ phong phú. Hoàn thành các câu đố hình ảnh đẹp bằng cách kéo và kết hợp các mảnh ghép.</string>
+    <string name="changelog_title">Nhật ký thay đổi</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Trung tâm cá nhân</string>
+    <string name="puzzle_master">Bậc thầy xếp hình</string>
+    <string name="completed">Hoàn thành</string>
+    <string name="stars">Sao</string>
+    <string name="coins">Xu</string>
+    <string name="check_in">Check-in</string>
+    <string name="days">Ngày</string>
+    <string name="unlocked">Đã mở khóa</string>
+    <string name="completion_rate">Tỷ lệ hoàn thành</string>
+    <string name="classic">Cổ điển</string>
+    <string name="gallery">Thư viện</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_checkin">Check-in</string>
+    <string name="nav_personal_center">Hồ sơ</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Check-in hàng ngày</string>
+    <string name="checked_in_today">Đã check-in hôm nay</string>
+    <string name="earned">Kiếm được</string>
+    <string name="click_to_check_in">Chạm để check-in</string>
+    <string name="daily_reward_desc">Kiếm xu hàng ngày</string>
+    <string name="check_in_now">Check-in ngay</string>
+    <string name="consecutive_check_in">Ngày liên tiếp</string>
+    <string name="today_reward">Phần thưởng hôm nay</string>
+    <string name="check_in_reward_title">💡 Phần thưởng check-in</string>
+    <string name="check_in_reward_desc">Kiếm 10-50 xu mỗi ngày\nNhiều ngày liên tiếp hơn = nhiều phần thưởng hơn!</string>
+    <string name="week_check_in_history">Lịch sử check-in 7 ngày</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Hoàn hảo!</string>
+    <string name="great">Tuyệt vời!</string>
+    <string name="keep_going">Tiếp tục!</string>
+    <string name="points">điểm</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Phiên bản đầu tiên</string>
+    <string name="changelog_item_2">• Chế độ Cổ điển và Thư viện</string>
+    <string name="changelog_item_3">• Tính năng check-in hàng ngày</string>
+    <string name="changelog_item_4">• Hiệu ứng âm thanh và phản hồi xúc giác</string>
+    <string name="changelog_item_5">• Hỗ trợ đa ngôn ngữ (Trung/Anh)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Ảnh đại diện</string>
+    <string name="cd_check_in">Check-in</string>
+    <string name="cd_checked_in">Đã check-in</string>
+    <string name="cd_restart">Khởi động lại</string>
+    <string name="cd_next">Tiếp theo</string>
+    <string name="cd_scroll_to_current">Cuộn đến cấp độ hiện tại</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">CN</string>
+    <string name="weekday_monday">T2</string>
+    <string name="weekday_tuesday">T3</string>
+    <string name="weekday_wednesday">T4</string>
+    <string name="weekday_thursday">T5</string>
+    <string name="weekday_friday">T6</string>
+    <string name="weekday_saturday">T7</string>
+</resources>

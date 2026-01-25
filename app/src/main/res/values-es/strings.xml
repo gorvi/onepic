@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Cerrar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="settings">Configuración</string>
+    <string name="about">Acerca de</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Efectos de sonido</string>
+    <string name="sound_effects_desc">Activar/desactivar efectos de sonido del juego</string>
+    <string name="language">Idioma</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Borrar datos</string>
+    <string name="clear_data_desc">Restablecer todo el progreso del juego</string>
+    <string name="clear_data_confirm_title">Borrar datos</string>
+    <string name="clear_data_confirm_message">¿Estás seguro de que quieres borrar todos los datos del juego?\n\nEsto eliminará:\n• Todo el progreso de niveles\n• Estrellas y monedas\n• Registros de check-in\n• Mejores tiempos\n\n¡Esta acción no se puede deshacer!</string>
+    <string name="clear_data_confirm">Borrar</string>
+    
+    <!-- About -->
+    <string name="about_title">Acerca de OnePic</string>
+    <string name="version">Versión</string>
+    <string name="build_number">Número de compilación</string>
+    <string name="developer">Desarrollador</string>
+    <string name="release_date">Fecha de lanzamiento</string>
+    <string name="app_description_title">Descripción de la aplicación</string>
+    <string name="app_description">OnePic es un hermoso juego de rompecabezas que ofrece múltiples modos de juego y desafíos de nivel ricos. Completa hermosos rompecabezas de imágenes arrastrando y combinando piezas del rompecabezas.</string>
+    <string name="changelog_title">Registro de cambios</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Centro personal</string>
+    <string name="puzzle_master">Maestro de rompecabezas</string>
+    <string name="completed">Completado</string>
+    <string name="stars">Estrellas</string>
+    <string name="coins">Monedas</string>
+    <string name="check_in">Registro</string>
+    <string name="days">Días</string>
+    <string name="unlocked">Desbloqueado</string>
+    <string name="completion_rate">Tasa de finalización</string>
+    <string name="classic">Clásico</string>
+    <string name="gallery">Galería</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_checkin">Registro</string>
+    <string name="nav_personal_center">Perfil</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Registro diario</string>
+    <string name="checked_in_today">Registrado hoy</string>
+    <string name="earned">Ganado</string>
+    <string name="click_to_check_in">Toca para registrar</string>
+    <string name="daily_reward_desc">Gana monedas diariamente</string>
+    <string name="check_in_now">Registrarse ahora</string>
+    <string name="consecutive_check_in">Días consecutivos</string>
+    <string name="today_reward">Recompensa de hoy</string>
+    <string name="check_in_reward_title">💡 Recompensas de registro</string>
+    <string name="check_in_reward_desc">Gana 10-50 monedas diarias\n¡Más días consecutivos = más recompensas!</string>
+    <string name="week_check_in_history">Historial de registro de 7 días</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">¡Perfecto!</string>
+    <string name="great">¡Genial!</string>
+    <string name="keep_going">¡Sigue así!</string>
+    <string name="points">pts</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Lanzamiento inicial</string>
+    <string name="changelog_item_2">• Modos Clásico y Galería</string>
+    <string name="changelog_item_3">• Función de registro diario</string>
+    <string name="changelog_item_4">• Efectos de sonido y retroalimentación háptica</string>
+    <string name="changelog_item_5">• Soporte multiidioma (Chino/Inglés)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Avatar</string>
+    <string name="cd_check_in">Registro</string>
+    <string name="cd_checked_in">Registrado</string>
+    <string name="cd_restart">Reiniciar</string>
+    <string name="cd_next">Siguiente</string>
+    <string name="cd_scroll_to_current">Desplazarse al nivel actual</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Dom</string>
+    <string name="weekday_monday">Lun</string>
+    <string name="weekday_tuesday">Mar</string>
+    <string name="weekday_wednesday">Mié</string>
+    <string name="weekday_thursday">Jue</string>
+    <string name="weekday_friday">Vie</string>
+    <string name="weekday_saturday">Sáb</string>
+</resources>

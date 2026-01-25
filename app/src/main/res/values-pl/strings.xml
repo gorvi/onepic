@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Zamknij</string>
+    <string name="cancel">Anuluj</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Efekty dźwiękowe</string>
+    <string name="sound_effects_desc">Włącz/wyłącz efekty dźwiękowe gry</string>
+    <string name="language">Język</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Wyczyść dane</string>
+    <string name="clear_data_desc">Resetuj cały postęp gry</string>
+    <string name="clear_data_confirm_title">Wyczyść dane</string>
+    <string name="clear_data_confirm_message">Czy na pewno chcesz usunąć wszystkie dane gry?\n\nTo usunie:\n• Cały postęp poziomów\n• Gwiazdki i monety\n• Rekordy logowania\n• Najlepsze czasy\n\nTej akcji nie można cofnąć!</string>
+    <string name="clear_data_confirm">Wyczyść</string>
+    
+    <!-- About -->
+    <string name="about_title">O aplikacji OnePic</string>
+    <string name="version">Wersja</string>
+    <string name="build_number">Numer kompilacji</string>
+    <string name="developer">Deweloper</string>
+    <string name="release_date">Data wydania</string>
+    <string name="app_description_title">Opis aplikacji</string>
+    <string name="app_description">OnePic to piękna gra puzzle oferująca wiele trybów gry i bogate wyzwania poziomów. Uzupełniaj piękne układanki obrazów, przeciągając i łącząc elementy układanki.</string>
+    <string name="changelog_title">Dziennik zmian</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Centrum osobiste</string>
+    <string name="puzzle_master">Mistrz układanek</string>
+    <string name="completed">Ukończone</string>
+    <string name="stars">Gwiazdki</string>
+    <string name="coins">Monety</string>
+    <string name="check_in">Logowanie</string>
+    <string name="days">Dni</string>
+    <string name="unlocked">Odblokowane</string>
+    <string name="completion_rate">Wskaźnik ukończenia</string>
+    <string name="classic">Klasyczny</string>
+    <string name="gallery">Galeria</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Strona główna</string>
+    <string name="nav_checkin">Logowanie</string>
+    <string name="nav_personal_center">Profil</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Codzienne logowanie</string>
+    <string name="checked_in_today">Zalogowano dziś</string>
+    <string name="earned">Zarobione</string>
+    <string name="click_to_check_in">Dotknij, aby się zalogować</string>
+    <string name="daily_reward_desc">Zarabiaj monety codziennie</string>
+    <string name="check_in_now">Zaloguj się teraz</string>
+    <string name="consecutive_check_in">Kolejne dni</string>
+    <string name="today_reward">Nagroda dzisiejsza</string>
+    <string name="check_in_reward_title">💡 Nagrody za logowanie</string>
+    <string name="check_in_reward_desc">Zarabiaj 10-50 monet dziennie\nWięcej kolejnych dni = więcej nagród!</string>
+    <string name="week_check_in_history">Historia logowania 7 dni</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Idealnie!</string>
+    <string name="great">Świetnie!</string>
+    <string name="keep_going">Tak trzymaj!</string>
+    <string name="points">pkt</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Pierwsza wersja</string>
+    <string name="changelog_item_2">• Tryby Klasyczny i Galeria</string>
+    <string name="changelog_item_3">• Funkcja codziennego logowania</string>
+    <string name="changelog_item_4">• Efekty dźwiękowe i feedback dotykowy</string>
+    <string name="changelog_item_5">• Obsługa wielu języków (Chiński/Angielski)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Awatar</string>
+    <string name="cd_check_in">Logowanie</string>
+    <string name="cd_checked_in">Zalogowano</string>
+    <string name="cd_restart">Uruchom ponownie</string>
+    <string name="cd_next">Dalej</string>
+    <string name="cd_scroll_to_current">Przewiń do bieżącego poziomu</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Nie</string>
+    <string name="weekday_monday">Pon</string>
+    <string name="weekday_tuesday">Wt</string>
+    <string name="weekday_wednesday">Śr</string>
+    <string name="weekday_thursday">Czw</string>
+    <string name="weekday_friday">Pt</string>
+    <string name="weekday_saturday">Sob</string>
+</resources>

@@ -15,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import site.aiok.onepic.ui.components.MeshGradientBackground
+import site.aiok.onepic.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun FragmentCollectionScreen() {
@@ -29,7 +31,7 @@ fun FragmentCollectionScreen() {
             
             // 标题
             Text(
-                text = "碎片收集",
+                text = stringResource(R.string.gallery), // 使用画廊的字符串资源
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface

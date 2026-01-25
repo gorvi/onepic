@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">बंद करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="about">के बारे में</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">ध्वनि प्रभाव</string>
+    <string name="sound_effects_desc">गेम ध्वनि प्रभाव चालू/बंद करें</string>
+    <string name="language">भाषा</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">डेटा साफ करें</string>
+    <string name="clear_data_desc">सभी गेम प्रगति रीसेट करें</string>
+    <string name="clear_data_confirm_title">डेटा साफ करें</string>
+    <string name="clear_data_confirm_message">क्या आप वाकई सभी गेम डेटा हटाना चाहते हैं?\n\nयह हटाएगा:\n• सभी स्तर प्रगति\n• सितारे और सिक्के\n• चेक-इन रिकॉर्ड\n• सर्वश्रेष्ठ समय\n\nयह कार्रवाई पूर्ववत नहीं की जा सकती!</string>
+    <string name="clear_data_confirm">साफ करें</string>
+    
+    <!-- About -->
+    <string name="about_title">OnePic के बारे में</string>
+    <string name="version">संस्करण</string>
+    <string name="build_number">बिल्ड नंबर</string>
+    <string name="developer">डेवलपर</string>
+    <string name="release_date">रिलीज़ तिथि</string>
+    <string name="app_description_title">ऐप विवरण</string>
+    <string name="app_description">OnePic एक सुंदर पहेली गेम है जो कई गेम मोड और समृद्ध स्तर चुनौतियां प्रदान करता है। पहेली टुकड़ों को खींचकर और संयोजित करके सुंदर चित्र पहेलियों को पूरा करें।</string>
+    <string name="changelog_title">परिवर्तन लॉग</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">व्यक्तिगत केंद्र</string>
+    <string name="puzzle_master">पहेली मास्टर</string>
+    <string name="completed">पूर्ण</string>
+    <string name="stars">सितारे</string>
+    <string name="coins">सिक्के</string>
+    <string name="check_in">चेक-इन</string>
+    <string name="days">दिन</string>
+    <string name="unlocked">अनलॉक</string>
+    <string name="completion_rate">पूर्णता दर</string>
+    <string name="classic">क्लासिक</string>
+    <string name="gallery">गैलरी</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">होम</string>
+    <string name="nav_checkin">चेक-इन</string>
+    <string name="nav_personal_center">प्रोफ़ाइल</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">दैनिक चेक-इन</string>
+    <string name="checked_in_today">आज चेक-इन किया गया</string>
+    <string name="earned">अर्जित</string>
+    <string name="click_to_check_in">चेक-इन करने के लिए टैप करें</string>
+    <string name="daily_reward_desc">दैनिक सिक्के अर्जित करें</string>
+    <string name="check_in_now">अभी चेक-इन करें</string>
+    <string name="consecutive_check_in">लगातार दिन</string>
+    <string name="today_reward">आज का इनाम</string>
+    <string name="check_in_reward_title">💡 चेक-इन इनाम</string>
+    <string name="check_in_reward_desc">दैनिक 10-50 सिक्के अर्जित करें\nअधिक लगातार दिन = अधिक इनाम!</string>
+    <string name="week_check_in_history">7-दिवसीय चेक-इन इतिहास</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">बिल्कुल सही!</string>
+    <string name="great">शानदार!</string>
+    <string name="keep_going">जारी रखें!</string>
+    <string name="points">अंक</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• प्रारंभिक रिलीज़</string>
+    <string name="changelog_item_2">• क्लासिक और गैलरी मोड</string>
+    <string name="changelog_item_3">• दैनिक चेक-इन सुविधा</string>
+    <string name="changelog_item_4">• ध्वनि प्रभाव और स्पर्श प्रतिक्रिया</string>
+    <string name="changelog_item_5">• बहुभाषी समर्थन (चीनी/अंग्रेजी)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">अवतार</string>
+    <string name="cd_check_in">चेक-इन</string>
+    <string name="cd_checked_in">चेक-इन किया गया</string>
+    <string name="cd_restart">पुनः आरंभ करें</string>
+    <string name="cd_next">अगला</string>
+    <string name="cd_scroll_to_current">वर्तमान स्तर पर स्क्रॉल करें</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">रवि</string>
+    <string name="weekday_monday">सोम</string>
+    <string name="weekday_tuesday">मंगल</string>
+    <string name="weekday_wednesday">बुध</string>
+    <string name="weekday_thursday">गुरु</string>
+    <string name="weekday_friday">शुक्र</string>
+    <string name="weekday_saturday">शनि</string>
+</resources>

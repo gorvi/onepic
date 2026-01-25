@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">Sluiten</string>
+    <string name="cancel">Annuleren</string>
+    <string name="confirm">Bevestigen</string>
+    <string name="settings">Instellingen</string>
+    <string name="about">Over</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">Geluidseffecten</string>
+    <string name="sound_effects_desc">Spelgeluidseffecten aan/uit</string>
+    <string name="language">Taal</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">Gegevens wissen</string>
+    <string name="clear_data_desc">Alle spelvoortgang resetten</string>
+    <string name="clear_data_confirm_title">Gegevens wissen</string>
+    <string name="clear_data_confirm_message">Weet je zeker dat je alle spelgegevens wilt wissen?\n\nDit wordt verwijderd:\n• Alle levelvoortgang\n• Sterren en munten\n• Check-in records\n• Beste tijden\n\nDeze actie kan niet ongedaan worden gemaakt!</string>
+    <string name="clear_data_confirm">Wissen</string>
+    
+    <!-- About -->
+    <string name="about_title">Over OnePic</string>
+    <string name="version">Versie</string>
+    <string name="build_number">Buildnummer</string>
+    <string name="developer">Ontwikkelaar</string>
+    <string name="release_date">Releasedatum</string>
+    <string name="app_description_title">App-beschrijving</string>
+    <string name="app_description">OnePic is een prachtig puzzelspel met meerdere spelmodi en rijke leveluitdagingen. Voltooi mooie beeldpuzzels door puzzelstukken te slepen en te combineren.</string>
+    <string name="changelog_title">Wijzigingslogboek</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">Persoonlijk centrum</string>
+    <string name="puzzle_master">Puzzelmeester</string>
+    <string name="completed">Voltooid</string>
+    <string name="stars">Sterren</string>
+    <string name="coins">Munten</string>
+    <string name="check_in">Inchecken</string>
+    <string name="days">Dagen</string>
+    <string name="unlocked">Ontgrendeld</string>
+    <string name="completion_rate">Voltooiingspercentage</string>
+    <string name="classic">Klassiek</string>
+    <string name="gallery">Galerij</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Start</string>
+    <string name="nav_checkin">Inchecken</string>
+    <string name="nav_personal_center">Profiel</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">Dagelijks inchecken</string>
+    <string name="checked_in_today">Vandaag ingecheckt</string>
+    <string name="earned">Verdiend</string>
+    <string name="click_to_check_in">Tik om in te checken</string>
+    <string name="daily_reward_desc">Verdien dagelijks munten</string>
+    <string name="check_in_now">Nu inchecken</string>
+    <string name="consecutive_check_in">Aaneengesloten dagen</string>
+    <string name="today_reward">Beloning van vandaag</string>
+    <string name="check_in_reward_title">💡 Incheckbeloningen</string>
+    <string name="check_in_reward_desc">Verdien dagelijks 10-50 munten\nMeer aaneengesloten dagen = meer beloningen!</string>
+    <string name="week_check_in_history">7-daagse incheckgeschiedenis</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">Perfect!</string>
+    <string name="great">Geweldig!</string>
+    <string name="keep_going">Ga door!</string>
+    <string name="points">punten</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• Eerste release</string>
+    <string name="changelog_item_2">• Klassieke en galerijmodi</string>
+    <string name="changelog_item_3">• Dagelijkse incheckfunctie</string>
+    <string name="changelog_item_4">• Geluidseffecten en haptische feedback</string>
+    <string name="changelog_item_5">• Meertalige ondersteuning (Chinees/Engels)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">Avatar</string>
+    <string name="cd_check_in">Inchecken</string>
+    <string name="cd_checked_in">Ing checked</string>
+    <string name="cd_restart">Opnieuw starten</string>
+    <string name="cd_next">Volgende</string>
+    <string name="cd_scroll_to_current">Scroll naar huidig level</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">Zo</string>
+    <string name="weekday_monday">Ma</string>
+    <string name="weekday_tuesday">Di</string>
+    <string name="weekday_wednesday">Wo</string>
+    <string name="weekday_thursday">Do</string>
+    <string name="weekday_friday">Vr</string>
+    <string name="weekday_saturday">Za</string>
+</resources>

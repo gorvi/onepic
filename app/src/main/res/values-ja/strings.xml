@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">閉じる</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirm">確認</string>
+    <string name="settings">設定</string>
+    <string name="about">について</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">サウンド効果</string>
+    <string name="sound_effects_desc">ゲームのサウンド効果をオン/オフ</string>
+    <string name="language">言語</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">データをクリア</string>
+    <string name="clear_data_desc">すべてのゲーム進行をリセット</string>
+    <string name="clear_data_confirm_title">データをクリア</string>
+    <string name="clear_data_confirm_message">すべてのゲームデータを削除してもよろしいですか？\n\nこれにより以下が削除されます：\n• すべてのレベル進行\n• 星とコイン\n• チェックインレコード\n• ベストタイム\n\nこの操作は元に戻せません！</string>
+    <string name="clear_data_confirm">クリア</string>
+    
+    <!-- About -->
+    <string name="about_title">OnePicについて</string>
+    <string name="version">バージョン</string>
+    <string name="build_number">ビルド番号</string>
+    <string name="developer">開発者</string>
+    <string name="release_date">リリース日</string>
+    <string name="app_description_title">アプリの説明</string>
+    <string name="app_description">OnePicは、複数のゲームモードと豊富なレベルチャレンジを提供する美しいパズルゲームです。パズルピースをドラッグして組み合わせることで、美しい画像パズルを完成させます。</string>
+    <string name="changelog_title">変更履歴</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">個人センター</string>
+    <string name="puzzle_master">パズルマスター</string>
+    <string name="completed">完了</string>
+    <string name="stars">星</string>
+    <string name="coins">コイン</string>
+    <string name="check_in">チェックイン</string>
+    <string name="days">日</string>
+    <string name="unlocked">アンロック</string>
+    <string name="completion_rate">完了率</string>
+    <string name="classic">クラシック</string>
+    <string name="gallery">ギャラリー</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">ホーム</string>
+    <string name="nav_checkin">チェックイン</string>
+    <string name="nav_personal_center">プロフィール</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">毎日チェックイン</string>
+    <string name="checked_in_today">今日チェックイン済み</string>
+    <string name="earned">獲得</string>
+    <string name="click_to_check_in">タップしてチェックイン</string>
+    <string name="daily_reward_desc">毎日コインを獲得</string>
+    <string name="check_in_now">今すぐチェックイン</string>
+    <string name="consecutive_check_in">連続日数</string>
+    <string name="today_reward">今日の報酬</string>
+    <string name="check_in_reward_title">💡 チェックイン報酬</string>
+    <string name="check_in_reward_desc">毎日10-50コイン獲得\n連続日数が多いほど報酬も増えます！</string>
+    <string name="week_check_in_history">7日間のチェックイン履歴</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">完璧！</string>
+    <string name="great">素晴らしい！</string>
+    <string name="keep_going">頑張って！</string>
+    <string name="points">点</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• 初回リリース</string>
+    <string name="changelog_item_2">• クラシックモードとギャラリーモード</string>
+    <string name="changelog_item_3">• 毎日チェックイン機能</string>
+    <string name="changelog_item_4">• サウンド効果と触覚フィードバック</string>
+    <string name="changelog_item_5">• 多言語サポート（中国語/英語）</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">アバター</string>
+    <string name="cd_check_in">チェックイン</string>
+    <string name="cd_checked_in">チェックイン済み</string>
+    <string name="cd_restart">再開</string>
+    <string name="cd_next">次へ</string>
+    <string name="cd_scroll_to_current">現在のレベルにスクロール</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">日</string>
+    <string name="weekday_monday">月</string>
+    <string name="weekday_tuesday">火</string>
+    <string name="weekday_wednesday">水</string>
+    <string name="weekday_thursday">木</string>
+    <string name="weekday_friday">金</string>
+    <string name="weekday_saturday">土</string>
+</resources>

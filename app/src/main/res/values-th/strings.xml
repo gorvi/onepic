@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnePic</string>
+    
+    <!-- Common -->
+    <string name="close">ปิด</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="confirm">ยืนยัน</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="about">เกี่ยวกับ</string>
+    
+    <!-- Settings -->
+    <string name="sound_effects">เอฟเฟกต์เสียง</string>
+    <string name="sound_effects_desc">เปิด/ปิดเอฟเฟกต์เสียงของเกม</string>
+    <string name="language">ภาษา</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+    <string name="clear_data">ล้างข้อมูล</string>
+    <string name="clear_data_desc">รีเซ็ตความคืบหน้าเกมทั้งหมด</string>
+    <string name="clear_data_confirm_title">ล้างข้อมูล</string>
+    <string name="clear_data_confirm_message">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลเกมทั้งหมด?\n\nสิ่งนี้จะลบ:\n• ความคืบหน้าทุกระดับ\n• ดาวและเหรียญ\n• บันทึกการเช็คอิน\n• เวลาที่ดีที่สุด\n\nการกระทำนี้ไม่สามารถยกเลิกได้!</string>
+    <string name="clear_data_confirm">ล้าง</string>
+    
+    <!-- About -->
+    <string name="about_title">เกี่ยวกับ OnePic</string>
+    <string name="version">เวอร์ชัน</string>
+    <string name="build_number">หมายเลขบิลด์</string>
+    <string name="developer">นักพัฒนา</string>
+    <string name="release_date">วันที่เผยแพร่</string>
+    <string name="app_description_title">คำอธิบายแอป</string>
+    <string name="app_description">OnePic เป็นเกมปริศนาที่สวยงามที่ให้โหมดเกมหลายแบบและความท้าทายระดับที่หลากหลาย ทำปริศนาภาพที่สวยงามให้เสร็จโดยการลากและรวมชิ้นส่วนปริศนา</string>
+    <string name="changelog_title">บันทึกการเปลี่ยนแปลง</string>
+    
+    <!-- Personal Center -->
+    <string name="personal_center">ศูนย์ส่วนตัว</string>
+    <string name="puzzle_master">ปรมาจารย์ปริศนา</string>
+    <string name="completed">เสร็จสมบูรณ์</string>
+    <string name="stars">ดาว</string>
+    <string name="coins">เหรียญ</string>
+    <string name="check_in">เช็คอิน</string>
+    <string name="days">วัน</string>
+    <string name="unlocked">ปลดล็อก</string>
+    <string name="completion_rate">อัตราการเสร็จสมบูรณ์</string>
+    <string name="classic">คลาสสิก</string>
+    <string name="gallery">แกลเลอรี</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">หน้าแรก</string>
+    <string name="nav_checkin">เช็คอิน</string>
+    <string name="nav_personal_center">โปรไฟล์</string>
+    
+    <!-- Check-in Screen -->
+    <string name="daily_check_in">เช็คอินรายวัน</string>
+    <string name="checked_in_today">เช็คอินวันนี้แล้ว</string>
+    <string name="earned">ได้รับ</string>
+    <string name="click_to_check_in">แตะเพื่อเช็คอิน</string>
+    <string name="daily_reward_desc">รับเหรียญทุกวัน</string>
+    <string name="check_in_now">เช็คอินตอนนี้</string>
+    <string name="consecutive_check_in">วันติดต่อกัน</string>
+    <string name="today_reward">รางวัลวันนี้</string>
+    <string name="check_in_reward_title">💡 รางวัลการเช็คอิน</string>
+    <string name="check_in_reward_desc">รับ 10-50 เหรียญทุกวัน\nวันติดต่อกันมากขึ้น = รางวัลมากขึ้น!</string>
+    <string name="week_check_in_history">ประวัติการเช็คอิน 7 วัน</string>
+    
+    <!-- Level Complete Dialog -->
+    <string name="perfect">สมบูรณ์แบบ!</string>
+    <string name="great">ยอดเยี่ยม!</string>
+    <string name="keep_going">ทำต่อไป!</string>
+    <string name="points">คะแนน</string>
+    
+    <!-- Changelog Items -->
+    <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
+    <string name="changelog_item_1">• เปิดตัวครั้งแรก</string>
+    <string name="changelog_item_2">• โหมดคลาสสิกและแกลเลอรี</string>
+    <string name="changelog_item_3">• ฟีเจอร์เช็คอินรายวัน</string>
+    <string name="changelog_item_4">• เอฟเฟกต์เสียงและการตอบสนองแบบสัมผัส</string>
+    <string name="changelog_item_5">• รองรับหลายภาษา (จีน/อังกฤษ)</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_avatar">อวตาร</string>
+    <string name="cd_check_in">เช็คอิน</string>
+    <string name="cd_checked_in">เช็คอินแล้ว</string>
+    <string name="cd_restart">เริ่มใหม่</string>
+    <string name="cd_next">ถัดไป</string>
+    <string name="cd_scroll_to_current">เลื่อนไปยังระดับปัจจุบัน</string>
+    
+    <!-- Week Days -->
+    <string name="weekday_sunday">อา</string>
+    <string name="weekday_monday">จ</string>
+    <string name="weekday_tuesday">อ</string>
+    <string name="weekday_wednesday">พ</string>
+    <string name="weekday_thursday">พฤ</string>
+    <string name="weekday_friday">ศ</string>
+    <string name="weekday_saturday">ส</string>
+</resources>

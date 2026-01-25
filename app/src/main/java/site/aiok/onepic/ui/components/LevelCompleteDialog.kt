@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.res.stringResource
+import site.aiok.onepic.R
 
 @Composable
 fun LevelCompleteDialog(
@@ -95,7 +97,7 @@ fun LevelCompleteDialog(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "关闭",
+                    contentDescription = stringResource(R.string.close),
                     tint = Color(0xFF424242),
                     modifier = Modifier.size(24.dp)
                 )
@@ -118,9 +120,9 @@ fun LevelCompleteDialog(
                 
                 Text(
                     text = when(stars) {
-                        3 -> "完美！"
-                        2 -> "很棒！"
-                        else -> "加油！"
+                        3 -> stringResource(R.string.perfect)
+                        2 -> stringResource(R.string.great)
+                        else -> stringResource(R.string.keep_going)
                     },
                     style = MaterialTheme.typography.headlineLarge.copy(
                         fontWeight = FontWeight.ExtraBold,
@@ -216,7 +218,7 @@ fun LevelCompleteDialog(
                                 color = Color(0xFFFFD700)
                             )
                             Text(
-                                text = "分",
+                                text = stringResource(R.string.points),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 18.sp,

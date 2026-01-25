@@ -41,6 +41,8 @@ import site.aiok.onepic.ui.components.GlassTopBar
 import site.aiok.onepic.ui.components.MeshGradientBackground
 import site.aiok.onepic.model.LevelConfig
 import site.aiok.onepic.model.ImageSource
+import site.aiok.onepic.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun GameScreen(
@@ -736,7 +738,7 @@ fun GameScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Refresh,
-                                        contentDescription = "再来一次",
+                                        contentDescription = stringResource(R.string.cd_restart),
                                         tint = Color(0xFF4A90E2),
                                         modifier = Modifier.size(32.dp)
                                     )
@@ -784,7 +786,7 @@ fun GameScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.ArrowForward,
-                                        contentDescription = "下一步",
+                                        contentDescription = stringResource(R.string.cd_next),
                                         tint = Color.White,
                                         modifier = Modifier.size(32.dp)
                                     )
