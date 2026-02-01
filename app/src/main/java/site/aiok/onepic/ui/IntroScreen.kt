@@ -1,15 +1,18 @@
 package site.aiok.onepic.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -134,54 +137,179 @@ fun IntroScreen(onStartJourney: () -> Unit) {
                             .fillMaxWidth()
                             .padding(bottom = 64.dp, top = 16.dp)
                     ) {
-                        // Ark Rocket Container (Matching LevelCompleteDialog style)
-                        val infiniteTransition = rememberInfiniteTransition(label = "rocket_visual")
-                        val floatOffset by infiniteTransition.animateFloat(
-                            initialValue = -5f,
-                            targetValue = 5f,
-                            animationSpec = infiniteRepeatable(
-                                animation = tween(1500, easing = FastOutSlowInEasing),
-                                repeatMode = RepeatMode.Reverse
-                            ),
-                            label = "float"
+                        // Rocket Launch State
+                        var isLaunching by remember { mutableStateOf(false) }
+                        var isCharging by remember { mutableStateOf(false) } // New state for pre-launch vibration
+                        val rocketOffsetY = remember { Animatable(0f) }
+                        val rocketScale = remember { Animatable(1f) }
+                        val vibrationOffset = remember { mutableStateOf(Offset.Zero) }
+                        
+                        // Flame Animation State
+                        val flameScale = remember { Animatable(1f) }
+                        val flameColor = animateColorAsState(
+                            targetValue = if (isLaunching) Color(0xFFFF5722) else Color(0xFF8E24AA), 
+                            animationSpec = tween(300)
                         )
+
+                        // Launch Logic
+                        val scope = rememberCoroutineScope()
+                        val launchRocket = {
+                            if (!isLaunching) {
+                                isLaunching = true
+                                isCharging = true 
+                                scope.launch {
+                                    // 1. Ignite Engine & Charge (Vibration)
+                                    launch { flameScale.animateTo(4.0f, tween(800, easing = LinearEasing)) }
+                                    launch { rocketScale.animateTo(0.95f, tween(200)) } 
+                                    
+                                    // Heavy Vibration Loop for Charging duration
+                                    val startTime = System.currentTimeMillis()
+                                    while (System.currentTimeMillis() - startTime < 800) {
+                                        vibrationOffset.value = Offset(
+                                            x = Random.nextFloat() * 6f - 3f,
+                                            y = Random.nextFloat() * 6f - 3f
+                                        )
+                                        delay(16) // ~60fps shake
+                                    }
+                                    vibrationOffset.value = Offset.Zero
+                                    isCharging = false
+
+                                    // 2. Blast Off (Fly up)
+                                    launch { rocketOffsetY.animateTo(-2500f, tween(800, easing = LinearEasing)) }
+                                    launch { rocketScale.animateTo(1.2f, tween(500)) } 
+                                    
+                                    delay(600)
+                                    onStartJourney()
+                                }
+                            }
+                        }
+
+                        // Ark Rocket Container (Stationary Dock + Animated Rocket)
+                        val infiniteTransition = rememberInfiniteTransition(label = "rocket_visual")
+                        // Floating animation (disable when launching to control manually)
+                        val floatOffset by if (!isLaunching) {
+                            infiniteTransition.animateFloat(
+                                initialValue = -5f,
+                                targetValue = 5f,
+                                animationSpec = infiniteRepeatable(
+                                    animation = tween(1500, easing = FastOutSlowInEasing),
+                                    repeatMode = RepeatMode.Reverse
+                                ),
+                                label = "float"
+                            )
+                        } else {
+                            remember { mutableFloatStateOf(0f) }
+                        }
 
                         Box(
                             modifier = Modifier
-                                .size(88.dp)
-                                .shadow(12.dp, CircleShape)
-                                .background(
-                                    brush = Brush.radialGradient(
-                                        colors = listOf(
-                                            Color(0xFF8E24AA), // Purple
-                                            Color(0xFF311B92), // Deep Indigo
-                                            Color(0xFF000000)  // Black
-                                        )
-                                    ),
-                                    shape = CircleShape
-                                )
-                                .border(2.dp, Color.White.copy(alpha = 0.8f), CircleShape),
+                                .size(120.dp) // Container size
+                                .clickable(
+                                    interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                                    indication = null,
+                                    onClick = launchRocket
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
-                                imageVector = Icons.Filled.RocketLaunch,
-                                contentDescription = null,
-                                tint = Color.White,
+                            // 1. Stationary Base (The Dock/Portal)
+                            Box(
                                 modifier = Modifier
-                                    .size(44.dp)
-                                    .graphicsLayer(
-                                        translationX = floatOffset * 1.5f,
-                                        translationY = -floatOffset * 1.5f,
-                                        rotationZ = (kotlin.math.sin(floatOffset.toDouble() * 0.5).toFloat() * 10f)
+                                    .size(88.dp)
+                                    .shadow(12.dp, CircleShape)
+                                    .background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(
+                                                Color(0xFF8E24AA), // Purple
+                                                Color(0xFF311B92), // Deep Indigo
+                                                Color(0xFF000000)  // Black
+                                            )
+                                        ),
+                                        shape = CircleShape
                                     )
+                                    .border(2.dp, Color.White.copy(alpha = 0.8f), CircleShape)
                             )
+
+                            // 2. Animated Assembly (Rocket + Engine Flame)
+                            Box(
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .graphicsLayer {
+                                        translationY = rocketOffsetY.value + floatOffset + vibrationOffset.value.y
+                                        translationX = vibrationOffset.value.x
+                                        scaleX = rocketScale.value
+                                        scaleY = rocketScale.value
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                // Real Tail Flame (Directional Jet)
+                                Box(
+                                    modifier = Modifier
+                                        .size(width = 18.dp, height = 60.dp) 
+                                        .align(Alignment.Center)
+                                        .offset(y = 32.dp) // Strictly centered below
+                                        .graphicsLayer {
+                                            transformOrigin = TransformOrigin(0.5f, 0f) // Grow downwards
+                                            scaleY = flameScale.value
+                                            scaleX = if (isLaunching) 0.8f else 1f
+                                            alpha = if (isLaunching) 0.9f else 0.0f 
+                                            rotationZ = 0f // Strictly vertical
+                                        }
+                                        .background(
+                                            brush = Brush.verticalGradient(
+                                                colors = listOf(
+                                                    Color(0xFFFFFFFF), // Core: White hot
+                                                    Color(0xFFFFEB3B), // Middle: Yellow
+                                                    Color(0xFFFF5722), // End: Red
+                                                    Color.Transparent
+                                                )
+                                            ),
+                                            shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)
+                                        )
+                                )
+
+                                // Idle Glow
+                                if (!isLaunching) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .offset(y = 10.dp)
+                                            .background(
+                                                brush = Brush.radialGradient(
+                                                    colors = listOf(
+                                                        Color(0xFF8E24AA).copy(alpha = 0.6f),
+                                                        Color.Transparent
+                                                    )
+                                                ),
+                                                shape = CircleShape
+                                            )
+                                    )
+                                }
+
+                                // Rocket Icon
+                                Icon(
+                                    imageVector = Icons.Filled.RocketLaunch,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .graphicsLayer {
+                                            // Fix rotation: Material Icon is tilted 45 degrees by default. 
+                                            // We rotate -45 to make it point straight UP.
+                                            val baseRotation = -45f 
+                                            val idleWiggle = if (!isLaunching) (kotlin.math.sin(floatOffset.toDouble() * 0.5).toFloat() * 5f) else 0f
+                                            
+                                            // Only apply base rotation and idle wiggle here. Launch shake is now handled by parent Box translation
+                                            rotationZ = baseRotation + idleWiggle 
+                                        }
+                                )
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(32.dp))
 
                         IntroButton(
                             text = buttonText,
-                            onClick = onStartJourney
+                            onClick = launchRocket
                         )
                     }
                 }
