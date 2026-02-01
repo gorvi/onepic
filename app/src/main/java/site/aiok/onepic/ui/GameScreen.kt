@@ -416,49 +416,50 @@ fun GameScreen(
                                         hasFreeHint = false
                                         gameBoardView?.showHint()
                                         android.widget.Toast.makeText(context, context.getString(R.string.hint_use_free), android.widget.Toast.LENGTH_SHORT).show()
-                                    } else {
-                                        // Ask for payment
-                                        showHintConfirmDialog = true
                                     }
                                 }
                             )
-                            Spacer(modifier = Modifier.width(24.dp))
-                            val canWatch = site.aiok.onepic.data.LevelProgressManager.canWatchAd(context)
-                            val cooldownRemaining = site.aiok.onepic.data.LevelProgressManager.getAdCooldownRemaining(context)
-                            val adReward = site.aiok.onepic.data.LevelProgressManager.calculateAdReward(context)
-                            val buttonLabel = if (canWatch) "+$adReward" else "${cooldownRemaining / 60}:${String.format("%02d", cooldownRemaining % 60)}"
-                            FloatingGameButton(
-                                icon = Icons.Default.PlayArrow, // Video icon proxy
-                                color = if (canWatch) Color(0xFF00C853) else Color.Gray,
-                                label = buttonLabel,
-                                onClick = {
-                                    if (!site.aiok.onepic.data.LevelProgressManager.canWatchAd(context)) {
-                                        val remaining = site.aiok.onepic.data.LevelProgressManager.getAdCooldownRemaining(context)
-                                        android.widget.Toast.makeText(context, context.getString(R.string.ad_wait_cooldown, remaining / 60, remaining % 60), android.widget.Toast.LENGTH_SHORT).show()
-                                        return@FloatingGameButton
+                            
+                            val isDemoOrTutorial = levelConfig.levelId.startsWith("tutorial") || levelConfig.levelId == "c1" || levelConfig.levelId.startsWith("demo")
+                            if (!isDemoOrTutorial) {
+                                Spacer(modifier = Modifier.width(24.dp))
+                                val canWatch = site.aiok.onepic.data.LevelProgressManager.canWatchAd(context)
+                                val cooldownRemaining = site.aiok.onepic.data.LevelProgressManager.getAdCooldownRemaining(context)
+                                val adReward = site.aiok.onepic.data.LevelProgressManager.calculateAdReward(context)
+                                val buttonLabel = if (canWatch) "+$adReward" else "${cooldownRemaining / 60}:${String.format("%02d", cooldownRemaining % 60)}"
+                                FloatingGameButton(
+                                    icon = Icons.Default.PlayArrow, // Video icon proxy
+                                    color = if (canWatch) Color(0xFF00C853) else Color.Gray,
+                                    label = buttonLabel,
+                                    onClick = {
+                                        if (!site.aiok.onepic.data.LevelProgressManager.canWatchAd(context)) {
+                                            val remaining = site.aiok.onepic.data.LevelProgressManager.getAdCooldownRemaining(context)
+                                            android.widget.Toast.makeText(context, context.getString(R.string.ad_wait_cooldown, remaining / 60, remaining % 60), android.widget.Toast.LENGTH_SHORT).show()
+                                            return@FloatingGameButton
+                                        }
+                                        val reward = site.aiok.onepic.data.LevelProgressManager.calculateAdReward(context)
+                                        android.widget.Toast.makeText(context, context.getString(R.string.ad_reward_toast, reward), android.widget.Toast.LENGTH_SHORT).show()
+                                        (context as? android.app.Activity)?.let { activity ->
+                                            site.aiok.onepic.logic.AdManager.showRewarded(
+                                                activity,
+                                                onUserEarnedReward = {
+                                                    // Record timestamp, increment view count and add diminishing reward
+                                                    site.aiok.onepic.data.LevelProgressManager.recordAdView(context)
+                                                    site.aiok.onepic.data.LevelProgressManager.incrementDailyAdViews(context)
+                                                    site.aiok.onepic.data.LevelProgressManager.addCoins(context, reward)
+                                                    displayScore += reward
+                                                    // 播放获得金币动效
+                                                    rewardController.emit(RewardType.COIN, reward, puzzleCenterPos, coinTargetPos) {}
+                                                    android.widget.Toast.makeText(context, context.getString(R.string.ad_reward_received, reward), android.widget.Toast.LENGTH_SHORT).show()
+                                                },
+                                                onAdClosed = {
+                                                    // Resume game or music if needed
+                                                }
+                                            )
+                                        }
                                     }
-                                    val reward = site.aiok.onepic.data.LevelProgressManager.calculateAdReward(context)
-                                    android.widget.Toast.makeText(context, context.getString(R.string.ad_reward_toast, reward), android.widget.Toast.LENGTH_SHORT).show()
-                                    (context as? android.app.Activity)?.let { activity ->
-                                        site.aiok.onepic.logic.AdManager.showRewarded(
-                                            activity,
-                                            onUserEarnedReward = {
-                                                // Record timestamp, increment view count and add diminishing reward
-                                                site.aiok.onepic.data.LevelProgressManager.recordAdView(context)
-                                                site.aiok.onepic.data.LevelProgressManager.incrementDailyAdViews(context)
-                                                site.aiok.onepic.data.LevelProgressManager.addCoins(context, reward)
-                                                displayScore += reward
-                                                // 播放获得金币动效
-                                                rewardController.emit(RewardType.COIN, reward, puzzleCenterPos, coinTargetPos) {}
-                                                android.widget.Toast.makeText(context, context.getString(R.string.ad_reward_received, reward), android.widget.Toast.LENGTH_SHORT).show()
-                                            },
-                                            onAdClosed = {
-                                                // Resume game or music if needed
-                                            }
-                                        )
-                                    }
-                                }
-                            )
+                                )
+                            }
                         }
                     }
 
