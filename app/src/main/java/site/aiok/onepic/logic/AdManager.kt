@@ -36,7 +36,7 @@ object AdManager {
     // --- Interstitial Ads ---
 
     fun loadInterstitial(context: Context) {
-        if (interstitialAd != null || isInterstitialLoading) return
+        if (interstitialAd != null || isInterstitialLoading || INTERSTITIAL_ID.isEmpty()) return
 
         isInterstitialLoading = true
         val adRequest = AdRequest.Builder().build()
@@ -93,7 +93,7 @@ object AdManager {
     // --- Rewarded Ads ---
 
     fun loadRewarded(context: Context) {
-        if (rewardedAd != null || isRewardedLoading) return
+        if (rewardedAd != null || isRewardedLoading || REWARDED_ID.isEmpty()) return
 
         isRewardedLoading = true
         val adRequest = AdRequest.Builder().build()
