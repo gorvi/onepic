@@ -3,7 +3,12 @@ package site.aiok.onepic.ui
 import androidx.compose.animation.core.*
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -166,6 +171,13 @@ fun CheckInScreen() {
     var showCheckInSuccess by remember { mutableStateOf(false) }
     var cardPulseScale by remember { mutableStateOf(1f) }
     
+    // 红点状态管理
+    var shouldShowRedDot by remember { mutableStateOf(LevelProgressManager.shouldShowCheckInRedDot(context)) }
+    
+    // 进入页面时如果有红点，由于已展示给用户看，点击行为将消除它（或者只要进入就消除？）
+    // 用户的需求是：点击后两个小红点消失。
+    // 点击指点击“签到卡片”本身
+    
     // 音效管理器
     val soundManager = remember { SoundManager.getInstance(context) }
     
@@ -214,14 +226,15 @@ fun CheckInScreen() {
         label = "coinScale"
     )
     
-    MeshGradientBackground {
+    site.aiok.onepic.ui.components.GalaxyBackground(particleTheme = "signin") {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
             // 顶部金币显示
             Row(
@@ -234,8 +247,8 @@ fun CheckInScreen() {
                 Text(
                     text = stringResource(R.string.daily_check_in),
                     fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    fontWeight = FontWeight.Black,
+                    color = Color.White
                 )
                 
                 // 金币显示
@@ -269,9 +282,9 @@ fun CheckInScreen() {
                 }
             }
             
-            // 当前日期显示 - 使用系统时区，每次重新获取
+            // 当前日期显示
             val currentDateDisplay = run {
-                val calendar = Calendar.getInstance() // 使用系统默认时区
+                val calendar = Calendar.getInstance()
                 val locale = LocaleHelper.getSavedLanguage(context).let {
                     when (it) {
                         "en" -> Locale.ENGLISH
@@ -284,91 +297,73 @@ fun CheckInScreen() {
                 } else {
                     "EEEE, MMMM dd, yyyy"
                 }
-                // 使用系统默认的日期格式，根据 locale 自动格式化
                 SimpleDateFormat(pattern, locale).apply {
-                    timeZone = calendar.timeZone // 明确使用系统时区
+                    timeZone = calendar.timeZone
                 }.format(calendar.time)
             }
             Text(
                 text = currentDateDisplay,
                 fontSize = 15.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
+                color = Color.White.copy(alpha = 0.7f)
             )
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // 打卡卡片 - 美化版
+            // 主打卡卡片 - 全息毛玻璃版
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(240.dp)
-                    .shadow(16.dp, RoundedCornerShape(32.dp), spotColor = cardColor.copy(alpha = 0.3f))
+                    .height(160.dp)
+                    .clip(RoundedCornerShape(32.dp))
                     .background(
                         brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.08f),
+                                Color.White.copy(alpha = 0.02f)
+                            )
+                        )
+                    )
+                    .border(
+                        width = 0.8.dp,
+                        brush = Brush.linearGradient(
                             colors = if (hasCheckedInToday) {
-                                listOf(
-                                    Color(0xFF4CAF50).copy(alpha = 0.9f),
-                                    Color(0xFF66BB6A).copy(alpha = 0.8f)
-                                )
+                                listOf(Color(0xFF00E676).copy(alpha = 0.5f), Color.Transparent, Color(0xFF00E676).copy(alpha = 0.2f))
                             } else {
-                                listOf(
-                                    Color(0xFF2196F3).copy(alpha = 0.9f),
-                                    Color(0xFF42A5F5).copy(alpha = 0.8f)
-                                )
+                                listOf(Color(0xFF00B0FF).copy(alpha = 0.5f), Color.Transparent, Color(0xFF00B0FF).copy(alpha = 0.2f))
                             }
                         ),
                         shape = RoundedCornerShape(32.dp)
                     )
-                    .clip(RoundedCornerShape(32.dp))
                     .clickable(enabled = !hasCheckedInToday) {
                         performCheckIn(context, hasCheckedInToday) { coins, days ->
-                            // 播放打卡成功音效
                             soundManager.playSound(SoundType.SNAP, 1.0f)
-                            
-                            // 震动反馈 - 增强冲击感
                             try {
                                 val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    // 使用更强的震动效果
-                                    vibrator?.vibrate(
-                                        VibrationEffect.createWaveform(
-                                            longArrayOf(0, 50, 30, 50), // 震动模式：立即开始，50ms强震，30ms间隔，50ms强震
-                                            -1 // 不重复
-                                        )
-                                    )
+                                    vibrator?.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 50, 30, 50), -1))
                                 } else {
-                                    @Suppress("DEPRECATION")
-                                    vibrator?.vibrate(150) // 旧版本使用更长的震动
+                                    @Suppress("DEPRECATION") vibrator?.vibrate(150)
                                 }
-                            } catch (e: Exception) {
-                                // 忽略震动失败
-                            }
+                            } catch (e: Exception) {}
                             
-                            // 触发打卡成功动画
                             showCheckInSuccess = true
-                            cardPulseScale = 1.2f // 更大的初始缩放
-                            
+                            cardPulseScale = 1.15f
                             hasCheckedInToday = true
                             coinsEarned = coins
                             consecutiveDays = days
                             totalCoins = LevelProgressManager.getTotalMergeScore(context)
                             showCoinAnimation = true
                             
-                            // 动画序列 - 优化时序以增强冲击感
+                            // 消除红点
+                            LevelProgressManager.markCheckInRedDotSeen(context)
+                            shouldShowRedDot = false
+                            
                             CoroutineScope(Dispatchers.Main).launch {
-                                // 卡片脉冲动画 - 快速放大然后回弹
                                 delay(150)
-                                cardPulseScale = 0.95f // 先缩小一点
-                                delay(100)
-                                cardPulseScale = 1f // 恢复正常
-                                
-                                // 闪光效果 - 快速闪烁
+                                cardPulseScale = 1f
                                 delay(200)
                                 showCheckInSuccess = false
-                                
-                                // 金币动画保持更久
-                                delay(1500)
+                                delay(1200)
                                 showCoinAnimation = false
                             }
                         }
@@ -376,451 +371,426 @@ fun CheckInScreen() {
                     .scale(cardScale),
                 contentAlignment = Alignment.Center
             ) {
-                // 闪光效果覆盖层
-                if (showCheckInSuccess) {
-                    val density = LocalDensity.current
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                brush = Brush.radialGradient(
-                                    colors = listOf(
-                                        Color.White.copy(alpha = flashAlpha * 0.9f),
-                                        Color.White.copy(alpha = flashAlpha * 0.5f),
-                                        Color.White.copy(alpha = 0f)
-                                    ),
-                                    center = androidx.compose.ui.geometry.Offset(
-                                        with(density) { 240.dp.toPx() / 2 },
-                                        with(density) { 240.dp.toPx() / 2 }
-                                    ),
-                                    radius = with(density) { 400.dp.toPx() }
-                                )
-                            )
-                            .clip(RoundedCornerShape(32.dp))
-                    )
+                // 背景全息网格装饰
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    val canvasWidth = size.width
+                    val canvasHeight = size.height
+                    val strokeWidth = 0.5.dp.toPx()
+                    val step = 20.dp.toPx()
+                    var x = 0f
+                    while (x < canvasWidth) {
+                        drawLine(
+                            color = Color.White.copy(alpha = 0.03f),
+                            start = androidx.compose.ui.geometry.Offset(x, 0f),
+                            end = androidx.compose.ui.geometry.Offset(x, canvasHeight),
+                            strokeWidth = strokeWidth
+                        )
+                        x += step
+                    }
+                    var y = 0f
+                    while (y < canvasHeight) {
+                        drawLine(
+                            color = Color.White.copy(alpha = 0.03f),
+                            start = androidx.compose.ui.geometry.Offset(0f, y),
+                            end = androidx.compose.ui.geometry.Offset(canvasWidth, y),
+                            strokeWidth = strokeWidth
+                        )
+                        y += step
+                    }
                 }
-                
+
+                // 角标装饰
+                val cornerColor = if (hasCheckedInToday) Color(0xFF00E676) else Color(0xFF00B0FF)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    // Top-Left corner
+                    Box(modifier = Modifier.align(Alignment.TopStart).padding(16.dp).size(12.dp, 2.dp).background(cornerColor.copy(alpha = 0.6f)))
+                    Box(modifier = Modifier.align(Alignment.TopStart).padding(16.dp).size(2.dp, 12.dp).background(cornerColor.copy(alpha = 0.6f)))
+                    // Bottom-Right corner
+                    Box(modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp).size(12.dp, 2.dp).background(cornerColor.copy(alpha = 0.6f)))
+                    Box(modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp).size(2.dp, 12.dp).background(cornerColor.copy(alpha = 0.6f)))
+                }
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     if (hasCheckedInToday) {
-                        // 已打卡状态
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(
-                                    brush = Brush.radialGradient(
-                                        colors = listOf(
-                                            Color.White.copy(alpha = 0.9f),
-                                            Color.White.copy(alpha = 0.6f)
-                                        )
-                                    ),
-                                    shape = CircleShape
-                                )
-                                .clip(CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
+                        // 已打卡状态 - 极光粒子感
+                        Box(contentAlignment = Alignment.Center) {
+                            // 外围发光
+                            Box(
+                                modifier = Modifier
+                                    .size(90.dp)
+                                    .background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(Color(0xFF00E676).copy(alpha = 0.2f), Color.Transparent)
+                                        ),
+                                        shape = CircleShape
+                                    )
+                            )
                             Icon(
                                 imageVector = Icons.Default.CheckCircle,
-                                contentDescription = stringResource(R.string.checked_in_today),
-                                modifier = Modifier.size(60.dp),
-                                tint = Color(0xFF4CAF50)
+                                contentDescription = null,
+                                modifier = Modifier.size(40.dp),
+                                tint = Color(0xFF00E676)
                             )
                         }
                         
                         Text(
-                            text = stringResource(R.string.checked_in_today),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            text = stringResource(R.string.check_in_energy_active),
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.White,
+                            letterSpacing = 1.sp
                         )
                         
-                        if (coinsEarned > 0) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.earned),
-                                    fontSize = 16.sp,
-                                    color = Color.White.copy(alpha = 0.9f)
-                                )
-                                AnimatedNumberText(
-                                    targetValue = coinsEarned,
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color(0xFFFFD700),
-                                    prefix = "+"
-                                )
-                                Text(
-                                    text = "🪙",
-                                    fontSize = 20.sp
+                    } else {
+                        // 未打卡状态 - 待激活感
+                        Box(contentAlignment = Alignment.Center) {
+                            // 扫描动画圆环
+                            val infiniteTransition = rememberInfiniteTransition(label = "scan")
+                            val rotation by infiniteTransition.animateFloat(
+                                initialValue = 0f,
+                                targetValue = 360f,
+                                animationSpec = infiniteRepeatable(tween(3000, easing = LinearEasing)),
+                                label = "rotation"
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .graphicsLayer { rotationZ = rotation }
+                                    .border(1.dp, Brush.sweepGradient(listOf(Color.Transparent, Color(0xFF00B0FF), Color.Transparent)), CircleShape)
+                            )
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                modifier = Modifier.size(40.dp),
+                                tint = Color(0xFF00B0FF).copy(alpha = 0.8f)
+                            )
+                            
+                            if (shouldShowRedDot) {
+                                // 卡片内部红点
+                                Box(
+                                    modifier = Modifier
+                                        .size(12.dp)
+                                        .align(Alignment.TopEnd)
+                                        .offset(x = 2.dp, y = (-2).dp)
+                                        .clip(CircleShape)
+                                        .background(Color.Red)
+                                        .border(1.5.dp, Color(0xFF1E1E2C), CircleShape)
                                 )
                             }
                         }
-                    } else {
-                        // 未打卡状态
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(
-                                    brush = Brush.radialGradient(
-                                        colors = listOf(
-                                            Color.White.copy(alpha = 0.3f),
-                                            Color.White.copy(alpha = 0.1f)
-                                        )
-                                    ),
-                                    shape = CircleShape
-                                )
-                                .clip(CircleShape)
-                                .border(3.dp, Color.White.copy(alpha = 0.5f), CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = stringResource(R.string.check_in),
-                                modifier = Modifier.size(50.dp),
-                                tint = Color.White
-                            )
-                        }
                         
                         Text(
-                            text = stringResource(R.string.click_to_check_in),
-                            fontSize = 28.sp,
+                            text = stringResource(R.string.check_in_energy_activate), // 注意：我需要补一个这个资源或复用
+                            fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color.White.copy(alpha = 0.8f)
                         )
                         
                         Text(
-                            text = stringResource(R.string.daily_reward_desc),
-                            fontSize = 14.sp,
-                            color = Color.White.copy(alpha = 0.8f)
+                            text = stringResource(R.string.check_in_sync_required),
+                            fontSize = 12.sp,
+                            color = Color(0xFF00B0FF).copy(alpha = 0.5f),
+                            letterSpacing = 1.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
             }
             
-            // 打卡按钮 - 只在未打卡时显示
-            if (!hasCheckedInToday) {
-                Spacer(modifier = Modifier.height(24.dp))
-                
-                Button(
-                    onClick = {
-                        performCheckIn(context, hasCheckedInToday) { coins, days ->
-                            // 播放打卡成功音效
-                            soundManager.playSound(SoundType.COMPLETE, 1.0f)
-                            
-                            // 震动反馈 - 增强冲击感
-                            try {
-                                val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    // 使用更强的震动效果
-                                    vibrator?.vibrate(
-                                        VibrationEffect.createWaveform(
-                                            longArrayOf(0, 50, 30, 50), // 震动模式：立即开始，50ms强震，30ms间隔，50ms强震
-                                            -1 // 不重复
-                                        )
-                                    )
-                                } else {
-                                    @Suppress("DEPRECATION")
-                                    vibrator?.vibrate(150) // 旧版本使用更长的震动
-                                }
-                            } catch (e: Exception) {
-                                // 忽略震动失败
-                            }
-                            
-                            // 触发打卡成功动画
-                            showCheckInSuccess = true
-                            cardPulseScale = 1.2f // 更大的初始缩放
-                            
-                            hasCheckedInToday = true
-                            coinsEarned = coins
-                            consecutiveDays = days
-                            totalCoins = LevelProgressManager.getTotalMergeScore(context)
-                            showCoinAnimation = true
-                            
-                            // 动画序列 - 优化时序以增强冲击感
-                            CoroutineScope(Dispatchers.Main).launch {
-                                // 卡片脉冲动画 - 快速放大然后回弹
-                                delay(150)
-                                cardPulseScale = 0.95f // 先缩小一点
-                                delay(100)
-                                cardPulseScale = 1f // 恢复正常
-                                
-                                // 闪光效果 - 快速闪烁
-                                delay(200)
-                                showCheckInSuccess = false
-                                
-                                // 金币动画保持更久
-                                delay(1500)
-                                showCoinAnimation = false
-                            }
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .scale(buttonScale),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 8.dp,
-                        pressedElevation = 4.dp
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.check_in_now),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.height(24.dp))
             
-            Spacer(modifier = Modifier.height(20.dp))
-            
-            // 统计信息卡片组 - 统一大小
+            // 统计卡片 - 增强科技排版
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp),
+                    .height(100.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // 连续打卡天数
-                Card(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-                ) {
-                    Column(
+                listOf(
+                    Pair(stringResource(R.string.consecutive_check_in), stringResource(R.string.check_in_days_suffix, consecutiveDays)),
+                    Pair(stringResource(R.string.today_earned), if (hasCheckedInToday) "+$coinsEarned 🪙" else stringResource(R.string.check_in_pending))
+                ).forEachIndexed { index, pair ->
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        content = {
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.White.copy(alpha = 0.05f))
+                            .border(0.5.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
+                            .padding(12.dp)
+                    ) {
+                        Column {
                             Text(
-                                text = stringResource(R.string.consecutive_check_in),
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                                text = pair.first.uppercase(),
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Black,
+                                color = Color.White.copy(alpha = 0.4f),
+                                letterSpacing = 1.sp
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Row(
-                                verticalAlignment = Alignment.Bottom,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                AnimatedNumberText(
-                                    targetValue = consecutiveDays,
-                                    fontSize = 32.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    suffix = ""
-                                )
-                                Text(
-                                    text = stringResource(R.string.days),
-                                    fontSize = 16.sp,
-                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                    modifier = Modifier.padding(bottom = 4.dp, start = 2.dp)
-                                )
-                            }
-                        }
-                    )
-                }
-                
-                // 今日奖励 - 统一大小和样式
-                Card(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        content = {
+                            Spacer(modifier = Modifier.weight(1f))
                             Text(
-                                text = stringResource(R.string.today_reward),
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                                text = pair.second,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (index == 0) Color(0xFF00B0FF) else Color(0xFFFFD700)
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Row(
-                                verticalAlignment = Alignment.Bottom,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                if (hasCheckedInToday) {
-                                    AnimatedNumberText(
-                                        targetValue = coinsEarned,
-                                        fontSize = 32.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color(0xFFFFD700)
-                                    )
-                                } else {
-                                    Text(
-                                        text = "?",
-                                        fontSize = 32.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color(0xFFFFD700)
-                                    )
-                                }
-                                Text(
-                                    text = "🪙",
-                                    fontSize = 18.sp,
-                                    modifier = Modifier.padding(bottom = 4.dp, start = 2.dp)
-                                )
-                            }
                         }
-                    )
+                    }
                 }
             }
             
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             
-            // 近7天打卡情况 - 当打卡状态改变时更新
-            WeekCheckInHistory(
+            // 30天打卡情况
+            MonthlyCheckInHistory(
                 modifier = Modifier.fillMaxWidth(),
                 context = context,
-                refreshTrigger = hasCheckedInToday // 当打卡状态改变时刷新
+                refreshTrigger = hasCheckedInToday
             )
             
-            Spacer(modifier = Modifier.weight(1f))
-            
-            // 奖励说明
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.check_in_reward_title),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Text(
-                        text = stringResource(R.string.check_in_reward_desc),
-                        fontSize = 13.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                        textAlign = TextAlign.Center,
-                        lineHeight = 20.sp
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }
 
-// 近7天打卡历史组件
+// 双倍金币 Buff 组件 - 支持手动激活
 @Composable
-fun WeekCheckInHistory(
+fun DoubleCoinsBuffTimer(context: Context) {
+    var remainingSeconds by remember { mutableStateOf(LevelProgressManager.getDoubleCoinsRemainingSeconds(context)) }
+    var isReady by remember { mutableStateOf(LevelProgressManager.isDoubleCoinsReady(context)) }
+    val isActive = remainingSeconds > 0
+    
+    // 定时器更新
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000)
+            remainingSeconds = LevelProgressManager.getDoubleCoinsRemainingSeconds(context)
+            isReady = LevelProgressManager.isDoubleCoinsReady(context)
+        }
+    }
+    
+    val soundManager = remember { SoundManager.getInstance(context) }
+    
+    when {
+        isActive -> {
+            // 运行态：显示倒计时
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                Color(0xFFFFD700).copy(alpha = 0.15f),
+                                Color(0xFFFFA500).copy(alpha = 0.05f)
+                            )
+                        )
+                    )
+                    .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+                    .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = null,
+                            tint = Color(0xFFFFD700),
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column {
+                            Text(
+                                text = stringResource(R.string.buff_double_coins_active),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Black,
+                                color = Color(0xFFFFD700),
+                                letterSpacing = 1.sp
+                            )
+                            Text(
+                                text = stringResource(R.string.buff_overclocking),
+                                fontSize = 10.sp,
+                                color = Color.White.copy(alpha = 0.4f),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                    
+                    Text(
+                        text = String.format("%02d:%02d", remainingSeconds / 60, remainingSeconds % 60),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Black,
+                        color = Color(0xFFFFD700),
+                        textAlign = TextAlign.End
+                    )
+                }
+                
+                // 底部能量条动画
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .fillMaxWidth((remainingSeconds / 180f).coerceAtMost(1f))
+                        .height(2.dp)
+                        .background(Color(0xFFFFD700))
+                )
+            }
+        }
+        isReady -> {
+            // 就绪态：显示待激活按钮
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White.copy(alpha = 0.05f))
+                    .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.5f), RoundedCornerShape(16.dp))
+                    .clickable {
+                        soundManager.playSound(SoundType.COMPLETE, 1.0f)
+                        val seconds = LevelProgressManager.getBuffEstimatedSeconds(context)
+                        LevelProgressManager.activateDoubleCoinsBuff(context, seconds)
+                        LevelProgressManager.setDoubleCoinsReady(context, false)
+                        remainingSeconds = seconds
+                        isReady = false
+                    }
+                    .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .background(Color(0xFFFFD700).copy(alpha = 0.1f), CircleShape)
+                                .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.4f), CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFFFD700),
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
+                            Text(
+                                text = stringResource(R.string.buff_ready),
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Black,
+                                color = Color.White,
+                                letterSpacing = 1.sp
+                            )
+                            Text(
+                                text = stringResource(R.string.buff_waiting),
+                                fontSize = 10.sp,
+                                color = Color(0xFFFFD700).copy(alpha = 0.6f),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                    
+                    Text(
+                        text = stringResource(R.string.buff_activate),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Black,
+                        color = Color(0xFFFFD700),
+                        modifier = Modifier
+                            .border(1.dp, Color(0xFFFFD700), RoundedCornerShape(4.dp))
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = stringResource(R.string.buff_duration_rule),
+                fontSize = 10.sp,
+                color = Color.White.copy(alpha = 0.3f),
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.5.sp,
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
+    }
+}
+
+// 30天打卡历史组件 - 增强网格质感
+@Composable
+fun MonthlyCheckInHistory(
     modifier: Modifier = Modifier,
     context: android.content.Context,
     refreshTrigger: Boolean = false
 ) {
-    val prefs = remember {
-        context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE)
-    }
+    val prefs = remember { context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE) }
     
-    // 获取最近7天的打卡记录 - 当 refreshTrigger 改变时重新计算
-    val weekHistory = remember(refreshTrigger) {
-        val calendar = Calendar.getInstance() // 使用系统时区
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
-            timeZone = calendar.timeZone // 明确使用系统时区
-        }
+    val monthHistory = remember(refreshTrigger) {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply { timeZone = calendar.timeZone }
         val checkedInDates = prefs.getStringSet("checked_in_dates", setOf()) ?: setOf()
         
-        (0..6).map { dayOffset ->
+        (0..29).map { dayOffset ->
             calendar.time = Date()
             calendar.add(Calendar.DAY_OF_YEAR, -dayOffset)
             val date = calendar.time
             val dateStr = dateFormat.format(date)
             val isCheckedIn = checkedInDates.contains(dateStr)
-            
-            DayInfo(
-                date = date,
-                dateStr = dateStr,
-                isCheckedIn = isCheckedIn,
-                isToday = dayOffset == 0,
-                dayOfWeek = "" // 将在 Composable 中设置
-            )
-        }.reversed() // 反转顺序，让最早的在左边
+            DayInfo(date, dateStr, isCheckedIn, dayOffset == 0, "")
+        }.reversed()
     }
     
-    // 为每个 DayInfo 设置本地化的星期
-    val localizedWeekHistory = remember(weekHistory) {
-        weekHistory.map { dayInfo ->
-            val calendar = Calendar.getInstance().apply {
-                time = dayInfo.date
-            }
-            val dayOfWeekInt = calendar.get(Calendar.DAY_OF_WEEK)
-            val resId = when (dayOfWeekInt) {
-                Calendar.SUNDAY -> R.string.weekday_sunday
-                Calendar.MONDAY -> R.string.weekday_monday
-                Calendar.TUESDAY -> R.string.weekday_tuesday
-                Calendar.WEDNESDAY -> R.string.weekday_wednesday
-                Calendar.THURSDAY -> R.string.weekday_thursday
-                Calendar.FRIDAY -> R.string.weekday_friday
-                Calendar.SATURDAY -> R.string.weekday_saturday
-                else -> return@map dayInfo.copy(dayOfWeek = "")
-            }
-            dayInfo.copy(dayOfWeek = context.getString(resId))
-        }
-    }
-    
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    Box(
+        modifier = modifier
+            .wrapContentHeight()
+            .clip(RoundedCornerShape(24.dp))
+            .background(Color.White.copy(alpha = 0.03f))
+            .border(0.5.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(24.dp))
+            .padding(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.week_check_in_history),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(4.dp, 16.dp).background(Color(0xFF00E676)))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.check_in_station_log),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color.White.copy(alpha = 0.7f),
+                    letterSpacing = 1.sp
+                )
+            }
             
-            // 7天日历视图
-            Row(
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            val columns = 7
+            val rows = monthHistory.chunked(columns)
+            
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                localizedWeekHistory.forEach { dayInfo ->
-                    DayCheckInItem(dayInfo = dayInfo)
+                rows.forEach { rowItems ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        rowItems.forEach { dayInfo ->
+                            MonthDayIcon(dayInfo = dayInfo)
+                        }
+                        if (rowItems.size < columns) {
+                            repeat(columns - rowItems.size) { Spacer(modifier = Modifier.size(48.dp)) }
+                        }
+                    }
                 }
             }
         }
@@ -828,81 +798,49 @@ fun WeekCheckInHistory(
 }
 
 @Composable
-fun DayCheckInItem(dayInfo: DayInfo) {
-    // 使用系统时区格式化日期
-    val calendar = Calendar.getInstance()
-    val dateFormat = SimpleDateFormat("dd", Locale.getDefault()).apply {
-        timeZone = calendar.timeZone
+fun MonthDayIcon(dayInfo: DayInfo) {
+    val dayNumber = run {
+        val cal = Calendar.getInstance()
+        cal.time = dayInfo.date
+        cal.get(Calendar.DAY_OF_MONTH).toString()
     }
-    val dayNumber = dateFormat.format(dayInfo.date)
     
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(6.dp)
+    Box(
+        modifier = Modifier
+            .size(46.dp)
+            .background(
+                color = when {
+                    dayInfo.isCheckedIn -> Color(0xFF00E676).copy(alpha = 0.15f)
+                    dayInfo.isToday -> Color(0xFF00B0FF).copy(alpha = 0.1f)
+                    else -> Color.White.copy(alpha = 0.02f)
+                },
+                shape = RoundedCornerShape(10.dp)
+            )
+            .border(
+                width = if (dayInfo.isToday) 1.5.dp else 0.5.dp,
+                color = when {
+                    dayInfo.isCheckedIn -> Color(0xFF00E676).copy(alpha = 0.8f)
+                    dayInfo.isToday -> Color(0xFF00B0FF)
+                    else -> Color.White.copy(alpha = 0.1f)
+                },
+                shape = RoundedCornerShape(10.dp)
+            ),
+        contentAlignment = Alignment.Center
     ) {
-        // 星期几
-        Text(
-            text = dayInfo.dayOfWeek,
-            fontSize = 12.sp,
-            color = if (dayInfo.isToday) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-            },
-            fontWeight = if (dayInfo.isToday) FontWeight.Bold else FontWeight.Normal
-        )
-        
-        // 日期圆圈
-        Box(
-            modifier = Modifier
-                .size(44.dp)
-                .background(
-                    brush = if (dayInfo.isCheckedIn) {
-                        Brush.radialGradient(
-                            colors = listOf(
-                                Color(0xFF4CAF50),
-                                Color(0xFF66BB6A)
-                            )
-                        )
-                    } else {
-                        Brush.radialGradient(
-                            colors = listOf(
-                                MaterialTheme.colorScheme.surfaceVariant,
-                                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
-                            )
-                        )
-                    },
-                    shape = CircleShape
-                )
-                .clip(CircleShape)
-                .then(
-                    if (dayInfo.isToday && !dayInfo.isCheckedIn) {
-                        Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                    } else {
-                        Modifier
-                    }
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            if (dayInfo.isCheckedIn) {
-                Icon(
-                    imageVector = Icons.Default.CheckCircle,
-                    contentDescription = stringResource(R.string.cd_checked_in),
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.White
-                )
-            } else {
-                Text(
-                    text = dayNumber,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = if (dayInfo.isToday) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    }
-                )
-            }
+        if (dayInfo.isCheckedIn) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = Color(0xFF00E676)
+            )
+        } else {
+            Text(
+                text = dayNumber,
+                fontSize = 13.sp,
+                color = if (dayInfo.isToday) Color(0xFF00B0FF) else Color.White.copy(alpha = 0.2f),
+                fontWeight = if (dayInfo.isToday) FontWeight.Black else FontWeight.Normal
+            )
         }
     }
 }
@@ -915,93 +853,55 @@ data class DayInfo(
     val dayOfWeek: String
 )
 
-
-// 执行打卡逻辑
 private fun performCheckIn(
-    context: android.content.Context,
-    alreadyCheckedIn: Boolean,
+    context: android.content.Context, 
+    alreadyCheckedIn: Boolean, 
     onSuccess: (coins: Int, days: Int) -> Unit
 ) {
     if (alreadyCheckedIn) return
     
-    // 获取上次打卡日期 - 使用系统时区
     val prefs = context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE)
-    val lastCheckInDate = prefs.getString("last_check_in_date", "")
-    val calendar = Calendar.getInstance() // 使用系统时区
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
-        timeZone = calendar.timeZone // 明确使用系统时区
-    }
+    val calendar = Calendar.getInstance()
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply { timeZone = calendar.timeZone }
     val currentDate = dateFormat.format(calendar.time)
+    
+    val lastCheckInDate = prefs.getString("last_check_in_date", "")
     val lastConsecutiveDays = prefs.getInt("consecutive_days", 0)
     
-    // 计算连续打卡天数
-    val consecutiveDays = if (lastCheckInDate == currentDate) {
-        // 今天已经打卡过了
-        lastConsecutiveDays
+    val yesterday = Calendar.getInstance().apply {
+        timeZone = calendar.timeZone
+        add(Calendar.DAY_OF_YEAR, -1)
+    }
+    val yesterdayStr = dateFormat.format(yesterday.time)
+    
+    val consecutiveDays = if (lastCheckInDate == yesterdayStr) {
+        lastConsecutiveDays + 1
     } else {
-        val yesterday = Calendar.getInstance().apply {
-            timeZone = calendar.timeZone // 确保使用相同的时区
-            add(Calendar.DAY_OF_YEAR, -1)
-        }
-        val yesterdayStr = dateFormat.format(yesterday.time)
-        
-        if (lastCheckInDate == yesterdayStr) {
-            // 连续打卡
-            lastConsecutiveDays + 1
-        } else {
-            // 中断了，重新开始
-            1
-        }
+        1
     }
     
-    // 计算奖励金币（基础10金币 + 连续天数奖励，最多50金币）
-    val baseCoins = 10
-    val bonusCoins = (consecutiveDays * 2).coerceAtMost(40)
-    val totalCoins = (baseCoins + bonusCoins).coerceAtMost(50)
+    val totalCoins = (10 + (consecutiveDays * 2).coerceAtMost(40)).coerceAtMost(50)
     
-    // 保存打卡记录 - 同时保存到日期集合中
     val checkedInDates = prefs.getStringSet("checked_in_dates", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
     checkedInDates.add(currentDate)
     
-    // 清理7天前的记录（每周更新）- 使用系统时区
-    val cleanCalendar = Calendar.getInstance()
-    cleanCalendar.timeZone = calendar.timeZone // 使用相同的系统时区
-    val cleanDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
-        timeZone = calendar.timeZone
-    }
-    val sevenDaysAgo = cleanCalendar.apply {
-        add(Calendar.DAY_OF_YEAR, -7)
-    }.time
-    checkedInDates.removeAll { dateStr ->
-        try {
-            val date = cleanDateFormat.parse(dateStr)
-            date != null && date.before(sevenDaysAgo)
-        } catch (e: Exception) {
-            false
-        }
-    }
-    
-    // 如果日期改变，重置今日奖励
     val lastCoinsDate = prefs.getString("last_coins_date", "")
     val editor = prefs.edit()
         .putString("last_check_in_date", currentDate)
         .putInt("consecutive_days", consecutiveDays)
         .putStringSet("checked_in_dates", checkedInDates)
     
-    // 只有今天第一次打卡时才保存奖励，如果日期变了说明是新的一天
     if (lastCoinsDate != currentDate) {
         editor.putInt("today_coins", totalCoins)
             .putString("last_coins_date", currentDate)
-    } else {
-        // 如果今天已经打卡过，保持之前的奖励
-        editor.putInt("today_coins", prefs.getInt("today_coins", totalCoins))
     }
     
     editor.apply()
     
-    // 增加金币到总分数
-    LevelProgressManager.saveTotalMergeScore(context, totalCoins)
+    // 启动 10秒预热 + 双倍金币 Buff (3分 + 1分 * 连签天数)
+    val buffSeconds = LevelProgressManager.calculateBuffDuration(consecutiveDays)
+    LevelProgressManager.activateDoubleCoinsBuff(context, buffSeconds)
     
-    // 回调
+    LevelProgressManager.saveTotalMergeScore(context, totalCoins)
     onSuccess(totalCoins, consecutiveDays)
 }

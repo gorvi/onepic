@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">ปริศนาดวงดาว</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">ปี 2077 พลังงานของโลกหมดลง อารยธรรมที่เคยยิ่งใหญ่ยืนอยู่บนขอบของการสูญพันธุ์\n\nคุณคือผู้บัญชาการของ \'โครงการเรือโนอาห์\' ความหวังเดียวของเราคือการรวบรวมแกนพลังงานดึกดำบรรพ์ที่กระจัดกระจายทั่วโลก เพื่อสร้างยานที่สามารถข้ามดาราจักร\n\nทุกปริศนาที่ถูกฟื้นฟูให้พลังดิจิทัลเพื่อจุดเครื่องยนต์วาร์ป รวบรวมพลังงาน สร้างพิมพ์เขียวใหม่ และนำมนุษยชาติข้ามดวงดาวไปหาบ้านใหม่</string>
+    <string name="intro_button">เริ่มต้นการเดินทาง</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">ปิด</string>
     <string name="cancel">ยกเลิก</string>
     <string name="confirm">ยืนยัน</string>
     <string name="settings">การตั้งค่า</string>
     <string name="about">เกี่ยวกับ</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">เอฟเฟกต์เสียง</string>
     <string name="sound_effects_desc">เปิด/ปิดเอฟเฟกต์เสียงของเกม</string>
     <string name="language">ภาษา</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">รอการซิงค์รายวัน</string>
+    <string name="check_in_energy_active">พลังงานดาว: เปิดใช้งานแล้ว</string>
+    <string name="check_in_energy_activate">แตะเพื่อรับพลังงานดาว</string>
+    <string name="check_in_days_suffix">%1$d วัน</string>
+    <string name="check_in_pending">รอดำเนินการ</string>
+    <string name="check_in_station_log">บันทึกสถานี: 30 วันล่าสุด</string>
+    <string name="today_earned">ได้รับวันนี้</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">เหรียญสองเท่า: ใช้งานอยู่</string>
+    <string name="buff_overclocking">ตัวเก็บเหรียญโอเวอร์คล็อก...</string>
+    <string name="buff_ready">ตัวเก็บเหรียญ: พร้อม</string>
+    <string name="buff_waiting">สถานะ: รอการ deploy</string>
+    <string name="buff_activate">เปิดใช้</string>
+    <string name="buff_duration_rule">กฎเวลา: 3 นาทีฐาน + 1 นาทีต่อวันติดกัน</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">โครงการอพยพ: ความสมบูรณ์</string>
+    <string name="asc_status_synthesizing">สถานะ: กำลังสังเคราะห์</string>
+    <string name="asc_fragments_count">%1$d / %2$d ชิ้นส่วน</string>
+    <string name="asc_tab_memories">ความทรงจำ</string>
+    <string name="asc_tab_blueprint">พิมพ์เขียว</string>
+    <string name="asc_memory_title">ความทรงจำเข้ารหัส</string>
+    <string name="asc_memory_desc">ปลดล็อกเพื่ออ่านเรื่องราว</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">กระดูกงูควอนตัม</string>
+    <string name="mod_1">หัวปฏิกรณ์ฟิวชัน</string>
+    <string name="mod_2">ห้องนักบินประสาท</string>
+    <string name="mod_3">ห้องไครโอสตาซิส</string>
+    <string name="mod_4">โดมชีวภาพ</string>
+    <string name="mod_5">โล่สุญญากาศ</string>
+    <string name="mod_6">ไฮเปอร์เซนเซอร์</string>
+    <string name="mod_7">ไอออน Thruster</string>
+    <string name="mod_8">หอสื่อสาร</string>
+    <string name="mod_9">ห้องสมุด Genesis</string>
+    <string name="mod_10">Warp Drive</string>
+    <string name="mod_11">กุญแจปล่อย</string>
+    <string name="mod_12">โครงการอพยพ</string>
+    <string name="mod_status_online">ออนไลน์</string>
+    <string name="mod_status_constructing">กำลังสร้าง</string>
+    <string name="mod_detail_online">สถานะ: โมดูลสร้างและรวมแล้ว\nความสมบูรณ์: 100%\nการเข้าถึง: ปลดล็อกแล้ว</string>
+    <string name="mod_detail_constructing">สถานะ: กำลังสังเคราะห์\n\nความคืบหน้าทั้งหมด: %1$d/10 ชิ้นส่วน\n\n- เมทริกซ์คลาสสิก: %2$d/5\n- ลิงก์ขั้นสูง: %3$d/5\n\nเป้าหมาย: ความมั่นคงของโครงสร้าง</string>
+    <string name="mod_close">ปิด</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">เหรียญสองเท่า: ใช้งานอยู่</string>
+    <string name="hud_buff_warming">ระบบกำลังวอร์ม...</string>
+    <string name="hud_buff_hint_prepare">เตรียมเริ่มเกม</string>
+    <string name="hud_buff_hint_overclock">ตัวเก็บโอเวอร์คล็อก</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">การตื่น: จุดเริ่มต้น</string>
+    <string name="level_tutorial_story">นักเดินทางนิรันดร์ตื่นในวิหารดิจิทัล พร้อมสำหรับภารกิจแรก</string>
+    <string name="level_tutorial_title_asc">การตื่น: จุดเริ่มต้น (ขยาย)</string>
+    <string name="level_tutorial_story_asc">ภารกิจจำลองขั้นสูงแรกของผู้บัญชาการ</string>
     <string name="clear_data">ล้างข้อมูล</string>
     <string name="clear_data_desc">รีเซ็ตความคืบหน้าเกมทั้งหมด</string>
     <string name="clear_data_confirm_title">ล้างข้อมูล</string>
     <string name="clear_data_confirm_message">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลเกมทั้งหมด?\n\nสิ่งนี้จะลบ:\n• ความคืบหน้าทุกระดับ\n• ดาวและเหรียญ\n• บันทึกการเช็คอิน\n• เวลาที่ดีที่สุด\n\nการกระทำนี้ไม่สามารถยกเลิกได้!</string>
     <string name="clear_data_confirm">ล้าง</string>
-    
-    <!-- About -->
     <string name="about_title">เกี่ยวกับ OnePic</string>
     <string name="version">เวอร์ชัน</string>
     <string name="build_number">หมายเลขบิลด์</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">คำอธิบายแอป</string>
     <string name="app_description">OnePic เป็นเกมปริศนาที่สวยงามที่ให้โหมดเกมหลายแบบและความท้าทายระดับที่หลากหลาย ทำปริศนาภาพที่สวยงามให้เสร็จโดยการลากและรวมชิ้นส่วนปริศนา</string>
     <string name="changelog_title">บันทึกการเปลี่ยนแปลง</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">ศูนย์ส่วนตัว</string>
     <string name="puzzle_master">ปรมาจารย์ปริศนา</string>
     <string name="completed">เสร็จสมบูรณ์</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">อัตราการเสร็จสมบูรณ์</string>
     <string name="classic">คลาสสิก</string>
     <string name="gallery">แกลเลอรี</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">หน้าแรก</string>
+    <string name="nav_galaxy">การยกระดับ</string>
     <string name="nav_checkin">เช็คอิน</string>
     <string name="nav_personal_center">โปรไฟล์</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">เช็คอินรายวัน</string>
     <string name="checked_in_today">เช็คอินวันนี้แล้ว</string>
     <string name="earned">ได้รับ</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 รางวัลการเช็คอิน</string>
     <string name="check_in_reward_desc">รับ 10-50 เหรียญทุกวัน\nวันติดต่อกันมากขึ้น = รางวัลมากขึ้น!</string>
     <string name="week_check_in_history">ประวัติการเช็คอิน 7 วัน</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">สมบูรณ์แบบ!</string>
     <string name="great">ยอดเยี่ยม!</string>
     <string name="keep_going">ทำต่อไป!</string>
     <string name="points">คะแนน</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">ดูโฆษณาเพื่อรับสองเท่า</string>
+    <string name="ad_double_claimed">รับ 2 เท่าแล้ว!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• เปิดตัวครั้งแรก</string>
     <string name="changelog_item_2">• โหมดคลาสสิกและแกลเลอรี</string>
     <string name="changelog_item_3">• ฟีเจอร์เช็คอินรายวัน</string>
     <string name="changelog_item_4">• เอฟเฟกต์เสียงและการตอบสนองแบบสัมผัส</string>
     <string name="changelog_item_5">• รองรับหลายภาษา (จีน/อังกฤษ)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">อวตาร</string>
     <string name="cd_check_in">เช็คอิน</string>
     <string name="cd_checked_in">เช็คอินแล้ว</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">ถัดไป</string>
     <string name="cd_scroll_to_current">เลื่อนไปยังระดับปัจจุบัน</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">ยินดีต้อนรับ ผู้บัญชาการ!</string>
+    <string name="tut_step_1">ลากชิ้นที่ 2 ไปตำแหน่ง 4 เพื่อสลับ!</string>
+    <string name="tut_step_double_tap">แตะสองครั้งเพื่อแยกชิ้นที่รวมแล้ว!</string>
+    <string name="tut_drag">ลากชิ้นเพื่อรวม</string>
+    <string name="tut_double_tap">แตะสองครั้งเพื่อแยก</string>
+    <string name="tut_node_title">คู่มือมือใหม่</string>
+    
     <string name="weekday_sunday">อา</string>
     <string name="weekday_monday">จ</string>
     <string name="weekday_tuesday">อ</string>
@@ -92,4 +164,47 @@
     <string name="weekday_thursday">พฤ</string>
     <string name="weekday_friday">ศ</string>
     <string name="weekday_saturday">ส</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 ผู้บัญชาการ การฝึกพื้นฐานเสร็จแล้ว แตะ \"การยกระดับ\" ด้านล่างเพื่อเริ่มการเดินทางจริง!</string>
+    <string name="guide_chapter1_hint">💡 จำลองขั้นสูงเสร็จ! ซิงค์เสถียร บทที่ 1 \"จุดกำเนิด\" เปิดใช้งานแล้ว พร้อม deploy!</string>
+    <string name="edit_nickname">แก้ไขชื่อเล่น</string>
+    <string name="enter_nickname">ใส่ชื่อเล่นใหม่</string>
+    <string name="save">บันทึก</string>
+    <string name="nickname_too_short">ชื่อเล่นต้องมีอย่างน้อย 2 ตัวอักษร</string>
+    <string name="nickname_too_long">ชื่อเล่นต้องไม่เกิน 12 ตัวอักษร</string>
+    <string name="hint_use_free">ใช้คำใบ้ฟรีรายวันแล้ว! ✨</string>
+    <string name="hint_confirm_title">ใช้คำใบ้?</string>
+    <string name="hint_confirm_msg">ใช้ 100 เหรียญเพื่อคำใบ้?\nยอดคงเหลือ: %1$d 🪙</string>
+    <string name="hint_confirm_yes">ใช่ (-100)</string>
+    <string name="hint_not_enough">เหรียญไม่พอ!</string>
+    <string name="ad_reward_toast">ดูวิดีโอเต็มเพื่อรับ +%1$d 🪙</string>
+    <string name="ad_reward_received">รับรางวัล: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">กรุณารอ %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">บทที่ 1: กระดูกงูควอนตัม · สันหลังแห่งการตื่น</string>
+    <string name="chapter_2">บทที่ 2: แกนฟิวชัน · ประกายนิรันดร์</string>
+    <string name="chapter_3">บทที่ 3: ห้องนักบินประสาท · กระจกสำนึก</string>
+    <string name="chapter_4">บทที่ 4: ห้องไครโอ · ความฝันฤดูหนาวนิรันดร์</string>
+    <string name="chapter_5">บทที่ 5: วงจรนิเวศ · ความหวังมรกต</string>
+    <string name="chapter_6">บทที่ 6: โล่สุญญากาศ · ปีกทะลุฟ้า</string>
+    <string name="chapter_7">บทที่ 7: เรดาร์ไฮเปอร์ · ดวงตาแห่งความจริง</string>
+    <string name="chapter_8">บทที่ 8: ไอออน Thruster · กระแสทะลุฟ้า</string>
+    <string name="chapter_9">บทที่ 9: หอสื่อสารดาว · การสั่นพ้องจักรวาล</string>
+    <string name="chapter_10">บทที่ 10: คลังเมล็ดอารยธรรม · วิหารความทรงจำ</string>
+    <string name="chapter_11">บทที่ 11: เครื่องยนต์ความโค้ง · เสียงสะท้อนกาลอวกาศ</string>
+    <string name="chapter_12">บทที่ 12: กุญแจปล่อย · โหมโรงสุดท้าย</string>
+    <string name="chapter_coming_soon">เร็วๆ นี้...</string>
+    <string name="ad_label">โฆษณา</string>
+    <string name="share_app">แชร์แอป</string>
+    <string name="share_message">ลองเล่น OnePic ดูสิ! เกมพัซเซิลแสนสวยบน Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="daily_reminder">แจ้งเตือนรายวัน</string>
+    <string name="daily_reminder_channel_name">แจ้งเตือนตัวต่อ</string>
+    <string name="daily_reminder_channel_desc">แจ้งเตือนรายวันเพื่อให้กลับมาต่อภาพให้เสร็จ</string>
+    <string name="daily_reminder_title_1">ได้เวลาต่อภาพแล้ว!</string>
+    <string name="daily_reminder_msg_1">สมองของคุณต้องการการพักผ่อน กลับมาไขปริศนาตัวต่อกันเถอะ! 🧩</string>
+    <string name="daily_reminder_title_2">ผู้บัญชาการ ความท้าทายใหม่รออยู่!</string>
+    <string name="daily_reminder_msg_2">อย่าปล่อยให้ชิ้นส่วนต้องรอ! ปลดล็อกความทรงจำเพิ่มเติมวันนี้ 🚀</string>
+    <string name="daily_reminder_title_3">พลังงานดวงดาวต่ำ!</string>
+    <string name="daily_reminder_msg_3">ยาน Ark ต้องการพลังงานของคุณเพื่อนำทาง เข้าร่วมภารกิจทันที! ✨</string>
 </resources>

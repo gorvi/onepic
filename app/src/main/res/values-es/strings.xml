@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Puzzle Estelar</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">El año 2077. La energía de la Tierra se ha agotado y la otrora gran civilización está al borde de la extinción.\n\nEres el Comandante de la \'Iniciativa del Arca.\' Nuestra única esperanza es reunir los núcleos de energía primigenia dispersos por el globo para forjar una nave capaz de cruzar la galaxia.\n\nCada puzzle restaurado aporta la energía digital para encender los motores warp. Reúne la energía, reconstruye los planos y guía a la humanidad entre las estrellas hacia nuestro nuevo hogar.</string>
+    <string name="intro_button">Iniciar viaje</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Cerrar</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
     <string name="settings">Configuración</string>
     <string name="about">Acerca de</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Efectos de sonido</string>
     <string name="sound_effects_desc">Activar/desactivar efectos de sonido del juego</string>
     <string name="language">Idioma</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">Sincronización diaria requerida</string>
+    <string name="check_in_energy_active">Energía estelar: Activa</string>
+    <string name="check_in_energy_activate">Toca para obtener energía estelar</string>
+    <string name="check_in_days_suffix">%1$d días</string>
+    <string name="check_in_pending">Pendiente</string>
+    <string name="check_in_station_log">Registro de estación: Últimos 30 días</string>
+    <string name="today_earned">Obtenido hoy</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">Monedas dobles: Activo</string>
+    <string name="buff_overclocking">Recolector overclock en marcha...</string>
+    <string name="buff_ready">Recolector de monedas: Listo</string>
+    <string name="buff_waiting">Estado: Esperando despliegue</string>
+    <string name="buff_activate">Activar</string>
+    <string name="buff_duration_rule">Duración: 3 min base + 1 min por día consecutivo</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">Proyecto Éxodo: Integridad</string>
+    <string name="asc_status_synthesizing">Estado: Sintetizando</string>
+    <string name="asc_fragments_count">%1$d / %2$d fragmentos</string>
+    <string name="asc_tab_memories">Recuerdos</string>
+    <string name="asc_tab_blueprint">Plano</string>
+    <string name="asc_memory_title">Memoria codificada</string>
+    <string name="asc_memory_desc">Desbloquea para leer la historia.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Quilla cuántica</string>
+    <string name="mod_1">Corazón del reactor de fusión</string>
+    <string name="mod_2">Cabina de enlace neural</string>
+    <string name="mod_3">Sala de criostasis</string>
+    <string name="mod_4">El biodomo</string>
+    <string name="mod_5">Escudos del vacío</string>
+    <string name="mod_6">Hiper-sensores</string>
+    <string name="mod_7">Propulsores iónicos</string>
+    <string name="mod_8">Torre de comunicación</string>
+    <string name="mod_9">Biblioteca Génesis</string>
+    <string name="mod_10">Motor warp</string>
+    <string name="mod_11">La llave de arranque</string>
+    <string name="mod_12">Proyecto Éxodo</string>
+    <string name="mod_status_online">EN LÍNEA</string>
+    <string name="mod_status_constructing">CONSTRUYENDO</string>
+    <string name="mod_detail_online">Estado: Módulo construido e integrado\nIntegridad: 100%\nAcceso: Activo estratégico desbloqueado</string>
+    <string name="mod_detail_constructing">Estado: Síntesis en curso\n\nProgreso total: %1$d/10 fragmentos\n\n- Matriz clásica: %2$d/5\n- Enlace ascendido: %3$d/5\n\nObjetivo: Estabilización estructural</string>
+    <string name="mod_close">CERRAR</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">Monedas dobles: Activo</string>
+    <string name="hud_buff_warming">Sistema calentando...</string>
+    <string name="hud_buff_hint_prepare">Prepara el inicio del juego</string>
+    <string name="hud_buff_hint_overclock">Recolector overclock</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Despertar: Origen</string>
+    <string name="level_tutorial_story">El Viajero Eterno despierta en el Templo Digital, preparándose para su primera misión.</string>
+    <string name="level_tutorial_title_asc">Despertar: Origen (Extendido)</string>
+    <string name="level_tutorial_story_asc">Primera simulación avanzada del Comandante.</string>
     <string name="clear_data">Borrar datos</string>
     <string name="clear_data_desc">Restablecer todo el progreso del juego</string>
     <string name="clear_data_confirm_title">Borrar datos</string>
     <string name="clear_data_confirm_message">¿Estás seguro de que quieres borrar todos los datos del juego?\n\nEsto eliminará:\n• Todo el progreso de niveles\n• Estrellas y monedas\n• Registros de check-in\n• Mejores tiempos\n\n¡Esta acción no se puede deshacer!</string>
     <string name="clear_data_confirm">Borrar</string>
-    
-    <!-- About -->
     <string name="about_title">Acerca de OnePic</string>
     <string name="version">Versión</string>
     <string name="build_number">Número de compilación</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Descripción de la aplicación</string>
     <string name="app_description">OnePic es un hermoso juego de rompecabezas que ofrece múltiples modos de juego y desafíos de nivel ricos. Completa hermosos rompecabezas de imágenes arrastrando y combinando piezas del rompecabezas.</string>
     <string name="changelog_title">Registro de cambios</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Centro personal</string>
     <string name="puzzle_master">Maestro de rompecabezas</string>
     <string name="completed">Completado</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Tasa de finalización</string>
     <string name="classic">Clásico</string>
     <string name="gallery">Galería</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Inicio</string>
+    <string name="nav_galaxy">Ascensión</string>
     <string name="nav_checkin">Registro</string>
     <string name="nav_personal_center">Perfil</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Registro diario</string>
     <string name="checked_in_today">Registrado hoy</string>
     <string name="earned">Ganado</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Recompensas de registro</string>
     <string name="check_in_reward_desc">Gana 10-50 monedas diarias\n¡Más días consecutivos = más recompensas!</string>
     <string name="week_check_in_history">Historial de registro de 7 días</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">¡Perfecto!</string>
     <string name="great">¡Genial!</string>
     <string name="keep_going">¡Sigue así!</string>
     <string name="points">pts</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Ver anuncio para doblar</string>
+    <string name="ad_double_claimed">¡Doble reclamado!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Lanzamiento inicial</string>
     <string name="changelog_item_2">• Modos Clásico y Galería</string>
     <string name="changelog_item_3">• Función de registro diario</string>
     <string name="changelog_item_4">• Efectos de sonido y retroalimentación háptica</string>
     <string name="changelog_item_5">• Soporte multiidioma (Chino/Inglés)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Avatar</string>
     <string name="cd_check_in">Registro</string>
     <string name="cd_checked_in">Registrado</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Siguiente</string>
     <string name="cd_scroll_to_current">Desplazarse al nivel actual</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">¡Bienvenido, Comandante!</string>
+    <string name="tut_step_1">¡Arrastra la pieza 2 a la posición 4 para intercambiar!</string>
+    <string name="tut_step_double_tap">¡Doble toque para separar piezas unidas!</string>
+    <string name="tut_drag">Arrastra piezas para unir</string>
+    <string name="tut_double_tap">Doble toque para separar</string>
+    <string name="tut_node_title">Guía para principiantes</string>
+    
     <string name="weekday_sunday">Dom</string>
     <string name="weekday_monday">Lun</string>
     <string name="weekday_tuesday">Mar</string>
@@ -92,4 +164,48 @@
     <string name="weekday_thursday">Jue</string>
     <string name="weekday_friday">Vie</string>
     <string name="weekday_saturday">Sáb</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Comandante, entrenamiento básico completado. ¡Toca \"Ascensión\" abajo para empezar el viaje real!</string>
+    <string name="guide_chapter1_hint">💡 ¡Simulación avanzada completada! Sincronización estable. Capítulo 1 \"El Origen\" activo. ¡Listo para desplegar!</string>
+    <string name="edit_nickname">Editar apodo</string>
+    <string name="enter_nickname">Introduce nuevo apodo</string>
+    <string name="save">Guardar</string>
+    <string name="nickname_too_short">El apodo debe tener al menos 2 caracteres</string>
+    <string name="nickname_too_long">El apodo no puede superar 12 caracteres</string>
+    <string name="hint_use_free">¡Pista gratuita diaria usada! ✨</string>
+    <string name="hint_confirm_title">¿Usar pista?</string>
+    <string name="hint_confirm_msg">¿Gastar 100 monedas en una pista?\nSaldo: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Sí (-100)</string>
+    <string name="hint_not_enough">¡Monedas insuficientes!</string>
+    <string name="ad_reward_toast">Ver vídeo completo para ganar +%1$d 🪙</string>
+    <string name="ad_reward_received">Recompensa recibida: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Espera %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Capítulo 1: Quilla cuántica · Espina del despertar</string>
+    <string name="chapter_2">Capítulo 2: Núcleo de fusión · Chispa eterna</string>
+    <string name="chapter_3">Capítulo 3: Cabina neural · Espejo de consciencia</string>
+    <string name="chapter_4">Capítulo 4: Sala de hibernación · Sueño del invierno eterno</string>
+    <string name="chapter_5">Capítulo 5: Bucle ecológico · Esperanza esmeralda</string>
+    <string name="chapter_6">Capítulo 6: Escudo del vacío · Ala que alcanza el cielo</string>
+    <string name="chapter_7">Capítulo 7: Radar hiper-sensor · Ojo de la verdad</string>
+    <string name="chapter_8">Capítulo 8: Propulsor iónico · Corriente que rompe el cielo</string>
+    <string name="chapter_9">Capítulo 9: Torre del habla estelar · Resonancia cósmica</string>
+    <string name="chapter_10">Capítulo 10: Repositorio de semillas de civilización · Templo de la memoria</string>
+    <string name="chapter_11">Capítulo 11: Motor de curvatura · Eco del espacio-tiempo</string>
+    <string name="chapter_12">Capítulo 12: Llave de arranque · Preludio final</string>
+    <string name="chapter_coming_soon">Próximamente...</string>
+    <string name="ad_label">Anuncio</string>
+    <string name="share_app">Compartir aplicación</string>
+    <string name="share_message">¡Echa un vistazo a OnePic! Un hermoso juego de puzzle en Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="daily_reminder">Recordatorio diario</string>
+    <string name="daily_reminder_channel_name">Recordatorios de puzles</string>
+    <string name="daily_reminder_channel_desc">Recordatorios diarios para volver y completar puzles.</string>
+    <string name="daily_reminder_title_1">¡Hora de puzles!</string>
+    <string name="daily_reminder_msg_1">Tu cerebro necesita un descanso. ¡Vuelve y resuelve un puzle! 🧩</string>
+    <string name="daily_reminder_title_2">¡Comandante, nuevos desafíos esperan!</string>
+    <string name="daily_reminder_msg_2">¡No hagas esperar a los fragmentos! Desbloquea más recuerdos hoy. 🚀</string>
+    <string name="daily_reminder_title_3">¡Energía estelar baja!</string>
+    <string name="daily_reminder_msg_3">El Arca necesita tu energía para iluminar el camino. ¡Unete ahora! ✨</string>
 </resources>

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Hạt giống Cây Thế giới",
+    "story_text": "Những hạt giống của Cây Thế giới trôi dạt trong hư không, bắt đầu cuộc hành trình của vạn vật.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Thánh đường Ánh sáng",
+    "story_text": "Một thánh đường nơi ánh sáng và sắc xanh đan xen, nơi vạn vật tìm thấy sự bình yên cho linh hồn.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Rừng bình minh",
+    "story_text": "Bình minh xuyên qua sương mù, đánh thức rừng già.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Lời thì thầm của hổ phách",
+    "story_text": "Khi mùa trôi qua, lá hổ phách thì thầm những câu chuyện về quá khứ.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Ngọc Thiền",
+    "story_text": "Cây tre đung đưa nhẹ nhàng, mang đến khoảnh khắc thiền định trong thế giới xanh tươi.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Ruộng bậc thang mây",
+    "story_text": "Sóng ngọc lục bảo đổ xuống sườn núi, lớp này qua lớp khác.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "cồn cát rực lửa",
+    "story_text": "Mặt trời thiêu đốt rèn giũa những cồn cát nhưng sự sống vẫn khuấy động trên vùng đất cằn cỗi này.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Biên giới vĩnh cửu",
+    "story_text": "Nơi đất liền và biển kết thúc, một cuộc hành trình mới bắt đầu vào nơi chưa biết.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Sói thần",
+    "story_text": "Sâu trong vùng đồng bằng tuyết, linh sói âm thầm bảo vệ sự thuần khiết.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Cáo Ánh trăng",
+    "story_text": "Ánh trăng tỏa sáng bạc khi cáo linh hồn lang thang trong khu rừng nửa đêm.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Phượng hoàng cầu vồng",
+    "story_text": "Những đôi cánh óng ánh cắt ngang bầu trời xanh, để lại vệt cầu vồng.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Hiền nhân gấu trúc",
+    "story_text": "Phía trên biển mây, nhà hiền triết gấu trúc thiền định về trí tuệ cổ xưa.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Rừng hổ",
+    "story_text": "Dưới những bóng tối lốm đốm, sức mạnh ẩn giấu trong sự kiên nhẫn thầm lặng.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Linh hồn Ganesha",
+    "story_text": "Vượt qua dòng sông thời gian, linh hồn voi nhận ra sự thật của thế giới.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Vua rừng",
+    "story_text": "Vua rừng đứng ở đây, mọi sinh vật đều nín thở dưới ánh mắt của hắn.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Thunderbird",
+    "story_text": "Lính gác ở đỉnh cao khảo sát vùng đất rộng lớn hùng vĩ bên dưới.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "chạm khắc cổ",
+    "story_text": "Những bức chạm khắc bị chôn vùi theo thời gian ghi lại lời thì thầm của tổ tiên.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Kim tự tháp đường sao",
+    "story_text": "Một kỳ quan hình học trên sa mạc thiêu đốt, đứng im lặng hàng thiên niên kỷ.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Cổng ánh sáng Petra",
+    "story_text": "Trên bức tường đá, hơi ấm của nền văn minh lan tỏa trong tảng đá đỏ.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Machu Picchu bị mất",
+    "story_text": "Thành phố trên đỉnh mây che phủ, lạc vào trong nếp gấp của thời gian và không gian.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Rồng đá",
+    "story_text": "Rồng đá uốn lượn theo sườn núi, trấn giữ vùng đất cổ.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Đấu trường anh hùng",
+    "story_text": "Đấu trường hoang tàn vang vọng những sử thi hào hùng của ngày xưa.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Mái vòm ánh sáng",
+    "story_text": "Ánh sáng thiêng liêng bên dưới mái vòm đã chứng kiến ​​sự thăng trầm của vô số nền văn minh.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Thư viện vô hạn",
+    "story_text": "Một vòng xoáy kiến ​​thức vươn tới bầu trời, những cuộn giấy cổ chứa đựng những sự thật đã mất.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Khu vườn mơ ước",
+    "story_text": "Một khu vườn lơ lửng giữa trời và đất, một bản giao hưởng đã mất của thiên nhiên.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Ngọn tháp tiên tri",
+    "story_text": "Tảng đá nguyên khối khổng lồ trên đỉnh núi dẫn đường cho người lạc lối qua sa mạc đỏ.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Cánh buồm trên bầu trời",
+    "story_text": "Những cánh buồm trắng ở bến cảng hướng tới những chân trời chưa biết.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Vòng xoắn sinh học mạng",
+    "story_text": "Đèn neon và dây leo đan xen trong ngọn tháp tương lai—thở thiên nhiên trong thời đại cyberpunk.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Chiếc hòm thời gian",
+    "story_text": "Một siêu đô thị bay trên mặt biển chạng vạng, con tàu chở thời gian.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Cá heo phát sáng",
+    "story_text": "Những hình dáng duyên dáng trên biển, nhảy múa trong những xung tím đậm.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "San hô huỳnh quang",
+    "story_text": "Dưới đáy đại dương, những rạn san hô dệt nên một khu vườn mộng mơ vạn hoa.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "Giấc ngủ rồng băng",
+    "story_text": "Bên dưới dòng nước lạnh giá, lính gác của con rồng băng cổ xưa đang ngủ say.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Con tàu đắm ma",
+    "story_text": "Đống đổ nát bị sóng bỏ rơi, lặng lẽ kể lại chương cuối của thời đại cánh buồm.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Cá voi vũ trụ",
+    "story_text": "Ở ranh giới của biển và các vì sao, cá voi lớn mang theo tia sáng của nền văn minh về phía trước.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Kraken hư không",
+    "story_text": "Trong vực thẳm giữa thực tế và ảo ảnh, các xúc tu dệt nên một mạng lưới dữ liệu.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Sứa ma",
+    "story_text": "Những luồng ánh sáng trong bóng tối, như ngọn lửa thần tiên bập bùng lúc nửa đêm.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Atlantis",
+    "story_text": "Atlantis bị phong ấn một lần nữa bộc lộ vinh quang trước đây của nó dưới đáy biển sâu.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "lò rèn lõi",
+    "story_text": "Các lỗ thông hơi nhiệt sâu bên trong lớp vỏ sinh ra những bông hoa sự sống ngoài sức tưởng tượng.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Lửa và Băng",
+    "story_text": "Dung nham đỏ đổ xuống vùng nước băng giá—cuộc đọ sức cuối cùng giữa lửa và nước.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Cuộc sống bị cấm",
+    "story_text": "Trong vùng cấm của cuộc đời, trật tự cổ xưa vẫn lặng lẽ xoay chuyển.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Phượng hoàng niết bàn",
+    "story_text": "Nổi lên từ than hồng của thế giới cũ, phượng hoàng có được sự sống vĩnh cửu nhờ ngọn lửa.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Rồng sao",
+    "story_text": "Người canh giữ thời gian, canh giữ ranh giới của những giấc mơ thông qua quỹ đạo của các vì sao.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Tấm màn thiên thể",
+    "story_text": "Bụi sao như sợi chỉ, cực quang như chùm lông vũ—cô ấy là tiếng vang vĩnh cửu của thời đại mộng mơ.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Vòng xoáy thời gian",
+    "story_text": "Thời gian tan biến trong giấc mơ, cầu thang xoắn ốc dẫn tới cõi vĩnh hằng.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Thác Nước Ngược",
+    "story_text": "Trọng lực chỉ là một đám mây thoáng qua—thác nước giờ đây chảy về phía đại dương trên bầu trời.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Mê cung pha lê",
+    "story_text": "Giữa vũ điệu của ánh sáng và bóng tối, mê cung pha lê phản chiếu chiều sâu tâm hồn.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Thư viện đám mây",
+    "story_text": "Thư viện huyền thoại trên bầu trời, nơi mọi câu chuyện cất cánh.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Đảo trọng lực",
+    "story_text": "Ở rìa nơi trọng lực không còn, những hòn đảo nổi lặng lẽ trôi qua biển mây.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Kích thước đồng hồ",
+    "story_text": "Một bài thánh ca công nghiệp của bánh răng và hơi nước, quay không ngừng trong chiều hướng của những giấc mơ.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Đất Mẹ: Xanh thẳm",
+    "story_text": "Trên bờ xa của các vì sao, chúng ta từng gọi đây là ngôi nhà—màu xanh đậm duy nhất.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Tiên phong đỏ",
+    "story_text": "Bên dưới lớp bụi đỏ gỉ, tia lửa của nền văn minh bùng cháy trên ngôi sao đỏ thẫm.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Nhẫn băng giá",
+    "story_text": "Những chiếc nhẫn băng giá—một dấu ấn vĩ đại của vũ trụ còn sót lại trong khoảng không.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "Hoàng hôn nhị phân",
+    "story_text": "Hai mặt trời lặn cùng nhau, tạo ra những cái bóng chồng lên nhau trên bầu trời xa lạ.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Ngôi sao không ngủ",
+    "story_text": "Hàng nghìn tỷ ánh sáng hội tụ thành dòng, mã hóa tương lai trên ngôi sao không ngủ này.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "siêu tân tinh",
+    "story_text": "Một ngôi sao kết thúc trong sự rực rỡ tột cùng—cái chết dữ dội nhất trong vũ trụ và cả sự tái sinh.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Biển Thiên Hà",
+    "story_text": "Các ngôi sao tụ tập thành một biển thiên hà xoáy, mỗi làn sóng là một bản hùng ca của nền văn minh.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Trụ cột của sự sáng tạo",
+    "story_text": "Những tòa tháp sáng tạo xuyên qua tinh vân—cái nôi im lặng nuôi dưỡng những vì sao và kỳ quan.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Chân trời sự kiện",
+    "story_text": "Trong cái bẫy tối thượng của lực hấp dẫn, ngay cả ánh sáng cũng không thể thoát khỏi số phận định mệnh của nó.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Quá cảnh hố sâu",
+    "story_text": "Không-thời gian gấp lại để rút ngắn khoảng cách bao la, cho phép chúng ta nhảy tự do giữa các vì sao.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Con mắt của vũ trụ",
+    "story_text": "Ở rìa chân trời cuối cùng, vũ trụ mở ra con mắt lạnh lùng nhưng vĩ đại của nó.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

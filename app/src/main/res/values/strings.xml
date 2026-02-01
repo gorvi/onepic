@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Starry Puzzle</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">The year is 2077. Earth\'s energy is depleted, and the once-great civilization stands at the edge of extinction.\n\nYou are the Commander of the \'Ark Initiative.\' Our only hope lies in collecting the primal energy cores scattered across the globe to forge a vessel capable of crossing the galaxy.\n\nEvery restored puzzle provides the digital power to ignite the warp engines. Gather the energy, reconstruct the blueprints, and lead humanity across the stars to find our new home.</string>
+    <string name="intro_button">Begin Journey</string>
     
     <!-- Default strings (fallback to English) -->
     <string name="close">Close</string>
@@ -10,8 +14,82 @@
     <string name="sound_effects">Sound Effects</string>
     <string name="sound_effects_desc">Enable/disable game sound effects</string>
     <string name="language">Language</string>
-    <string name="language_chinese">中文</string>
+    <string name="language_chinese">简体中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+    <!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">DAILY_SYNCHRONIZATION_REQUIRED</string>
+    <string name="check_in_energy_active">ENERGY_SOURCE_ACTIVE</string>
+    <string name="check_in_energy_activate">ACTIVATE_STELLAR_ENERGY</string>
+    <string name="check_in_days_suffix">%1$d DAYS</string>
+    <string name="check_in_pending">PENDING</string>
+    <string name="check_in_station_log">STATION_LOG: RECENT_30_DAYS</string>
+    <string name="today_earned">TODAY_EARNED</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="buff_overclocking">OVERCLOCKING_SYSTEM_COLLECTOR...</string>
+    <string name="buff_ready">COIN_COLLECTOR: READY</string>
+    <string name="buff_waiting">STATUS: WAITING_FOR_DEPLOYMENT</string>
+    <string name="buff_activate">ACTIVATE</string>
+    <string name="buff_duration_rule">DURATION RULE: 3 MINS BASE + 1 MIN PER CONSECUTIVE DAY</string>
+
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">PROJECT EXODUS: INTEGRITY</string>
+    <string name="asc_status_synthesizing">STATUS: SYNTHESIZING</string>
+    <string name="asc_fragments_count">%1$d / %2$d FRAGMENTS</string>
+    <string name="asc_tab_memories">Memories</string>
+    <string name="asc_tab_blueprint">Blueprint</string>
+    <string name="asc_memory_title">Encoded Memory</string>
+    <string name="asc_memory_desc">Unlock to read the lore.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Quantum Keel</string>
+    <string name="mod_1">Fusion Reactor Heart</string>
+    <string name="mod_2">Neuro-Link Cockpit</string>
+    <string name="mod_3">Cryostasis Hall</string>
+    <string name="mod_4">The Bio-Dome</string>
+    <string name="mod_5">Void Shields</string>
+    <string name="mod_6">Hyper-Sensors</string>
+    <string name="mod_7">Ion Thrusters</string>
+    <string name="mod_8">Communication Spire</string>
+    <string name="mod_9">Genesis Library</string>
+    <string name="mod_10">Warp Drive</string>
+    <string name="mod_11">The Launch Key</string>
+    <string name="mod_12">Project Exodus</string>
+    <string name="mod_status_online">ONLINE</string>
+    <string name="mod_status_constructing">CONSTRUCTING</string>
+    <string name="mod_detail_online">Status: Module Constructed &amp; Integrated\nIntegrity: 100%\nAccess: Strategic Asset Unlocked</string>
+    <string name="mod_detail_constructing">Status: Synthesis In Progress\n\nTotal Progress: %1$d/10 Fragments\n\n- Classic Matrix: %2$d/5\n- Ascended Link: %3$d/5\n\nTarget: Structural Stabilization</string>
+    <string name="mod_close">CLOSE</string>
+
+    <!-- Global HUD -->
+    <string name="hud_buff_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="hud_buff_warming">SYSTEM_WARMING_UP...</string>
+    <string name="hud_buff_hint_prepare">PREPARE_FOR_GAME_START</string>
+    <string name="hud_buff_hint_overclock">OVERCLOCKING_COLLECTOR</string>
+
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Awakening: Origin</string>
+    <string name="level_tutorial_story">The Eternal Voyager awakens in the Digital Temple, preparing for its first mission.</string>
+    <string name="level_tutorial_title_asc">Awakening: Origin (Extended)</string>
+    <string name="level_tutorial_story_asc">The Commander\'s first advanced simulation task.</string>
     <string name="clear_data">Clear Data</string>
     <string name="clear_data_desc">Reset all game progress</string>
     <string name="clear_data_confirm_title">Clear Data</string>
@@ -23,7 +101,7 @@
     <string name="developer">Developer</string>
     <string name="release_date">Release Date</string>
     <string name="app_description_title">App Description</string>
-    <string name="app_description">OnePic is a beautiful puzzle game offering multiple game modes and rich level challenges. Complete beautiful picture puzzles by dragging and combining puzzle pieces.</string>
+    <string name="app_description">OnePic: Starry Puzzle is a premium jigsaw puzzle game set in a sci-fi universe. Unlock the secrets of the galaxy, train your brain with challenging puzzles, and enjoy a relaxing space odyssey. Perfect for fans of strategy games, logic puzzles, and cosmic adventures.</string>
     <string name="changelog_title">Changelog</string>
     <string name="personal_center">Personal Center</string>
     <string name="puzzle_master">Puzzle Master</string>
@@ -35,8 +113,9 @@
     <string name="unlocked">Unlocked</string>
     <string name="completion_rate">Completion Rate</string>
     <string name="classic">Classic</string>
-    <string name="gallery">Gallery</string>
+    <string name="gallery">Ascension</string>
     <string name="nav_home">Home</string>
+    <string name="nav_galaxy">Ascension</string>
     <string name="nav_checkin">Check-in</string>
     <string name="nav_personal_center">Profile</string>
     <string name="daily_check_in">Daily Check-in</string>
@@ -54,9 +133,11 @@
     <string name="great">Great!</string>
     <string name="keep_going">Keep Going!</string>
     <string name="points">pts</string>
+    <string name="ad_to_double_short">Watch Ad to Double</string>
+    <string name="ad_double_claimed">2X Claimed!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Initial release</string>
-    <string name="changelog_item_2">• Classic and Gallery modes</string>
+    <string name="changelog_item_2">• Classic and Ascension modes</string>
     <string name="changelog_item_3">• Daily check-in feature</string>
     <string name="changelog_item_4">• Sound effects and haptic feedback</string>
     <string name="changelog_item_5">• Multi-language support (Chinese/English)</string>
@@ -66,6 +147,15 @@
     <string name="cd_restart">Restart</string>
     <string name="cd_next">Next</string>
     <string name="cd_scroll_to_current">Scroll to current level</string>
+    
+    <!-- Tutorial -->
+    <string name="tut_welcome">Welcome, Commander!</string>
+    <string name="tut_step_1">Drag piece 2 to position 4 to swap!</string>
+    <string name="tut_step_double_tap">Double-tap to separate merged pieces!</string>
+    <string name="tut_drag">Drag pieces to merge</string>
+    <string name="tut_double_tap">Double tap to unmerge</string>
+    <string name="tut_node_title">Newcomer Guide</string>
+    
     <string name="weekday_sunday">Sun</string>
     <string name="weekday_monday">Mon</string>
     <string name="weekday_tuesday">Tue</string>
@@ -73,4 +163,56 @@
     <string name="weekday_thursday">Thu</string>
     <string name="weekday_friday">Fri</string>
     <string name="weekday_saturday">Sat</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Commander, basic training is done. Tap "Ascended" below to start the real journey!</string>
+    <string name="guide_chapter1_hint">💡 Advanced simulation complete! Sync stable. Chapter 1 \"The Origin\" is now active. Ready for deployment!</string>
+    <string name="edit_nickname">Edit Nickname</string>
+    <string name="enter_nickname">Enter new nickname</string>
+    <string name="save">Save</string>
+    <string name="nickname_too_short">Nickname must be at least 2 characters</string>
+    <string name="nickname_too_long">Nickname cannot exceed 12 characters</string>
+    <string name="hint_use_free">Daily Free Hint Used! ✨</string>
+    <string name="hint_confirm_title">Use Hint?</string>
+    <string name="hint_confirm_msg">Spend 100 Coins for a hint?\nBalance: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Yes (-100)</string>
+    <string name="hint_not_enough">Not enough coins!</string>
+    <string name="ad_reward_toast">Watch full video to earn +%1$d 🪙</string>
+    <string name="ad_reward_received">Reward Received: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Please wait %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Chapter 1: Quantum Keel · Spine of Awakening</string>
+    <string name="chapter_2">Chapter 2: Fusion Core · Eternal Spark</string>
+    <string name="chapter_3">Chapter 3: Neural Cockpit · Consciousness Mirror</string>
+    <string name="chapter_4">Chapter 4: Hibernation Hall · Eternal Winter Dream</string>
+    <string name="chapter_5">Chapter 5: Ecology Loop · Emerald Hope</string>
+    <string name="chapter_6">Chapter 6: Void Shield · Sky-reaching Wing</string>
+    <string name="chapter_7">Chapter 7: Hyper-sensing Radar · Eye of Truth</string>
+    <string name="chapter_8">Chapter 8: Ion Thruster · Sky-breaking Streamer</string>
+    <string name="chapter_9">Chapter 9: Star-speak Tower · Cosmic Resonance</string>
+    <string name="chapter_10">Chapter 10: Civilization Seed Repository · Memory Temple</string>
+    <string name="chapter_11">Chapter 11: Curvature Engine · Spacetime Echo</string>
+    <string name="chapter_12">Chapter 12: Startup Key · Final Prelude</string>
+    <string name="chapter_coming_soon">COMING SOON...</string>
+    <string name="ad_label">Ad</string>
+    <string name="share_app">Share App</string>
+    <string name="share_message">Check out OnePic! A beautiful puzzle game on Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="more_games">More Games</string>
+    <string name="recommend_game_title">Hot: 2048</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_reminder_channel_name">Puzzle Reminders</string>
+    <string name="daily_reminder_channel_desc">Daily reminders to come back and complete puzzles.</string>
+    
+    <!-- Random Notification Set 1: Relaxation -->
+    <string name="daily_reminder_title_1">Time to Puzzle!</string>
+    <string name="daily_reminder_msg_1">Your brain needs a break. Come back and solve a puzzle! 🧩</string>
+    
+    <!-- Random Notification Set 2: Challenge -->
+    <string name="daily_reminder_title_2">Commander, New Challenges Await!</string>
+    <string name="daily_reminder_msg_2">Don\'t let the fragments wait! Unlock more memories and build your ship today. 🚀</string>
+    
+    <!-- Random Notification Set 3: Energy -->
+    <string name="daily_reminder_title_3">Star Energy Low!</string>
+    <string name="daily_reminder_msg_3">The Ark needs your puzzle-solving energy to light the way. Join the mission now! ✨</string>
 </resources>

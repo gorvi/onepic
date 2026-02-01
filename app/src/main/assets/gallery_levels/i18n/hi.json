@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "विश्व वृक्ष के बीज",
+    "story_text": "विश्व वृक्ष के बीज शून्य में तैरते हैं, जो सभी चीजों के ओडिसी की शुरुआत करते हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "प्रकाश का अभयारण्य",
+    "story_text": "एक अभयारण्य जहाँ प्रकाश और हरियाली आपस में जुड़ते हैं, जहाँ सभी प्राणी अपनी आत्माओं के लिए विश्राम पाते हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "भोर का जंगल",
+    "story_text": "भोर धुंध को चीर कर प्राचीन जंगल को जगाती है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "अंबर की फुसफुसाहट",
+    "story_text": "जैसे-जैसे मौसम बीतता है, अंबर की पत्तियाँ अतीत की कहानियाँ फुसफुसाती हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "पन्ना ज़ेन",
+    "story_text": "बाँस धीरे से डोलता है, जो हरे-भरे साम्राज्य में ज़ेन का एक क्षण प्रदान करता है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "बादल छतें",
+    "story_text": "पन्ने की लहरें पहाड़ से परत दर परत नीचे गिरती जा रही हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "धधकते टीले",
+    "story_text": "चिलचिलाती धूप टीलों का निर्माण करती है, फिर भी इस बंजर भूमि में जीवन हलचल मचाता है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "अनंत काल का किनारा",
+    "story_text": "जहां भूमि और समुद्र समाप्त होते हैं, अज्ञात में एक नई यात्रा शुरू होती है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "आत्मा भेड़िया",
+    "story_text": "बर्फीले मैदानों के भीतर, आत्मा भेड़िया चुपचाप पवित्रता की रक्षा करता है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "चाँदनी लोमड़ी",
+    "story_text": "चाँदनी एक चांदी की चमक बिखेरती है जबकि आत्मा लोमड़ी आधी रात के जंगल में घूमती है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "इंद्रधनुष फीनिक्स",
+    "story_text": "नीले आकाश में इंद्रधनुषी पंख कटते हुए, एक इंद्रधनुषी निशान छोड़ते हुए।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "पांडा ऋषि",
+    "story_text": "बादलों के समुद्र के ऊपर, पांडा ऋषि प्राचीन ज्ञान पर ध्यान करते हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "बाघ वन",
+    "story_text": "धुंधली छाया के नीचे, शक्ति मौन धैर्य में छिपी है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "गणेश आत्मा",
+    "story_text": "समय की नदी को पार करते हुए, हाथी की आत्मा दुनिया की सच्चाई को समझती है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "वन राजा",
+    "story_text": "जंगल का राजा यहाँ खड़ा है, और सभी जीव उसकी निगाहों के नीचे अपनी साँसें रोके हुए हैं।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "थंडरबर्ड",
+    "story_text": "आंचल का प्रहरी नीचे की भूमि के भव्य विस्तार का सर्वेक्षण करता है।",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "प्राचीन नक्काशी",
+    "story_text": "समय के साथ दबी हुई नक्काशी में पूर्वजों की फुसफुसाहट दर्ज है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "स्टार रोड पिरामिड",
+    "story_text": "तपते रेगिस्तान में एक ज्यामितीय चमत्कार, जो सहस्राब्दियों से मौन खड़ा है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "पेट्रा लाइट गेट",
+    "story_text": "पत्थर की दीवार पर, सभ्यता की गर्माहट लाल चट्टान के भीतर स्पंदित होती है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "माचू पिचू खो दिया",
+    "story_text": "बादलों से ढकी चोटी पर बसा शहर, समय और स्थान की तहों में खो गया।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "स्टोन ड्रैगन",
+    "story_text": "पत्थर का ड्रैगन प्राचीन भूमि की रक्षा करते हुए, पर्वत श्रृंखला के साथ घूमता है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "हीरो का अखाड़ा",
+    "story_text": "खंडहरों का अखाड़ा बीते दिनों की वीरतापूर्ण गाथाओं से गूंजता है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "प्रकाश का गुंबद",
+    "story_text": "गुंबद के नीचे की पवित्र रोशनी ने अनगिनत सभ्यताओं के उत्थान और पतन को देखा है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "अनंत पुस्तकालय",
+    "story_text": "ज्ञान का एक चक्र आकाश की ओर बढ़ रहा है, प्राचीन स्क्रॉल खोए हुए सत्य को पकड़ रहे हैं।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "सपनों का बगीचा",
+    "story_text": "स्वर्ग और पृथ्वी के बीच लटका हुआ एक बगीचा, प्रकृति की एक खोई हुई सिम्फनी।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "पैगंबर शिखर",
+    "story_text": "पहाड़ के ऊपर विशाल मोनोलिथ खोए हुए लोगों को लाल रेगिस्तान के माध्यम से मार्गदर्शन करता है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "आकाश पाल",
+    "story_text": "बंदरगाह में सफेद पाल अज्ञात क्षितिजों की ओर अपना रास्ता तय करते हैं।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "साइबर बायो स्पायर",
+    "story_text": "नियॉन और लताएँ भविष्य के शिखर में गुँथी हुई हैं—साइबरपंक युग में प्रकृति साँस ले रही है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "समय का सन्दूक",
+    "story_text": "गोधूलि समुद्र के ऊपर उड़ता हुआ एक मेगासिटी, वह जहाज़ जो स्वयं समय को वहन करता है।",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "ग्लो पल्स डॉल्फ़िन",
+    "story_text": "समुद्र में सुंदर आकृतियाँ, गहरी बैंगनी तरंगों के भीतर नृत्य करती हुई।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "फ्लोरोसेंट मूंगा",
+    "story_text": "समुद्र की गहराई में, मूंगा चट्टानें एक बहुरूपदर्शक स्वप्न उद्यान बुनती हैं।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "आइस ड्रैगन स्लंबर",
+    "story_text": "ठंडी धाराओं के नीचे, प्राचीन बर्फ ड्रैगन का प्रहरी सोता है।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "भूतिया जहाज़ की तबाही",
+    "story_text": "लहरों द्वारा छोड़ा गया मलबा, चुपचाप पाल के युग का अंतिम अध्याय बता रहा है।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "कॉस्मिक व्हेल",
+    "story_text": "समुद्र और तारों की सीमा पर, बड़ी व्हेल सभ्यता की चिंगारी को आगे बढ़ाती है।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "शून्य क्रैकन",
+    "story_text": "वास्तविकता और भ्रम के बीच की खाई में, जाल डेटा का जाल बुनते हैं।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "फैंटम जेलिफ़िश",
+    "story_text": "अंधेरे में प्रकाश की किरणें, आधी रात को टिमटिमाती परी की आग की तरह।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "अटलांटिस",
+    "story_text": "सीलबंद अटलांटिस गहरे समुद्र में एक बार फिर अपना पूर्व गौरव प्रकट करता है।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "कोर फोर्ज",
+    "story_text": "भूपर्पटी के भीतर गहरे तापीय छिद्र कल्पना से परे जीवन के फूलों को जन्म देते हैं।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "आग और बर्फ",
+    "story_text": "लाल लावा बर्फीले पानी में डाला जाता है - आग और पानी का अंतिम द्वंद्व।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "निषिद्ध जीवन",
+    "story_text": "जीवन के निषिद्ध क्षेत्र में, प्राचीन व्यवस्था अभी भी चुपचाप घूमती है।",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "निर्वाण फीनिक्स",
+    "story_text": "पुरानी दुनिया के अंगारों से उठकर, फीनिक्स आग की लपटों के माध्यम से शाश्वत जीवन प्राप्त करता है।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "स्टार ड्रैगन",
+    "story_text": "समय का पहरेदार, तारों की कक्षाओं के माध्यम से सपनों की सीमा की रक्षा करता है।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "दिव्य आवरण",
+    "story_text": "धागे के रूप में स्टारडस्ट, प्लम के रूप में अरोरा - वह स्वप्न युग की शाश्वत प्रतिध्वनि है।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "समय सर्पिल",
+    "story_text": "समय सपनों में विलीन हो जाता है, और घुमावदार सीढ़ियाँ अनंत काल की ओर ले जाती हैं।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "उलटा झरना",
+    "story_text": "गुरुत्वाकर्षण एक क्षणभंगुर बादल है - झरना अब आकाश में एक महासागर की ओर बहता है।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "क्रिस्टल भूलभुलैया",
+    "story_text": "प्रकाश और छाया के नृत्य के बीच, क्रिस्टल भूलभुलैया आत्मा की आंतरिक गहराई को दर्शाती है।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "क्लाउड लाइब्रेरी",
+    "story_text": "आकाश में पौराणिक पुस्तकालय, जहाँ सभी कहानियाँ उड़ान भरती हैं।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "ग्रेविटी द्वीप",
+    "story_text": "किनारे पर जहां गुरुत्वाकर्षण विफल हो जाता है, तैरते हुए द्वीप बादलों के समुद्र में चुपचाप बहते हैं।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "घड़ी की कल का आयाम",
+    "story_text": "गियर और भाप का एक औद्योगिक भजन, सपनों के आयाम में अंतहीन रूप से घूमता हुआ।",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "धरती माता: गहरा नीला",
+    "story_text": "तारों के सुदूर तटों पर, हम एक बार इसे घर कहते थे - एकमात्र गहरा नीला।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "लाल पायनियर",
+    "story_text": "जंग-लाल धूल के नीचे, सभ्यता की चिंगारी लाल तारे पर प्रज्वलित होती है।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "ठंढ के छल्ले",
+    "story_text": "ठंडे छल्ले - शून्य में छोड़ी गई ब्रह्मांड की एक भव्य छाप।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "बाइनरी सूर्यास्त",
+    "story_text": "जुड़वाँ सूरज एक साथ अस्त हो गए, एक विदेशी आकाश में अतिव्यापी छाया डालते हुए।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "नींद हराम सितारा",
+    "story_text": "खरबों रोशनियाँ धाराओं में परिवर्तित हो जाती हैं, जो इस नींद हराम तारे पर भविष्य को कोडित करती हैं।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "सुपरनोवा",
+    "story_text": "एक तारे का अंत परम चमक के साथ होता है - ब्रह्मांड में सबसे हिंसक मृत्यु, और पुनर्जन्म भी।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "आकाशगंगा सागर",
+    "story_text": "तारे आकाशगंगाओं के घूमते समुद्र में एकत्र होते हैं, प्रत्येक लहर सभ्यता का एक महाकाव्य है।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "सृजन के स्तंभ",
+    "story_text": "सृजन की मीनारें नीहारिका को भेदती हैं - एक मूक पालना जो सितारों और चमत्कारों का पोषण करता है।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "घटना क्षितिज",
+    "story_text": "गुरुत्वाकर्षण के अंतिम जाल में, प्रकाश भी अपने नियत विनाश से बच नहीं सकता है।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "वर्महोल पारगमन",
+    "story_text": "अंतरिक्ष-समय विशाल दूरियों को छोटा कर देता है, जिससे हम तारों के बीच स्वतंत्र रूप से छलाँग लगा सकते हैं।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "ब्रह्माण्ड की आँख",
+    "story_text": "अंतिम क्षितिज के किनारे पर, ब्रह्मांड अपनी ठंडी लेकिन भव्य आंख खोलता है।",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

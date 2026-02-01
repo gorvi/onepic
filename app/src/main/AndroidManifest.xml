@@ -5,8 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
+        android:name=".OnePicApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,17 +19,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Onepic"
         tools:targetApi="31">
+        
+        <!-- Google AdMob App ID (Production ID) -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6888206339207009~1463751057"/>
+        <!-- Test ID: ca-app-pub-3940256099942544~3347511713 -->
+            
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Onepic">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Deep Link Support for SEO Indexing -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="netrill.com" android:pathPrefix="/onepic" />
+                <data android:scheme="http" android:host="netrill.com" android:pathPrefix="/onepic" />
+            </intent-filter>
         </activity>
+
+        <receiver 
+            android:name=".utils.DailyReminderReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="site.aiok.onepic.DAILY_REMINDER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

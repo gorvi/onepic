@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Världsträdets frön",
+    "story_text": "Världsträdets frön driver genom tomrummet och börjar alla tings odyssé.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Ljusets helgedom",
+    "story_text": "En helgedom där ljus och grönska flätas samman, där alla varelser finner vila för sina själar.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Gryningsskogen",
+    "story_text": "Gryningen tränger igenom dimman och väcker den gamla skogen.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Viskningar av bärnsten",
+    "story_text": "När årstiderna flödar, lämnar bärnstensblad viskande berättelser om det förflutna.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Emerald Zen",
+    "story_text": "Bambu svajar försiktigt och erbjuder ett ögonblick av zen i det grönskande riket.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Molnterrasser",
+    "story_text": "Smaragdvågor forsar nerför bergssidan, lager på lager.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "Brinnande sanddyner",
+    "story_text": "Den gassande solen formar sanddynerna, men livet rör sig i detta karga land.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Edge of Eternity",
+    "story_text": "Där land och hav slutar börjar en ny resa in i det okända.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Andevarg",
+    "story_text": "Djupt inne i snöslätterna vaktar andevargen tyst över renheten.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Månräv",
+    "story_text": "Månsken kastar ett silverglans när andräven vandrar genom midnattsskogen.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Rainbow Phoenix",
+    "story_text": "Skimrande vingar skär över den blå himlen och lämnar en regnbågsspår.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Panda Sage",
+    "story_text": "Ovanför molnhavet mediterar pandavismannen över uråldrig visdom.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Tigerskog",
+    "story_text": "Under fläckiga skuggor lurar kraften i tyst tålamod.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Ganesha själ",
+    "story_text": "När elefantsjälen korsar tidens flod uppfattar den världens sanning.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Skogskungen",
+    "story_text": "Skogens kung står här, och alla varelser håller andan under hans blick.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Thunderbird",
+    "story_text": "Vaktposten i zenit övervakar den majestätiska vidderna av landet nedanför.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "Gamla ristningar",
+    "story_text": "Sniderier begravda av tiden registrerar förfäders viskningar.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Stjärnvägspyramiderna",
+    "story_text": "Ett geometriskt underverk i den brännande öknen som har stått tyst i årtusenden.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Petra Light Gate",
+    "story_text": "På stenmuren pulserar civilisationens värme i den röda klippan.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Förlorade Machu Picchu",
+    "story_text": "Staden på den molnhöljda toppen, förlorad i tidens och rummets veck.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Sten drake",
+    "story_text": "Stendraken slingrar sig längs bergsryggen och vaktar det gamla landet.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Hero's Arena",
+    "story_text": "Arenan i ruiner ekar av svunna dagars heroiska epos.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Ljusets kupol",
+    "story_text": "Det heliga ljuset under kupolen har sett otaliga civilisationers uppgång och fall.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Oändligt bibliotek",
+    "story_text": "En spiral av kunskap som sträcker sig mot himlen, uråldriga rullar med förlorade sanningar.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Drömträdgårdar",
+    "story_text": "En trädgård svävande mellan himmel och jord, en förlorad symfoni av naturen.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Profeten Spire",
+    "story_text": "Den gigantiska monoliten på toppen av berget guidar de vilsna genom den röda öknen.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Sky Sails",
+    "story_text": "Vita segel i hamnen sätter kurs mot okända horisonter.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Cyber ​​Bio Spire",
+    "story_text": "Neon och vinstockar flätas samman i den framtida spiran - naturen andas i en cyberpunkålder.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Tidens ark",
+    "story_text": "En megastad som svävar över skymningshavet, arken som bär tiden själv.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Glow Pulse Delfiner",
+    "story_text": "Graciösa figurer i havet, dansande i djupa violetta pulser.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "Fluorescerande korall",
+    "story_text": "I havets djup väver korallrev en kalejdoskopisk drömträdgård.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "Ice Dragon Slumber",
+    "story_text": "Under iskalla strömmar sover den gamla isdrakens vaktpost.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Spöke skeppsbrott",
+    "story_text": "Vrakdelar övergivna av vågorna, som tyst berättar om det sista kapitlet av segeltiden.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Kosmisk val",
+    "story_text": "Vid gränsen mellan hav och stjärnor bär den stora valen civilisationens gnista framåt.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Void Kraken",
+    "story_text": "I avgrunden mellan verklighet och illusion väver tentakler ett nät av data.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Fantommaneter",
+    "story_text": "Strömrar av ljus i mörker, som en älva som flimrar vid midnatt.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Atlantis",
+    "story_text": "Den förseglade Atlantis avslöjar sin forna glans ännu en gång i djuphavet.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "Core Forge",
+    "story_text": "Termiska öppningar djupt inne i skorpan ger upphov till livets blommor bortom fantasi.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Eld och is",
+    "story_text": "Röd lava rinner ut i iskallt vatten - den ultimata duellen av eld och vatten.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Förbjudet liv",
+    "story_text": "I livets förbjudna zon vänder den gamla ordningen fortfarande tyst.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Nirvana Phoenix",
+    "story_text": "Upp ur den gamla världens glöd, får Fenixen evigt liv genom lågor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Star Dragon",
+    "story_text": "Tidsbevakaren, som bevakar drömmarnas gräns genom stjärnornas banor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Himmelsk slöja",
+    "story_text": "Stjärnstoft som tråd, norrsken som plym – hon är drömtidens eviga eko.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Tidsspiral",
+    "story_text": "Tiden löses upp i drömmar, och spiraltrappan leder till evigheten.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Inverterat vattenfall",
+    "story_text": "Tyngdkraften är bara ett flyktigt moln - vattenfallet rinner nu mot ett hav på himlen.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Kristalllabyrint",
+    "story_text": "Mitt i dansen av ljus och skugga reflekterar kristalllabyrinten själens inre djup.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Molnbibliotek",
+    "story_text": "Det legendariska biblioteket i himlen, där alla berättelser tar flyg.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Gravity Island",
+    "story_text": "Vid kanten där gravitationen brister driver flytande öar tyst genom molnhavet.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Clockwork Dimension",
+    "story_text": "En industriell hymn av kugghjul och ånga, vänder sig oändligt i drömmarnas dimension.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Moder Jord: Deep Blue",
+    "story_text": "På stjärnornas bortre stränder kallade vi en gång detta hem – det enda djupblåa.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Röd pionjär",
+    "story_text": "Under rostrött damm tänds civilisationens gnista på den röda stjärnan.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Frost ringar",
+    "story_text": "Kalla ringar - ett storslaget avtryck av kosmos som lämnats i tomrummet.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "Binär solnedgång",
+    "story_text": "Tvillingsolar går ner och kastar överlappande skuggor över en främmande himmel.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Sömnlös stjärna",
+    "story_text": "Biljoner ljus konvergerar till strömmar och kodar framtiden på denna sömnlösa stjärna.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "Supernova",
+    "story_text": "En stjärna slutar i ultimat briljans - den mest våldsamma döden i kosmos, och även återfödelse.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Galaxy havet",
+    "story_text": "Stjärnor samlas i ett virvlande hav av galaxer, varje våg med ett civilisationsepos.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Skapelsens pelare",
+    "story_text": "Skapelsens torn genomborrar nebulosan – en tyst vagga som fostrar stjärnor och underverk.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Händelsehorisont",
+    "story_text": "I tyngdkraftens ultimata fälla kan inte ens ljus undkomma sin ödesbestämda undergång.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Wormhole Transit",
+    "story_text": "Rum-tid veck för att förkorta stora avstånd, låter oss hoppa fritt bland stjärnorna.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Universums öga",
+    "story_text": "Vid den sista horisontens kant öppnar universum sitt kalla men storslagna öga.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

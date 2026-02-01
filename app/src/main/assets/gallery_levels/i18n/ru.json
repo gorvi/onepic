@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Семена Мирового Древа",
+    "story_text": "Семена Мирового Древа дрейфуют сквозь пустоту, начиная одиссею всего сущего.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Святилище Света",
+    "story_text": "Святилище, где переплетаются свет и зелень, где все существа находят покой для своих душ.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Рассветный лес",
+    "story_text": "Рассвет пробивается сквозь туман, пробуждая древний лес.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Шепот янтаря",
+    "story_text": "Пока текут времена года, янтарные листья шепчут сказки о прошлом.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Изумрудный дзен",
+    "story_text": "Бамбук мягко покачивается, предлагая момент дзена в изумрудном царстве.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Облачные террасы",
+    "story_text": "Изумрудные волны каскадом спускаются по склону горы, слой за слоем.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "Пылающие дюны",
+    "story_text": "Палящее солнце кует дюны, но жизнь шевелится даже в этой бесплодной земле.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Край вечности",
+    "story_text": "Там, где кончаются суша и море, начинается новое путешествие в неизведанное.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Дух Волка",
+    "story_text": "Глубоко в снежных равнинах дух волка молча охраняет чистоту.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Лунная лиса",
+    "story_text": "Лунное сияние отбрасывает серебристое свечение, пока призрачная лиса блуждает по полуночному лесу.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Радуга Феникс",
+    "story_text": "Переливающиеся крылья рассекали голубое небо, оставляя радужный след.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Панда Мудрец",
+    "story_text": "Над морем облаков панда-мудрец размышляет о древней мудрости.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Тигровый лес",
+    "story_text": "Под пестрыми тенями в молчаливом терпении скрывается сила.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Душа Ганеши",
+    "story_text": "Пересекая реку времени, душа слона постигает истину мира.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Лесной король",
+    "story_text": "Здесь стоит царь леса, и все существа затаили дыхание под его взглядом.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Тандерберд",
+    "story_text": "Дозорный в зените обозревает величественные просторы земли внизу.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "Древние резные фигурки",
+    "story_text": "Резные изображения, погребенные временем, хранят шепот предков.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Пирамиды Звездной дороги",
+    "story_text": "Геометрическое чудо в палящей пустыне, молчаливо стоящее тысячелетиями.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Световые ворота Петры",
+    "story_text": "На каменной стене внутри красной скалы пульсирует тепло цивилизации.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Затерянный Мачу-Пикчу",
+    "story_text": "Город на окутанной облаками вершине, затерянный в складках времени и пространства.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Каменный Дракон",
+    "story_text": "Каменный дракон вьется по горному хребту, охраняя древнюю землю.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Арена Героев",
+    "story_text": "Руины арены перекликаются с героическим эпосом былых дней.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Купол Света",
+    "story_text": "Священный свет под куполом стал свидетелем взлета и падения бесчисленных цивилизаций.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Бесконечная библиотека",
+    "story_text": "Спираль знаний, уходящая в небо, древние свитки, хранящие утерянные истины.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Сады мечты",
+    "story_text": "Сад, подвешенный между небом и землей, потерянная симфония природы.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Пророк Шпиль",
+    "story_text": "Гигантский монолит на вершине горы ведет заблудших через красную пустыню.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Небесные паруса",
+    "story_text": "Белые паруса в гавани взяли курс к неизведанным горизонтам.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Кибер Био Шпиль",
+    "story_text": "Неон и виноградные лозы переплетаются в шпиле будущего — природа дышит эпохой киберпанка.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Ковчег Времени",
+    "story_text": "Мегаполис, парящий над сумеречным морем, ковчег, несущий само время.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Светящиеся импульсные дельфины",
+    "story_text": "Изящные фигуры в море, танцующие в глубоких фиолетовых пульсациях.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "Флуоресцентный коралл",
+    "story_text": "В глубинах океана коралловые рифы ткут калейдоскопический сад грез.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "Сон Ледяного Дракона",
+    "story_text": "Под холодными потоками спит страж древнего ледяного дракона.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Призрачное кораблекрушение",
+    "story_text": "Обломки, оставленные волнами, тихо рассказывают о последней главе эпохи парусного спорта.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Космический кит",
+    "story_text": "На границе моря и звезд огромный кит несет вперед искру цивилизации.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Пустотный Кракен",
+    "story_text": "В пропасти между реальностью и иллюзией щупальца плетут паутину данных.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Призрачная медуза",
+    "story_text": "Струны света во тьме, словно волшебный огонь, мерцающий в полночь.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Атлантида",
+    "story_text": "Запечатанная Атлантида еще раз раскрывает свою былую славу в морских глубинах.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "Основная кузница",
+    "story_text": "Термальные источники глубоко в земной коре рождают цветы жизни, которые невозможно себе представить.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Огонь и лед",
+    "story_text": "Красная лава льется в ледяные воды — настоящая дуэль огня и воды.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Запретная жизнь",
+    "story_text": "В запретной зоне жизни по-прежнему тихо вращается древний порядок.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Нирвана Феникс",
+    "story_text": "Восстав из тлеющих углей старого мира, феникс обретает вечную жизнь через пламя.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Звездный Дракон",
+    "story_text": "Наблюдатель времени, охраняющий границу снов по орбитам звезд.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Небесная завеса",
+    "story_text": "Звездная пыль как нить, полярное сияние как шлейф — она вечное эхо мечтательной эпохи.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Спираль времени",
+    "story_text": "Время растворяется в снах, и винтовая лестница ведет в вечность.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Перевернутый водопад",
+    "story_text": "Гравитация — всего лишь мимолетное облако: водопад теперь течет к океану в небе.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Кристальный лабиринт",
+    "story_text": "В танце света и тени хрустальный лабиринт отражает внутренние глубины души.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Облачная библиотека",
+    "story_text": "Легендарная небесная библиотека, где летают все истории.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Остров Гравитации",
+    "story_text": "На краю, где гравитация не действует, плавучие острова бесшумно дрейфуют сквозь море облаков.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Заводное измерение",
+    "story_text": "Индустриальный гимн шестерен и пара, бесконечно вращающийся в измерении мечты.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Мать-Земля: Глубокий Синий",
+    "story_text": "На дальних берегах звезд мы когда-то называли этот дом — единственный темно-синий.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Красный пионер",
+    "story_text": "Под ржаво-красной пылью на малиновой звезде загорается искра цивилизации.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Морозные кольца",
+    "story_text": "Холодные кольца — грандиозный отпечаток космоса, оставленный в пустоте.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "Двоичный закат",
+    "story_text": "Двойные солнца сели вместе, отбрасывая перекрывающиеся тени на чужое небо.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Бессонная звезда",
+    "story_text": "Триллионы огней сходятся в потоки, кодируя будущее этой бессонной звезды.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "сверхновая",
+    "story_text": "Звезда заканчивается величайшим сиянием — самой жестокой смертью в космосе, а также возрождением.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Галактическое море",
+    "story_text": "Звезды собираются в бурлящее море галактик, каждая волна которых представляет собой эпопею цивилизации.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Столпы творения",
+    "story_text": "Башни творения пронзают туманность — тихая колыбель, питающая звезды и чудеса.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Горизонт событий",
+    "story_text": "В последней ловушке гравитации даже свет не может избежать предназначенной ему гибели.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Транзит через червоточину",
+    "story_text": "Пространство-время сжимается, сокращая огромные расстояния, позволяя нам свободно прыгать среди звезд.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Глаз Вселенной",
+    "story_text": "На последнем краю горизонта Вселенная открывает свой холодный, но величественный глаз.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">星際拼圖</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">2077年，地球資源枯竭，曾經輝煌的文明已至暮色蒼茫。\n\n你是『方舟計劃』的指揮官。唯一的希望，是蒐集散落在地球各處的原始能量核心，鑄就足以穿越星海的巨型方舟。\n\n每一幅被還原的拼圖，都是點燃躍遷引擎的數位動力。收集能量，重構藍圖，帶領人類跨越璀璨星河，尋找我們的新家園。</string>
+    <string name="intro_button">開啟旅程</string>
     
-    <!-- 通用 -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">關閉</string>
     <string name="cancel">取消</string>
     <string name="confirm">確定</string>
     <string name="settings">設定</string>
     <string name="about">關於</string>
-    
-    <!-- 設定 -->
     <string name="sound_effects">音效</string>
     <string name="sound_effects_desc">開啟/關閉遊戲音效</string>
     <string name="language">語言</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+    <!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">DAILY_SYNCHRONIZATION_REQUIRED</string>
+    <string name="check_in_energy_active">ENERGY_SOURCE_ACTIVE</string>
+    <string name="check_in_energy_activate">ACTIVATE_STELLAR_ENERGY</string>
+    <string name="check_in_days_suffix">%1$d DAYS</string>
+    <string name="check_in_pending">PENDING</string>
+    <string name="check_in_station_log">STATION_LOG: RECENT_30_DAYS</string>
+    <string name="today_earned">TODAY_EARNED</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="buff_overclocking">OVERCLOCKING_SYSTEM_COLLECTOR...</string>
+    <string name="buff_ready">COIN_COLLECTOR: READY</string>
+    <string name="buff_waiting">STATUS: WAITING_FOR_DEPLOYMENT</string>
+    <string name="buff_activate">ACTIVATE</string>
+    <string name="buff_duration_rule">DURATION RULE: 3 MINS BASE + 1 MIN PER CONSECUTIVE DAY</string>
+
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">PROJECT EXODUS: INTEGRITY</string>
+    <string name="asc_status_synthesizing">STATUS: SYNTHESIZING</string>
+    <string name="asc_fragments_count">%1$d / %2$d FRAGMENTS</string>
+    <string name="asc_tab_memories">記憶</string>
+    <string name="asc_tab_blueprint">藍圖</string>
+    <string name="asc_memory_title">加密記憶</string>
+    <string name="asc_memory_desc">解鎖以讀取背景故事</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">量子龍骨</string>
+    <string name="mod_1">聚變核心</string>
+    <string name="mod_2">神經連結駕駛艙</string>
+    <string name="mod_3">休眠大廳</string>
+    <string name="mod_4">生態循環艙</string>
+    <string name="mod_5">虛空護盾</string>
+    <string name="mod_6">超感雷達</string>
+    <string name="mod_7">離子推進器</string>
+    <string name="mod_8">星語塔</string>
+    <string name="mod_9">文明火種庫</string>
+    <string name="mod_10">曲率引擎</string>
+    <string name="mod_11">啟動密鑰</string>
+    <string name="mod_12">星際方舟：昇華號</string>
+    <string name="mod_status_online">已上線</string>
+    <string name="mod_status_constructing">構造中</string>
+    <string name="mod_detail_online">狀態：模組已構建並整合\n完整度：100%\n權限：戰略資產已解鎖</string>
+    <string name="mod_detail_constructing">狀態：敘事諧振合成中\n\n總進度：%1$d/10 碎片\n\n- 經典矩陣：%2$d/5\n- 飛升鏈路：%3$d/5\n\n目標：結構穩定化</string>
+    <string name="mod_close">關閉</string>
+
+    <!-- Global HUD -->
+    <string name="hud_buff_active">雙倍金幣：生效中</string>
+    <string name="hud_buff_warming">系統預熱中...</string>
+    <string name="hud_buff_hint_prepare">準備開啟航程</string>
+    <string name="hud_buff_hint_overclock">超頻收集器已啟動</string>
+
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">甦醒：原點</string>
+    <string name="level_tutorial_story">永恆航行者在數位聖殿中甦醒，準備開始它的第一個任務。</string>
+    <string name="level_tutorial_title_asc">甦醒：原點（進階）</string>
+    <string name="level_tutorial_story_asc">指揮官的第一個進階模擬任務。</string>
     <string name="clear_data">清除資料</string>
     <string name="clear_data_desc">重置所有遊戲進度</string>
     <string name="clear_data_confirm_title">清除資料</string>
     <string name="clear_data_confirm_message">確定要清除所有遊戲資料嗎？\n\n這將刪除：\n• 所有關卡進度\n• 星星和金幣\n• 打卡記錄\n• 最佳時間\n\n此操作不可恢復！</string>
     <string name="clear_data_confirm">確定清除</string>
-    
-    <!-- 關於 -->
     <string name="about_title">關於 OnePic</string>
     <string name="version">版本</string>
     <string name="build_number">構建號</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">應用簡介</string>
     <string name="app_description">OnePic 是一款精美的拼圖遊戲，提供多種遊戲模式和豐富的關卡挑戰。通過拖動和組合拼圖塊，完成美麗的圖片拼圖。</string>
     <string name="changelog_title">更新日誌</string>
-    
-    <!-- 個人中心 -->
     <string name="personal_center">個人中心</string>
     <string name="puzzle_master">拼圖大師</string>
     <string name="completed">完成</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">完成率</string>
     <string name="classic">經典</string>
     <string name="gallery">畫廊</string>
-    
-    <!-- 底部導航 -->
     <string name="nav_home">首頁</string>
+    <string name="nav_galaxy">Ascension</string>
     <string name="nav_checkin">打卡</string>
     <string name="nav_personal_center">個人中心</string>
-    
-    <!-- 打卡頁面 -->
     <string name="daily_check_in">每日打卡</string>
     <string name="checked_in_today">今日已打卡</string>
     <string name="earned">獲得</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 打卡獎勵</string>
     <string name="check_in_reward_desc">每日打卡可獲得 10-50 金幣\n連續打卡天數越多，獎勵越豐厚！</string>
     <string name="week_check_in_history">近7天打卡記錄</string>
-    
-    <!-- 遊戲完成對話框 -->
     <string name="perfect">完美！</string>
     <string name="great">很棒！</string>
     <string name="keep_going">加油！</string>
     <string name="points">分</string>
-    
-    <!-- 更新日誌項 -->
+    <string name="ad_to_double_short">看廣告獎勵翻倍</string>
+    <string name="ad_double_claimed">已領取 2 倍獎勵！</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• 初始版本發布</string>
     <string name="changelog_item_2">• 支援經典模式和畫廊模式</string>
     <string name="changelog_item_3">• 每日打卡功能</string>
     <string name="changelog_item_4">• 音效和震動反饋</string>
     <string name="changelog_item_5">• 多語言支援（中文/英文）</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">頭像</string>
     <string name="cd_check_in">打卡</string>
     <string name="cd_checked_in">已打卡</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">下一步</string>
     <string name="cd_scroll_to_current">定位到當前關卡</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">歡迎，指揮官！</string>
+    <string name="tut_step_1">拖動 2 到位置 4 來交換！</string>
+    <string name="tut_step_double_tap">雙擊可以拆開拼好的圖片！</string>
+    <string name="tut_drag">拖動拼圖塊進行連接</string>
+    <string name="tut_double_tap">雙擊拼圖塊取消連接</string>
+    <string name="tut_node_title">新手指引</string>
+    
     <string name="weekday_sunday">日</string>
     <string name="weekday_monday">一</string>
     <string name="weekday_tuesday">二</string>
@@ -92,4 +164,52 @@
     <string name="weekday_thursday">四</string>
     <string name="weekday_friday">五</string>
     <string name="weekday_saturday">六</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 指揮官，基礎訓練已完成。\n點擊下方「飛升」頻道，開啟真正的能量蒐集之旅！</string>
+    <string name="guide_chapter1_hint">💡 進階模擬完成！同步率已達標，第一章節「萬物起源」正式開啟，準備出發！</string>
+    <string name="edit_nickname">編輯暱稱</string>
+    <string name="enter_nickname">請輸入新暱稱</string>
+    <string name="save">儲存</string>
+    <string name="nickname_too_short">暱稱至少需要 2 個字元</string>
+    <string name="nickname_too_long">暱稱不能超過 12 個字元</string>
+    <string name="hint_use_free">已使用每日免費提示！✨</string>
+    <string name="hint_confirm_title">使用提示？</string>
+    <string name="hint_confirm_msg">花費 100 金幣獲取提示？\n當前餘額：%1$d 🪙</string>
+    <string name="hint_confirm_yes">確定 (-100)</string>
+    <string name="hint_not_enough">金幣不足！</string>
+    <string name="ad_reward_toast">完整觀看影片可獲得 +%1$d 🪙</string>
+    <string name="ad_reward_received">獎勵已領取：+%1$d 🪙</string>
+    <string name="ad_wait_cooldown">請等待 %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">第一章：量子龍骨 · 覺醒之脊</string>
+    <string name="chapter_2">第二章：聚變核心 · 永恆火種</string>
+    <string name="chapter_3">第三章：神經駕駛艙 · 意識鏡像</string>
+    <string name="chapter_4">第四章：休眠大廳 · 永冬幻夢</string>
+    <string name="chapter_5">第五章：生態循環艙 · 翡翠希望</string>
+    <string name="chapter_6">第六章：虛空護盾 · 垂天之翼</string>
+    <string name="chapter_7">第七章：超感雷達 · 真理之眼</string>
+    <string name="chapter_8">第八章：離子推進器 · 破空流影</string>
+    <string name="chapter_9">第九章：星語塔 · 寰宇共鳴</string>
+    <string name="chapter_10">第十章：文明火種庫 · 記憶聖殿</string>
+    <string name="chapter_11">第十一章：曲率引擎 · 時空回響</string>
+    <string name="chapter_12">第十二章：啟動密鑰 · 終焉啟幕</string>
+    <string name="chapter_coming_soon">敬請期待...</string>
+    <string name="ad_label">廣告</string>
+    <string name="privacy_policy">隱私政策</string>
+    <string name="daily_reminder">每日提醒</string>
+    <string name="daily_reminder_channel_name">拼圖提醒</string>
+    <string name="daily_reminder_channel_desc">每日提醒您回來玩一會兒拼圖。</string>
+
+    <!-- 隨機話術1：放鬆 -->
+    <string name="daily_reminder_title_1">該拼圖啦！</string>
+    <string name="daily_reminder_msg_1">指揮官，大腦需要放鬆一下。快回來解開一個謎題吧！🧩</string>
+
+    <!-- 隨機話術2：挑戰 -->
+    <string name="daily_reminder_title_2">指揮官，發現新的座標！</string>
+    <string name="daily_reminder_msg_2">核心碎片正在呼喚您！快來解鎖更多記憶，完善您的方舟。🚀</string>
+
+    <!-- 隨機話術3：能量 -->
+    <string name="daily_reminder_title_3">恆星能量不足！</string>
+    <string name="daily_reminder_msg_3">方舟需要您的智慧來點亮前路。立即執行拼圖任務！✨</string>
 </resources>

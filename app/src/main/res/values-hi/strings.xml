@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">स्टार पहेली</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">वर्ष 2077 है। पृथ्वी की ऊर्जा खत्म हो चुकी है, और कभी महान सभ्यता विलुप्त होने के कगार पर है।\n\nआप \'आर्क पहल\' के कमांडर हैं। हमारी एकमात्र उम्मीद दुनिया भर में बिखरे आदि ऊर्जा कोर इकट्ठा कर गैलेक्सी पार करने वाला जहाज बनाना है।\n\nहर बहाल पज़ल वार्प इंजन जलाने की डिजिटल शक्ति देता है। ऊर्जा इकट्ठा करो, नक्शे फिर बनाओ और मानवता को तारों के पार नए घर तक ले चलो।</string>
+    <string name="intro_button">यात्रा शुरू करें</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">बंद करें</string>
     <string name="cancel">रद्द करें</string>
     <string name="confirm">पुष्टि करें</string>
     <string name="settings">सेटिंग्स</string>
     <string name="about">के बारे में</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">ध्वनि प्रभाव</string>
     <string name="sound_effects_desc">गेम ध्वनि प्रभाव चालू/बंद करें</string>
     <string name="language">भाषा</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">रोज़ सिंक ज़रूरी</string>
+    <string name="check_in_energy_active">तारा ऊर्जा: सक्रिय</string>
+    <string name="check_in_energy_activate">तारा ऊर्जा पाने के लिए टैप करें</string>
+    <string name="check_in_days_suffix">%1$d दिन</string>
+    <string name="check_in_pending">लंबित</string>
+    <string name="check_in_station_log">स्टेशन लॉग: पिछले 30 दिन</string>
+    <string name="today_earned">आज मिला</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">डबल सिक्के: सक्रिय</string>
+    <string name="buff_overclocking">ओवरक्लॉक कलेक्टर चल रहा...</string>
+    <string name="buff_ready">सिक्का कलेक्टर: तैयार</string>
+    <string name="buff_waiting">स्थिति: तैनाती का इंतज़ार</string>
+    <string name="buff_activate">सक्रिय करें</string>
+    <string name="buff_duration_rule">अवधि: 3 मिनट आधार + लगातार हर दिन 1 मिनट</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">प्रोजेक्ट एक्सोडस: अखंडता</string>
+    <string name="asc_status_synthesizing">स्थिति: संश्लेषण जारी</string>
+    <string name="asc_fragments_count">%1$d / %2$d टुकड़े</string>
+    <string name="asc_tab_memories">यादें</string>
+    <string name="asc_tab_blueprint">नक्शा</string>
+    <string name="asc_memory_title">एन्कोडेड मेमोरी</string>
+    <string name="asc_memory_desc">कहानी पढ़ने के लिए अनलॉक करें।</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">क्वांटम कील</string>
+    <string name="mod_1">फ्यूजन रिएक्टर हार्ट</string>
+    <string name="mod_2">न्यूरो-लिंक कॉकपिट</string>
+    <string name="mod_3">क्रायोस्टेसिस हॉल</string>
+    <string name="mod_4">बायो-डोम</string>
+    <string name="mod_5">वॉयड शील्ड</string>
+    <string name="mod_6">हाइपर-सेंसर</string>
+    <string name="mod_7">आयन थ्रस्टर</string>
+    <string name="mod_8">कम्युनिकेशन स्पायर</string>
+    <string name="mod_9">जेनेसिस लाइब्रेरी</string>
+    <string name="mod_10">वार्प ड्राइव</string>
+    <string name="mod_11">लॉन्च की</string>
+    <string name="mod_12">प्रोजेक्ट एक्सोडस</string>
+    <string name="mod_status_online">ऑनलाइन</string>
+    <string name="mod_status_constructing">निर्माणाधीन</string>
+    <string name="mod_detail_online">स्थिति: मॉड्यूल बना और एकीकृत\nअखंडता: 100%\nएक्सेस: स्ट्रैटेजिक एसेट अनलॉक</string>
+    <string name="mod_detail_constructing">स्थिति: संश्लेषण जारी\n\nकुल प्रगति: %1$d/10 टुकड़े\n\n- क्लासिक मैट्रिक्स: %2$d/5\n- एसेंडेड लिंक: %3$d/5\n\nलक्ष्य: संरचनात्मक स्थिरीकरण</string>
+    <string name="mod_close">बंद करें</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">डबल सिक्के: सक्रिय</string>
+    <string name="hud_buff_warming">सिस्टम वार्म अप...</string>
+    <string name="hud_buff_hint_prepare">गेम शुरू करने की तैयारी</string>
+    <string name="hud_buff_hint_overclock">ओवरक्लॉक कलेक्टर</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">जागरण: मूल</string>
+    <string name="level_tutorial_story">शाश्वत यात्री डिजिटल मंदिर में जागता है, पहले मिशन की तैयारी करता है।</string>
+    <string name="level_tutorial_title_asc">जागरण: मूल (विस्तारित)</string>
+    <string name="level_tutorial_story_asc">कमांडर का पहला उन्नत सिमुलेशन कार्य।</string>
     <string name="clear_data">डेटा साफ करें</string>
     <string name="clear_data_desc">सभी गेम प्रगति रीसेट करें</string>
     <string name="clear_data_confirm_title">डेटा साफ करें</string>
     <string name="clear_data_confirm_message">क्या आप वाकई सभी गेम डेटा हटाना चाहते हैं?\n\nयह हटाएगा:\n• सभी स्तर प्रगति\n• सितारे और सिक्के\n• चेक-इन रिकॉर्ड\n• सर्वश्रेष्ठ समय\n\nयह कार्रवाई पूर्ववत नहीं की जा सकती!</string>
     <string name="clear_data_confirm">साफ करें</string>
-    
-    <!-- About -->
     <string name="about_title">OnePic के बारे में</string>
     <string name="version">संस्करण</string>
     <string name="build_number">बिल्ड नंबर</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">ऐप विवरण</string>
     <string name="app_description">OnePic एक सुंदर पहेली गेम है जो कई गेम मोड और समृद्ध स्तर चुनौतियां प्रदान करता है। पहेली टुकड़ों को खींचकर और संयोजित करके सुंदर चित्र पहेलियों को पूरा करें।</string>
     <string name="changelog_title">परिवर्तन लॉग</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">व्यक्तिगत केंद्र</string>
     <string name="puzzle_master">पहेली मास्टर</string>
     <string name="completed">पूर्ण</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">पूर्णता दर</string>
     <string name="classic">क्लासिक</string>
     <string name="gallery">गैलरी</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">होम</string>
+    <string name="nav_galaxy">उन्नति</string>
     <string name="nav_checkin">चेक-इन</string>
     <string name="nav_personal_center">प्रोफ़ाइल</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">दैनिक चेक-इन</string>
     <string name="checked_in_today">आज चेक-इन किया गया</string>
     <string name="earned">अर्जित</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 चेक-इन इनाम</string>
     <string name="check_in_reward_desc">दैनिक 10-50 सिक्के अर्जित करें\nअधिक लगातार दिन = अधिक इनाम!</string>
     <string name="week_check_in_history">7-दिवसीय चेक-इन इतिहास</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">बिल्कुल सही!</string>
     <string name="great">शानदार!</string>
     <string name="keep_going">जारी रखें!</string>
     <string name="points">अंक</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">डबल पाने के लिए विज्ञापन देखें</string>
+    <string name="ad_double_claimed">2X मिल गया!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• प्रारंभिक रिलीज़</string>
     <string name="changelog_item_2">• क्लासिक और गैलरी मोड</string>
     <string name="changelog_item_3">• दैनिक चेक-इन सुविधा</string>
     <string name="changelog_item_4">• ध्वनि प्रभाव और स्पर्श प्रतिक्रिया</string>
     <string name="changelog_item_5">• बहुभाषी समर्थन (चीनी/अंग्रेजी)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">अवतार</string>
     <string name="cd_check_in">चेक-इन</string>
     <string name="cd_checked_in">चेक-इन किया गया</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">अगला</string>
     <string name="cd_scroll_to_current">वर्तमान स्तर पर स्क्रॉल करें</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">कमांडर, स्वागत है!</string>
+    <string name="tut_step_1">स्वैप के लिए टुकड़ा 2 को पोजिशन 4 पर खींचें!</string>
+    <string name="tut_step_double_tap">जुड़े टुकड़े अलग करने के लिए डबल-टैप!</string>
+    <string name="tut_drag">जोड़ने के लिए टुकड़े खींचें</string>
+    <string name="tut_double_tap">अलग करने के लिए डबल टैप</string>
+    <string name="tut_node_title">नौसिखिया गाइड</string>
+    
     <string name="weekday_sunday">रवि</string>
     <string name="weekday_monday">सोम</string>
     <string name="weekday_tuesday">मंगल</string>
@@ -92,4 +164,45 @@
     <string name="weekday_thursday">गुरु</string>
     <string name="weekday_friday">शुक्र</string>
     <string name="weekday_saturday">शनि</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 कमांडर, बेसिक ट्रेनिंग पूरी। असली यात्रा शुरू करने के लिए नीचे \"उन्नति\" टैप करें!</string>
+    <string name="guide_chapter1_hint">💡 उन्नत सिमुलेशन पूरा! सिंक स्थिर। अध्याय 1 \"मूल\" अब सक्रिय। तैनाती के लिए तैयार!</string>
+    <string name="edit_nickname">उपनाम संपादित करें</string>
+    <string name="enter_nickname">नया उपनाम दर्ज करें</string>
+    <string name="save">सहेजें</string>
+    <string name="nickname_too_short">उपनाम कम से कम 2 अक्षर का होना चाहिए</string>
+    <string name="nickname_too_long">उपनाम 12 अक्षर से ज़्यादा नहीं हो सकता</string>
+    <string name="hint_use_free">आज का मुफ्त संकेत इस्तेमाल हो गया! ✨</string>
+    <string name="hint_confirm_title">संकेत इस्तेमाल करें?</string>
+    <string name="hint_confirm_msg">संकेत के लिए 100 सिक्के खर्च करें?\nबैलेंस: %1$d 🪙</string>
+    <string name="hint_confirm_yes">हाँ (-100)</string>
+    <string name="hint_not_enough">सिक्के कम हैं!</string>
+    <string name="ad_reward_toast">+%1$d 🪙 पाने के लिए पूरी वीडियो देखें</string>
+    <string name="ad_reward_received">इनाम मिला: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">कृपया %1$d:%2$02d इंतज़ार करें</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">अध्याय 1: क्वांटम कील · जागरण की रीढ़</string>
+    <string name="chapter_2">अध्याय 2: फ्यूजन कोर · शाश्वत चिंगारी</string>
+    <string name="chapter_3">अध्याय 3: न्यूरल कॉकपिट · चेतना दर्पण</string>
+    <string name="chapter_4">अध्याय 4: हाइबरनेशन हॉल · शाश्वत सर्दी का सपना</string>
+    <string name="chapter_5">अध्याय 5: इकोलॉजी लूप · पन्ना उम्मीद</string>
+    <string name="chapter_6">अध्याय 6: वॉयड शील्ड · आसमान छूता पंख</string>
+    <string name="chapter_7">अध्याय 7: हाइपर-सेंसिंग रडार · सच की आंख</string>
+    <string name="chapter_8">अध्याय 8: आयन थ्रस्टर · आसमान चीरता प्रवाह</string>
+    <string name="chapter_9">अध्याय 9: स्टार-स्पीक टावर · ब्रह्मांडीय अनुनाद</string>
+    <string name="chapter_10">अध्याय 10: सभ्यता बीज भंडार · स्मृति मंदिर</string>
+    <string name="chapter_11">अध्याय 11: कर्वेचर इंजन · स्पेसटाइम प्रतिध्वनि</string>
+    <string name="chapter_12">अध्याय 12: स्टार्टअप की · अंतिम प्रस्तावना</string>
+    <string name="chapter_coming_soon">जल्द आ रहा है...</string>
+    <string name="ad_label">विज्ञापन</string>
+    <string name="daily_reminder">दैनिक अनुस्मारक</string>
+    <string name="daily_reminder_channel_name">पहेली अनुस्मारक</string>
+    <string name="daily_reminder_channel_desc">पहेलियों को पूरा करने के लिए दैनिक अनुस्मारक।</string>
+    <string name="daily_reminder_title_1">पहेली का समय!</string>
+    <string name="daily_reminder_msg_1">आपके मस्तिष्क को विश्राम की आवश्यकता है। वापस आएं और एक पहेली हल करें! 🧩</string>
+    <string name="daily_reminder_title_2">कमांडर, नई चुनौतियाँ इंतज़ार कर रही हैं!</string>
+    <string name="daily_reminder_msg_2">टुकड़ों को इंतज़ार न करने दें! आज ही और यादें अनलॉक करें। 🚀</string>
+    <string name="daily_reminder_title_3">तारा ऊर्जा कम है!</string>
+    <string name="daily_reminder_msg_3">सन्दूक को रास्ता दिखाने के लिए आपकी ऊर्जा की आवश्यकता है। अभी मिशन में शामिल हों! ✨</string>
 </resources>

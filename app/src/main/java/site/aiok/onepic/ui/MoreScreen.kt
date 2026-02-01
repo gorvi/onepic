@@ -1,6 +1,7 @@
 package site.aiok.onepic.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,12 +11,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Delete
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.core.content.ContextCompat
+import site.aiok.onepic.utils.NotificationHelper
 import androidx.compose.ui.window.Dialog
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -44,12 +53,25 @@ import site.aiok.onepic.R
 import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.material.icons.filled.Edit
+import android.net.Uri
 
 @Composable
-fun MoreScreen() {
+fun MoreScreen(
+    onBack: () -> Unit
+) {
     val context = LocalContext.current
     
-    // 获取用户数据 - 直接读取，确保每次组合时获取最新数据
+    // 获取用户资料
+    var nickname by remember { mutableStateOf(LevelProgressManager.getNickname(context)) }
+    var avatarPath by remember { mutableStateOf(LevelProgressManager.getAvatarPath(context)) }
+    
+    var showNicknameDialog by remember { mutableStateOf(false) }
+    var nicknameInput by remember { mutableStateOf(nickname) }
+    var nicknameError by remember { mutableStateOf<String?>(null) }
+
+    // 获取统计数据
     val totalCoins = LevelProgressManager.getTotalMergeScore(context)
     val totalStars = LevelProgressManager.getTotalStars(context)
     val classicCompleted = LevelProgressManager.getCompletedClassicLevels(context).size
@@ -57,27 +79,47 @@ fun MoreScreen() {
     val totalCompleted = classicCompleted + galleryCompleted
     
     // 获取解锁关卡数
-    val classicUnlocked = remember {
-        LevelProgressManager.getUnlockedClassicLevels(context).size
-    }
-    val galleryUnlocked = remember {
-        LevelProgressManager.getUnlockedGalleryLevels(context).size
-    }
+    val classicUnlocked = LevelProgressManager.getUnlockedClassicLevels(context).size
+    val galleryUnlocked = LevelProgressManager.getUnlockedGalleryLevels(context).size
     val totalUnlocked = classicUnlocked + galleryUnlocked
-    
-    // 获取打卡数据 - 直接读取，确保实时更新
+
+    // 获取打卡数据
     val prefs = context.getSharedPreferences("check_in", android.content.Context.MODE_PRIVATE)
     val consecutiveDays = prefs.getInt("consecutive_days", 0)
-    
+
+    // 通知权限请求
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = androidx.activity.result.contract.ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            LevelProgressManager.setDailyReminderEnabled(context, true)
+            NotificationHelper.scheduleDailyReminder(context)
+        }
+    }
+
     // 设置对话框状态
     var showSettingsDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
-    
-    MeshGradientBackground {
+
+    // 头像选择器
+    val launcher = rememberLauncherForActivityResult(
+        contract = androidx.activity.result.contract.ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            val savedPath = site.aiok.onepic.utils.ProfileImageUtils.saveAvatarFromUri(context, it)
+            if (savedPath != null) {
+                LevelProgressManager.saveAvatarPath(context, savedPath)
+                avatarPath = savedPath
+            }
+        }
+    }
+
+    site.aiok.onepic.ui.components.GalaxyBackground(particleTheme = "profile") {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 16.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             
@@ -85,235 +127,325 @@ fun MoreScreen() {
             Text(
                 text = stringResource(R.string.personal_center),
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Black,
+                color = Color.White,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)
             )
             
             Spacer(modifier = Modifier.height(16.dp))
             
-            // 用户头像区域
-            Card(
+            // 用户头像区域 - Glassmorphism
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(110.dp),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f)
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                    .height(110.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.1f),
+                                Color.White.copy(alpha = 0.05f)
+                            )
+                        )
+                    )
+                    .border(1.dp, Color.White.copy(alpha = 0.15f), RoundedCornerShape(24.dp))
+                    .padding(20.dp)
             ) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(20.dp),
+                    modifier = Modifier.fillMaxSize(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // 头像
+                    // 头像 - 点击可编辑
                     Box(
                         modifier = Modifier
-                            .size(80.dp)
+                            .size(70.dp)
                             .background(
                                 brush = Brush.linearGradient(
                                     colors = listOf(
-                                        Color(0xFF2196F3),
-                                        Color(0xFF42A5F5)
+                                        Color(0xFF00E676),
+                                        Color(0xFF2979FF)
                                     )
                                 ),
                                 shape = CircleShape
                             )
-                            .clip(CircleShape),
+                            .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                            .clip(CircleShape)
+                            .clickable { launcher.launch("image/*") },
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = stringResource(R.string.cd_avatar),
-                            modifier = Modifier.size(48.dp),
-                            tint = Color.White
-                        )
+                        if (avatarPath != null) {
+                            coil.compose.AsyncImage(
+                                model = avatarPath,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = stringResource(R.string.cd_avatar),
+                                modifier = Modifier.size(40.dp),
+                                tint = Color.White
+                            )
+                        }
                     }
                     
-                    // 用户信息
+                    // 用户信息 - 点击昵称编辑
                     Column(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { 
+                                nicknameInput = nickname
+                                nicknameError = null
+                                showNicknameDialog = true 
+                            },
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.puzzle_master),
-                            fontSize = 22.sp,
+                            text = nickname,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = Color.White,
+                            letterSpacing = 0.5.sp
                         )
-                        Text(
-                            text = "ID: ${System.currentTimeMillis().toString().takeLast(6)}",
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.4f),
+                            modifier = Modifier.size(14.dp)
                         )
                     }
                 }
             }
             
-            Spacer(modifier = Modifier.height(20.dp))
+            // 分割线与内容区（已缩减间距）
+            Spacer(modifier = Modifier.height(16.dp))
             
-            // 统计数据 - 4个卡片
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                // 第一行：完成关卡和总星星
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    StatCard(
-                        modifier = Modifier.weight(1f),
-                        icon = Icons.Default.CheckCircle,
-                        title = stringResource(R.string.completed),
-                        value = "$totalCompleted",
-                        unit = null,
-                        gradientColors = listOf(Color(0xFF4CAF50), Color(0xFF66BB6A))
-                    )
-                    
-                    StatCard(
-                        modifier = Modifier.weight(1f),
-                        icon = Icons.Default.Star,
-                        title = stringResource(R.string.stars),
-                        value = "$totalStars",
-                        unit = null,
-                        gradientColors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
-                    )
-                }
-                
-                // 第二行：总金币和连续打卡
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    StatCard(
-                        modifier = Modifier.weight(1f),
-                        icon = null,
-                        title = stringResource(R.string.coins),
-                        value = "$totalCoins",
-                        unit = "🪙",
-                        gradientColors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
-                    )
-                    
-                    StatCard(
-                        modifier = Modifier.weight(1f),
-                        icon = Icons.Default.CheckCircle,
-                        title = stringResource(R.string.check_in),
-                        value = "$consecutiveDays",
-                        unit = stringResource(R.string.days),
-                        gradientColors = listOf(Color(0xFF2196F3), Color(0xFF42A5F5))
-                    )
-                }
+            // 昵称编辑对话框
+            if (showNicknameDialog) {
+                AlertDialog(
+                    onDismissRequest = { showNicknameDialog = false },
+                    containerColor = Color(0xFF1A1A1A),
+                    title = {
+                        Text(
+                            text = stringResource(R.string.edit_nickname),
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    text = {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            OutlinedTextField(
+                                value = nicknameInput,
+                                onValueChange = { 
+                                    nicknameInput = it
+                                    nicknameError = null 
+                                },
+                                label = { Text(stringResource(R.string.enter_nickname), color = Color.White.copy(alpha = 0.6f)) },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,
+                                    focusedBorderColor = Color(0xFF2979FF),
+                                    unfocusedBorderColor = Color.White.copy(alpha = 0.3f),
+                                    cursorColor = Color(0xFF2979FF)
+                                )
+                            )
+                            if (nicknameError != null) {
+                                Text(
+                                    text = nicknameError!!,
+                                    color = Color.Red.copy(alpha = 0.8f),
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                val trimmed = nicknameInput.trim()
+                                when {
+                                    trimmed.length < 2 -> nicknameError = context.getString(site.aiok.onepic.R.string.nickname_too_short)
+                                    trimmed.length > 12 -> nicknameError = context.getString(site.aiok.onepic.R.string.nickname_too_long)
+                                    else -> {
+                                        LevelProgressManager.saveNickname(context, trimmed)
+                                        nickname = trimmed
+                                        showNicknameDialog = false
+                                    }
+                                }
+                            }
+                        ) {
+                            Text(stringResource(site.aiok.onepic.R.string.save), color = Color(0xFF2979FF))
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showNicknameDialog = false }) {
+                            Text(stringResource(site.aiok.onepic.R.string.cancel), color = Color.White.copy(alpha = 0.6f))
+                        }
+                    },
+                    shape = RoundedCornerShape(20.dp)
+                )
             }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            // 额外统计信息卡片 - 使用图标和简短文字
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.6f)
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp, horizontal = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    StatItemWithIcon(
-                        icon = Icons.Default.CheckCircle,
-                        title = stringResource(R.string.unlocked),
-                        value = "$totalUnlocked",
-                        iconColor = Color(0xFF2196F3)
-                    )
-                    VerticalDivider(
-                        modifier = Modifier.height(50.dp),
-                        thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                    )
-                    StatItemWithIcon(
-                        icon = Icons.Default.CheckCircle,
-                        title = stringResource(R.string.completion_rate),
-                        value = if (totalUnlocked > 0) {
-                            "${(totalCompleted * 100 / totalUnlocked).coerceAtMost(100)}"
-                        } else {
-                            "0"
-                        },
-                        iconColor = Color(0xFF4CAF50)
-                    )
-                    VerticalDivider(
-                        modifier = Modifier.height(50.dp),
-                        thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                    )
-                    StatItemWithIcon(
-                        icon = Icons.Default.Star,
-                        title = stringResource(R.string.classic),
-                        value = "$classicCompleted",
-                        iconColor = Color(0xFFFFD700)
-                    )
-                    VerticalDivider(
-                        modifier = Modifier.height(50.dp),
-                        thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                    )
-                    StatItemWithIcon(
-                        icon = Icons.Default.CheckCircle,
-                        title = stringResource(R.string.gallery),
-                        value = "$galleryCompleted",
-                        iconColor = Color(0xFF66BB6A)
-                    )
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(20.dp))
             
             // 功能菜单
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f)
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White.copy(alpha = 0.05f))
+                    .border(0.5.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
                 ) {
+                    // 内联语言选择器
+                    LanguageSelectorRow(context)
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 20.dp), 
+                        thickness = 0.5.dp,
+                        color = Color.White.copy(alpha = 0.1f)
+                    )
+                    
                     MenuItem(
                         icon = Icons.Default.Settings,
                         title = stringResource(R.string.settings),
                         onClick = { showSettingsDialog = true }
                     )
-                    Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp)
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 20.dp), 
+                        thickness = 0.5.dp,
+                        color = Color.White.copy(alpha = 0.1f)
+                    )
                     MenuItem(
                         icon = Icons.Default.Info,
                         title = stringResource(R.string.about),
                         onClick = { showAboutDialog = true }
                     )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 20.dp), 
+                        thickness = 0.5.dp,
+                        color = Color.White.copy(alpha = 0.1f)
+                    )
+                    MenuItem(
+                        icon = Icons.Default.Share,
+                        title = stringResource(R.string.share_app),
+                        onClick = {
+                            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_app))
+                                putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_message))
+                            }
+                            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_app)))
+                        }
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 20.dp), 
+                        thickness = 0.5.dp,
+                        color = Color.White.copy(alpha = 0.1f)
+                    )
+                    MenuItem(
+                        icon = Icons.Default.Apps,
+                        title = stringResource(R.string.more_games),
+                        onClick = {
+                            try {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=netrill.com"))
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                // No browser or store
+                            }
+                        }
+                    )
                 }
             }
             
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 热门推荐：2048 (容器化设计 - 整合更多游戏按钮)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White.copy(alpha = 0.05f))
+                    .border(
+                        width = 0.5.dp,
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color.White.copy(alpha = 0.15f), Color.Transparent)
+                        ),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(16.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_launcher_2048),
+                        contentDescription = "2048 Game",
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .clickable {
+                                try {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=site.aiok.game2048")))
+                                } catch (e: Exception) {}
+                            }
+                    )
+                    
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "2048 Premium",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White.copy(alpha = 0.9f)
+                        )
+                        Text(
+                            text = stringResource(R.string.recommend_game_title),
+                            fontSize = 11.sp,
+                            color = Color.White.copy(alpha = 0.5f)
+                        )
+                    }
+                    
+                    // 模拟下载按钮
+                    Box(
+                        modifier = Modifier
+                            .background(Color(0xFF2979FF).copy(alpha = 0.2f), RoundedCornerShape(20.dp))
+                            .border(0.5.dp, Color(0xFF2979FF).copy(alpha = 0.5f), RoundedCornerShape(20.dp))
+                            .padding(horizontal = 12.dp, vertical = 4.dp)
+                            .clickable {
+                                try {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=site.aiok.game2048")))
+                                } catch (e: Exception) {}
+                            }
+                    ) {
+                        Text(
+                            text = "GET",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Black,
+                            color = Color(0xFF2979FF)
+                        )
+                    }
+                }
+            }
             
             // 版本信息
             Text(
-                text = "OnePic v1.0.0",
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                text = "OnePic v1.0.0 • System Online",
+                fontSize = 10.sp,
+                color = Color.White.copy(alpha = 0.3f),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    .padding(vertical = 24.dp),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                letterSpacing = 1.sp
             )
+            
+            Spacer(modifier = Modifier.height(60.dp))
         }
         
         // 设置对话框
@@ -333,178 +465,123 @@ fun MoreScreen() {
 }
 
 @Composable
-fun StatCard(
-    modifier: Modifier = Modifier,
-    icon: ImageVector?,
-    title: String?,
-    value: String,
-    unit: String?,
-    gradientColors: List<Color>
-) {
-    Card(
-        modifier = modifier.height(115.dp),
-        shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = gradientColors.map { it.copy(alpha = 0.2f) }
-                    ),
-                    shape = RoundedCornerShape(18.dp)
-                )
-                .padding(12.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                // 顶部：文字标签
-                if (title != null) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = title,
-                        fontSize = 13.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                        maxLines = 1,
-                        fontWeight = FontWeight.Medium
-                    )
-                } else {
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
-                
-                // 底部：图标/图案在前，数字在后
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    // 图标或单位（图案）
-                    if (icon != null) {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = null,
-                            modifier = Modifier.size(32.dp),
-                            tint = gradientColors[0]
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                    } else if (unit != null) {
-                        Text(
-                            text = unit,
-                            fontSize = 28.sp,
-                            color = gradientColors[0],
-                            maxLines = 1
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                    }
-                    
-                    // 数字
-                    Text(
-                        text = value,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = gradientColors[0],
-                        maxLines = 1
-                    )
-                    
-                    // 单位（如果有图标且有单位）
-                    if (icon != null && unit != null) {
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = unit,
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                            modifier = Modifier.padding(bottom = 4.dp),
-                            maxLines = 1
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun StatItem(
-    title: String,
-    value: String,
-    unit: String
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.widthIn(min = 60.dp, max = 80.dp)
-    ) {
-        Text(
-            text = title,
-            fontSize = 11.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            maxLines = 1,
-            softWrap = false
-        )
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = value,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                maxLines = 1
-            )
-            Text(
-                text = unit,
-                fontSize = 11.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                modifier = Modifier.padding(bottom = 2.dp, start = 2.dp),
-                maxLines = 1
-            )
-        }
-    }
-}
-
-@Composable
-fun StatItemWithIcon(
+fun MenuSwitch(
     icon: ImageVector,
     title: String,
-    value: String,
-    iconColor: Color
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = Modifier.widthIn(min = 60.dp, max = 90.dp)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(20.dp),
-            tint = iconColor
+            modifier = Modifier.size(24.dp),
+            tint = Color(0xFF2979FF)
         )
         Text(
             text = title,
-            fontSize = 11.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            maxLines = 1,
-            softWrap = false
-        )
-        Text(
-            text = value,
-            fontSize = 20.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1
+            color = Color.White.copy(alpha = 0.9f),
+            modifier = Modifier.weight(1f)
         )
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Color(0xFF2979FF),
+                uncheckedThumbColor = Color.LightGray,
+                uncheckedTrackColor = Color.DarkGray
+            )
+        )
+    }
+}
+
+@Composable
+fun LanguageSelectorRow(context: android.content.Context) {
+    val languages = remember { site.aiok.onepic.utils.LocaleHelper.getSupportedLanguages(context) }
+    val currentLang = remember { site.aiok.onepic.utils.LocaleHelper.getSavedLanguage(context) }
+    
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = Color(0xFF00E676)
+            )
+            Text(
+                text = stringResource(R.string.language),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White.copy(alpha = 0.9f),
+                modifier = Modifier.weight(1f)
+            )
+        }
+        
+        Spacer(modifier = Modifier.height(12.dp))
+        
+        androidx.compose.foundation.lazy.LazyRow(
+            contentPadding = PaddingValues(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            languages.forEach { (code, label) ->
+                item {
+                    val isSelected = currentLang == code
+                    Surface(
+                        onClick = {
+                            if (!isSelected) {
+                                site.aiok.onepic.utils.LocaleHelper.saveLanguage(context, code)
+                                // Restart Activity
+                                val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+                                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                                (context as? android.app.Activity)?.finish()
+                            }
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (isSelected) Color(0xFF2979FF).copy(alpha = 0.2f) else Color.White.copy(alpha = 0.05f),
+                        modifier = Modifier
+                            .height(36.dp)
+                            .border(
+                                width = 1.dp,
+                                color = if (isSelected) Color(0xFF2979FF) else Color.White.copy(alpha = 0.1f),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                    ) {
+                        Box(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 13.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected) Color(0xFF2979FF) else Color.White.copy(alpha = 0.7f)
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -518,7 +595,7 @@ fun MenuItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 20.dp, vertical = 16.dp),
+            .padding(horizontal = 20.dp, vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -526,68 +603,65 @@ fun MenuItem(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colorScheme.primary
+            tint = Color(0xFF2979FF)
         )
         Text(
             text = title,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold,
+            color = Color.White.copy(alpha = 0.9f),
             modifier = Modifier.weight(1f)
         )
         Icon(
             imageVector = Icons.Default.ArrowForward,
             contentDescription = null,
-            modifier = Modifier.size(20.dp),
-            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+            modifier = Modifier.size(18.dp),
+            tint = Color.White.copy(alpha = 0.3f)
         )
     }
 }
 
-// 设置对话框
+// 设置对话框 - Dark Theme
 @Composable
 fun SettingsDialog(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onClearData: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val soundManager = remember { SoundManager.getInstance(context) }
-    var soundEnabled by remember { 
-        mutableStateOf(soundManager.isEnabled()) 
-    }
-    
     Dialog(onDismissRequest = onDismiss) {
-        Card(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF1E1E2C))
+                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(24.dp))
+                .padding(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(24.dp)
+                    .padding(8.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 // 标题
                 Text(
                     text = stringResource(R.string.settings),
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = Color.White
                 )
                 
-                Divider()
+                HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
                 
-                // 声音开关
+                // 音效开关
+                val soundManager = remember { SoundManager.getInstance(context) }
+                var soundEnabled by remember { mutableStateOf(soundManager.isEnabled()) }
+                
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -597,122 +671,96 @@ fun SettingsDialog(
                             imageVector = Icons.Default.Settings,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = if (soundEnabled) 
-                                MaterialTheme.colorScheme.primary 
-                            else 
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                            tint = Color(0xFF2979FF)
                         )
-                        Column {
-                            Text(
-                                text = stringResource(R.string.sound_effects),
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            Text(
-                                text = stringResource(R.string.sound_effects_desc),
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.sound_effects),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White.copy(alpha = 0.9f)
+                        )
                     }
-                    
                     Switch(
                         checked = soundEnabled,
                         onCheckedChange = { enabled ->
                             soundEnabled = enabled
                             soundManager.setEnabled(enabled)
-                        }
+                        },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = Color(0xFF2979FF)
+                        )
                     )
                 }
+
+                // 每日提醒开关
+                var reminderEnabled by remember { mutableStateOf(LevelProgressManager.isDailyReminderEnabled(context)) }
                 
-                Divider()
-                
-                // 语言设置
-                val languagePrefs = context.getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE)
-                var currentLanguage by remember { 
-                    mutableStateOf(LocaleHelper.getSavedLanguage(context))
+                // 通知权限请求 (在 Dialog 内部也需要 launcher，但这里直接用主界面的 launcher 或重新定义一个)
+                // 注意：Dialog 内部使用 rememberLauncherForActivityResult 是允许的
+                val dialogPermissionLauncher = rememberLauncherForActivityResult(
+                    contract = androidx.activity.result.contract.ActivityResultContracts.RequestPermission()
+                ) { isGranted ->
+                    if (isGranted) {
+                        reminderEnabled = true
+                        LevelProgressManager.setDailyReminderEnabled(context, true)
+                        NotificationHelper.scheduleDailyReminder(context)
+                    }
                 }
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Settings,
+                            imageVector = Icons.Default.Notifications,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = Color(0xFF2979FF)
                         )
-                        Column {
-                            Text(
-                                text = stringResource(R.string.language),
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            Text(
-                                text = if (currentLanguage == "zh") 
-                                    stringResource(R.string.language_chinese) 
-                                else 
-                                    stringResource(R.string.language_english),
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.daily_reminder),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White.copy(alpha = 0.9f)
+                        )
                     }
-                    
-                    // 语言选择按钮
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        TextButton(
-                            onClick = {
-                                currentLanguage = "zh"
-                                LocaleHelper.saveLanguage(context, "zh")
-                                // 重新创建 Activity 以应用语言更改
-                                val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-                                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                context.startActivity(intent)
-                                (context as? android.app.Activity)?.finish()
-                            },
-                            colors = ButtonDefaults.textButtonColors(
-                                contentColor = if (currentLanguage == "zh") 
-                                    MaterialTheme.colorScheme.primary 
-                                else 
-                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            )
-                        ) {
-                            Text(stringResource(R.string.language_chinese), fontSize = 14.sp)
-                        }
-                        TextButton(
-                            onClick = {
-                                currentLanguage = "en"
-                                LocaleHelper.saveLanguage(context, "en")
-                                // 重新创建 Activity 以应用语言更改
-                                val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-                                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                context.startActivity(intent)
-                                (context as? android.app.Activity)?.finish()
-                            },
-                            colors = ButtonDefaults.textButtonColors(
-                                contentColor = if (currentLanguage == "en") 
-                                    MaterialTheme.colorScheme.primary 
-                                else 
-                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            )
-                        ) {
-                            Text(stringResource(R.string.language_english), fontSize = 14.sp)
-                        }
-                    }
+                    Switch(
+                        checked = reminderEnabled,
+                        onCheckedChange = { enabled ->
+                            if (enabled) {
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                                        reminderEnabled = true
+                                        LevelProgressManager.setDailyReminderEnabled(context, true)
+                                        NotificationHelper.scheduleDailyReminder(context)
+                                    } else {
+                                        dialogPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                    }
+                                } else {
+                                    reminderEnabled = true
+                                    LevelProgressManager.setDailyReminderEnabled(context, true)
+                                    NotificationHelper.scheduleDailyReminder(context)
+                                }
+                            } else {
+                                reminderEnabled = false
+                                LevelProgressManager.setDailyReminderEnabled(context, false)
+                                NotificationHelper.cancelDailyReminder(context)
+                            }
+                        },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = Color(0xFF2979FF)
+                        )
+                    )
                 }
-                
-                Divider()
+
+                HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
                 
                 // 清除数据
                 var showClearDataConfirm by remember { mutableStateOf(false) }
@@ -732,19 +780,19 @@ fun SettingsDialog(
                             imageVector = Icons.Default.Delete,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = MaterialTheme.colorScheme.error
+                            tint = Color(0xFFFF5252)
                         )
                         Column {
                             Text(
                                 text = stringResource(R.string.clear_data),
-                                fontSize = 18.sp,
+                                fontSize = 16.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.error
+                                color = Color(0xFFFF5252)
                             )
                             Text(
                                 text = stringResource(R.string.clear_data_desc),
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                                fontSize = 12.sp,
+                                color = Color.White.copy(alpha = 0.5f)
                             )
                         }
                     }
@@ -752,8 +800,8 @@ fun SettingsDialog(
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                        modifier = Modifier.size(18.dp),
+                        tint = Color.White.copy(alpha = 0.3f)
                     )
                 }
                 
@@ -761,11 +809,13 @@ fun SettingsDialog(
                 if (showClearDataConfirm) {
                     AlertDialog(
                         onDismissRequest = { showClearDataConfirm = false },
-                        title = { Text(stringResource(R.string.clear_data_confirm_title), color = MaterialTheme.colorScheme.error) },
+                        containerColor = Color(0xFF2C2C3E),
+                        title = { Text(stringResource(R.string.clear_data_confirm_title), color = Color(0xFFFF5252)) },
                         text = { 
                             Text(
                                 stringResource(R.string.clear_data_confirm_message),
-                                textAlign = TextAlign.Start
+                                textAlign = TextAlign.Start,
+                                color = Color.White.copy(alpha = 0.8f)
                             )
                         },
                         confirmButton = {
@@ -780,11 +830,14 @@ fun SettingsDialog(
                                     context.getSharedPreferences("level_progress", android.content.Context.MODE_PRIVATE)
                                         .edit().clear().apply()
                                     
+                                    // 触发主界面刷新
+                                    onClearData()
+                                    
                                     showClearDataConfirm = false
                                     onDismiss() // 关闭设置对话框
                                 },
                                 colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colorScheme.error
+                                    contentColor = Color(0xFFFF5252)
                                 )
                             ) {
                                 Text(stringResource(R.string.clear_data_confirm))
@@ -792,25 +845,9 @@ fun SettingsDialog(
                         },
                         dismissButton = {
                             TextButton(onClick = { showClearDataConfirm = false }) {
-                                Text(stringResource(R.string.cancel))
+                                Text(stringResource(R.string.cancel), color = Color.White.copy(alpha = 0.6f))
                             }
                         }
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                // 关闭按钮
-                Button(
-                    onClick = onDismiss,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.close),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(vertical = 4.dp)
                     )
                 }
             }
@@ -818,147 +855,57 @@ fun SettingsDialog(
     }
 }
 
-// 关于对话框
+// 关于对话框 - Dark Theme
 @Composable
 fun AboutDialog(
     onDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
-        Card(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF1E1E2C))
+                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(24.dp))
+                .padding(24.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // 标题
-                Text(
-                    text = stringResource(R.string.about_title),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp),
+                    tint = Color.White.copy(alpha = 0.9f)
                 )
                 
-                Divider()
-                
-                // 应用信息
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    InfoRow(stringResource(R.string.version), "1.0.0")
-                    InfoRow(stringResource(R.string.build_number), "1")
-                    InfoRow(stringResource(R.string.developer), "OnePic Team")
-                    InfoRow(stringResource(R.string.release_date), "2026-01-22")
-                }
-                
-                Divider()
-                
-                // 应用描述
                 Text(
-                    text = stringResource(R.string.app_description_title),
-                    fontSize = 18.sp,
+                    text = stringResource(R.string.about),
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = Color.White
                 )
+                
                 Text(
-                    text = stringResource(R.string.app_description),
+                    text = "OnePic Puzzle\nv1.0.0\n\nDesigned by AI & Human.\nA journey through the fragmented universe.",
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    color = Color.White.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center,
                     lineHeight = 20.sp
                 )
                 
-                Divider()
-                
-                // 更新日志
-                Text(
-                    text = stringResource(R.string.changelog_title),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    UpdateLogItem(
-                        stringResource(R.string.changelog_v1_0_0), 
-                        listOf(
-                            stringResource(R.string.changelog_item_1),
-                            stringResource(R.string.changelog_item_2),
-                            stringResource(R.string.changelog_item_3),
-                            stringResource(R.string.changelog_item_4),
-                            stringResource(R.string.changelog_item_5)
-                        )
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                // 关闭按钮
                 Button(
                     onClick = onDismiss,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2979FF)),
+                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp))
                 ) {
-                    Text(
-                        text = stringResource(R.string.close),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
+                    Text(stringResource(R.string.close), color = Color.White)
                 }
             }
         }
     }
 }
 
-@Composable
-fun InfoRow(label: String, value: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = label,
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-        )
-        Text(
-            text = value,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
 
-@Composable
-fun UpdateLogItem(version: String, items: List<String>) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Text(
-            text = version,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
-        items.forEach { item ->
-            Text(
-                text = item,
-                fontSize = 13.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
-    }
-}

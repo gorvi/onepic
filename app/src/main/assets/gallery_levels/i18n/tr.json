@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Dünya Ağacı Tohumları",
+    "story_text": "Dünya Ağacı'nın tohumları boşlukta süzülüyor ve her şeyin serüveni başlıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Işık Tapınağı",
+    "story_text": "Işık ve yeşilin iç içe geçtiği, tüm varlıkların ruhları için huzur bulduğu bir tapınak.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Şafak Ormanı",
+    "story_text": "Şafak sisi delip geçerek kadim ormanı uyandırıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Amber'in Fısıltıları",
+    "story_text": "Mevsimler akıp giderken kehribar, geçmişin fısıltı hikayelerini bırakır.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Zümrüt Zen",
+    "story_text": "Bambu hafifçe sallanarak yemyeşil alanda bir zen anı sunuyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Bulut Terasları",
+    "story_text": "Zümrüt yeşili dalgalar dağın yamacından katman katman aşağıya doğru akıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "Alevli Kumullar",
+    "story_text": "Kavurucu güneş kum tepelerini şekillendiriyor ama yine de bu çorak topraklarda hayat kıpırdanıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Sonsuzluğun Sınırı",
+    "story_text": "Kara ve denizin bittiği yerde bilinmeyene doğru yeni bir yolculuk başlıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Ruh Kurt",
+    "story_text": "Karlı ovaların derinliklerinde, ruh kurdu sessizce saflığı korur.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Ay Tilkisi",
+    "story_text": "Ay ışığı gümüşi bir parıltı yayarken, ruh tilki gece yarısı ormanında dolaşır.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Gökkuşağı Anka kuşu",
+    "story_text": "Yanardöner kanatlar mavi gökyüzünü keserek gökkuşağı izi bırakıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Panda Adaçayı",
+    "story_text": "Bulut denizinin üzerinde, bilge panda kadim bilgelik üzerine derin derin düşünür.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Kaplan Ormanı",
+    "story_text": "Benekli gölgelerin altında güç, sessiz sabırda gizlenir.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Ganesha Ruhu",
+    "story_text": "Zaman nehrini kateden fil ruhu, dünyanın gerçeğini algılar.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Orman Kralı",
+    "story_text": "Ormanın kralı burada duruyor ve tüm yaratıklar onun bakışları altında nefeslerini tutuyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Thunderbird",
+    "story_text": "Zirvedeki nöbetçi aşağıdaki arazinin görkemli genişliğini araştırıyor.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "Antik Oymalar",
+    "story_text": "Zamanın gömdüğü oymalar ataların fısıltılarını kaydediyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Yıldız Yolu Piramitleri",
+    "story_text": "Kavurucu çölde binlerce yıldır sessiz duran bir geometrik mucize.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Petra Işık Kapısı",
+    "story_text": "Taş duvardaki kırmızı kayanın içinde medeniyetin sıcaklığı nabız gibi atıyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Machu Picchu'yu kaybettim",
+    "story_text": "Bulutlarla örtülü zirvedeki şehir, zamanın ve mekanın kıvrımlarında kaybolmuş.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Taş Ejderha",
+    "story_text": "Taş ejderha, antik toprakları koruyan dağ sırtı boyunca kıvrılıyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Kahramanın Arenası",
+    "story_text": "Harabe halindeki arena, geçmiş günlerin kahramanlık destanlarını anımsatıyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Işık Kubbesi",
+    "story_text": "Kubbenin altındaki kutsal ışık sayısız medeniyetin yükselişine ve çöküşüne tanıklık etmiştir.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Sonsuz Kütüphane",
+    "story_text": "Gökyüzüne uzanan bir bilgi sarmalı, kayıp gerçekleri tutan kadim tomarlar.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Rüya Bahçeleri",
+    "story_text": "Cennet ile yeryüzü arasında asılı duran bir bahçe, doğanın kayıp bir senfonisi.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Peygamber Kulesi",
+    "story_text": "Dağın tepesindeki dev monolit, kızıl çölde kaybolanlara rehberlik ediyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Gökyüzü Yelkenleri",
+    "story_text": "Limandaki beyaz yelkenler bilinmeyen ufuklara doğru rota çiziyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Siber Biyo Spire",
+    "story_text": "Gelecekteki kulede neon ve sarmaşıklar iç içe geçiyor; doğa, siberpunk çağında nefes alıyor.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Zamanın Arkı",
+    "story_text": "Alacakaranlık denizinin üzerinde süzülen bir mega şehir, zamanı taşıyan gemi.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Glow Pulse Yunuslar",
+    "story_text": "Denizdeki zarif figürler, derin menekşe titreşimleri içinde dans ediyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "Floresan Mercan",
+    "story_text": "Okyanusun derinliklerinde mercan kayalıkları sürekli değişen bir rüya bahçesi örüyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "Buz Ejderhası Uykusu",
+    "story_text": "Soğuk akıntıların altında kadim buz ejderhasının nöbetçisi uyuyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Hayalet Gemi Enkazı",
+    "story_text": "Dalgaların terk ettiği enkaz, sessizce yelken çağının son bölümünü anlatıyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Kozmik Balina",
+    "story_text": "Denizin ve yıldızların sınırındaki büyük balina, medeniyetin kıvılcımını ileriye taşıyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Hiçlik Kraken",
+    "story_text": "Gerçeklik ile yanılsama arasındaki uçurumda, dokunaçlar bir veri ağı örüyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Hayalet Denizanası",
+    "story_text": "Karanlıkta ışık şeritleri, gece yarısı titreşen peri ateşi gibi.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Atlantis",
+    "story_text": "Mühürlenen Atlantis, derin denizde eski görkemini bir kez daha ortaya çıkarıyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "Çekirdek Demirhanesi",
+    "story_text": "Kabuğun derinliklerindeki termal menfezler, hayal edilemeyecek yaşam çiçeklerini doğurur.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Ateş ve Buz",
+    "story_text": "Kırmızı lav buzlu sulara dökülüyor; ateş ve suyun nihai düellosu.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Yasak Hayat",
+    "story_text": "Yaşamın yasak bölgesinde kadim düzen hâlâ sessizce dönüyor.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Nirvana Anka kuşu",
+    "story_text": "Eski dünyanın közlerinden yükselen anka kuşu, alevler aracılığıyla sonsuz yaşama kavuşur.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Yıldız Ejderhası",
+    "story_text": "Zamanın gözlemcisi, yıldızların yörüngeleri boyunca rüyaların sınırlarını koruyan.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Göksel Peçe",
+    "story_text": "İplik gibi yıldız tozu, tüy gibi aurora; o, rüya gören çağın ebedi yankısıdır.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Zaman Spirali",
+    "story_text": "Zaman rüyalarda eriyip gidiyor ve dönen merdivenler sonsuzluğa çıkıyor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Ters Şelale",
+    "story_text": "Yerçekimi geçici bir buluttan başka bir şey değil; şelale artık gökyüzündeki okyanusa doğru akıyor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Kristal Labirent",
+    "story_text": "Işık ve gölgenin dansının ortasındaki kristal labirent, ruhun iç derinliklerini yansıtıyor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Bulut Kitaplığı",
+    "story_text": "Tüm hikayelerin uçuştuğu, gökyüzündeki efsanevi kütüphane.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Yerçekimi Adası",
+    "story_text": "Yer çekiminin başarısız olduğu kenarda, yüzen adalar bulut denizinde sessizce sürükleniyor.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Otomatik Boyut",
+    "story_text": "Hayaller boyutunda sonsuzca dönen, dişlilerin ve buharın endüstriyel bir ilahisi.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Toprak Ana: Derin Mavi",
+    "story_text": "Yıldızların uzak kıyılarındaki bu yere bir zamanlar ev derdik; tek derin mavi.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Kızıl Öncü",
+    "story_text": "Pas kırmızısı tozun altında medeniyetin kıvılcımı kızıl yıldızda ateşleniyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Don Halkaları",
+    "story_text": "Soğuk halkalar; boşlukta kalan kozmosun büyük bir izi.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "İkili Gün Batımı",
+    "story_text": "İkiz güneşler bir araya gelerek yabancı bir gökyüzünde üst üste binen gölgeler oluşturuyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Uykusuz Yıldız",
+    "story_text": "Trilyonlarca ışık akıntılar halinde birleşerek bu uykusuz yıldızın geleceğini kodluyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "Süpernova",
+    "story_text": "Bir yıldız nihai bir parlaklıkla sona erer; evrendeki en şiddetli ölüm ve aynı zamanda yeniden doğuş.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Galaksi Denizi",
+    "story_text": "Yıldızlar, her biri bir medeniyet destanını dalgalandıran, dönen bir galaksiler denizinde toplanır.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Yaradılış Sütunları",
+    "story_text": "Yaradılışın kuleleri, yıldızları ve harikaları besleyen sessiz bir beşik olan nebulayı deliyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Olay Ufku",
+    "story_text": "Yer çekiminin nihai tuzağında ışık bile kaderindeki sondan kaçamaz.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Solucan deliği geçişi",
+    "story_text": "Uzay-zaman geniş mesafeleri kısaltmak için kıvrılıyor ve yıldızlar arasında özgürce sıçramamıza olanak tanıyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Evrenin Gözü",
+    "story_text": "Son ufkun kenarında evren soğuk ama görkemli gözünü açıyor.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Puzzle Stellare</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">L\'anno 2077. L\'energia della Terra è esaurita, la civiltà un tempo grande è sull\'orlo dell\'estinzione.\n\nSei il Comandante dell\'Iniziativa Arca. La nostra unica speranza è raccogliere i nuclei energetici primordiali sparsi sul globo per forgiare un vascello in grado di attraversare la galassia.\n\nOgni puzzle restaurato fornisce l\'energia digitale per accendere i motori warp. Raccogli l\'energia, ricostruisci i progetti e guida l\'umanità attraverso le stelle verso la nostra nuova casa.</string>
+    <string name="intro_button">Inizia il viaggio</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Chiudi</string>
     <string name="cancel">Annulla</string>
     <string name="confirm">Conferma</string>
     <string name="settings">Impostazioni</string>
     <string name="about">Informazioni</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Effetti sonori</string>
     <string name="sound_effects_desc">Attiva/disattiva effetti sonori del gioco</string>
     <string name="language">Lingua</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">Sincronizzazione giornaliera richiesta</string>
+    <string name="check_in_energy_active">Energia stellare: Attiva</string>
+    <string name="check_in_energy_activate">Tocca per ottenere energia stellare</string>
+    <string name="check_in_days_suffix">%1$d giorni</string>
+    <string name="check_in_pending">In attesa</string>
+    <string name="check_in_station_log">Log stazione: Ultimi 30 giorni</string>
+    <string name="today_earned">Ottenuto oggi</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">Monete doppie: Attivo</string>
+    <string name="buff_overclocking">Raccoglitore overclock in corso...</string>
+    <string name="buff_ready">Raccoglitore monete: Pronto</string>
+    <string name="buff_waiting">Stato: In attesa di dispiegamento</string>
+    <string name="buff_activate">Attiva</string>
+    <string name="buff_duration_rule">Durata: 3 min base + 1 min per giorno consecutivo</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">Progetto Esodo: Integrità</string>
+    <string name="asc_status_synthesizing">Stato: Sintesi in corso</string>
+    <string name="asc_fragments_count">%1$d / %2$d frammenti</string>
+    <string name="asc_tab_memories">Memorie</string>
+    <string name="asc_tab_blueprint">Progetto</string>
+    <string name="asc_memory_title">Memoria codificata</string>
+    <string name="asc_memory_desc">Sblocca per leggere la storia.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Chiglia quantica</string>
+    <string name="mod_1">Cuore reattore a fusione</string>
+    <string name="mod_2">Cabina neuro-link</string>
+    <string name="mod_3">Sala criostasi</string>
+    <string name="mod_4">Il biodomo</string>
+    <string name="mod_5">Scudi del vuoto</string>
+    <string name="mod_6">Iper-sensori</string>
+    <string name="mod_7">Propulsori ionici</string>
+    <string name="mod_8">Torre comunicazioni</string>
+    <string name="mod_9">Biblioteca Genesi</string>
+    <string name="mod_10">Motore warp</string>
+    <string name="mod_11">Chiave di avvio</string>
+    <string name="mod_12">Progetto Esodo</string>
+    <string name="mod_status_online">ONLINE</string>
+    <string name="mod_status_constructing">IN COSTRUZIONE</string>
+    <string name="mod_detail_online">Stato: Modulo costruito e integrato\nIntegrità: 100%\nAccesso: Bene strategico sbloccato</string>
+    <string name="mod_detail_constructing">Stato: Sintesi in corso\n\nProgresso totale: %1$d/10 frammenti\n\n- Matrice classica: %2$d/5\n- Link asceso: %3$d/5\n\nObiettivo: Stabilizzazione strutturale</string>
+    <string name="mod_close">CHIUDI</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">Monete doppie: Attivo</string>
+    <string name="hud_buff_warming">Sistema in riscaldamento...</string>
+    <string name="hud_buff_hint_prepare">Prepara l\'avvio della partita</string>
+    <string name="hud_buff_hint_overclock">Raccoglitore overclock</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Risveglio: Origine</string>
+    <string name="level_tutorial_story">Il Viaggiatore eterno si risveglia nel Tempio digitale, pronto per la sua prima missione.</string>
+    <string name="level_tutorial_title_asc">Risveglio: Origine (Esteso)</string>
+    <string name="level_tutorial_story_asc">Prima simulazione avanzata del Comandante.</string>
     <string name="clear_data">Cancella dati</string>
     <string name="clear_data_desc">Reimposta tutto il progresso del gioco</string>
     <string name="clear_data_confirm_title">Cancella dati</string>
     <string name="clear_data_confirm_message">Sei sicuro di voler cancellare tutti i dati del gioco?\n\nQuesto eliminerà:\n• Tutto il progresso dei livelli\n• Stelle e monete\n• Registri di check-in\n• Migliori tempi\n\nQuesta azione non può essere annullata!</string>
     <string name="clear_data_confirm">Cancella</string>
-    
-    <!-- About -->
     <string name="about_title">Informazioni su OnePic</string>
     <string name="version">Versione</string>
     <string name="build_number">Numero di build</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Descrizione dell\'app</string>
     <string name="app_description">OnePic è un bellissimo gioco di puzzle che offre più modalità di gioco e ricche sfide di livello. Completa bellissimi puzzle di immagini trascinando e combinando pezzi del puzzle.</string>
     <string name="changelog_title">Registro delle modifiche</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Centro personale</string>
     <string name="puzzle_master">Maestro del puzzle</string>
     <string name="completed">Completato</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Tasso di completamento</string>
     <string name="classic">Classico</string>
     <string name="gallery">Galleria</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Home</string>
+    <string name="nav_galaxy">Ascensione</string>
     <string name="nav_checkin">Check-in</string>
     <string name="nav_personal_center">Profilo</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Check-in giornaliero</string>
     <string name="checked_in_today">Registrato oggi</string>
     <string name="earned">Guadagnato</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Ricompense check-in</string>
     <string name="check_in_reward_desc">Guadagna 10-50 monete al giorno\nPiù giorni consecutivi = più ricompense!</string>
     <string name="week_check_in_history">Cronologia check-in di 7 giorni</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Perfetto!</string>
     <string name="great">Ottimo!</string>
     <string name="keep_going">Continua!</string>
     <string name="points">punti</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Guarda un annuncio per il doppio</string>
+    <string name="ad_double_claimed">Doppio reclamato!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Rilascio iniziale</string>
     <string name="changelog_item_2">• Modalità Classica e Galleria</string>
     <string name="changelog_item_3">• Funzione check-in giornaliero</string>
     <string name="changelog_item_4">• Effetti sonori e feedback aptico</string>
     <string name="changelog_item_5">• Supporto multilingua (Cinese/Inglese)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Avatar</string>
     <string name="cd_check_in">Check-in</string>
     <string name="cd_checked_in">Registrato</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Avanti</string>
     <string name="cd_scroll_to_current">Scorri al livello corrente</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Benvenuto, Comandante!</string>
+    <string name="tut_step_1">Trascina il pezzo 2 nella posizione 4 per scambiare!</string>
+    <string name="tut_step_double_tap">Doppio tocco per separare i pezzi uniti!</string>
+    <string name="tut_drag">Trascina i pezzi per unire</string>
+    <string name="tut_double_tap">Doppio tocco per separare</string>
+    <string name="tut_node_title">Guida per principianti</string>
+    
     <string name="weekday_sunday">Dom</string>
     <string name="weekday_monday">Lun</string>
     <string name="weekday_tuesday">Mar</string>
@@ -92,4 +164,48 @@
     <string name="weekday_thursday">Gio</string>
     <string name="weekday_friday">Ven</string>
     <string name="weekday_saturday">Sab</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Comandante, addestramento base completato. Tocca \"Ascensione\" qui sotto per iniziare il vero viaggio!</string>
+    <string name="guide_chapter1_hint">💡 Simulazione avanzata completata! Sincronizzazione stabile. Capitolo 1 \"L\'Origine\" ora attivo. Pronto al dispiegamento!</string>
+    <string name="edit_nickname">Modifica soprannome</string>
+    <string name="enter_nickname">Inserisci nuovo soprannome</string>
+    <string name="save">Salva</string>
+    <string name="nickname_too_short">Il soprannome deve avere almeno 2 caratteri</string>
+    <string name="nickname_too_long">Il soprannome non può superare i 12 caratteri</string>
+    <string name="hint_use_free">Suggerimento gratuito giornaliero usato! ✨</string>
+    <string name="hint_confirm_title">Usare suggerimento?</string>
+    <string name="hint_confirm_msg">Spendere 100 monete per un suggerimento?\nSaldo: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Sì (-100)</string>
+    <string name="hint_not_enough">Monete insufficienti!</string>
+    <string name="ad_reward_toast">Guarda il video completo per guadagnare +%1$d 🪙</string>
+    <string name="ad_reward_received">Ricompensa ricevuta: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Attendi %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Capitolo 1: Chiglia quantica · Spina del risveglio</string>
+    <string name="chapter_2">Capitolo 2: Nucleo fusione · Scintilla eterna</string>
+    <string name="chapter_3">Capitolo 3: Cabina neurale · Specchio della coscienza</string>
+    <string name="chapter_4">Capitolo 4: Sala ibernazione · Sogno dell\'inverno eterno</string>
+    <string name="chapter_5">Capitolo 5: Anello ecologico · Speranza smeraldo</string>
+    <string name="chapter_6">Capitolo 6: Scudo del vuoto · Ala che tocca il cielo</string>
+    <string name="chapter_7">Capitolo 7: Radar iper-sensibile · Occhio della verità</string>
+    <string name="chapter_8">Capitolo 8: Propulsore ionico · Flusso che squarcia il cielo</string>
+    <string name="chapter_9">Capitolo 9: Torre parlante-stelle · Risonanza cosmica</string>
+    <string name="chapter_10">Capitolo 10: Deposito semi civiltà · Tempio della memoria</string>
+    <string name="chapter_11">Capitolo 11: Motore curvatura · Eco spazio-tempo</string>
+    <string name="chapter_12">Capitolo 12: Chiave di avvio · Preludio finale</string>
+    <string name="chapter_coming_soon">Prossimamente...</string>
+    <string name="ad_label">Annuncio</string>
+    <string name="share_app">Condividi l\'app</string>
+    <string name="share_message">Dai un\'occhiata a OnePic! Un bellissimo gioco di puzzle su Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Informativa sulla privacy</string>
+    <string name="daily_reminder">Promemoria giornaliero</string>
+    <string name="daily_reminder_channel_name">Promemoria puzzle</string>
+    <string name="daily_reminder_channel_desc">Promemoria giornalieri per tornare e completare i puzzle.</string>
+    <string name="daily_reminder_title_1">È ora del puzzle!</string>
+    <string name="daily_reminder_msg_1">Il tuo cervello ha bisogno di una pausa. Torna e risolvi un puzzle! 🧩</string>
+    <string name="daily_reminder_title_2">Comandante, nuove sfide ti attendono!</string>
+    <string name="daily_reminder_msg_2">Non far aspettare i frammenti! Sblocca più ricordi oggi. 🚀</string>
+    <string name="daily_reminder_title_3">Energia stellare bassa!</string>
+    <string name="daily_reminder_msg_3">L\'Arca ha bisogno della tua energia per illuminare il cammino. Unisciti ora! ✨</string>
 </resources>

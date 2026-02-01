@@ -1,27 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">لغز النجوم</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">العام 2077. طاقة الأرض نضبت، والحضارة العظيمة ذات يوم تقف على حافة الانقراض.\n\nأنت قائد \"مبادرة السفينة\". أملنا الوحيد في جمع قلوب الطاقة البدائية المنتشرة عبر الكوكب لصنع سفينة تعبر المجرة.\n\nكل لغز يُستعاد يعطي القوة الرقمية لإشعال محركات الالتواء. اجمع الطاقة، أعد بناء المخططات، وقيادة البشرية عبر النجوم لإيجاد وطننا الجديد.</string>
+    <string name="intro_button">بدء الرحلة</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">إغلاق</string>
     <string name="cancel">إلغاء</string>
     <string name="confirm">تأكيد</string>
     <string name="settings">الإعدادات</string>
     <string name="about">حول</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">التأثيرات الصوتية</string>
     <string name="sound_effects_desc">تمكين/تعطيل التأثيرات الصوتية للعبة</string>
     <string name="language">اللغة</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">مطلوب مزامنة يومية</string>
+    <string name="check_in_energy_active">طاقة نجمية: مفعّلة</string>
+    <string name="check_in_energy_activate">انقر للحصول على الطاقة النجمية</string>
+    <string name="check_in_days_suffix">%1$d أيام</string>
+    <string name="check_in_pending">قيد الانتظار</string>
+    <string name="check_in_station_log">سجل المحطة: آخر 30 يوماً</string>
+    <string name="today_earned">تم الحصول عليه اليوم</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">عملات مزدوجة: مفعّل</string>
+    <string name="buff_overclocking">مجمع أوفركلوك يعمل...</string>
+    <string name="buff_ready">مجمع العملات: جاهز</string>
+    <string name="buff_waiting">الحالة: في انتظار النشر</string>
+    <string name="buff_activate">تفعيل</string>
+    <string name="buff_duration_rule">قاعدة المدة: 3 دقائق + 1 دقيقة لكل يوم متتالٍ</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">مشروع الخروج: السلامة</string>
+    <string name="asc_status_synthesizing">الحالة: جاري التركيب</string>
+    <string name="asc_fragments_count">%1$d / %2$d شظايا</string>
+    <string name="asc_tab_memories">ذكريات</string>
+    <string name="asc_tab_blueprint">مخطط</string>
+    <string name="asc_memory_title">ذاكرة مشفرة</string>
+    <string name="asc_memory_desc">افتح لقرض الحكاية.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">عارضة الكم</string>
+    <string name="mod_1">قلب المفاعل الاندماجي</string>
+    <string name="mod_2">قمرة الربط العصبي</string>
+    <string name="mod_3">قاعة التجميد</string>
+    <string name="mod_4">القبة الحيوية</string>
+    <string name="mod_5">دروع الفراغ</string>
+    <string name="mod_6">مستشعرات فائقة</string>
+    <string name="mod_7">دفعات أيونية</string>
+    <string name="mod_8">برج الاتصال</string>
+    <string name="mod_9">مكتبة التكوين</string>
+    <string name="mod_10">محرك الالتواء</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="share_message">تفقد OnePic! لعبة ألغاز جميلة على Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="mod_11">مفتاح الإطلاق</string>
+    <string name="mod_12">مشروع الخروج</string>
+    <string name="mod_status_online">متصل</string>
+    <string name="mod_status_constructing">قيد البناء</string>
+    <string name="mod_detail_online">الحالة: الوحدة مبنية ومتكاملة\nالسلامة: 100%\nالوصول: أصل استراتيجي مفتوح</string>
+    <string name="mod_detail_constructing">الحالة: التركيب جارٍ\n\nالتقدم الكلي: %1$d/10 شظايا\n\n- مصفوفة كلاسيكية: %2$d/5\n- رابط الصعود: %3$d/5\n\nالهدف: استقرار البنية</string>
+    <string name="mod_close">إغلاق</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">عملات مزدوجة: مفعّل</string>
+    <string name="hud_buff_warming">النظام يسخّن...</string>
+    <string name="hud_buff_hint_prepare">استعد لبدء اللعبة</string>
+    <string name="hud_buff_hint_overclock">مجمع أوفركلوك</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">اليقظة: المنشأ</string>
+    <string name="level_tutorial_story">المسافر الأبدي يستيقظ في المعبد الرقمي، يستعد لمهمته الأولى.</string>
+    <string name="level_tutorial_title_asc">اليقظة: المنشأ (موسّع)</string>
+    <string name="level_tutorial_story_asc">مهمة المحاكاة المتقدمة الأولى للقائد.</string>
     <string name="clear_data">مسح البيانات</string>
     <string name="clear_data_desc">إعادة تعيين جميع تقدم اللعبة</string>
     <string name="clear_data_confirm_title">مسح البيانات</string>
     <string name="clear_data_confirm_message">هل أنت متأكد أنك تريد مسح جميع بيانات اللعبة؟\n\nسيتم حذف:\n• جميع تقدم المستويات\n• النجوم والعملات\n• سجلات تسجيل الدخول\n• أفضل الأوقات\n\nلا يمكن التراجع عن هذا الإجراء!</string>
     <string name="clear_data_confirm">مسح</string>
-    
-    <!-- About -->
     <string name="about_title">حول OnePic</string>
     <string name="version">الإصدار</string>
     <string name="build_number">رقم البناء</string>
@@ -30,8 +107,6 @@
     <string name="app_description_title">وصف التطبيق</string>
     <string name="app_description">OnePic هي لعبة ألغاز جميلة تقدم أوضاع لعب متعددة وتحديات مستوى غنية. أكمل ألغاز الصور الجميلة عن طريق السحب ودمج قطع الألغاز.</string>
     <string name="changelog_title">سجل التغييرات</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">المركز الشخصي</string>
     <string name="puzzle_master">سيد الألغاز</string>
     <string name="completed">مكتمل</string>
@@ -43,13 +118,10 @@
     <string name="completion_rate">معدل الإكمال</string>
     <string name="classic">كلاسيكي</string>
     <string name="gallery">المعرض</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">الرئيسية</string>
+    <string name="nav_galaxy">الصعود</string>
     <string name="nav_checkin">تسجيل الدخول</string>
     <string name="nav_personal_center">الملف الشخصي</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">تسجيل الدخول اليومي</string>
     <string name="checked_in_today">تم تسجيل الدخول اليوم</string>
     <string name="earned">حصلت</string>
@@ -61,22 +133,18 @@
     <string name="check_in_reward_title">💡 مكافآت تسجيل الدخول</string>
     <string name="check_in_reward_desc">احصل على 10-50 عملة يومياً\nكلما زادت الأيام المتتالية، زادت المكافآت!</string>
     <string name="week_check_in_history">سجل تسجيل الدخول لـ 7 أيام</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">مثالي!</string>
     <string name="great">رائع!</string>
     <string name="keep_going">استمر!</string>
     <string name="points">نقطة</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">شاهد إعلاناً للحصول على الضعف</string>
+    <string name="ad_double_claimed">تم استلام الضعف!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• الإصدار الأول</string>
     <string name="changelog_item_2">• أوضاع الكلاسيكية والمعرض</string>
     <string name="changelog_item_3">• ميزة تسجيل الدخول اليومي</string>
     <string name="changelog_item_4">• التأثيرات الصوتية وردود الفعل اللمسية</string>
     <string name="changelog_item_5">• دعم متعدد اللغات (الصينية/الإنجليزية)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">الصورة الرمزية</string>
     <string name="cd_check_in">تسجيل الدخول</string>
     <string name="cd_checked_in">تم تسجيل الدخول</string>
@@ -84,7 +152,14 @@
     <string name="cd_next">التالي</string>
     <string name="cd_scroll_to_current">انتقل إلى المستوى الحالي</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">مرحباً أيها القائد!</string>
+    <string name="tut_step_1">اسحب القطعة 2 إلى الموضع 4 للمبادلة!</string>
+    <string name="tut_step_double_tap">انقر مرتين لفصل القطع المدمجة!</string>
+    <string name="tut_drag">اسحب القطع للدمج</string>
+    <string name="tut_double_tap">انقر مرتين للفك</string>
+    <string name="tut_node_title">دليل المبتدئين</string>
+    
     <string name="weekday_sunday">الأحد</string>
     <string name="weekday_monday">الاثنين</string>
     <string name="weekday_tuesday">الثلاثاء</string>
@@ -92,4 +167,45 @@
     <string name="weekday_thursday">الخميس</string>
     <string name="weekday_friday">الجمعة</string>
     <string name="weekday_saturday">السبت</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 أيها القائد، التدريب الأساسي انتهى. انقر \"الصعود\" أدناه لبدء الرحلة الحقيقية!</string>
+    <string name="guide_chapter1_hint">💡 المحاكاة المتقدمة مكتملة! المزامنة مستقرة. الفصل 1 \"المنشأ\" مفعّل الآن. جاهز للنشر!</string>
+    <string name="edit_nickname">تعديل اللقب</string>
+    <string name="enter_nickname">أدخل لقباً جديداً</string>
+    <string name="save">حفظ</string>
+    <string name="nickname_too_short">اللقب يجب أن يكون حرفين على الأقل</string>
+    <string name="nickname_too_long">اللقب لا يمكن أن يتجاوز 12 حرفاً</string>
+    <string name="hint_use_free">تم استخدام التلميح المجاني اليوم! ✨</string>
+    <string name="hint_confirm_title">استخدام تلميح؟</string>
+    <string name="hint_confirm_msg">إنفاق 100 عملة مقابل تلميح؟\nالرصيد: %1$d 🪙</string>
+    <string name="hint_confirm_yes">نعم (-100)</string>
+    <string name="hint_not_enough">عملات غير كافية!</string>
+    <string name="ad_reward_toast">شاهد الفيديو كاملاً للحصول على +%1$d 🪙</string>
+    <string name="ad_reward_received">تم استلام المكافأة: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">يرجى الانتظار %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">الفصل 1: عارضة الكم · عمود اليقظة</string>
+    <string name="chapter_2">الفصل 2: قلب الاندماج · الشرارة الأبدية</string>
+    <string name="chapter_3">الفصل 3: قمرة الأعصاب · مرآة الوعي</string>
+    <string name="chapter_4">الفصل 4: قاعة السبات · حلم الشتاء الأبدي</string>
+    <string name="chapter_5">الفصل 5: حلقة البيئة · أمل الزمرد</string>
+    <string name="chapter_6">الفصل 6: درع الفراغ · جناح يلامس السماء</string>
+    <string name="chapter_7">الفصل 7: رادار فائق الاستشعار · عين الحقيقة</string>
+    <string name="chapter_8">الفصل 8: الدفع الأيوني · تيار يقطع السماء</string>
+    <string name="chapter_9">الفصل 9: برج حديث النجوم · رنين كوني</string>
+    <string name="chapter_10">الفصل 10: مستودع بذور الحضارة · معبد الذاكرة</string>
+    <string name="chapter_11">الفصل 11: محرك الانحناء · صدى الزمكان</string>
+    <string name="chapter_12">الفصل 12: مفتاح الإطلاق · مقدمة الختام</string>
+    <string name="chapter_coming_soon">قريباً...</string>
+    <string name="ad_label">إعلان</string>
+    <string name="daily_reminder">تذكير يومي</string>
+    <string name="daily_reminder_channel_name">تذكيرات الألغاز</string>
+    <string name="daily_reminder_channel_desc">تذكيرات يومية للعودة وإكمال الألغاز.</string>
+    <string name="daily_reminder_title_1">وقت اللغز!</string>
+    <string name="daily_reminder_msg_1">يحتاج عقلك إلى استراحة. عد وحل لغزًا! 🧩</string>
+    <string name="daily_reminder_title_2">أيها القائد، تحديات جديدة بانتظارك!</string>
+    <string name="daily_reminder_msg_2">لا تدع الشظايا تنتظر! افتح المزيد من الذكريات اليوم. 🚀</string>
+    <string name="daily_reminder_title_3">طاقة النجوم منخفضة!</string>
+    <string name="daily_reminder_msg_3">تحتاج السفينة إلى طاقتك لإنارة الطريق. انضم للمهمة الآن! ✨</string>
 </resources>

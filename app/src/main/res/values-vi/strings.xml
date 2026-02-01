@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Câu đố vòm trời</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">Năm 2077. Năng lượng Trái đất cạn kiệt, nền văn minh một thời huy hoàng đứng bên bờ vực tuyệt chủng.\n\nBạn là Chỉ huy trưởng \'Sáng kiến Ark.\' Hy vọng duy nhất là thu thập các lõi năng lượng nguyên thủy rải rác khắp địa cầu để rèn một con tàu vượt thiên hà.\n\nMỗi bức tranh ghép được khôi phục là nguồn điện kỹ thuật số để châm ngòi động cơ warp. Thu năng lượng, tái tạo bản thiết kế, dẫn nhân loại vượt các vì sao tìm mái nhà mới.</string>
+    <string name="intro_button">Bắt đầu hành trình</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Đóng</string>
     <string name="cancel">Hủy</string>
     <string name="confirm">Xác nhận</string>
     <string name="settings">Cài đặt</string>
     <string name="about">Giới thiệu</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Hiệu ứng âm thanh</string>
     <string name="sound_effects_desc">Bật/tắt hiệu ứng âm thanh trò chơi</string>
     <string name="language">Ngôn ngữ</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">Cần đồng bộ hằng ngày</string>
+    <string name="check_in_energy_active">Năng lượng sao: Đã kích hoạt</string>
+    <string name="check_in_energy_activate">Chạm để nhận năng lượng sao</string>
+    <string name="check_in_days_suffix">%1$d ngày</string>
+    <string name="check_in_pending">Đang chờ</string>
+    <string name="check_in_station_log">Nhật ký trạm: 30 ngày gần đây</string>
+    <string name="today_earned">Hôm nay nhận</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">Xu x2: Đang bật</string>
+    <string name="buff_overclocking">Bộ thu overclock đang chạy...</string>
+    <string name="buff_ready">Bộ thu xu: Sẵn sàng</string>
+    <string name="buff_waiting">Trạng thái: Chờ triển khai</string>
+    <string name="buff_activate">Kích hoạt</string>
+    <string name="buff_duration_rule">Quy tắc thời lượng: 3 phút cơ bản + 1 phút mỗi ngày liên tiếp</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">DỰ ÁN EXODUS: Độ toàn vẹn</string>
+    <string name="asc_status_synthesizing">Trạng thái: Đang tổng hợp</string>
+    <string name="asc_fragments_count">%1$d / %2$d mảnh</string>
+    <string name="asc_tab_memories">Ký ức</string>
+    <string name="asc_tab_blueprint">Bản thiết kế</string>
+    <string name="asc_memory_title">Ký ức mã hóa</string>
+    <string name="asc_memory_desc">Mở khóa để đọc cốt truyện.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Sống lượng tử</string>
+    <string name="mod_1">Lõi lò phản ứng nhiệt hạch</string>
+    <string name="mod_2">Buồng lái liên kết thần kinh</string>
+    <string name="mod_3">Đại sảnh đông lạnh</string>
+    <string name="mod_4">Vòm sinh học</string>
+    <string name="mod_5">Khiên chân không</string>
+    <string name="mod_6">Cảm biến siêu âm</string>
+    <string name="mod_7">Động cơ đẩy ion</string>
+    <string name="mod_8">Tháp liên lạc</string>
+    <string name="mod_9">Thư viện Genesis</string>
+    <string name="mod_10">Động cơ warp</string>
+    <string name="mod_11">Chìa khóa phóng</string>
+    <string name="mod_12">Dự án Exodus</string>
+    <string name="mod_status_online">Trực tuyến</string>
+    <string name="mod_status_constructing">Đang xây</string>
+    <string name="mod_detail_online">Trạng thái: Mô-đun đã xây và tích hợp\nĐộ toàn vẹn: 100%\nTruy cập: Tài sản chiến lược đã mở khóa</string>
+    <string name="mod_detail_constructing">Trạng thái: Đang tổng hợp\n\nTiến độ tổng: %1$d/10 mảnh\n\n- Ma trận cổ điển: %2$d/5\n- Liên kết thăng thiên: %3$d/5\n\nMục tiêu: Ổn định cấu trúc</string>
+    <string name="mod_close">Đóng</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">Xu x2: Đang bật</string>
+    <string name="hud_buff_warming">Hệ thống đang làm nóng...</string>
+    <string name="hud_buff_hint_prepare">Chuẩn bị bắt đầu chơi</string>
+    <string name="hud_buff_hint_overclock">Bộ thu overclock</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Tỉnh giấc: Khởi nguồn</string>
+    <string name="level_tutorial_story">Nhà du hành vĩnh cửu tỉnh trong Điện thờ Số, chuẩn bị nhiệm vụ đầu tiên.</string>
+    <string name="level_tutorial_title_asc">Tỉnh giấc: Khởi nguồn (Mở rộng)</string>
+    <string name="level_tutorial_story_asc">Nhiệm vụ mô phỏng nâng cao đầu tiên của Chỉ huy.</string>
     <string name="clear_data">Xóa dữ liệu</string>
     <string name="clear_data_desc">Đặt lại toàn bộ tiến trình trò chơi</string>
     <string name="clear_data_confirm_title">Xóa dữ liệu</string>
     <string name="clear_data_confirm_message">Bạn có chắc chắn muốn xóa tất cả dữ liệu trò chơi?\n\nĐiều này sẽ xóa:\n• Toàn bộ tiến trình cấp độ\n• Sao và xu\n• Bản ghi check-in\n• Thời gian tốt nhất\n\nHành động này không thể hoàn tác!</string>
     <string name="clear_data_confirm">Xóa</string>
-    
-    <!-- About -->
     <string name="about_title">Giới thiệu về OnePic</string>
     <string name="version">Phiên bản</string>
     <string name="build_number">Số bản dựng</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Mô tả ứng dụng</string>
     <string name="app_description">OnePic là một trò chơi xếp hình đẹp mắt cung cấp nhiều chế độ chơi và thử thách cấp độ phong phú. Hoàn thành các câu đố hình ảnh đẹp bằng cách kéo và kết hợp các mảnh ghép.</string>
     <string name="changelog_title">Nhật ký thay đổi</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Trung tâm cá nhân</string>
     <string name="puzzle_master">Bậc thầy xếp hình</string>
     <string name="completed">Hoàn thành</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Tỷ lệ hoàn thành</string>
     <string name="classic">Cổ điển</string>
     <string name="gallery">Thư viện</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Trang chủ</string>
+    <string name="nav_galaxy">Thăng thiên</string>
     <string name="nav_checkin">Check-in</string>
     <string name="nav_personal_center">Hồ sơ</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Check-in hàng ngày</string>
     <string name="checked_in_today">Đã check-in hôm nay</string>
     <string name="earned">Kiếm được</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Phần thưởng check-in</string>
     <string name="check_in_reward_desc">Kiếm 10-50 xu mỗi ngày\nNhiều ngày liên tiếp hơn = nhiều phần thưởng hơn!</string>
     <string name="week_check_in_history">Lịch sử check-in 7 ngày</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Hoàn hảo!</string>
     <string name="great">Tuyệt vời!</string>
     <string name="keep_going">Tiếp tục!</string>
     <string name="points">điểm</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Xem quảng cáo để nhận x2</string>
+    <string name="ad_double_claimed">Đã nhận x2!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Phiên bản đầu tiên</string>
     <string name="changelog_item_2">• Chế độ Cổ điển và Thư viện</string>
     <string name="changelog_item_3">• Tính năng check-in hàng ngày</string>
     <string name="changelog_item_4">• Hiệu ứng âm thanh và phản hồi xúc giác</string>
     <string name="changelog_item_5">• Hỗ trợ đa ngôn ngữ (Trung/Anh)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Ảnh đại diện</string>
     <string name="cd_check_in">Check-in</string>
     <string name="cd_checked_in">Đã check-in</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Tiếp theo</string>
     <string name="cd_scroll_to_current">Cuộn đến cấp độ hiện tại</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Chào Chỉ huy!</string>
+    <string name="tut_step_1">Kéo mảnh 2 tới vị trí 4 để đổi!</string>
+    <string name="tut_step_double_tap">Chạm đúp để tách mảnh đã ghép!</string>
+    <string name="tut_drag">Kéo mảnh để ghép</string>
+    <string name="tut_double_tap">Chạm đúp để tách</string>
+    <string name="tut_node_title">Hướng dẫn người mới</string>
+    
     <string name="weekday_sunday">CN</string>
     <string name="weekday_monday">T2</string>
     <string name="weekday_tuesday">T3</string>
@@ -92,4 +164,48 @@
     <string name="weekday_thursday">T5</string>
     <string name="weekday_friday">T6</string>
     <string name="weekday_saturday">T7</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Chỉ huy, huấn luyện cơ bản xong. Chạm \"Thăng thiên\" bên dưới để bắt đầu hành trình thật!</string>
+    <string name="guide_chapter1_hint">💡 Mô phỏng nâng cao hoàn tất! Đồng bộ ổn định. Chương 1 \"Khởi nguồn\" đã kích hoạt. Sẵn sàng triển khai!</string>
+    <string name="edit_nickname">Sửa biệt danh</string>
+    <string name="enter_nickname">Nhập biệt danh mới</string>
+    <string name="save">Lưu</string>
+    <string name="nickname_too_short">Biệt danh cần ít nhất 2 ký tự</string>
+    <string name="nickname_too_long">Biệt danh không quá 12 ký tự</string>
+    <string name="hint_use_free">Đã dùng gợi ý miễn phí hôm nay! ✨</string>
+    <string name="hint_confirm_title">Dùng gợi ý?</string>
+    <string name="hint_confirm_msg">Tiêu 100 Xu để lấy gợi ý?\nSố dư: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Có (-100)</string>
+    <string name="hint_not_enough">Không đủ xu!</string>
+    <string name="ad_reward_toast">Xem hết video để nhận +%1$d 🪙</string>
+    <string name="ad_reward_received">Đã nhận thưởng: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Vui lòng chờ %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Chương 1: Sống lượng tử · Xương sống tỉnh giấc</string>
+    <string name="chapter_2">Chương 2: Lõi nhiệt hạch · Tia lửa vĩnh cửu</string>
+    <string name="chapter_3">Chương 3: Buồng lái thần kinh · Gương ý thức</string>
+    <string name="chapter_4">Chương 4: Đại sảnh ngủ đông · Giấc mơ mùa đông vĩnh cửu</string>
+    <string name="chapter_5">Chương 5: Vòng sinh thái · Hy vọng ngọc lục bảo</string>
+    <string name="chapter_6">Chương 6: Khiên chân không · Cánh chạm trời</string>
+    <string name="chapter_7">Chương 7: Radar siêu cảm · Con mắt chân lý</string>
+    <string name="chapter_8">Chương 8: Động cơ ion · Dòng xé trời</string>
+    <string name="chapter_9">Chương 9: Tháp ngôn ngữ sao · Cộng hưởng vũ trụ</string>
+    <string name="chapter_10">Chương 10: Kho hạt giống văn minh · Điện thờ ký ức</string>
+    <string name="chapter_11">Chương 11: Động cơ độ cong · Vang không-thời gian</string>
+    <string name="chapter_12">Chương 12: Chìa khóa phóng · Khúc dạo đầu cuối</string>
+    <string name="chapter_coming_soon">Sắp ra mắt...</string>
+    <string name="ad_label">Quảng cáo</string>
+    <string name="share_app">Chia sẻ ứng dụng</string>
+    <string name="share_message">Hãy thử OnePic! Một trò chơi xếp hình tuyệt đẹp trên Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="daily_reminder">Nhắc nhở hàng ngày</string>
+    <string name="daily_reminder_channel_name">Nhắc nhở ghép hình</string>
+    <string name="daily_reminder_channel_desc">Nhắc nhở hàng ngày để quay lại và hoàn thành các câu đố.</string>
+    <string name="daily_reminder_title_1">Đến giờ giải đố rồi!</string>
+    <string name="daily_reminder_msg_1">Bộ não của bạn cần được nghỉ ngơi. Hãy quay lại và giải một câu đố! 🧩</string>
+    <string name="daily_reminder_title_2">Chỉ huy, các thử thách mới đang chờ đợi!</string>
+    <string name="daily_reminder_msg_2">Đừng để các mảnh vỡ phải chờ đợi! Mở khóa thêm ký ức ngay hôm nay. 🚀</string>
+    <string name="daily_reminder_title_3">Năng lượng tinh tú thấp!</string>
+    <string name="daily_reminder_msg_3">Con tàu Ark cần năng lượng của bạn để dẫn lối. Tham gia ngay! ✨</string>
 </resources>

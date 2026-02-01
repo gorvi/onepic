@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Stjärnpussel</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">Året är 2077. Jordens energi är uttömd och den en gång stora civilisationen står på randen till utrotning.\n\nDu är befälhavaren för \'Arken-initiativet.\' Vårt enda hopp är att samla de urenergikärnor som är utspridda över jorden för att smida ett fartyg som kan korsa galaxen.\n\nVarje återställd pussel ger den digitala kraften att tända warp-motorerna. Samla energin, återskapa ritningarna och led mänskligheten genom stjärnorna till vårt nya hem.</string>
+    <string name="intro_button">Börja resan</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Stäng</string>
     <string name="cancel">Avbryt</string>
     <string name="confirm">Bekräfta</string>
     <string name="settings">Inställningar</string>
     <string name="about">Om</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Ljudeffekter</string>
     <string name="sound_effects_desc">Aktivera/inaktivera spellydeffekter</string>
     <string name="language">Språk</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+    <!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">DAILY_SYNCHRONIZATION_REQUIRED</string>
+    <string name="check_in_energy_active">ENERGY_SOURCE_ACTIVE</string>
+    <string name="check_in_energy_activate">ACTIVATE_STELLAR_ENERGY</string>
+    <string name="check_in_days_suffix">%1$d DAYS</string>
+    <string name="check_in_pending">PENDING</string>
+    <string name="check_in_station_log">STATION_LOG: RECENT_30_DAYS</string>
+    <string name="today_earned">TODAY_EARNED</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="buff_overclocking">OVERCLOCKING_SYSTEM_COLLECTOR...</string>
+    <string name="buff_ready">COIN_COLLECTOR: READY</string>
+    <string name="buff_waiting">STATUS: WAITING_FOR_DEPLOYMENT</string>
+    <string name="buff_activate">ACTIVATE</string>
+    <string name="buff_duration_rule">DURATION RULE: 3 MINS BASE + 1 MIN PER CONSECUTIVE DAY</string>
+
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">PROJECT EXODUS: INTEGRITY</string>
+    <string name="asc_status_synthesizing">STATUS: SYNTHESIZING</string>
+    <string name="asc_fragments_count">%1$d / %2$d FRAGMENTS</string>
+    <string name="asc_tab_memories">Minnen</string>
+    <string name="asc_tab_blueprint">Ritning</string>
+    <string name="asc_memory_title">Kodat minne</string>
+    <string name="asc_memory_desc">Lås upp för att läsa berättelsen.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Kvantköl</string>
+    <string name="mod_1">Fusionsreaktorhjärta</string>
+    <string name="mod_2">Neuro-Link cockpit</string>
+    <string name="mod_3">Kryostashall</string>
+    <string name="mod_4">Bio-kupolen</string>
+    <string name="mod_5">Void-sköldar</string>
+    <string name="mod_6">Hyper-sensorer</string>
+    <string name="mod_7">Jonmotorer</string>
+    <string name="mod_8">Kommunikationstorn</string>
+    <string name="mod_9">Genesis-biblioteket</string>
+    <string name="mod_10">Warp-driv</string>
+    <string name="mod_11">Startnyckeln</string>
+    <string name="mod_12">Projekt Exodus</string>
+    <string name="mod_status_online">ONLINE</string>
+    <string name="mod_status_constructing">UNDER BYGGNAD</string>
+    <string name="mod_detail_online">Status: Modul byggd och integrerad\nIntegritet: 100%\nÅtkomst: Strategisk tillgång upplåst</string>
+    <string name="mod_detail_constructing">Status: Syntes pågår\n\nTotal framsteg: %1$d/10 fragment\n\n- Klassisk matris: %2$d/5\n- Uppstigen länk: %3$d/5\n\nMål: Strukturell stabilisering</string>
+    <string name="mod_close">STÄNG</string>
+
+    <!-- Global HUD -->
+    <string name="hud_buff_active">DUBBLA MYNT: AKTIV</string>
+    <string name="hud_buff_warming">SYSTEMET VARMAR UPP...</string>
+    <string name="hud_buff_hint_prepare">FÖRBERED SPELSTART</string>
+    <string name="hud_buff_hint_overclock">OVERCLOCK-SAMLARE</string>
+
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Uppvaknande: Ursprung</string>
+    <string name="level_tutorial_story">Den evige resenären vaknar i den digitala templet, förbereder sig för sitt första uppdrag.</string>
+    <string name="level_tutorial_title_asc">Uppvaknande: Ursprung (Utökad)</string>
+    <string name="level_tutorial_story_asc">Befälhavarens första avancerade simuleringsuppgift.</string>
     <string name="clear_data">Rensa data</string>
     <string name="clear_data_desc">Återställ all spelutveckling</string>
     <string name="clear_data_confirm_title">Rensa data</string>
     <string name="clear_data_confirm_message">Är du säker på att du vill radera alla speldata?\n\nDetta kommer att radera:\n• All nivåutveckling\n• Stjärnor och mynt\n• Incheckningsregister\n• Bästa tider\n\nDenna åtgärd kan inte ångras!</string>
     <string name="clear_data_confirm">Rensa</string>
-    
-    <!-- About -->
     <string name="about_title">Om OnePic</string>
     <string name="version">Version</string>
     <string name="build_number">Buildnummer</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Appbeskrivning</string>
     <string name="app_description">OnePic är ett vackert pusselspel som erbjuder flera spellägen och rika nivåutmaningar. Slutför vackra bildpussel genom att dra och kombinera pusselbitar.</string>
     <string name="changelog_title">Ändringslogg</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Personligt centrum</string>
     <string name="puzzle_master">Pusselmästare</string>
     <string name="completed">Slutförd</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Slutförandegrad</string>
     <string name="classic">Klassisk</string>
     <string name="gallery">Galleri</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Hem</string>
+    <string name="nav_galaxy">Ascension</string>
     <string name="nav_checkin">Incheckning</string>
     <string name="nav_personal_center">Profil</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Daglig incheckning</string>
     <string name="checked_in_today">Incheckad idag</string>
     <string name="earned">Tjänat</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Incheckningsbelöningar</string>
     <string name="check_in_reward_desc">Tjäna 10-50 mynt dagligen\nFler konsekutiva dagar = fler belöningar!</string>
     <string name="week_check_in_history">7-dagars incheckningshistorik</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Perfekt!</string>
     <string name="great">Bravo!</string>
     <string name="keep_going">Fortsätt!</string>
     <string name="points">poäng</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Titta på reklam för att dubbla</string>
+    <string name="ad_double_claimed">2× hämtat!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Första utgåvan</string>
     <string name="changelog_item_2">• Klassiska och gallerilägen</string>
     <string name="changelog_item_3">• Daglig incheckningsfunktion</string>
     <string name="changelog_item_4">• Ljudeffekter och haptisk feedback</string>
     <string name="changelog_item_5">• Flerspråkigt stöd (Kinesiska/Engelska)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Avatar</string>
     <string name="cd_check_in">Incheckning</string>
     <string name="cd_checked_in">Incheckad</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Nästa</string>
     <string name="cd_scroll_to_current">Scrolla till nuvarande nivå</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Välkommen, befälhavare!</string>
+    <string name="tut_step_1">Dra bit 2 till position 4 för att byta!</string>
+    <string name="tut_step_double_tap">Dubbeltryck för att separera sammanslagna bitar!</string>
+    <string name="tut_drag">Dra bitar för att slå ihop</string>
+    <string name="tut_double_tap">Dubbeltryck för att dela</string>
+    <string name="tut_node_title">Nykomlingsguide</string>
+    
     <string name="weekday_sunday">Sön</string>
     <string name="weekday_monday">Mån</string>
     <string name="weekday_tuesday">Tis</string>
@@ -92,4 +164,47 @@
     <string name="weekday_thursday">Tor</string>
     <string name="weekday_friday">Fre</string>
     <string name="weekday_saturday">Lör</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Befälhavare, grundutbildningen är klar. Tryck på \"Uppstigen\" nedan för att starta den verkliga resan!</string>
+    <string name="guide_chapter1_hint">💡 Avancerad simulering klar! Synk stabil. Kapitel 1 \"Ursprunget\" är nu aktivt. Redo för utplacering!</string>
+    <string name="edit_nickname">Redigera smeknamn</string>
+    <string name="enter_nickname">Ange nytt smeknamn</string>
+    <string name="save">Spara</string>
+    <string name="nickname_too_short">Smeknamn måste vara minst 2 tecken</string>
+    <string name="nickname_too_long">Smeknamn får inte överstiga 12 tecken</string>
+    <string name="hint_use_free">Daglig gratis ledtråd använd! ✨</string>
+    <string name="hint_confirm_title">Använd ledtråd?</string>
+    <string name="hint_confirm_msg">Spendera 100 mynt för en ledtråd?\nSaldo: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Ja (-100)</string>
+    <string name="hint_not_enough">Inte tillräckligt med mynt!</string>
+    <string name="ad_reward_toast">Titta på hela videon för att tjäna +%1$d 🪙</string>
+    <string name="ad_reward_received">Belöning mottagen: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Vänta %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Kapitel 1: Kvantköl · Uppvaknandets ryggrad</string>
+    <string name="chapter_2">Kapitel 2: Fusionskärna · Evig gnista</string>
+    <string name="chapter_3">Kapitel 3: Neural cockpit · Medvetandets spegel</string>
+    <string name="chapter_4">Kapitel 4: Dvalhall · Evig vinterdröm</string>
+    <string name="chapter_5">Kapitel 5: Ekologisk loop · Smaragdgrönt hopp</string>
+    <string name="chapter_6">Kapitel 6: Void-sköld · Himmelsnårande vinge</string>
+    <string name="chapter_7">Kapitel 7: Hyper-sensorradar · Sanningens öga</string>
+    <string name="chapter_8">Kapitel 8: Jonmotor · Himmelspräckande ström</string>
+    <string name="chapter_9">Kapitel 9: Stjärntorn · Kosmisk resonans</string>
+    <string name="chapter_10">Kapitel 10: Civilisationens fröförråd · Minnes tempel</string>
+    <string name="chapter_11">Kapitel 11: Krökningsmotor · Rymdtidseko</string>
+    <string name="chapter_12">Kapitel 12: Startnyckel · Sista förspelet</string>
+    <string name="chapter_coming_soon">KOMMER SNART...</string>
+    <string name="ad_label">Annons</string>
+    <string name="share_app">Dela appen</string>
+    <string name="share_message">Kolla in OnePic! Ett vackert pusselspel på Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="daily_reminder">Daglig påminnelse</string>
+    <string name="daily_reminder_channel_name">Pussel påminnelser</string>
+    <string name="daily_reminder_channel_desc">Dagliga påminnelser om att komma tillbaka och lösa pussel.</string>
+    <string name="daily_reminder_title_1">Dags för pussel!</string>
+    <string name="daily_reminder_msg_1">Din hjärna behöver en paus. Kom tillbaka och lös ett pussel! 🧩</string>
+    <string name="daily_reminder_title_2">Befälhavare, nya utmaningar väntar!</string>
+    <string name="daily_reminder_msg_2">Låt inte fragmenten vänta! Lås upp fler minnen idag. 🚀</string>
+    <string name="daily_reminder_title_3">Stjärnenergi låg!</string>
+    <string name="daily_reminder_msg_3">Arken behöver din energi för att lysa upp vägen. Gå med i uppdraget nu! ✨</string>
 </resources>

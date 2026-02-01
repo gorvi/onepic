@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "เมล็ดพันธุ์แห่งพฤกษาโลก",
+    "story_text": "เมล็ดพันธุ์แห่งพฤกษาโลกล่องลอยผ่านความว่างเปล่า เริ่มต้นการเดินทางอันยาวนานของทุกสรรพสิ่ง",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "วิหารแห่งแสง",
+    "story_text": "วิหารที่แสงและสีเขียวขจีถักทอกัน ที่ซึ่งสรรพชีวิตได้พักพิงทางจิตวิญญาณ",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "ป่ารุ่งอรุณ",
+    "story_text": "รุ่งอรุณทะลุผ่านหมอก ปลุกป่าโบราณให้ตื่นขึ้น",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "เสียงกระซิบของแอมเบอร์",
+    "story_text": "เมื่อฤดูกาลผ่านไป ใบไม้อำพันก็กระซิบเรื่องราวในอดีต",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "มรกตเซน",
+    "story_text": "ไม้ไผ่แกว่งไกวเบา ๆ มอบช่วงเวลาแห่งเซนในดินแดนอันเขียวขจี",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "คลาวด์เทอร์เรซ",
+    "story_text": "คลื่นสีมรกตตกลงมาตามไหล่เขาทีละชั้น",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "เนินทรายที่ลุกโชติช่วง",
+    "story_text": "ดวงอาทิตย์ที่แผดเผาสร้างเนินทราย แต่ชีวิตยังคงปั่นป่วนอยู่ในดินแดนแห้งแล้งแห่งนี้",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "ขอบแห่งนิรันดร์",
+    "story_text": "เมื่อแผ่นดินและทะเลสิ้นสุดลง การเดินทางครั้งใหม่จะเริ่มต้นขึ้นสู่สิ่งที่ไม่รู้จัก",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "หมาป่าวิญญาณ",
+    "story_text": "ลึกเข้าไปในที่ราบหิมะ หมาป่าวิญญาณคอยปกป้องความบริสุทธิ์อย่างเงียบๆ",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "จิ้งจอกจันทรา",
+    "story_text": "แสงจันทร์สาดส่องประกายสีเงินขณะที่จิ้งจอกวิญญาณท่องไปในป่ายามเที่ยงคืน",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "เรนโบว์ฟีนิกซ์",
+    "story_text": "ปีกสีรุ้งพาดผ่านท้องฟ้าสีคราม ทิ้งร่องรอยสายรุ้งไว้",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "ปัญญาชนแพนด้า",
+    "story_text": "เหนือทะเลเมฆ ปราชญ์แพนด้านั่งสมาธิตามภูมิปัญญาโบราณ",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "ป่าเสือ",
+    "story_text": "ภายใต้เงามืดที่สาดส่อง พลังแฝงตัวอยู่ในความอดทนอันเงียบงัน",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "วิญญาณพระพิฆเนศ",
+    "story_text": "เมื่อข้ามแม่น้ำแห่งกาลเวลา วิญญาณช้างก็รับรู้ความจริงของโลก",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "ราชาแห่งป่า",
+    "story_text": "ราชาแห่งป่ายืนอยู่ที่นี่และสิ่งมีชีวิตทั้งหมดก็กลั้นหายใจภายใต้การจ้องมองของเขา",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "ธันเดอร์เบิร์ด",
+    "story_text": "ยามที่จุดสุดยอดจะสำรวจพื้นที่อันกว้างใหญ่เบื้องล่าง",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "งานแกะสลักโบราณ",
+    "story_text": "งานแกะสลักที่ถูกฝังไว้ตามกาลเวลาบันทึกเสียงกระซิบของบรรพบุรุษ",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "ปิรามิดถนนสตาร์",
+    "story_text": "สิ่งมหัศจรรย์ทางเรขาคณิตในทะเลทรายที่แผดเผา ยืนนิ่งเงียบมานานนับพันปี",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "ประตูเพตราไลท์",
+    "story_text": "บนกำแพงหิน ความอบอุ่นของอารยธรรมเต้นเป็นจังหวะภายในหินสีแดง",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "มาชูปิกชูที่หายไป",
+    "story_text": "เมืองบนยอดเขาที่ปกคลุมไปด้วยเมฆ สูญหายไปตามกาลเวลาและสถานที่",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "มังกรหิน",
+    "story_text": "มังกรหินเคลื่อนตัวไปตามสันเขา ปกป้องดินแดนโบราณ",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "อารีน่าของฮีโร่",
+    "story_text": "เวทีที่พังทลายสะท้อนกับมหากาพย์วีรชนในอดีต",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "โดมแห่งแสง",
+    "story_text": "แสงศักดิ์สิทธิ์ใต้โดมได้เห็นความรุ่งเรืองและการล่มสลายของอารยธรรมนับไม่ถ้วน",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "ห้องสมุดไม่มีที่สิ้นสุด",
+    "story_text": "เกลียวความรู้ที่ทอดยาวไปสู่ท้องฟ้า ม้วนหนังสือโบราณที่รวบรวมความจริงที่สูญหาย",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "สวนในฝัน",
+    "story_text": "สวนที่แขวนอยู่ระหว่างสวรรค์และโลก ซิมโฟนีแห่งธรรมชาติที่สูญหายไป",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "ศาสดาสไปร์",
+    "story_text": "เสาหินขนาดยักษ์บนยอดเขาคอยนำทางผู้สูญหายผ่านทะเลทรายสีแดง",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "สกายเซลส์",
+    "story_text": "ใบเรือสีขาวในท่าเรือกำหนดเส้นทางไปสู่เส้นขอบฟ้าที่ไม่รู้จัก",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "ไซเบอร์ ไบโอ สไปร์",
+    "story_text": "นีออนและเถาวัลย์เกี่ยวพันกันในยอดแหลมแห่งอนาคต—ธรรมชาติที่สูดลมหายใจในยุคไซเบอร์พังก์",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "หีบแห่งกาลเวลา",
+    "story_text": "เมืองขนาดใหญ่ที่ทะยานเหนือทะเลยามพลบค่ำ หีบพันธสัญญาที่บรรทุกกาลเวลา",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "โลมาเรืองแสง",
+    "story_text": "ร่างที่สง่างามในทะเล เต้นรำอยู่ในคลื่นสีม่วงเข้ม",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "ปะการังเรืองแสง",
+    "story_text": "ในส่วนลึกของมหาสมุทร แนวปะการังสานต่อเป็นสวนในฝันอันสลับซับซ้อน",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "มังกรน้ำแข็งสลัมเบอร์",
+    "story_text": "ภายใต้กระแสน้ำเย็นยะเยือก ทหารรักษาการณ์ของมังกรน้ำแข็งโบราณกำลังหลับใหล",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "ซากเรือผี",
+    "story_text": "ซากปรักหักพังที่ถูกคลื่นซัดทอดทิ้ง บอกเล่าบทสุดท้ายของยุคแห่งการแล่นเรืออย่างเงียบๆ",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "วาฬจักรวาล",
+    "story_text": "ที่เขตแดนของทะเลและดวงดาว วาฬผู้ยิ่งใหญ่นำพาประกายแห่งอารยธรรมไปข้างหน้า",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "โมฆะคราเคน",
+    "story_text": "ในห้วงลึกระหว่างความเป็นจริงและภาพลวงตา หนวดจะสานใยสายใยแห่งข้อมูล",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "แมงกะพรุนผี",
+    "story_text": "ลำแสงแห่งแสงสว่างในความมืด ราวกับไฟนางฟ้าที่ริบหรี่ในเวลาเที่ยงคืน",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "แอตแลนติส",
+    "story_text": "แอตแลนติสที่ถูกผนึกไว้เผยให้เห็นความรุ่งโรจน์ในอดีตอีกครั้งในทะเลลึก",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "แกนฟอร์จ",
+    "story_text": "ช่องระบายความร้อนที่อยู่ลึกเข้าไปในเปลือกโลกทำให้เกิดดอกไม้แห่งชีวิตเหนือจินตนาการ",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "ไฟและน้ำแข็ง",
+    "story_text": "ลาวาสีแดงไหลลงสู่น้ำเย็นจัด ซึ่งเป็นการดวลกันระหว่างไฟและน้ำ",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "ชีวิตต้องห้าม",
+    "story_text": "ในเขตต้องห้ามแห่งชีวิต ระเบียบโบราณยังคงเปลี่ยนไปอย่างเงียบๆ",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "เนอร์วาน่า ฟีนิกซ์",
+    "story_text": "ฟีนิกซ์ฟื้นคืนชีพขึ้นมาจากเปลวเพลิงในโลกเก่าและมีชีวิตนิรันดร์ผ่านเปลวเพลิง",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "สตาร์ ดราก้อน",
+    "story_text": "ผู้เฝ้าดูเวลา เฝ้ารักษาขอบเขตความฝันผ่านวงโคจรของดวงดาว",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "ผ้าคลุมสวรรค์",
+    "story_text": "ละอองดาวดั่งเส้นด้าย ออโรร่าราวกับขนนก เธอคือเสียงสะท้อนแห่งยุคแห่งความฝันชั่วนิรันดร์",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "เกลียวเวลา",
+    "story_text": "เวลาสลายไปในความฝัน และบันไดเวียนนำไปสู่นิรันดร์",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "น้ำตกคว่ำ",
+    "story_text": "แรงโน้มถ่วงเป็นเพียงเมฆที่หายวับไป ปัจจุบันน้ำตกไหลไปสู่มหาสมุทรบนท้องฟ้า",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "เขาวงกตคริสตัล",
+    "story_text": "ท่ามกลางการเต้นรำของแสงและเงา เขาวงกตคริสตัลสะท้อนถึงส่วนลึกภายในของจิตวิญญาณ",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "ห้องสมุดคลาวด์",
+    "story_text": "ห้องสมุดในตำนานบนท้องฟ้า ที่ซึ่งเรื่องราวทั้งหมดเบ่งบาน",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "เกาะกราวิตี้",
+    "story_text": "ณ ขอบที่แรงโน้มถ่วงล้มเหลว เกาะลอยน้ำล่องลอยไปอย่างเงียบ ๆ ผ่านทะเลเมฆ",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "มิตินาฬิกา",
+    "story_text": "เพลงสดุดีอุตสาหกรรมที่ประกอบด้วยเกียร์และไอน้ำ พลิกผันไปในมิติแห่งความฝันอย่างไม่มีที่สิ้นสุด",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "แม่ธรณี: สีน้ำเงินเข้ม",
+    "story_text": "บนชายฝั่งอันไกลโพ้นของดวงดาว ครั้งหนึ่งเราเคยเรียกบ้านหลังนี้ว่าเป็นบ้านสีน้ำเงินเข้มแห่งเดียว",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "เรดไพโอเนียร์",
+    "story_text": "ภายใต้ฝุ่นสนิมแดง ประกายไฟแห่งอารยธรรมได้จุดประกายบนดาวสีแดงเข้ม",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "ฟรอสต์ริงส์",
+    "story_text": "วงแหวนเยือกแข็ง—รอยประทับอันยิ่งใหญ่ของจักรวาลที่เหลืออยู่ในความว่างเปล่า",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "ไบนารีซันเซ็ท",
+    "story_text": "ดวงตะวันคู่ที่บรรจบกัน ทำให้เกิดเงาที่ทับซ้อนกันบนท้องฟ้าของมนุษย์ต่างดาว",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "ดาวนอนไม่หลับ",
+    "story_text": "แสงนับล้านล้านดวงมาบรรจบกันเป็นลำธาร กำหนดอนาคตบนดวงดาวที่ไม่หลับใหลดวงนี้",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "ซูเปอร์โนวา",
+    "story_text": "ดาวดวงหนึ่งจบลงด้วยความเจิดจ้าขั้นสูงสุด—การตายที่รุนแรงที่สุดในจักรวาลและการเกิดใหม่ด้วย",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "กาแล็กซีซี",
+    "story_text": "ดวงดาวรวมตัวกันในทะเลแห่งกาแล็กซี่ที่หมุนวน แต่ละคลื่นเป็นมหากาพย์แห่งอารยธรรม",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "เสาหลักแห่งการสร้างสรรค์",
+    "story_text": "หอคอยแห่งการสร้างสรรค์เจาะทะลุเนบิวลา ซึ่งเป็นแหล่งกำเนิดอันเงียบสงบที่หล่อเลี้ยงดวงดาวและสิ่งมหัศจรรย์",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "ขอบฟ้าเหตุการณ์",
+    "story_text": "ในกับดักขั้นสูงสุดของแรงโน้มถ่วง แม้แต่แสงก็ไม่สามารถหลีกหนีชะตากรรมของมันได้",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "การขนส่งรูหนอน",
+    "story_text": "กาล-อวกาศพับทบเพื่อย่นระยะทางอันกว้างใหญ่ให้สั้นลง ทำให้เรากระโดดอย่างอิสระท่ามกลางดวงดาว",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "ดวงตาแห่งจักรวาล",
+    "story_text": "เมื่อถึงขอบขอบฟ้าสุดท้าย จักรวาลจะเปิดดวงตาที่เย็นชาแต่ยิ่งใหญ่ออกมา",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

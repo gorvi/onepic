@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Sterrenpuzzel</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">Het jaar 2077. De energie van de aarde is uitgeput, de ooit grote beschaving staat op de rand van uitsterven.\n\nJij bent de commandant van het \'Ark-initiatief.\' Onze enige hoop is het verzamelen van de oer-energiekernen verspreid over de wereld om een schip te smeden dat het sterrenstelsel kan doorkruisen.\n\nElke herstelde puzzel levert de digitale kracht om de warp-motoren te ontsteken. Verzamel de energie, herbouw de blauwdrukken en leid de mensheid door de sterren naar ons nieuwe thuis.</string>
+    <string name="intro_button">Begin reis</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Sluiten</string>
     <string name="cancel">Annuleren</string>
     <string name="confirm">Bevestigen</string>
     <string name="settings">Instellingen</string>
     <string name="about">Over</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Geluidseffecten</string>
     <string name="sound_effects_desc">Spelgeluidseffecten aan/uit</string>
     <string name="language">Taal</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+<!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">Dagelijkse synchronisatie vereist</string>
+    <string name="check_in_energy_active">Sterrenenergie: Actief</string>
+    <string name="check_in_energy_activate">Tik voor sterrenenergie</string>
+    <string name="check_in_days_suffix">%1$d dagen</string>
+    <string name="check_in_pending">In afwachting</string>
+    <string name="check_in_station_log">Stationlog: Laatste 30 dagen</string>
+    <string name="today_earned">Vandaag verdiend</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">Dubbele munten: Actief</string>
+    <string name="buff_overclocking">Overclock-verzamelaar bezig...</string>
+    <string name="buff_ready">Muntverzamelaar: Klaar</string>
+    <string name="buff_waiting">Status: Wacht op inzet</string>
+    <string name="buff_activate">Activeren</string>
+    <string name="buff_duration_rule">Duur: 3 min basis + 1 min per opeenvolgende dag</string>
+    
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">Project Exodus: Integriteit</string>
+    <string name="asc_status_synthesizing">Status: Synthetiseren</string>
+    <string name="asc_fragments_count">%1$d / %2$d fragmenten</string>
+    <string name="asc_tab_memories">Herinneringen</string>
+    <string name="asc_tab_blueprint">Blauwdruk</string>
+    <string name="asc_memory_title">Gecodeerd geheugen</string>
+    <string name="asc_memory_desc">Ontgrendel om het verhaal te lezen.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Quantum kiel</string>
+    <string name="mod_1">Kernfusiereactor hart</string>
+    <string name="mod_2">Neuro-link cockpit</string>
+    <string name="mod_3">Cryostase hal</string>
+    <string name="mod_4">De biodome</string>
+    <string name="mod_5">Void-schilden</string>
+    <string name="mod_6">Hyper-sensoren</string>
+    <string name="mod_7">Ion-aandrijving</string>
+    <string name="mod_8">Communicatiespits</string>
+    <string name="mod_9">Genesis-bibliotheek</string>
+    <string name="mod_10">Warp-aandrijving</string>
+    <string name="mod_11">De start sleutel</string>
+    <string name="mod_12">Project Exodus</string>
+    <string name="mod_status_online">ONLINE</string>
+    <string name="mod_status_constructing">IN BOUW</string>
+    <string name="mod_detail_online">Status: Module gebouwd en geïntegreerd\nIntegriteit: 100%\nToegang: Strategisch actief ontgrendeld</string>
+    <string name="mod_detail_constructing">Status: Synthese bezig\n\nTotale voortgang: %1$d/10 fragmenten\n\n- Klassieke matrix: %2$d/5\n- Opgestegen link: %3$d/5\n\nDoel: Structurele stabilisatie</string>
+    <string name="mod_close">SLUITEN</string>
+    
+    <!-- Global HUD -->
+    <string name="hud_buff_active">Dubbele munten: Actief</string>
+    <string name="hud_buff_warming">Systeem warmt op...</string>
+    <string name="hud_buff_hint_prepare">Bereid spelstart voor</string>
+    <string name="hud_buff_hint_overclock">Overclock-verzamelaar</string>
+    
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Ontwaken: Oorsprong</string>
+    <string name="level_tutorial_story">De Eeuwige reiziger ontwaakt in de Digitale tempel, klaar voor zijn eerste missie.</string>
+    <string name="level_tutorial_title_asc">Ontwaken: Oorsprong (Uitgebreid)</string>
+    <string name="level_tutorial_story_asc">De eerste geavanceerde simulatie van de commandant.</string>
     <string name="clear_data">Gegevens wissen</string>
     <string name="clear_data_desc">Alle spelvoortgang resetten</string>
     <string name="clear_data_confirm_title">Gegevens wissen</string>
     <string name="clear_data_confirm_message">Weet je zeker dat je alle spelgegevens wilt wissen?\n\nDit wordt verwijderd:\n• Alle levelvoortgang\n• Sterren en munten\n• Check-in records\n• Beste tijden\n\nDeze actie kan niet ongedaan worden gemaakt!</string>
     <string name="clear_data_confirm">Wissen</string>
-    
-    <!-- About -->
     <string name="about_title">Over OnePic</string>
     <string name="version">Versie</string>
     <string name="build_number">Buildnummer</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">App-beschrijving</string>
     <string name="app_description">OnePic is een prachtig puzzelspel met meerdere spelmodi en rijke leveluitdagingen. Voltooi mooie beeldpuzzels door puzzelstukken te slepen en te combineren.</string>
     <string name="changelog_title">Wijzigingslogboek</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Persoonlijk centrum</string>
     <string name="puzzle_master">Puzzelmeester</string>
     <string name="completed">Voltooid</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Voltooiingspercentage</string>
     <string name="classic">Klassiek</string>
     <string name="gallery">Galerij</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Start</string>
+    <string name="nav_galaxy">Opstijging</string>
     <string name="nav_checkin">Inchecken</string>
     <string name="nav_personal_center">Profiel</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Dagelijks inchecken</string>
     <string name="checked_in_today">Vandaag ingecheckt</string>
     <string name="earned">Verdiend</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Incheckbeloningen</string>
     <string name="check_in_reward_desc">Verdien dagelijks 10-50 munten\nMeer aaneengesloten dagen = meer beloningen!</string>
     <string name="week_check_in_history">7-daagse incheckgeschiedenis</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Perfect!</string>
     <string name="great">Geweldig!</string>
     <string name="keep_going">Ga door!</string>
     <string name="points">punten</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Bekijk advertentie voor dubbel</string>
+    <string name="ad_double_claimed">Dubbel geclaimd!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Eerste release</string>
     <string name="changelog_item_2">• Klassieke en galerijmodi</string>
     <string name="changelog_item_3">• Dagelijkse incheckfunctie</string>
     <string name="changelog_item_4">• Geluidseffecten en haptische feedback</string>
     <string name="changelog_item_5">• Meertalige ondersteuning (Chinees/Engels)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Avatar</string>
     <string name="cd_check_in">Inchecken</string>
     <string name="cd_checked_in">Ing checked</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Volgende</string>
     <string name="cd_scroll_to_current">Scroll naar huidig level</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Welkom, commandant!</string>
+    <string name="tut_step_1">Sleep stuk 2 naar positie 4 om te wisselen!</string>
+    <string name="tut_step_double_tap">Dubbeltik om samengevoegde stukken te scheiden!</string>
+    <string name="tut_drag">Sleep stukken om te voegen</string>
+    <string name="tut_double_tap">Dubbeltik om te scheiden</string>
+    <string name="tut_node_title">Beginnersgids</string>
+    
     <string name="weekday_sunday">Zo</string>
     <string name="weekday_monday">Ma</string>
     <string name="weekday_tuesday">Di</string>
@@ -92,4 +164,45 @@
     <string name="weekday_thursday">Do</string>
     <string name="weekday_friday">Vr</string>
     <string name="weekday_saturday">Za</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Commandant, basistraining voltooid. Tik hieronder op \"Opstijging\" om de echte reis te beginnen!</string>
+    <string name="guide_chapter1_hint">💡 Geavanceerde simulatie voltooid! Sync stabiel. Hoofdstuk 1 \"De oorsprong\" is nu actief. Klaar voor inzet!</string>
+    <string name="edit_nickname">Bijnaam bewerken</string>
+    <string name="enter_nickname">Voer nieuwe bijnaam in</string>
+    <string name="save">Opslaan</string>
+    <string name="nickname_too_short">Bijnaam moet minstens 2 tekens zijn</string>
+    <string name="nickname_too_long">Bijnaam mag maximaal 12 tekens zijn</string>
+    <string name="hint_use_free">Dagelijkse gratis hint gebruikt! ✨</string>
+    <string name="hint_confirm_title">Hint gebruiken?</string>
+    <string name="hint_confirm_msg">100 munten uitgeven voor een hint?\nSaldo: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Ja (-100)</string>
+    <string name="hint_not_enough">Niet genoeg munten!</string>
+    <string name="ad_reward_toast">Bekijk volledige video voor +%1$d 🪙</string>
+    <string name="ad_reward_received">Beloning ontvangen: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Wacht %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Hoofdstuk 1: Quantum kiel · Ruggengraat van ontwaken</string>
+    <string name="chapter_2">Hoofdstuk 2: Kernfusiekern · Eeuwige vonk</string>
+    <string name="chapter_3">Hoofdstuk 3: Neuro-cockpit · Bewustzijnsspiegel</string>
+    <string name="chapter_4">Hoofdstuk 4: Cryostase hal · Eeuwige winterdroom</string>
+    <string name="chapter_5">Hoofdstuk 5: Ecologie-loop · Smaragd hoop</string>
+    <string name="chapter_6">Hoofdstuk 6: Void-schild · Hemelreikende vleugel</string>
+    <string name="chapter_7">Hoofdstuk 7: Hyper-sensorradar · Oog van waarheid</string>
+    <string name="chapter_8">Hoofdstuk 8: Ion-aandrijving · Hemelbrekende stroom</string>
+    <string name="chapter_9">Hoofdstuk 9: Sterrenspraak toren · Kosmische resonantie</string>
+    <string name="chapter_10">Hoofdstuk 10: Beschavingszaad opslag · Tempel van geheugen</string>
+    <string name="chapter_11">Hoofdstuk 11: Krommingmotor · Ruimtetijd-echo</string>
+    <string name="chapter_12">Hoofdstuk 12: Start sleutel · Laatste prelude</string>
+    <string name="chapter_coming_soon">Binnenkort...</string>
+    <string name="ad_label">Advertentie</string>
+    <string name="daily_reminder">Dagelijkse herinnering</string>
+    <string name="daily_reminder_channel_name">Puzzel herinneringen</string>
+    <string name="daily_reminder_channel_desc">Dagelijkse herinneringen om terug te komen en puzzels op te lossen.</string>
+    <string name="daily_reminder_title_1">Tijd om te puzzelen!</string>
+    <string name="daily_reminder_msg_1">Je hersenen hebben rust nodig. Kom terug en los een puzzel op! 🧩</string>
+    <string name="daily_reminder_title_2">Commandant, nieuwe uitdagingen wachten!</string>
+    <string name="daily_reminder_msg_2">Laat de fragmenten niet wachten! Ontgrendel vandaag meer herinneringen. 🚀</string>
+    <string name="daily_reminder_title_3">Sterrenenergie laag!</string>
+    <string name="daily_reminder_msg_3">De Ark heeft jouw energie nodig om de weg te wijzen. Doe nu mee! ✨</string>
 </resources>

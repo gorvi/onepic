@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "세계수의 씨앗",
+    "story_text": "세계수의 씨앗이 허공을 떠돌며, 만물의 오디세이가 시작됩니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "빛의 성소",
+    "story_text": "빛과 초록이 어우러진 신성한 곳에서, 모든 존재가 영혼의 휴식을 취합니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "새벽의 밀림",
+    "story_text": "새벽녘의 빛이 안개를 뚫고 오래된 밀림을 깨웁니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "호박의 속삭임",
+    "story_text": "계절이 흐르는 가운데, 호박색 낙엽이 과거의 이야기를 속삭입니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "비취의 선경",
+    "story_text": "대나무가 부드럽게 흔들리며, 초록빛 세상 속에서 잠시 선의 마음을 찾습니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "구름 위의 계단식 논",
+    "story_text": "에메랄드빛 물결이 산을 따라 겹겹이 쏟아져 내립니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "타오르는 사구",
+    "story_text": "뜨거운 태양 아래 사구가 단련되지만, 이 황량한 땅에도 생명은 숨 쉬고 있습니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "영원의 절벽",
+    "story_text": "땅과 바다가 만나는 그 끝에서, 미지의 세계로 향하는 새로운 여정이 시작됩니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "설원의 영혼 늑대",
+    "story_text": "설원 깊은 곳에서 정령 늑대가 조용히 순수함을 지키고 있습니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "달빛 정령 여우",
+    "story_text": "은은한 달빛 아래, 정령 여우가 한밤중의 숲을 거닙니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "레인보우 피닉스",
+    "story_text": "무지개 빛깔의 날개가 푸른 하늘을 가르며 무지개 흔적을 남긴다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "팬더 세이지",
+    "story_text": "운해 위에서 팬더 현자는 고대의 지혜를 묵상합니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "호랑이 숲",
+    "story_text": "얼룩덜룩한 그림자 아래에는 침묵의 인내 속에 힘이 숨어 있습니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "가네샤 소울",
+    "story_text": "시간의 강을 건너면서 코끼리 영혼은 세상의 진실을 깨닫습니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "포레스트 킹",
+    "story_text": "숲의 왕이 여기에 서 있고, 모든 생물이 그의 시선 아래 숨을 죽인다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "천둥새",
+    "story_text": "천정에 있는 파수꾼은 아래 땅의 장엄한 광활함을 조사합니다.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "고대 조각품",
+    "story_text": "시간이 흘러 묻혀진 조각품에는 조상들의 속삭임이 기록되어 있다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "스타로드 피라미드",
+    "story_text": "뜨거운 사막 속에서 수천 년 동안 침묵을 지키고 있는 기하학적 경이로움입니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "페트라 라이트 게이트",
+    "story_text": "돌담 위, 붉은 바위 속에 문명의 온기가 고동친다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "잃어버린 마추픽추",
+    "story_text": "구름에 덮인 봉우리 위의 도시는 시간과 공간의 주름 속에서 길을 잃었습니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "스톤 드래곤",
+    "story_text": "돌용은 산 능선을 따라 구불구불하며 고대의 땅을 수호합니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "영웅의 경기장",
+    "story_text": "폐허가 된 투기장에는 과거의 영웅적인 서사시가 메아리칩니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "빛의 돔",
+    "story_text": "돔 아래의 신성한 빛은 수많은 문명의 흥망성쇠를 목격했습니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "무한 도서관",
+    "story_text": "하늘을 향해 뻗어나가는 지식의 나선, 잃어버린 진실을 담고 있는 고대 두루마리.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "드림 가든",
+    "story_text": "하늘과 땅 사이에 떠 있는 정원, 잃어버린 자연의 교향곡.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "예언자 첨탑",
+    "story_text": "산 꼭대기에 있는 거대한 기둥은 길 잃은 자들을 붉은 사막으로 인도합니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "스카이 세일스",
+    "story_text": "항구의 하얀 돛은 미지의 지평선으로 향합니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "사이버바이오스파이어",
+    "story_text": "사이버펑크 시대에 자연이 숨쉬는 미래의 첨탑에는 네온과 덩굴이 얽혀 있습니다.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "시간의 방주",
+    "story_text": "황혼의 바다 위로 솟아오른 거대 도시, 시간 그 자체를 담고 있는 방주.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "글로우 펄스 돌고래",
+    "story_text": "짙은 보랏빛 펄스 속에서 춤추는 바다 속의 우아한 형상들.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "형광산호",
+    "story_text": "바다 깊은 곳에는 산호초가 만화경 같은 꿈의 정원을 만들어냅니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "아이스 드래곤 파자마",
+    "story_text": "차가운 해류 아래 고대 아이스 드래곤의 파수꾼이 잠들어 있습니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "유령 난파선",
+    "story_text": "파도에 버려진 잔해, 항해 시대의 마지막 장을 조용히 이야기합니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "우주고래",
+    "story_text": "바다와 별의 경계에서 거대고래는 문명의 불꽃을 앞으로 옮깁니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "공허 크라켄",
+    "story_text": "현실과 환상 사이의 심연에서 촉수는 데이터의 그물을 엮습니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "팬텀 해파리",
+    "story_text": "한밤중에 깜박이는 요정의 불처럼 어둠 속의 빛의 깃발.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "아틀란티스",
+    "story_text": "봉인된 아틀란티스는 심해에서 다시 한 번 예전의 영광을 드러낸다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "코어 포지",
+    "story_text": "지각 깊은 곳의 열 배출구는 상상을 초월하는 생명의 꽃을 탄생시킵니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "불과 얼음",
+    "story_text": "붉은 용암이 얼음물 속으로 쏟아져 나옵니다. 이는 불과 물의 궁극적인 결투입니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "금단의 삶",
+    "story_text": "삶의 금지된 영역에서 고대의 질서는 여전히 조용히 회전하고 있습니다.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "너바나 피닉스",
+    "story_text": "옛 세계의 불씨에서 솟아난 불사조는 불꽃을 통해 영원한 생명을 얻습니다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "스타드래곤",
+    "story_text": "별의 궤도를 따라 꿈의 경계를 지키는 시간의 감시자.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "천상의 베일",
+    "story_text": "실 같은 스타더스트, 깃털 같은 오로라, 그녀는 꿈꾸는 시대의 영원한 메아리입니다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "시간 나선",
+    "story_text": "시간은 꿈 속에 녹아버리고, 나선형 계단은 영원으로 이어진다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "거꾸로 된 폭포",
+    "story_text": "중력은 덧없는 구름에 불과합니다. 이제 폭포는 하늘의 바다를 향해 흘러갑니다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "크리스탈 미로",
+    "story_text": "빛과 그림자의 춤 속에서 수정 미로는 영혼의 내면의 깊이를 반영합니다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "클라우드 라이브러리",
+    "story_text": "모든 이야기가 날아다니는 하늘 위의 전설적인 도서관.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "중력섬",
+    "story_text": "중력이 작용하지 않는 가장자리에는 떠 있는 섬들이 운해를 조용히 떠돌고 있습니다.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "시계태엽 차원",
+    "story_text": "꿈의 차원에서 끝없이 회전하는 기어와 증기의 산업 찬가.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "어머니 지구: 딥 블루",
+    "story_text": "별들의 머나먼 해안에서 우리는 한때 이곳을 유일한 짙푸른 집이라고 불렀습니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "레드 파이오니어",
+    "story_text": "녹슬고 붉은 먼지 아래, 진홍색 별에서 문명의 불꽃이 점화됩니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "프로스트 링",
+    "story_text": "얼어붙은 고리 - 공허 속에 남겨진 우주의 거대한 흔적.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "바이너리 일몰",
+    "story_text": "쌍둥이 태양이 함께 지면서 외계 하늘에 겹치는 그림자를 드리웁니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "잠들지 않는 별",
+    "story_text": "수조 개의 빛이 흐름으로 모여 이 잠 못 이루는 별에 미래를 코딩합니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "초신성",
+    "story_text": "별은 궁극적인 광채로 끝난다. 우주에서 가장 폭력적인 죽음이자 재탄생이다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "은하수",
+    "story_text": "별들은 소용돌이치는 은하계 바다에 모이고, 각 파도는 문명의 서사시를 나타냅니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "창조의 기둥",
+    "story_text": "창조의 탑은 별과 불가사의를 키우는 조용한 요람인 성운을 관통합니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "이벤트 호라이즌",
+    "story_text": "중력의 궁극적인 함정에서는 빛조차도 정해진 운명을 벗어날 수 없습니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "웜홀 운송",
+    "story_text": "시공간이 접혀서 먼 거리가 짧아지고, 우리는 별들 사이를 자유롭게 뛰어넘을 수 있습니다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "우주의 눈",
+    "story_text": "마지막 지평선의 가장자리에서 우주는 차갑지만 웅장한 눈을 뜬다.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

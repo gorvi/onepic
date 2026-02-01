@@ -17,6 +17,7 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +26,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +38,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +47,9 @@ import androidx.compose.ui.unit.sp
 import site.aiok.onepic.data.LevelRepository
 import site.aiok.onepic.model.LevelConfig
 import site.aiok.onepic.ui.components.MeshGradientBackground
+import site.aiok.onepic.ui.components.getChapterColors
+import site.aiok.onepic.ui.components.*
+
 import site.aiok.onepic.R
 import androidx.compose.ui.res.stringResource
 
@@ -62,14 +70,9 @@ fun rememberSmoothFlingBehavior(): FlingBehavior {
             override suspend fun ScrollScope.performFling(
                 initialVelocity: Float
             ): Float {
-                // 降低初始速度，使滑动更平滑、更有阻尼感
                 val adjustedVelocity = initialVelocity * 0.75f
-                
                 if (abs(adjustedVelocity) < 50f) return adjustedVelocity
-                
-                var velocityLeft = adjustedVelocity
                 var lastValue = 0f
-                
                 AnimationState(
                     initialValue = 0f,
                     initialVelocity = adjustedVelocity,
@@ -77,15 +80,11 @@ fun rememberSmoothFlingBehavior(): FlingBehavior {
                     val delta = value - lastValue
                     lastValue = value
                     val consumed = scrollBy(delta)
-                    
-                    // 如果滚动被消耗的量与期望不同，说明到达边界
                     if (abs(delta - consumed) > 0.5f) {
                         cancelAnimation()
                     }
-                    velocityLeft = velocity
                 }
-                
-                return velocityLeft
+                return 0f 
             }
         }
     }
@@ -94,27 +93,22 @@ fun rememberSmoothFlingBehavior(): FlingBehavior {
 @Composable
 fun rememberSharedAnimations(): SharedAnimationState {
     val infiniteTransition = rememberInfiniteTransition(label = "shared_anim")
-    
-    // 脉冲缩放 - 更大的范围，更快的速度
     val pulseScale by infiniteTransition.animateFloat(
         initialValue = 1f,
-        targetValue = 1.35f,  // 扩大到1.35倍
+        targetValue = 1.35f,
         animationSpec = infiniteRepeatable(
-            animation = tween(800, easing = FastOutSlowInEasing),  // 加快速度
+            animation = tween(800, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         ), label = "pulse_scale"
     )
-    
-    // 脉冲透明度 - 更明显的变化
     val pulseAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.9f,  // 起始更亮
-        targetValue = 0.1f,   // 结束更淡
+        initialValue = 0.9f,
+        targetValue = 0.1f,
         animationSpec = infiniteRepeatable(
             animation = tween(800, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         ), label = "pulse_alpha"
     )
-    
     val floatOffset by infiniteTransition.animateFloat(
         initialValue = -6f,
         targetValue = 6f,
@@ -123,7 +117,6 @@ fun rememberSharedAnimations(): SharedAnimationState {
             repeatMode = RepeatMode.Reverse
         ), label = "float_offset"
     )
-    
     val breatheScale by infiniteTransition.animateFloat(
         initialValue = 0.97f,
         targetValue = 1.03f,
@@ -132,72 +125,75 @@ fun rememberSharedAnimations(): SharedAnimationState {
             repeatMode = RepeatMode.Reverse
         ), label = "breathe_scale"
     )
-    
     return SharedAnimationState(pulseScale, pulseAlpha, floatOffset, breatheScale)
 }
 
 @Composable
 fun LevelSelectScreen(
-    scrollTriggerKey: Int = 0, // 用于触发重新检查滚动的 key
-    completedLevelsBeforeGame: Set<Int> = emptySet(), // 进入游戏前的 completedLevels
-    onLevelSelected: (LevelConfig, Int, String, onComplete: () -> Unit) -> Unit
+    currentStageIndex: Int = 0,
+    scrollTriggerKey: Int = 0,
+    lastPlayedLevelIndex: Int? = null,
+    targetScrollLevelId: Int? = null,
+    completedLevelsBeforeGame: Set<Int> = emptySet(),
+    cachedLevels: List<LevelConfig>, // Performance: Pass pre-loaded levels
+    onLevelSelected: (LevelConfig, Int, String, () -> Unit) -> Unit,
+    preloadedNativeAd: com.google.android.gms.ads.nativead.NativeAd? = null
 ) {
     val context = LocalContext.current
     val density = LocalDensity.current
     val coroutineScope = rememberCoroutineScope()
+    val configuration = androidx.compose.ui.platform.LocalConfiguration.current
+    val screenHeightPx = with(density) { configuration.screenHeightDp.dp.toPx() }
     
-    // 合并 Classic 和 Gallery 关卡
-    val allLevels = remember {
-        LevelRepository.classicLevels + LevelRepository.getGalleryLevels(context)
-    }
+    // Performance: Use passed cachedLevels directy
+    val allLevels = cachedLevels
     
-    // 从持久化存储加载解锁和完成状态
-    // 如果 completedLevelsBeforeGame 不为空，说明从游戏返回，先使用完成前的状态
-    var unlockedLevels by remember { 
-        mutableStateOf(site.aiok.onepic.data.LevelProgressManager.getUnlockedClassicLevels(context)) 
-    }
-    var completedLevels by remember { 
+    var unlockedLevels: Set<Int> by remember { 
         mutableStateOf(
             if (completedLevelsBeforeGame.isNotEmpty()) {
-                // 从游戏返回，先使用完成前的状态
+                // Reconstruct "Old" unlocked state: Completed levels + their next levels (and level 0)
+                completedLevelsBeforeGame.flatMap { setOf(it, it + 1) }.toSet() + 0
+            } else {
+                site.aiok.onepic.data.LevelProgressManager.getUnlockedClassicLevels(context)
+            }
+        ) 
+    }
+    var renderingUnlockedLevels: Set<Int> by remember { mutableStateOf(unlockedLevels) }
+    var completedLevels: Set<Int> by remember { 
+        mutableStateOf(
+            if (completedLevelsBeforeGame.isNotEmpty()) {
                 completedLevelsBeforeGame
             } else {
-                // 首次进入，使用最新状态
                 site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(context)
             }
         )
     }
+
+    var unlockedAscendedIds by remember { mutableStateOf(site.aiok.onepic.data.LevelProgressManager.getUnlockedAscendedLevels(context)) }
+    var completedAscendedIds by remember { mutableStateOf(site.aiok.onepic.data.LevelProgressManager.getCompletedAscendedLevels(context)) }
+
+    val onUnlockLevel: (Int) -> Unit = { id -> unlockedLevels = unlockedLevels + id }
+    val onCompleteLevel: (Int) -> Unit = { id -> completedLevels = completedLevels + id }
+    val onCompleteAscendedLevel: (Int) -> Unit = { id -> completedAscendedIds = completedAscendedIds + id }
     
-    // 标记是否应该延迟更新状态（用于显示动画效果）
     var shouldDelayUpdateState by remember { mutableStateOf(false) }
     var pendingCompletedLevels by remember { mutableStateOf<Set<Int>?>(null) }
     var pendingUnlockedLevels by remember { mutableStateOf<Set<Int>?>(null) }
-    
-    // 追踪刚刚完成的关卡（用于触发对号动画）
     var newlyCompletedLevels by remember { mutableStateOf<Set<Int>>(emptySet()) }
+    var isProcessingReturn by remember { mutableStateOf(false) }
     
-    // 获取总合并得分（游戏中合并拼图块获得的分数）
-    val totalMergeScore = remember {
-        site.aiok.onepic.data.LevelProgressManager.getTotalMergeScore(context)
+    // Performance: Load stats asynchronously to avoid main thread IO block
+    val totalMergeScore by produceState(initialValue = 0, key1 = scrollTriggerKey) {
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            value = site.aiok.onepic.data.LevelProgressManager.getTotalMergeScore(context)
+        }
+    }
+    val totalStars by produceState(initialValue = 0, key1 = scrollTriggerKey) {
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            value = site.aiok.onepic.data.LevelProgressManager.getTotalStars(context)
+        }
     }
     
-    // 获取总星星数
-    val totalStars = remember {
-        site.aiok.onepic.data.LevelProgressManager.getTotalStars(context)
-    }
-    
-    // 获取最后玩的关卡，作为初始滚动位置
-    val initialScrollIndex = remember {
-        site.aiok.onepic.data.LevelProgressManager.getLastPlayedLevel(context)
-            .coerceIn(0, allLevels.size - 1)
-    }
-    
-    // 使用初始滚动位置创建 listState，这样启动时就直接显示最后玩的关卡，不需要动画
-    val listState = rememberLazyListState(
-        initialFirstVisibleItemIndex = initialScrollIndex
-    )
-    
-    // 计算下一个可玩关卡的索引
     val nextToPlayIndex = remember(unlockedLevels, completedLevels) {
         allLevels.indices.firstOrNull { index ->
             val isUnlocked = index in unlockedLevels || index == 0
@@ -205,1099 +201,391 @@ fun LevelSelectScreen(
             isUnlocked && !isCompleted
         } ?: 0
     }
+
+    val levelHeightPx = with(density) { 152.dp.toPx().toInt() }
+    val centerOffset = (screenHeightPx - levelHeightPx) / 2
     
-    // 追踪上一个 nextToPlayIndex，用于圆环移动动画
+    // Use a stable initial index that doesn't change during ON_RESUME Refresh
+    val initialJumpIndex = remember { nextToPlayIndex }
+    val listState = rememberLazyListState(
+        initialFirstVisibleItemIndex = initialJumpIndex,
+        initialFirstVisibleItemScrollOffset = (-centerOffset).toInt()
+    )
+
+    val initialScrollIndex = nextToPlayIndex
     var previousNextToPlayIndex by remember { mutableStateOf(nextToPlayIndex) }
     
-    // 当 nextToPlayIndex 变化时，延迟更新 previousNextToPlayIndex（让动画先执行）
+    var hasInitialScrolled by remember { mutableStateOf(false) }
+    LaunchedEffect(allLevels.size) {
+        if (allLevels.size > 1 && !hasInitialScrolled) {
+            // Give a tiny delay for layout to stabilize
+            kotlinx.coroutines.delay(100)
+            listState.scrollToItem(
+                index = nextToPlayIndex,
+                scrollOffset = (-centerOffset).toInt()
+            )
+            hasInitialScrolled = true
+        }
+    }
+    
+    var lastScrolledToIndex by remember { mutableStateOf(initialScrollIndex) }
+    var shouldAnimateScroll by remember { mutableStateOf(false) }
+
+    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    LaunchedEffect(targetScrollLevelId) {
+        targetScrollLevelId?.let { id ->
+            val lookupId = if (id > 60) id - 60 else id
+            val index = allLevels.indexOfFirst { 
+                val numericId = it.levelId.filter { ch -> ch.isDigit() }.toIntOrNull()
+                numericId == lookupId
+            }
+            if (index != -1) {
+                listState.scrollToItem((index - 1).coerceAtLeast(0))
+            }
+        }
+    }
+
     LaunchedEffect(nextToPlayIndex) {
         if (nextToPlayIndex != previousNextToPlayIndex) {
-            // 延迟更新，让圆环移动动画先完成（淡出200ms + 淡入1000ms = 1200ms）
             kotlinx.coroutines.delay(1200)
             previousNextToPlayIndex = nextToPlayIndex
         }
     }
-    
-    // 记住上次滚动到的关卡索引，用于判断是否需要重新滚动
-    var lastScrolledToIndex by remember { mutableStateOf(initialScrollIndex) }
-    // 标记是否应该执行滚动动画
-    var shouldAnimateScroll by remember { mutableStateOf(false) }
-    
-    // 检查当前关卡是否在可见区域（响应滚动变化）
-    // 使用 derivedStateOf 减少重组，只在滚动时计算
-    val isCurrentLevelVisible = remember {
-        derivedStateOf {
-            val visibleIndices = listState.layoutInfo.visibleItemsInfo.map { it.index }.toSet()
-            nextToPlayIndex in visibleIndices
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                val latestUnlockedFromStorage = site.aiok.onepic.data.LevelProgressManager.getUnlockedClassicLevels(context)
+                if (scrollTriggerKey == 0) {
+                     unlockedLevels = latestUnlockedFromStorage
+                     completedLevels = site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(context)
+                     if (!shouldDelayUpdateState) {
+                        renderingUnlockedLevels = latestUnlockedFromStorage
+                     }
+                } else {
+                    // When scrollTriggerKey is active, we FREEZE state updates here
+                    // Handling is delegated to LaunchedEffect(scrollTriggerKey)
+                    isProcessingReturn = true
+                }
+                unlockedAscendedIds = site.aiok.onepic.data.LevelProgressManager.getUnlockedAscendedLevels(context)
+                completedAscendedIds = site.aiok.onepic.data.LevelProgressManager.getCompletedAscendedLevels(context)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
     
-    // 共享动画状态 - 只创建一次
     val sharedAnim = rememberSharedAnimations()
-    
-    // 自定义缓冲滑动效果 - 更平滑的减速
     val smoothFlingBehavior = rememberSmoothFlingBehavior()
     
-    // 自动滚动到目标关卡
-    // 计算一个关卡的高度：节点容器(110dp) + 连接线(26dp) + 间距(16dp) ≈ 152dp
-    val levelHeightPx = with(density) { 152.dp.toPx().toInt() }
-    
-    // 定位到当前关卡
     val scrollToCurrentLevel: () -> Unit = {
         coroutineScope.launch {
             listState.animateScrollToItem(
                 index = nextToPlayIndex,
-                scrollOffset = -200 - levelHeightPx * 2
+                scrollOffset = (-centerOffset).toInt()
             )
         }
     }
-    
-    // 使用 LaunchedEffect 监听 scrollTriggerKey 变化
-    // 当 scrollTriggerKey 增加时（> 0），说明从游戏返回且可能完成了关卡
-    LaunchedEffect(scrollTriggerKey, completedLevelsBeforeGame) {
-        // 当 scrollTriggerKey > 0 时，说明从游戏返回（因为初始值是 0）
-        if (scrollTriggerKey > 0 && completedLevelsBeforeGame.isNotEmpty()) {
-            // 先重置为完成前的状态（确保显示完成前的状态）
-            completedLevels = completedLevelsBeforeGame
-            // 计算完成前的 unlockedLevels（基于完成前的 completedLevels）
-            val beforeGameUnlockedLevels = completedLevelsBeforeGame.map { it + 1 }.toSet() + 0
-            unlockedLevels = beforeGameUnlockedLevels
-            
-            // 从持久化存储读取最新的状态
-            val newCompletedLevels = site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(context)
-            val newUnlockedLevels = site.aiok.onepic.data.LevelProgressManager.getUnlockedClassicLevels(context)
-            
-            // 检查是否有新完成的关卡
-            val newCompleted = newCompletedLevels - completedLevelsBeforeGame
-            
-            if (newCompleted.isNotEmpty()) {
-                // 保存待更新的状态
-                pendingCompletedLevels = newCompletedLevels
-                pendingUnlockedLevels = newUnlockedLevels
-                // 设置延迟更新标志
-                shouldDelayUpdateState = true
-            } else {
-                // 没有新完成的关卡，立即更新状态
-                completedLevels = newCompletedLevels
-                unlockedLevels = newUnlockedLevels
+
+    val currentStageIndex by remember {
+        derivedStateOf {
+            val visibleItems = listState.layoutInfo.visibleItemsInfo
+            if (visibleItems.isEmpty()) 0
+            else {
+                val middleItem = visibleItems[visibleItems.size / 2]
+                val index = middleItem.index
+                if (index == 0) 0 else (index - 1) / 5 + 1
             }
         }
     }
     
-    // 延迟更新状态，实现动画效果
-    LaunchedEffect(shouldDelayUpdateState) {
-        if (shouldDelayUpdateState && pendingCompletedLevels != null && pendingUnlockedLevels != null) {
-            // 延迟 300ms，让用户看到完成前的状态
-            kotlinx.coroutines.delay(300)
+    LaunchedEffect(scrollTriggerKey) {
+        if (scrollTriggerKey > 0) {
+            // 1. Identify what happened (new progress vs replay)
+            val latestCompletedFromStorage = site.aiok.onepic.data.LevelProgressManager.getCompletedClassicLevels(context)
+            val latestUnlockedFromStorage = site.aiok.onepic.data.LevelProgressManager.getUnlockedClassicLevels(context)
+            val newCompletions = latestCompletedFromStorage - completedLevelsBeforeGame
             
-            // 更新状态，这会触发 nextToPlayIndex 的变化，从而触发圆环移动动画
-            completedLevels = pendingCompletedLevels!!
-            unlockedLevels = pendingUnlockedLevels!!
-            
-            // 设置标志，等待页面完全加载后再执行滚动动画
-            shouldAnimateScroll = true
-            
-            // 重置标志
-            shouldDelayUpdateState = false
-            pendingCompletedLevels = null
-            pendingUnlockedLevels = null
-        }
-    }
-    
-    // 使用 LaunchedEffect 监听 shouldAnimateScroll 标志
-    // 当页面完全加载后，执行滚动动画
-    LaunchedEffect(shouldAnimateScroll) {
-        if (shouldAnimateScroll) {
-            // 等待页面完全加载
-            kotlinx.coroutines.delay(300)
-            
-            // 重新计算 nextToPlayIndex（因为 completedLevels 和 unlockedLevels 已更新）
-            val currentNextToPlayIndex = allLevels.indices.firstOrNull { index ->
-                val isUnlocked = index in unlockedLevels || index == 0
-                val isCompleted = index in completedLevels
+            // 2. Decide Target Scroll Position IMMEDIATELY
+            // Use current index as fallback for replays, or next index for progress
+            val currentFruitierIndex = allLevels.indices.firstOrNull { index ->
+                val isUnlocked = index in latestUnlockedFromStorage || index == 0
+                val isCompleted = index in latestCompletedFromStorage
                 isUnlocked && !isCompleted
             } ?: 0
-            
-            val currentVisibleIndex = listState.firstVisibleItemIndex
-            
-            // 如果下一关索引和当前可见索引相同或接近，不需要滚动
-            val indexDiff = kotlin.math.abs(currentNextToPlayIndex - currentVisibleIndex)
-            if (currentNextToPlayIndex == currentVisibleIndex || indexDiff <= 1) {
-                shouldAnimateScroll = false
-                return@LaunchedEffect
+
+            var targetIndex = currentFruitierIndex
+            // Only override if we didn't just complete a new level (Replay logic)
+            if (newCompletions.isEmpty() && lastPlayedLevelIndex != null && lastPlayedLevelIndex < currentFruitierIndex) {
+                 // Replay case: Stay on what we just played
+                 targetIndex = lastPlayedLevelIndex
+            }
+
+            // 3. Handle State Updates
+            if (newCompletions.isNotEmpty()) {
+                // Progress case: show animation sequence
+                completedLevels = completedLevelsBeforeGame
+                val beforeGameUnlocked = completedLevelsBeforeGame.map { it + 1 }.toSet() + 0
+                unlockedLevels = beforeGameUnlocked
+                renderingUnlockedLevels = beforeGameUnlocked
+                
+                pendingCompletedLevels = latestCompletedFromStorage
+                pendingUnlockedLevels = latestUnlockedFromStorage
+                newlyCompletedLevels = newCompletions
+                shouldDelayUpdateState = true
+            } else {
+                // Replay case: swift update
+                completedLevels = latestCompletedFromStorage
+                unlockedLevels = latestUnlockedFromStorage
+                newlyCompletedLevels = emptySet()
             }
             
-            // 从当前关卡位置平滑滚动到下一关（有动画）
+            // 4. Force synchronization of composition before scrolling
+            kotlinx.coroutines.yield() 
+            
+            // 5. Atomic Snap + Anim
             try {
-                listState.animateScrollToItem(
-                    index = currentNextToPlayIndex,
-                    scrollOffset = 0
-                )
-            } catch (e: Exception) {
-                // 忽略错误
-            }
+                if (newCompletions.isNotEmpty() && lastPlayedLevelIndex != null) {
+                     // Progress Mode: Visual Journey (Old -> New)
+                     // 1. Start at the level we just finished
+                     listState.scrollToItem(
+                         index = lastPlayedLevelIndex,
+                         scrollOffset = (-centerOffset).toInt()
+                     )
+                     
+                     // 2. Brief pause to let user recognize "Oh, here I am"
+                     kotlinx.coroutines.delay(300)
+                     
+                     // 3. Smoothly travel to the new frontier
+                     listState.animateScrollToItem(
+                         index = targetIndex,
+                         scrollOffset = (-centerOffset).toInt()
+                     )
+                } else {
+                    // Replay/Init Mode: Instantly appear at target
+                    listState.scrollToItem(
+                        index = targetIndex,
+                        scrollOffset = (-centerOffset).toInt()
+                    )
+                    // Micro-adjust alignment
+                    listState.animateScrollToItem(
+                        index = targetIndex,
+                        scrollOffset = (-centerOffset).toInt()
+                    )
+                }
+            } catch (e: Exception) {}
             
-            shouldAnimateScroll = false
+            // 6. Release UI Freeze
+            kotlinx.coroutines.delay(200) // Small stability buffer
+            isProcessingReturn = false
+            
+            // 7. Finalize state
+            if (newCompletions.isEmpty()) {
+                renderingUnlockedLevels = latestUnlockedFromStorage
+            }
+        }
+    }
+    
+    // Start unlock animation sequence when pending data is ready
+    LaunchedEffect(pendingUnlockedLevels) {
+        if (pendingUnlockedLevels != null && pendingCompletedLevels != null) {
+            // 1. Wait for scroll animation (triggered by scrollTriggerKey) to settle
+            kotlinx.coroutines.delay(400)
+            
+            // 2. silently update the logical state (checkmark appears on previous level)
+            completedLevels = pendingCompletedLevels!!
+            unlockedLevels = pendingUnlockedLevels!! 
+            
+            // 3. Wait for simple user recognition of "Locked" state
+            kotlinx.coroutines.delay(1200) 
+            
+            // 4. Trigger visual unlock (Explosion!)
+            renderingUnlockedLevels = pendingUnlockedLevels!!
+            
+            // 5. Cleanup
+            pendingCompletedLevels = null
+            pendingUnlockedLevels = null
+            shouldDelayUpdateState = false
         }
     }
 
-    MeshGradientBackground {
-        Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            // 顶部标题和总分
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // 左侧：星星图标和总星星数
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFFFFD700).copy(alpha = 0.3f),
-                                    Color(0xFFFFD700).copy(alpha = 0.15f)
-                                )
-                            ),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null,
-                        tint = Color(0xFFFFD700),
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Text(
-                        text = totalStars.toString(),
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 22.sp,
-                            shadow = androidx.compose.ui.graphics.Shadow(
-                                color = Color.Black.copy(alpha = 0.6f),
-                                offset = androidx.compose.ui.geometry.Offset(0.5f, 0.5f),
-                                blurRadius = 2f
-                            )
-                        ),
-                        color = Color(0xFFFFD700)
-                    )
-                }
+    val atmosphereTheme = remember(currentStageIndex) {
+        when (currentStageIndex) {
+            0 -> "light"
+            1 -> "nature"
+            2 -> "abyss"
+            3 -> "fire"
+            4 -> "magic"
+            5 -> "ruins"
+            6 -> "ice"
+            7 -> "mechanical"
+            8 -> "time"
+            9 -> "cosmos"
+            10 -> "void"
+            11 -> "light"
+            12 -> "unity"
+            else -> "magic"
+        }
+    }
+    
+    val chapterColors: List<Color> = remember<List<Color>>(currentStageIndex) { getChapterColors(currentStageIndex) }
 
-                // 右侧：总合并得分显示（使用硬币emoji）
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    Color(0xFFFFD700).copy(alpha = 0.3f),
-                                    Color(0xFFFFD700).copy(alpha = 0.15f)
-                                )
-                            ),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "🪙",
-                        style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp)
-                    )
-                    Text(
-                        text = totalMergeScore.toString(),
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 22.sp,
-                            shadow = androidx.compose.ui.graphics.Shadow(
-                                color = Color.Black.copy(alpha = 0.6f),
-                                offset = androidx.compose.ui.geometry.Offset(1f, 1f),
-                                blurRadius = 2f
-                            )
-                        ),
-                        color = Color(0xFFFFD700)
-                    )
-                }
-            }
-            
-            // 阶梯式关卡路径
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Z-Index 0: Background Layer
+        MeshGradientBackground(colors = chapterColors) {
+            ChapterAtmosphere(
+                theme = atmosphereTheme, 
+                modifier = Modifier.fillMaxSize().graphicsLayer { alpha = 0.6f }
+            )
+        }
+
+        // Z-Index 1: Main Content Layer
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Content
+            val levelsCount = allLevels.size
             LazyColumn(
                 state = listState,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .graphicsLayer {
+                         // Use graphicsLayer here to push this content to its own layer
+                         // This can help isolate this fast-scrolling part from the background
+                         clip = true
+                    },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(vertical = 16.dp),
-                flingBehavior = smoothFlingBehavior
+                contentPadding = PaddingValues(top = 100.dp, bottom = 180.dp),
+                flingBehavior = smoothFlingBehavior,
+                reverseLayout = true
             ) {
-                itemsIndexed(allLevels, key = { index, _ -> index }) { index, level ->
-                    val isUnlocked = index in unlockedLevels || index == 0
-                    val isCompleted = index in completedLevels
-                    val stars = remember(index) { 
-                        site.aiok.onepic.data.LevelProgressManager.getClassicLevelStars(context, index) 
-                    }
+                items(allLevels.size) { index ->
+                    val level = allLevels[index]
                     
-                    val isNextToPlay = isUnlocked && !isCompleted && 
-                        (index == 0 || completedLevels.contains(index - 1))
-                    
-                    val offsetX = remember(index) {
-                        when (index % 4) {
-                            0 -> 0.dp
-                            1 -> 60.dp
-                            2 -> 0.dp
-                            3 -> (-60).dp
-                            else -> 0.dp
-                        }
-                    }
-                    
-                    // 第一个分隔在第1关（S关）后面，即index=0后面（index=1时显示）
-                    // 第1关（index=0）是stage 0，第2-6关（index=1-5）是stage 1，第7-11关（index=6-10）是stage 2...
-                    val stageIndex = if (index == 0) 0 else (index - 1) / 5 + 1
-                    val isFirstOfStage = index == 0 || (index > 0 && (index - 1) % 5 == 0)
-                    
-                    // 在第1关（S关）后面显示第一个分隔
-                    if (index == 1) {
-                        StageDivider(
-                            stageNumber = 1, // 第一个stage，显示为stage 1
-                            sharedAnim = sharedAnim
-                        )
-                    } else if (isFirstOfStage && index > 1) {
-                        StageDivider(
-                            stageNumber = stageIndex,
-                            sharedAnim = sharedAnim
-                        )
-                    }
-                    
-                    if (index > 0 && !isFirstOfStage) {
-                        PathConnector(
-                            fromOffset = when ((index - 1) % 4) {
-                                0 -> 0.dp
-                                1 -> 60.dp
-                                2 -> 0.dp
-                                3 -> (-60).dp
-                                else -> 0.dp
-                            },
-                            toOffset = offsetX,
-                            isCompleted = completedLevels.contains(index - 1),
-                            stageIndex = stageIndex
-                        )
-                    }
-                    
-                    // 只在特定位置显示装饰，减少渲染
-                    if (index % 5 == 2) {
-                        CartoonDecoration(
-                            stageIndex = stageIndex, 
-                            side = "left",
-                            sharedAnim = sharedAnim
-                        )
-                    }
-                    if (index % 5 == 3) {
-                        CartoonDecoration(
-                            stageIndex = stageIndex, 
-                            side = "right",
-                            sharedAnim = sharedAnim
-                        )
-                    }
-                    
-                    // 关卡编号：第1关（index=0）显示"S"，第2关开始显示1, 2, 3...
-                    val displayLevelNumber = if (index == 0) "S" else index.toString()
-                    
-                    LevelNode(
+                    // Show level node
+                    LevelRow(
+                        idx = index,
                         level = level,
-                        levelNumber = index, // 使用实际index，内部会转换为显示文本
-                        displayLevelNumber = displayLevelNumber, // 显示的关卡编号
-                        isLocked = !isUnlocked,
-                        isCompleted = isCompleted,
-                        isNextToPlay = isNextToPlay,
-                        stars = stars,
-                        offsetX = offsetX,
-                        stageIndex = stageIndex,
+                        unlockedLevels = renderingUnlockedLevels,
+                        completedLevels = completedLevels,
+                        completedAscendedIds = completedAscendedIds,
+                        newlyCompletedLevels = newlyCompletedLevels,
+                        previousNextToPlayIndex = previousNextToPlayIndex,
                         sharedAnim = sharedAnim,
-                        previousNextToPlayIndex = previousNextToPlayIndex, // 传递上一个 nextToPlayIndex
-                        isNewlyCompleted = index in newlyCompletedLevels, // 传递是否刚刚完成
-                        onClick = {
-                            if (isUnlocked) {
-                                onLevelSelected(level, index, "classic") {
-                                    site.aiok.onepic.data.LevelProgressManager.markClassicLevelCompleted(context, index)
-                                    site.aiok.onepic.data.LevelProgressManager.unlockClassicLevel(context, index + 1)
-                                    completedLevels = completedLevels + index
-                                    unlockedLevels = unlockedLevels + (index + 1)
-                                }
-                            }
-                        }
+                        onLevelSelected = onLevelSelected,
+                        onCompleteLevel = onCompleteLevel,
+                        onUnlockLevel = onUnlockLevel,
+                        onCompleteAscendedLevel = onCompleteAscendedLevel
                     )
+
+                    // Every 5 levels, insert a native ad (skipping demo level index 0)
+                    if (index % 5 == 0 && index > 0 && index != allLevels.size - 1) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        site.aiok.onepic.ui.components.NativeAdView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            preloadedNativeAd = preloadedNativeAd,
+                            loadDelayMillis = if (preloadedNativeAd != null) 0L else 1500L
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
                 
                 item {
-                    Spacer(modifier = Modifier.height(100.dp))
-                }
-            }
-            }
-            
-            // 定位按钮 - 当当前关卡不在可见区域时显示
-            if (!isCurrentLevelVisible.value) {
-                FloatingActionButton(
-                    onClick = scrollToCurrentLevel,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(24.dp)
-                        .size(56.dp)
-                        .shadow(
-                            elevation = 8.dp,
-                            shape = CircleShape,
-                            ambientColor = Color.Black.copy(alpha = 0.3f),
-                            spotColor = Color.Black.copy(alpha = 0.4f)
-                        ),
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = stringResource(R.string.cd_scroll_to_current),
-                        modifier = Modifier.size(28.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
-// 模式主题色
-fun getStageColors(stageIndex: Int): List<Color> {
-    return when (stageIndex % 6) {
-        0 -> listOf(Color(0xFF81C784), Color(0xFF66BB6A)) // 绿色森林
-        1 -> listOf(Color(0xFF64B5F6), Color(0xFF42A5F5)) // 蓝色海洋
-        2 -> listOf(Color(0xFFFFB74D), Color(0xFFFFA726)) // 橙色沙漠
-        3 -> listOf(Color(0xFFBA68C8), Color(0xFFAB47BC)) // 紫色魔法
-        4 -> listOf(Color(0xFFE57373), Color(0xFFEF5350)) // 红色火山
-        5 -> listOf(Color(0xFF4DD0E1), Color(0xFF26C6DA)) // 青色冰川
-        else -> listOf(Color(0xFF81C784), Color(0xFF66BB6A))
-    }
-}
-
-// 模式装饰emoji
-fun getStageEmoji(stageIndex: Int): String {
-    return when (stageIndex % 6) {
-        0 -> "🌲"  // 森林
-        1 -> "🌊"  // 海洋
-        2 -> "🏜️"  // 沙漠
-        3 -> "✨"  // 魔法
-        4 -> "🌋"  // 火山
-        5 -> "❄️"  // 冰川
-        else -> "🌟"
-    }
-}
-
-// 模式名称
-fun getStageName(stageIndex: Int): String {
-    return when (stageIndex % 6) {
-        0 -> "森林"
-        1 -> "海洋"
-        2 -> "沙漠"
-        3 -> "魔法"
-        4 -> "火山"
-        5 -> "冰川"
-        else -> "未知"
-    }
-}
-
-@Composable
-fun StageDivider(
-    stageNumber: Int,
-    sharedAnim: SharedAnimationState
-) {
-    val stageIndex = stageNumber - 1
-    val colors = remember(stageIndex) { getStageColors(stageIndex) }
-    val emoji = remember(stageIndex) { getStageEmoji(stageIndex) }
-    val stageName = remember(stageIndex) { getStageName(stageIndex) }
-    
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 28.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            // 左侧渐变线 - 简化
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(3.dp)
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(Color.Transparent, colors[0])
-                        ),
-                        shape = RoundedCornerShape(2.dp)
-                    )
-            )
-            
-            // 模式标识
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .size(72.dp)
-                    .scale(sharedAnim.breatheScale)
-                    .clip(CircleShape)
-                    .background(brush = Brush.verticalGradient(colors = colors))
-                    .border(3.dp, Color.White.copy(alpha = 0.6f), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = emoji,
-                    style = MaterialTheme.typography.headlineLarge.copy(fontSize = 40.sp),
-                    modifier = Modifier.graphicsLayer {
-                        rotationZ = sharedAnim.floatOffset * 0.5f
-                    }
-                )
-            }
-            
-            // 右侧渐变线 - 简化
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(3.dp)
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(colors[0], Color.Transparent)
-                        ),
-                        shape = RoundedCornerShape(2.dp)
-                    )
-            )
-        }
-        
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = stageName,
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            ),
-            color = colors[1]
-        )
-    }
-}
-
-@Composable
-fun CartoonDecoration(
-    stageIndex: Int, 
-    side: String,
-    sharedAnim: SharedAnimationState
-) {
-    val emoji = remember(stageIndex, side) {
-        when (stageIndex % 6) {
-            0 -> if (side == "left") "🌳" else "🍄"
-            1 -> if (side == "left") "🐠" else "🐚"
-            2 -> if (side == "left") "🌵" else "🦂"
-            3 -> if (side == "left") "🦄" else "🔮"
-            4 -> if (side == "left") "🔥" else "🪨"
-            5 -> if (side == "left") "⛄" else "🐧"
-            else -> "🌟"
-        }
-    }
-    
-    val offsetX = if (side == "left") (-100).dp else 100.dp
-    val stageColors = remember(stageIndex) { getStageColors(stageIndex) }
-    
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(x = offsetX, y = sharedAnim.floatOffset.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        // Emoji容器 - 简化，移除外发光
-        Box(
-            modifier = Modifier
-                .offset(y = (-16).dp)
-                .size(56.dp)
-                .scale(sharedAnim.breatheScale)
-                .clip(CircleShape)
-                .background(Color.White.copy(alpha = 0.95f))
-                .border(2.dp, stageColors[0].copy(alpha = 0.6f), CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = emoji,
-                style = MaterialTheme.typography.headlineLarge.copy(fontSize = 36.sp)
-            )
-        }
-    }
-}
-
-@Composable
-fun PathConnector(
-    fromOffset: androidx.compose.ui.unit.Dp, 
-    toOffset: androidx.compose.ui.unit.Dp, 
-    isCompleted: Boolean,
-    stageIndex: Int = 0
-) {
-    val stageColors = remember(stageIndex) { getStageColors(stageIndex) }
-    
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(26.dp)
-            .offset(x = (fromOffset + toOffset) / 2),
-        contentAlignment = Alignment.Center
-    ) {
-        // 虚线连接点
-        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            repeat(3) { index ->
-                val dotSize = if (isCompleted) 6.dp else 5.dp
-                val dotColor = if (isCompleted) {
-                    // 完成的路径：渐变色点
-                    stageColors[if (index == 1) 0 else 1].copy(alpha = 0.9f)
-                } else {
-                    Color.White.copy(alpha = 0.25f)
-                }
-                
-                Box(
-                    modifier = Modifier
-                        .size(dotSize)
-                        .background(dotColor, CircleShape)
-                        .then(
-                            if (isCompleted) {
-                                Modifier.border(
-                                    width = 1.dp,
-                                    color = Color.White.copy(alpha = 0.3f),
-                                    shape = CircleShape
-                                )
-                            } else Modifier
-                        )
-                )
-            }
-        }
-    }
-}
-
-// 每个模式的emoji池
-val stageEmojiPools = mapOf(
-    0 to listOf("🌲", "🌳", "🌴", "🍀", "🌿", "🍃", "🌸", "🦋", "🐿️", "🦊"),  // 森林
-    1 to listOf("🐋", "🐬", "🐠", "🦈", "🐙", "🦑", "🐡", "🦐", "🐳", "🌊"),  // 海洋
-    2 to listOf("🌵", "🐪", "☀️", "🦂", "🏜️", "🌻", "🦎", "🐫", "🌅", "⭐"),   // 沙漠
-    3 to listOf("✨", "🌙", "⭐", "🔮", "🦄", "🌈", "💎", "🪄", "🎭", "🌟"),   // 魔法
-    4 to listOf("🔥", "🌋", "💥", "🐉", "☄️", "🦅", "🏔️", "⚡", "🔶", "🧨"),   // 火山
-    5 to listOf("❄️", "⛄", "🐧", "🦭", "🏔️", "💠", "🌨️", "🐻‍❄️", "🧊", "💎")   // 冰川
-)
-
-// 根据关卡号获取随机emoji（但同一关卡始终相同）
-fun getRandomStageEmoji(stageIndex: Int, levelNumber: Int): String {
-    val pool = stageEmojiPools[stageIndex % 6] ?: listOf("⭐")
-    // 使用关卡号作为种子，确保同一关卡emoji固定
-    val index = (levelNumber * 7 + stageIndex * 13) % pool.size
-    return pool[index]
-}
-
-// 获取锁定状态的emoji
-fun getLockedEmoji(stageIndex: Int, levelNumber: Int): String {
-    val pool = when (stageIndex % 6) {
-        0 -> listOf("🌱", "🍂", "🌰", "🥜")      // 森林 - 种子
-        1 -> listOf("🐚", "🦪", "🪸", "🫧")      // 海洋 - 贝壳
-        2 -> listOf("🏜️", "🪨", "💨", "🌾")      // 沙漠
-        3 -> listOf("💫", "🌠", "✨", "🔮")      // 魔法
-        4 -> listOf("🌋", "🪨", "💎", "⚫")      // 火山
-        5 -> listOf("🧊", "❄️", "🌬️", "💠")     // 冰川
-        else -> listOf("🔮")
-    }
-    val index = (levelNumber * 11 + stageIndex * 17) % pool.size
-    return pool[index]
-}
-
-@Composable
-fun LevelNode(
-    level: LevelConfig,
-    levelNumber: Int,
-    displayLevelNumber: String = levelNumber.toString(), // 显示的关卡编号，默认使用levelNumber
-    isLocked: Boolean,
-    isCompleted: Boolean,
-    isNextToPlay: Boolean,
-    stars: Int,
-    offsetX: androidx.compose.ui.unit.Dp,
-    stageIndex: Int = 0,
-    sharedAnim: SharedAnimationState,
-    previousNextToPlayIndex: Int = -1, // 上一个 nextToPlayIndex，用于动画
-    isNewlyCompleted: Boolean = false, // 是否刚刚完成（用于触发动画）
-    onClick: () -> Unit
-) {
-    // 判断是否应该显示圆环移动动画（从上一个位置移动到当前位置）
-    val shouldShowMoveAnimation = isNextToPlay && previousNextToPlayIndex >= 0 && previousNextToPlayIndex != levelNumber
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    
-    // 点击缩放动画
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.9f else 1f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ), label = "scale"
-    )
-    
-    val nodeColors = remember(stageIndex) { getStageColors(stageIndex) }
-    val bgEmoji = remember(stageIndex, levelNumber) { getRandomStageEmoji(stageIndex, levelNumber) }
-    val lockedEmoji = remember(stageIndex, levelNumber) { getLockedEmoji(stageIndex, levelNumber) }
-    
-    // 根据状态计算轻微浮动效果（只给活跃关卡）
-    val floatY = if (isNextToPlay || (!isLocked && !isCompleted)) {
-        sharedAnim.floatOffset * 0.3f
-    } else 0f
-    
-    Box(
-        modifier = Modifier
-            .offset(x = offsetX, y = floatY.dp)
-            .size(110.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        // 脉冲圆环 - 只给下一个可玩关卡显示，带移动动画
-        // 如果是从上一个位置移动过来的，使用更明显的动画效果
-        AnimatedVisibility(
-            visible = isNextToPlay,
-            enter = if (shouldShowMoveAnimation) {
-                // 从上一个位置移动过来：1秒动画，更明显的放大 + 淡入效果
-                fadeIn(animationSpec = tween(1000, easing = FastOutSlowInEasing)) + 
-                scaleIn(
-                    initialScale = 0.2f,
-                    animationSpec = tween(1000, easing = FastOutSlowInEasing)
-                )
-            } else {
-                // 首次显示：普通淡入
-                fadeIn(animationSpec = tween(300)) + 
-                scaleIn(
-                    initialScale = 0.8f,
-                    animationSpec = tween(300, easing = FastOutSlowInEasing)
-                )
-            },
-            exit = fadeOut(animationSpec = tween(200)) + scaleOut(
-                targetScale = 0.2f,
-                animationSpec = tween(200, easing = FastOutSlowInEasing)
-            )
-        ) {
-            // 优化：使用 graphicsLayer 减少重组，只在动画时应用 scale
-            // 确保所有圆环都是正圆，使用相同的 scaleX 和 scaleY
-            val pulseScale = sharedAnim.pulseScale
-            
-            Box(
-                modifier = Modifier
-                    .size(120.dp)  // 从110.dp增加到120.dp，让呼吸环更大
-                    .clip(CircleShape)  // 先裁剪为圆形，确保初始状态就是圆形
-                    .graphicsLayer {
-                        // 确保正圆：scaleX 和 scaleY 必须完全一致
-                        scaleX = pulseScale
-                        scaleY = pulseScale
-                    }
-                    .border(
-                        width = 14.dp,  // 从12.dp增加到14.dp，让边框更厚
-                        color = nodeColors[0].copy(alpha = 1f),  // 保持不透明，不随动画变化
-                        shape = CircleShape
-                    )
-            )
-            Box(
-                modifier = Modifier
-                    .size(120.dp)  // 从110.dp增加到120.dp，让呼吸环更大
-                    .clip(CircleShape)  // 先裁剪为圆形，确保初始状态就是圆形
-                    .graphicsLayer {
-                        val innerScale = pulseScale * 0.85f
-                        // 确保正圆：scaleX 和 scaleY 必须完全一致
-                        scaleX = innerScale
-                        scaleY = innerScale
-                    }
-                    .border(
-                        width = 12.dp,  // 从10.dp增加到12.dp，让内环边框更厚
-                        color = nodeColors[1].copy(alpha = 0.7f),  // 保持固定透明度，不随动画变化
-                        shape = CircleShape
-                    )
-            )
-        }
-        
-        
-        // 关卡圆形节点 - 立体效果
-        Box(
-            modifier = Modifier
-                .size(82.dp)
-                .scale(scale)
-                .shadow(
-                    elevation = if (isLocked) 4.dp else 8.dp,  // 减少阴影高度，优化性能
-                    shape = CircleShape,
-                    ambientColor = Color.Black.copy(alpha = 0.2f),  // 降低阴影透明度，优化性能
-                    spotColor = Color.Black.copy(alpha = 0.3f)
-                )
-                .graphicsLayer {
-                    // 3D立体效果 - 只在下一个可玩关卡时应用，减少滚动时的计算
-                    if (isNextToPlay) {
-                        rotationX = sharedAnim.floatOffset * 0.8f
-                        rotationY = sharedAnim.floatOffset * 0.5f
-                    }
-                    // 移除解锁关卡的轻微立体感，减少滚动时的计算开销
-                }
-                .clip(CircleShape)
-                .background(
-                    brush = when {
-                        isLocked -> Brush.verticalGradient(
-                            colors = listOf(
-                                Color(0xFF6A6A6A),
-                                Color(0xFF4A4A4A),
-                                Color(0xFF3A3A3A)
-                            )
-                        )
-                        else -> Brush.verticalGradient(
-                            colors = listOf(
-                                nodeColors[0].copy(alpha = 0.95f),
-                                nodeColors[0],
-                                nodeColors[1]
-                            )
-                        )
-                    }
-                )
-                .border(
-                    width = if (isNextToPlay) 4.dp else 3.dp,
-                    brush = when {
-                        isCompleted -> Brush.verticalGradient(
-                            colors = listOf(Color(0xFFFFD700), Color(0xFFFFA000))
-                        )
-                        isNextToPlay -> Brush.verticalGradient(
-                            colors = listOf(Color.White, Color.White.copy(alpha = 0.7f))
-                        )
-                        isLocked -> Brush.verticalGradient(
-                            colors = listOf(
-                                nodeColors[0].copy(alpha = 0.4f),
-                                nodeColors[1].copy(alpha = 0.2f)
-                            )
-                        )
-                        else -> Brush.verticalGradient(
-                            colors = listOf(
-                                Color.White.copy(alpha = 0.8f),
-                                Color.White.copy(alpha = 0.4f)
-                            )
-                        )
-                    },
-                    shape = CircleShape
-                )
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = onClick
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            // 内部高光效果（立体感）
-            if (!isLocked) {
-                Box(
-            modifier = Modifier
-                .fillMaxSize()
-                        .clip(CircleShape)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.White.copy(alpha = 0.25f),
-                                    Color.Transparent,
-                                    Color.Black.copy(alpha = 0.1f)
-                                ),
-                                startY = 0f,
-                                endY = Float.POSITIVE_INFINITY
-                            )
-                        )
-                )
-            }
-            
-            // 背景Emoji - 立体旋转效果
-            Text(
-                text = if (isLocked) lockedEmoji else bgEmoji,
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontSize = if (isLocked) 42.sp else 50.sp
-                ),
-                modifier = Modifier
-                .graphicsLayer { 
-                    alpha = if (isLocked) 0.6f else 1f
-                    // Emoji也有轻微3D效果 - 只在非锁定且是下一个可玩关卡时应用，减少滚动时的计算
-                    if (!isLocked && isNextToPlay) {
-                        rotationY = sharedAnim.floatOffset * 0.2f
-                        scaleX = 1f + sharedAnim.breatheScale * 0.02f
-                        scaleY = 1f + sharedAnim.breatheScale * 0.02f
-                    }
-                }
-            )
-            
-            if (isLocked) {
-                // 锁定状态 - 小锁图标在底部
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = 4.dp)
-                        .size(26.dp)
-                        .clip(CircleShape)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFF3A3A3A),
-                                    Color(0xFF2A2A2A)
-                                )
-                            )
-                        )
-                        .border(
-                            width = 1.5.dp,
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.White.copy(alpha = 0.4f),
-                                    Color.White.copy(alpha = 0.1f)
-                                )
-                            ),
-                            shape = CircleShape
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Locked",
-                        tint = Color.White.copy(alpha = 0.85f),
-                        modifier = Modifier.size(14.dp)
-                    )
-                }
-            } else {
-                // 解锁状态 - 数字叠加在emoji上，白色毛玻璃描边
-                Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-                    // 关卡数字 - 白色描边效果
-            Text(
-                        text = displayLevelNumber,
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 30.sp,
-                            letterSpacing = (-1).sp,
-                            shadow = androidx.compose.ui.graphics.Shadow(
-                                color = Color.Black.copy(alpha = 0.6f),
-                                offset = androidx.compose.ui.geometry.Offset(1.5f, 1.5f),
-                                blurRadius = 3f
-                            )
-                        ),
-                        color = Color.White
-                    )
-                    // 网格大小 - 白色毛玻璃描边
-            Text(
-                        text = "${level.rows}×${level.cols}",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            shadow = androidx.compose.ui.graphics.Shadow(
-                                color = Color.White.copy(alpha = 0.8f),
-                                offset = androidx.compose.ui.geometry.Offset(0f, 0f),
-                                blurRadius = 6f
-                            )
-                        ),
-                        color = Color.White
-                    )
-                }
-            }
-        }
-        
-        // 完成标记 - 右上角勾（带烟花和对号动画）
-        if (isCompleted) {
-            // 烟花动画状态 - 只在刚刚完成时触发
-            var showFirework by remember { mutableStateOf(false) }
-            var showCheckmark by remember { mutableStateOf(false) }
-            
-            // 当关卡刚刚完成时，触发烟花和对号动画
-            LaunchedEffect(isNewlyCompleted) {
-                if (isNewlyCompleted) {
-                    // 刚刚完成，显示烟花和对号动画
-                    showFirework = true
-                    // 烟花显示后，延迟显示对号
-                    kotlinx.coroutines.delay(300)
-                    showFirework = false
-                    showCheckmark = true
-                } else if (isCompleted) {
-                    // 已经完成但不是刚刚完成，直接显示对号（无动画）
-                    showCheckmark = true
-                }
-            }
-            
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .offset(x = 2.dp, y = (-2).dp)
-                    .size(26.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                // 烟花效果
-                if (showFirework) {
-                    val fireworkScale by animateFloatAsState(
-                        targetValue = 1.5f,
-                        animationSpec = tween(300, easing = FastOutSlowInEasing),
-                        label = "firework_scale"
-                    )
-                    val fireworkAlpha by animateFloatAsState(
-                        targetValue = 0f,
-                        animationSpec = tween(300, easing = FastOutSlowInEasing),
-                        label = "firework_alpha"
-                    )
-                    
-                    // 烟花粒子效果 - 使用多个小星星
-                    repeat(8) { index ->
-                        val angle = (index * 45f) * kotlin.math.PI / 180f
-                        val distance = 20.dp
-                        val offsetX = (kotlin.math.cos(angle) * distance.value).dp
-                        val offsetY = (kotlin.math.sin(angle) * distance.value).dp
-                        
-                        Box(
-                            modifier = Modifier
-                                .offset(x = offsetX * fireworkScale, y = offsetY * fireworkScale)
-                                .size(6.dp)
-                                .graphicsLayer {
-                                    alpha = fireworkAlpha
-                                    scaleX = fireworkScale
-                                    scaleY = fireworkScale
-                                }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = null,
-                                tint = Color(0xFFFFD700),
-                                modifier = Modifier.fillMaxSize()
-                            )
+                    val lastIndex = levelsCount - 1
+                    val lastOffsetX = remember(lastIndex) {
+                        when (lastIndex % 4) {
+                            0 -> 0.dp; 1 -> 60.dp; 2 -> 0.dp; 3 -> (-60).dp; else -> 0.dp
                         }
                     }
-                }
-                
-                // 对号标记 - 只在刚刚完成时有1秒动画，否则直接显示
-                if (isNewlyCompleted) {
-                    // 刚刚完成：使用动画
-                    AnimatedVisibility(
-                        visible = showCheckmark,
-                        enter = fadeIn(animationSpec = tween(1000, easing = FastOutSlowInEasing)) +
-                                scaleIn(
-                                    initialScale = 0f,
-                                    animationSpec = tween(1000, easing = FastOutSlowInEasing)
-                                ),
-                        modifier = Modifier
-                            .size(26.dp)
-                            .clip(CircleShape)
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(Color(0xFF66BB6A), Color(0xFF43A047))
-                                )
-                            )
-                            .border(2.dp, Color.White, CircleShape),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Completed",
-                            tint = Color.White,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                } else {
-                    // 已经完成：直接显示，无动画
-                    if (showCheckmark) {
-                        Box(
-                            modifier = Modifier
-                                .size(26.dp)
-                                .clip(CircleShape)
-                                .background(
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(Color(0xFF66BB6A), Color(0xFF43A047))
-                                    )
-                                )
-                                .border(2.dp, Color.White, CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Completed",
-                                tint = Color.White,
-                                modifier = Modifier.size(16.dp)
-                            )
+                    val comingSoonOffsetX = remember(levelsCount) {
+                        when (levelsCount % 4) {
+                            0 -> 0.dp; 1 -> 60.dp; 2 -> 0.dp; 3 -> (-60).dp; else -> 0.dp
                         }
                     }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        if (levelsCount > 0) {
+                            PathConnector(fromOffset = lastOffsetX, toOffset = comingSoonOffsetX, isCompleted = completedLevels.contains(lastIndex), stageIndex = 12)
+                        }
+                        ComingSoonNode(offsetX = comingSoonOffsetX, sharedAnim = sharedAnim, stageIndex = 12)
+                    }
                 }
+                item { Spacer(modifier = Modifier.height(100.dp)) }
             }
         }
         
-        // 得分显示 - 底部（所有解锁关卡都显示）
-        if (!isLocked) {
+        // Z-Index 10: HUD Layer (Absolute positioning on top)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 16.dp, vertical = 2.dp)
+        ) {
             Row(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = 18.dp)
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                Color(0xFFFFD700).copy(alpha = 0.9f),
-                                Color(0xFFFFA000).copy(alpha = 0.8f)
-                            )
-                        ),
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .padding(horizontal = 6.dp, vertical = 2.dp),
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (stars > 0) {
-                    // 显示星星数 - 添加描边提高对比度
-                    repeat(3) { index ->
-                        val isFilled = index < stars
-                        Box(
-                            modifier = Modifier.size(14.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            // 描边层
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = null,
-                                tint = Color.Black.copy(alpha = 0.6f),
-                                modifier = Modifier.size(14.dp)
-                            )
-                            // 前景层
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = null,
-                                tint = if (isFilled) Color(0xFFFFD700) else Color.White.copy(alpha = 0.3f),
-                                modifier = Modifier.size(12.dp)
-                            )
-                        }
-                    }
-                } else {
-                    // 未完成时显示占位
-            Text(
-                        text = "0",
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            shadow = androidx.compose.ui.graphics.Shadow(
-                                color = Color.Black.copy(alpha = 0.6f),
-                                offset = androidx.compose.ui.geometry.Offset(0.5f, 0.5f),
-                                blurRadius = 1f
-                            )
-                        ),
-                        color = Color.White.copy(alpha = 0.5f)
-                    )
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(text = "🪙", style = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp))
+                    Text(text = totalMergeScore.toString(), style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Black, fontSize = 20.sp), color = Color.White)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFD700), modifier = Modifier.size(22.dp))
+                    Text(text = totalStars.toString(), style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Black, fontSize = 20.sp), color = Color.White)
                 }
             }
         }
-        
-        // 下一关指示器 - 小箭头
-        if (isNextToPlay) {
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = "Play",
-                tint = Color.White,
+
+        // 3. FAB Layer Visibility Logic
+        val scrollInfo by remember {
+            derivedStateOf {
+                val firstVisible = listState.firstVisibleItemIndex
+                val distance = abs(firstVisible - nextToPlayIndex)
+                val isBelow = firstVisible > nextToPlayIndex
+                Triple(distance > 3, isBelow, firstVisible)
+            }
+        }
+        val (showFab, isBelowTarget, _) = scrollInfo
+
+        // Z-Index 1000: UI Freeze Overlay (Hides flickering during game return)
+        if (isProcessingReturn) {
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = 16.dp)
-                    .size(20.dp)
-                    .graphicsLayer {
-                        // 箭头轻微跳动
-                        translationY = -sharedAnim.floatOffset * 0.5f
-                    }
+                    .fillMaxSize()
+                    .zIndex(1000f)
+                    .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.8f))
             )
+        }
+
+        // Z-Index 100: Top Layer FAB (Isolated from all Column/Background logic)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .zIndex(100f),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showFab,
+                enter = fadeIn() + scaleIn(),
+                exit = fadeOut() + scaleOut(),
+                modifier = Modifier.padding(start = 16.dp).align(Alignment.CenterStart) // Left edge center
+            ) {
+                // Directional icon based on scroll position relative to target
+                val fabIcon = if (isBelowTarget) Icons.Default.KeyboardDoubleArrowDown else Icons.Default.KeyboardDoubleArrowUp
+                
+                // Tech FAB
+                TechFloatingActionButton(
+                    onClick = scrollToCurrentLevel,
+                    icon = fabIcon, 
+                    contentDescription = stringResource(R.string.cd_scroll_to_current),
+                )
+            }
         }
     }
 }

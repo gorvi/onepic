@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Звездный пазл</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">2077 год. Энергия Земли исчерпана, некогда великая цивилизация на грани вымирания.\n\nВы — Командор «Инициативы Ковчега». Единственная надежда — собрать первозданные энергоядра, рассеянные по планете, и построить корабль, способный пересечь галактику.\n\nКаждая собранная головоломка даёт цифровую энергию для warp-двигателей. Собирайте энергию, восстанавливайте чертежи и ведите человечество к звёздам в поисках нового дома.</string>
+    <string name="intro_button">Начать путь</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Закрыть</string>
     <string name="cancel">Отмена</string>
     <string name="confirm">Подтвердить</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Звуковые эффекты</string>
     <string name="sound_effects_desc">Включить/выключить звуковые эффекты игры</string>
     <string name="language">Язык</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+    <!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">DAILY_SYNCHRONIZATION_REQUIRED</string>
+    <string name="check_in_energy_active">ENERGY_SOURCE_ACTIVE</string>
+    <string name="check_in_energy_activate">ACTIVATE_STELLAR_ENERGY</string>
+    <string name="check_in_days_suffix">%1$d DAYS</string>
+    <string name="check_in_pending">PENDING</string>
+    <string name="check_in_station_log">STATION_LOG: RECENT_30_DAYS</string>
+    <string name="today_earned">TODAY_EARNED</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="buff_overclocking">OVERCLOCKING_SYSTEM_COLLECTOR...</string>
+    <string name="buff_ready">COIN_COLLECTOR: READY</string>
+    <string name="buff_waiting">STATUS: WAITING_FOR_DEPLOYMENT</string>
+    <string name="buff_activate">ACTIVATE</string>
+    <string name="buff_duration_rule">DURATION RULE: 3 MINS BASE + 1 MIN PER CONSECUTIVE DAY</string>
+
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">PROJECT EXODUS: INTEGRITY</string>
+    <string name="asc_status_synthesizing">STATUS: SYNTHESIZING</string>
+    <string name="asc_fragments_count">%1$d / %2$d FRAGMENTS</string>
+    <string name="asc_tab_memories">Память</string>
+    <string name="asc_tab_blueprint">Чертежи</string>
+    <string name="asc_memory_title">Закодированная память</string>
+    <string name="asc_memory_desc">Разблокируйте, чтобы прочитать историю.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Квантовый киль</string>
+    <string name="mod_1">Сердце термоядерного реактора</string>
+    <string name="mod_2">Нейро-кабина</string>
+    <string name="mod_3">Зал криостаза</string>
+    <string name="mod_4">Био-купол</string>
+    <string name="mod_5">Щиты Пустоты</string>
+    <string name="mod_6">Гипер-сенсоры</string>
+    <string name="mod_7">Ионные двигатели</string>
+    <string name="mod_8">Башня связи</string>
+    <string name="mod_9">Библиотека Генезиса</string>
+    <string name="mod_10">Warp-двигатель</string>
+    <string name="mod_11">Ключ запуска</string>
+    <string name="mod_12">Проект Исход</string>
+    <string name="mod_status_online">ОНЛАЙН</string>
+    <string name="mod_status_constructing">В СБОРКЕ</string>
+    <string name="mod_detail_online">Статус: Модуль собран и интегрирован\nЦелостность: 100%\nДоступ: Стратегический актив разблокирован</string>
+    <string name="mod_detail_constructing">Статус: Синтез в процессе\n\nПрогресс: %1$d/10 фрагментов\n\n- Классическая матрица: %2$d/5\n- Ссылка восхождения: %3$d/5\n\nЦель: Структурная стабилизация</string>
+    <string name="mod_close">ЗАКРЫТЬ</string>
+
+    <!-- Global HUD -->
+    <string name="hud_buff_active">ДВОЙНЫЕ МОНЕТЫ: АКТИВНО</string>
+    <string name="hud_buff_warming">ПРОГРЕВ СИСТЕМЫ...</string>
+    <string name="hud_buff_hint_prepare">ПОДГОТОВЬТЕСЬ К СТАРТУ ИГРЫ</string>
+    <string name="hud_buff_hint_overclock">РАЗГОН СОБИРАТЕЛЯ</string>
+
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Пробуждение: Исток</string>
+    <string name="level_tutorial_story">Вечный Путешественник пробуждается в Цифровом Храме, готовясь к первой миссии.</string>
+    <string name="level_tutorial_title_asc">Пробуждение: Исток (Расширенный)</string>
+    <string name="level_tutorial_story_asc">Первая продвинутая симуляция Командора.</string>
     <string name="clear_data">Очистить данные</string>
     <string name="clear_data_desc">Сбросить весь прогресс игры</string>
     <string name="clear_data_confirm_title">Очистить данные</string>
     <string name="clear_data_confirm_message">Вы уверены, что хотите удалить все данные игры?\n\nЭто удалит:\n• Весь прогресс уровней\n• Звёзды и монеты\n• Записи о входе\n• Лучшие времена\n\nЭто действие нельзя отменить!</string>
     <string name="clear_data_confirm">Очистить</string>
-    
-    <!-- About -->
     <string name="about_title">О OnePic</string>
     <string name="version">Версия</string>
     <string name="build_number">Номер сборки</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Описание приложения</string>
     <string name="app_description">OnePic — красивая головоломка с несколькими режимами игры и богатыми уровнями. Собирайте красивые пазлы, перетаскивая и комбинируя части головоломки.</string>
     <string name="changelog_title">Журнал изменений</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Личный центр</string>
     <string name="puzzle_master">Мастер пазлов</string>
     <string name="completed">Завершено</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Процент завершения</string>
     <string name="classic">Классический</string>
     <string name="gallery">Галерея</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Главная</string>
+    <string name="nav_galaxy">Ascension</string>
     <string name="nav_checkin">Вход</string>
     <string name="nav_personal_center">Профиль</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Ежедневный вход</string>
     <string name="checked_in_today">Вошли сегодня</string>
     <string name="earned">Заработано</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Награды за вход</string>
     <string name="check_in_reward_desc">Зарабатывайте 10-50 монет ежедневно\nБольше последовательных дней = больше наград!</string>
     <string name="week_check_in_history">История входа за 7 дней</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Идеально!</string>
     <string name="great">Отлично!</string>
     <string name="keep_going">Продолжайте!</string>
     <string name="points">балл</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">Смотрите рекламу, чтобы удвоить</string>
+    <string name="ad_double_claimed">2× получено!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• Первый выпуск</string>
     <string name="changelog_item_2">• Режимы Классический и Галерея</string>
     <string name="changelog_item_3">• Функция ежедневного входа</string>
     <string name="changelog_item_4">• Звуковые эффекты и тактильная обратная связь</string>
     <string name="changelog_item_5">• Многоязычная поддержка (Китайский/Английский)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Аватар</string>
     <string name="cd_check_in">Вход</string>
     <string name="cd_checked_in">Вошли</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Далее</string>
     <string name="cd_scroll_to_current">Прокрутить к текущему уровню</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Добро пожаловать, Командор!</string>
+    <string name="tut_step_1">Перетащите элемент 2 на позицию 4, чтобы поменять!</string>
+    <string name="tut_step_double_tap">Двойное нажатие разделит объединённые элементы!</string>
+    <string name="tut_drag">Перетаскивайте элементы для объединения</string>
+    <string name="tut_double_tap">Двойное нажатие для разъединения</string>
+    <string name="tut_node_title">Руководство для новичков</string>
+    
     <string name="weekday_sunday">Вс</string>
     <string name="weekday_monday">Пн</string>
     <string name="weekday_tuesday">Вт</string>
@@ -92,4 +164,48 @@
     <string name="weekday_thursday">Чт</string>
     <string name="weekday_friday">Пт</string>
     <string name="weekday_saturday">Сб</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Командор, базовая подготовка завершена. Нажмите «Восхождение» ниже, чтобы начать настоящий путь!</string>
+    <string name="guide_chapter1_hint">💡 Продвинутая симуляция завершена! Синхронизация стабильна. Глава 1 «Исток» активна. Готов к развёртыванию!</string>
+    <string name="edit_nickname">Редактировать псевдоним</string>
+    <string name="enter_nickname">Введите новый псевдоним</string>
+    <string name="save">Сохранить</string>
+    <string name="nickname_too_short">Псевдоним должен быть не менее 2 символов</string>
+    <string name="nickname_too_long">Псевдоним не может превышать 12 символов</string>
+    <string name="hint_use_free">Ежедневная бесплатная подсказка использована! ✨</string>
+    <string name="hint_confirm_title">Использовать подсказку?</string>
+    <string name="hint_confirm_msg">Потратить 100 монет на подсказку?\nБаланс: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Да (-100)</string>
+    <string name="hint_not_enough">Недостаточно монет!</string>
+    <string name="ad_reward_toast">Досмотрите видео до конца, чтобы получить +%1$d 🪙</string>
+    <string name="ad_reward_received">Награда получена: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Подождите %1$d:%2$02d</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Глава 1: Квантовый киль · Хребет пробуждения</string>
+    <string name="chapter_2">Глава 2: Термоядерное ядро · Вечная искра</string>
+    <string name="chapter_3">Глава 3: Нейро-кабина · Зеркало сознания</string>
+    <string name="chapter_4">Глава 4: Зал гибернации · Вещий зимний сон</string>
+    <string name="chapter_5">Глава 5: Экологический цикл · Изумрудная надежда</string>
+    <string name="chapter_6">Глава 6: Щит Пустоты · Крыло до небес</string>
+    <string name="chapter_7">Глава 7: Гипер-радар · Око истины</string>
+    <string name="chapter_8">Глава 8: Ионный двигатель · Небесная струя</string>
+    <string name="chapter_9">Глава 9: Звёздная башня · Космический резонанс</string>
+    <string name="chapter_10">Глава 10: Хранилище семян цивилизации · Храм памяти</string>
+    <string name="chapter_11">Глава 11: Двигатель кривизны · Эхо пространства-времени</string>
+    <string name="chapter_12">Глава 12: Ключ запуска · Финальная прелюдия</string>
+    <string name="chapter_coming_soon">СКОРО...</string>
+    <string name="ad_label">Реклама</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="share_message">Попробуйте OnePic! Прекрасная игра-головоломка в Google Play: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="daily_reminder">Ежедневное напоминание</string>
+    <string name="daily_reminder_channel_name">Напоминания о головоломках</string>
+    <string name="daily_reminder_channel_desc">Ежедневные напоминания, чтобы вернуться и решить головоломки.</string>
+    <string name="daily_reminder_title_1">Время собирать пазл!</string>
+    <string name="daily_reminder_msg_1">Вашему мозгу нужен отдых. Вернитесь и решите головоломку! 🧩</string>
+    <string name="daily_reminder_title_2">Командор, вас ждут новые испытания!</string>
+    <string name="daily_reminder_msg_2">Не заставляйте фрагменты ждать! Разблокируйте больше воспоминаний сегодня. 🚀</string>
+    <string name="daily_reminder_title_3">Звездная энергия на исходе!</string>
+    <string name="daily_reminder_msg_3">Ковчегу нужна ваша энергия, чтобы осветить путь. Присоединяйтесь! ✨</string>
 </resources>

@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">星际拼图</string>
+
+    <!-- 启动页故事背景 -->
+    <string name="intro_prologue">2077年，地球资源枯竭，曾经辉煌的文明已至暮色苍茫。\n\n你是『方舟计划』的指挥官。唯一的希望，是搜集散落在地球各处的原始能量核心，铸就足以穿越星海的巨型方舟。\n\n每一幅被还原的拼图，都是点燃跃迁引擎的数字动力。收集能量，重构蓝图，带领人类跨越璀璨星河，寻找我们要寻找的那颗新家园。</string>
+    <string name="intro_button">开启旅程</string>
     
     <!-- 通用 -->
     <string name="close">关闭</string>
@@ -13,8 +16,82 @@
     <string name="sound_effects">音效</string>
     <string name="sound_effects_desc">开启/关闭游戏音效</string>
     <string name="language">语言</string>
-    <string name="language_chinese">中文</string>
+    <string name="language_chinese">简体中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+
+    <!-- 签到界面视觉标签 -->
+    <string name="check_in_sync_required">星际同步：等待接入</string>
+    <string name="check_in_energy_active">星际能量：已激活</string>
+    <string name="check_in_energy_activate">点击获取星际能量</string>
+    <string name="check_in_days_suffix">%1$d 天</string>
+    <string name="check_in_pending">待领取</string>
+    <string name="check_in_station_log">空间站日志：近期 30 天</string>
+    <string name="today_earned">今日获取</string>
+    
+    <!-- 金币 Buff -->
+    <string name="buff_double_coins_active">双倍金币：生效中</string>
+    <string name="buff_overclocking">超频系统收集器运行中...</string>
+    <string name="buff_ready">金币收集器：就绪</string>
+    <string name="buff_waiting">状态：等待部署</string>
+    <string name="buff_activate">激活</string>
+    <string name="buff_duration_rule">时长规则：基础 3 分钟 + 连续天数 × 1 分钟</string>
+
+    <!-- 飞升 / 碎片界面 -->
+    <string name="asc_project_title">出埃及计划：完整度</string>
+    <string name="asc_status_synthesizing">状态：谐振合成中</string>
+    <string name="asc_fragments_count">%1$d / %2$d 碎片</string>
+    <string name="asc_tab_memories">记忆</string>
+    <string name="asc_tab_blueprint">蓝图</string>
+    <string name="asc_memory_title">加密记忆</string>
+    <string name="asc_memory_desc">解锁以读取背景故事</string>
+
+    <!-- 蓝图模块 -->
+    <string name="mod_0">量子龙骨</string>
+    <string name="mod_1">聚变核心</string>
+    <string name="mod_2">神经链接驾驶舱</string>
+    <string name="mod_3">休眠大厅</string>
+    <string name="mod_4">生态循环仓</string>
+    <string name="mod_5">虚空护盾</string>
+    <string name="mod_6">超感雷达</string>
+    <string name="mod_7">离子推进器</string>
+    <string name="mod_8">星语塔</string>
+    <string name="mod_9">文明火种库</string>
+    <string name="mod_10">曲率引擎</string>
+    <string name="mod_11">启动密钥</string>
+    <string name="mod_12">星际方舟：升华号</string>
+    <string name="mod_status_online">已上线</string>
+    <string name="mod_status_constructing">构造中</string>
+    <string name="mod_detail_online">状态：模块已构建并集成\n完整度：100%\n权限：战略资产已解锁</string>
+    <string name="mod_detail_constructing">状态：叙事谐振合成中\n\n总进度：%1$d/10 碎片\n\n- 经典矩阵：%2$d/5\n- 飞升链路：%3$d/5\n\n目标：结构稳定化</string>
+    <string name="mod_close">关闭</string>
+
+    <!-- 全局 HUD -->
+    <string name="hud_buff_active">双倍金币：生效中</string>
+    <string name="hud_buff_warming">系统预热中...</string>
+    <string name="hud_buff_hint_prepare">准备开启航程</string>
+    <string name="hud_buff_hint_overclock">超频收集器已启动</string>
+
+    <!-- 特定关卡标题 -->
+    <string name="level_tutorial_title">苏醒：原点</string>
+    <string name="level_tutorial_story">永恒航行者在数字圣殿中苏醒，准备开始它的第一个任务。</string>
+    <string name="level_tutorial_title_asc">苏醒：原点（进阶）</string>
+    <string name="level_tutorial_story_asc">指挥官的第一个进阶模拟任务。</string>
     <string name="clear_data">清除数据</string>
     <string name="clear_data_desc">重置所有游戏进度</string>
     <string name="clear_data_confirm_title">清除数据</string>
@@ -28,7 +105,7 @@
     <string name="developer">开发者</string>
     <string name="release_date">发布日期</string>
     <string name="app_description_title">应用简介</string>
-    <string name="app_description">OnePic 是一款精美的拼图游戏，提供多种游戏模式和丰富的关卡挑战。通过拖动和组合拼图块，完成美丽的图片拼图。</string>
+    <string name="app_description">《星际拼图》(OnePic) 是一款融合了赛博朋克美学与太空探索主题的高级益智拼图游戏。在浩瀚星海中寻找失落核心，通过极具挑战性的脑力开发关卡，重构人类文明蓝图。专为热爱科幻、拼图挑战和逻辑解谜的玩家打造。</string>
     <string name="changelog_title">更新日志</string>
     
     <!-- 个人中心 -->
@@ -42,11 +119,12 @@
     <string name="unlocked">解锁</string>
     <string name="completion_rate">完成率</string>
     <string name="classic">经典</string>
-    <string name="gallery">画廊</string>
+    <string name="gallery">飞升</string>
     
     <!-- 底部导航 -->
     <string name="nav_home">首页</string>
-    <string name="nav_checkin">打卡</string>
+    <string name="nav_galaxy">飞升</string>
+    <string name="nav_checkin">签到</string>
     <string name="nav_personal_center">个人中心</string>
     
     <!-- 打卡页面 -->
@@ -67,11 +145,13 @@
     <string name="great">很棒！</string>
     <string name="keep_going">加油！</string>
     <string name="points">分</string>
+    <string name="ad_to_double_short">看广告奖励翻倍</string>
+    <string name="ad_double_claimed">已领取 2倍奖励!</string>
     
     <!-- 更新日志项 -->
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• 初始版本发布</string>
-    <string name="changelog_item_2">• 支持经典模式和画廊模式</string>
+    <string name="changelog_item_2">• 支持经典模式和飞升模式</string>
     <string name="changelog_item_3">• 每日打卡功能</string>
     <string name="changelog_item_4">• 音效和震动反馈</string>
     <string name="changelog_item_5">• 多语言支持（中文/英文）</string>
@@ -84,6 +164,14 @@
     <string name="cd_next">下一步</string>
     <string name="cd_scroll_to_current">定位到当前关卡</string>
     
+    <!-- 教程 -->
+    <string name="tut_welcome">欢迎，指挥官！</string>
+    <string name="tut_step_1">拖动 2 到位置 4 来交换！</string>
+    <string name="tut_step_double_tap">双击可以拆开拼好的图片！</string>
+    <string name="tut_drag">拖动拼图块进行连接</string>
+    <string name="tut_double_tap">双击拼图块取消连接</string>
+    <string name="tut_node_title">新手指引</string>
+    
     <!-- Week Days -->
     <string name="weekday_sunday">日</string>
     <string name="weekday_monday">一</string>
@@ -92,4 +180,56 @@
     <string name="weekday_thursday">四</string>
     <string name="weekday_friday">五</string>
     <string name="weekday_saturday">六</string>
+    <!-- 引导 -->
+    <string name="guide_gallery_hint">💡 指挥官，基础训练已完成。\n点击下方“飞升”频道，开启真正的能量搜集之旅！</string>
+    <string name="guide_chapter1_hint">💡 进阶模拟完成！同步率已达标，第一章节“万物起源”正式开启，准备出发！</string>
+    <string name="edit_nickname">编辑昵称</string>
+    <string name="enter_nickname">请输入新昵称</string>
+    <string name="save">保存</string>
+    <string name="nickname_too_short">昵称至少需要 2 个字符</string>
+    <string name="nickname_too_long">昵称不能超过 12 个字符</string>
+    <string name="hint_use_free">已使用每日免费提示！✨</string>
+    <string name="hint_confirm_title">使用提示？</string>
+    <string name="hint_confirm_msg">花费 100 金币获取提示？\n当前余额: %1$d 🪙</string>
+    <string name="hint_confirm_yes">确定 (-100)</string>
+    <string name="hint_not_enough">金币不足！</string>
+    <string name="ad_reward_toast">完整观看视频可获得 +%1$d 🪙</string>
+    <string name="ad_reward_received">奖励已领取：+%1$d 🪙</string>
+    <string name="ad_wait_cooldown">请等待 %1$d:%2$02d</string>
+
+    <!-- 章节名称 -->
+    <string name="chapter_1">第一章：量子龙骨 · 觉醒之脊</string>
+    <string name="chapter_2">第二章：聚变核心 · 永恒火种</string>
+    <string name="chapter_3">第三章：神经驾驶舱 · 意识镜像</string>
+    <string name="chapter_4">第四章：休眠大厅 · 永冬幻梦</string>
+    <string name="chapter_5">第五章：生态循环仓 · 翡翠希望</string>
+    <string name="chapter_6">第六章：虚空护盾 · 垂天之翼</string>
+    <string name="chapter_7">第七章：超感雷达 · 真理之眼</string>
+    <string name="chapter_8">第八章：离子推进器 · 破空流影</string>
+    <string name="chapter_9">第九章：星语塔 · 寰宇共鸣</string>
+    <string name="chapter_10">第十章：文明火种库 · 记忆圣殿</string>
+    <string name="chapter_11">第十一章：曲率引擎 · 时空回响</string>
+    <string name="chapter_12">第十二章：启动密钥 · 终焉启幕</string>
+    <string name="chapter_coming_soon">敬请期待...</string>
+    <string name="ad_label">广告</string>
+    <string name="share_app">分享应用</string>
+    <string name="share_message">快来玩 OnePic！这是一款精美的拼图游戏：https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="more_games">更多游戏</string>
+    <string name="recommend_game_title">热门推荐: 2048</string>
+    <string name="daily_reminder">每日提醒</string>
+    <string name="daily_reminder_channel_name">拼图提醒</string>
+    <string name="daily_reminder_channel_desc">每日提醒您回来玩一会儿拼图。</string>
+
+    <!-- 随机话术1：放松 -->
+    <string name="daily_reminder_title_1">该拼图啦！</string>
+    <string name="daily_reminder_msg_1">指挥官，大脑需要放松一下。快回来解开一个谜题吧！🧩</string>
+
+    <!-- 随机话术2：挑战 -->
+    <string name="daily_reminder_title_2">指挥官，发现新的坐标！</string>
+    <string name="daily_reminder_msg_2">核心碎片正在呼唤您！快来解锁更多记忆，完善您的方舟。🚀</string>
+
+    <!-- 随机话术3：能量 -->
+    <string name="daily_reminder_title_3">恒星能量不足！</string>
+    <string name="daily_reminder_msg_3">方舟需要您的智慧来点亮前路。立即执行拼图任务！✨</string>
 </resources>

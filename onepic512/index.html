@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星际拼图 | Starry Puzzle - 探索星辰大海的益智之旅</title>
+    <meta name="description" content="《星际拼图》(OnePic) 是一款融合了赛博朋克美学与太空探索主题的高级益智拼图游戏。在浩瀚星海中寻找失落核心，解锁星辰奥秘。">
+    <meta name="keywords" content="星际拼图, OnePic, 拼图游戏, 益智游戏, 脑力开发, 赛博朋克, 太空探索, Jigsaw Puzzle, Brain Teaser">
+    <style>
+        :root {
+            --primary: #2979FF;
+            --accent: #E040FB;
+            --bg: #050A18;
+            --text: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 动态星空背景 */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #050A18 0%, #0D1B3E 100%);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* 内容布局 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 图标/Logo */
+        .logo-wrapper {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(41, 121, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        /* ASO 描述文本 */
+        .description {
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 按钮 */
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(41, 121, 255, 0.4);
+            margin-bottom: 60px;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(41, 121, 255, 0.6);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: auto;
+            padding-top: 40px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .logo {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars-container" id="stars"></div>
+
+    <div class="container">
+        <div class="logo-wrapper">
+            <!-- 这里可以替换为您生成的 rocket_square.png 路径 -->
+            <img src="https://netrill.com/onepic/icon.png" alt="星际拼图 Logo" class="logo">
+        </div>
+
+        <h1>星际拼图</h1>
+        <div class="tagline">STARRY PUZZLE</div>
+
+        <div class="description">
+            《星际拼图》(OnePic) 是一款融合了赛博朋克美学与太空探索主题的高级益智拼图游戏。在浩瀚星海中寻找失落核心，通过极具挑战性的脑力开发关卡，重构人类文明蓝图。专为热爱科幻、拼图挑战和逻辑解谜的玩家打造。
+        </div>
+
+        <a href="https://play.google.com/store/apps/details?id=site.aiok.onepic" class="cta-btn">立即获取航行许可 (Google
+            Play)</a>
+
+        <footer>
+            <p>&copy; 2026 NETRILL. All rights reserved.</p>
+            <p>
+                <a href="privacy.html">隐私政策</a>
+                <a href="#">支持</a>
+                <a href="mailto:support@netrill.com">联系我们</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 生成背景星星
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+
+</html>

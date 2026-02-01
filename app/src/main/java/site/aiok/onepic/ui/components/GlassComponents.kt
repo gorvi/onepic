@@ -14,38 +14,43 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 // Premium Mesh Gradient Background
 @Composable
-fun MeshGradientBackground(content: @Composable BoxScope.() -> Unit) {
+fun MeshGradientBackground(
+    colors: List<Color> = listOf(
+        Color(0xFF1A237E), // 深蓝色中心
+        Color(0xFF311B92), // 深紫色
+        Color(0xFF0D47A1), // 普鲁士蓝
+        Color(0xFF000000)  // 黑色边缘
+    ),
+    content: @Composable BoxScope.() -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.radialGradient(
-                    colors = listOf(
-                        Color(0xFFB39DDB), // 淡紫色中心
-                        Color(0xFF90CAF9), // 淡蓝色
-                        Color(0xFF80CBC4), // 青绿色
-                        Color(0xFFCE93D8)  // 粉紫色边缘
-                    ),
-                    center = androidx.compose.ui.geometry.Offset(0.3f, 0.3f),
-                    radius = 1500f
+                    colors = colors,
+                    center = androidx.compose.ui.geometry.Offset(0.2f, 0.2f),
+                    radius = 2000f
                 )
             )
     ) {
-        // 添加一层柔和的渐变覆盖
+        // 添加一层柔和的极光感渐变覆盖
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                            Color(0xFFE1F5FE).copy(alpha = 0.3f), // 浅蓝
-                            Color(0xFFF3E5F5).copy(alpha = 0.4f), // 浅紫
-                            Color(0xFFFCE4EC).copy(alpha = 0.3f)  // 浅粉
+                            Color.White.copy(alpha = 0.05f), // 极光亮部
+                            Color.Transparent, 
+                            Color.Black.copy(alpha = 0.6f)   // 深邃底部
                     )
                 )
             )
@@ -81,41 +86,89 @@ fun GlassBox(
 fun GlassTopBar(
     title: String,
     onBack: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showBackground: Boolean = true
 ) {
-    GlassBox(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        cornerRadius = 12.dp
+            .height(56.dp)
+            .then(if (showBackground) {
+                Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.15f),
+                                Color.White.copy(alpha = 0.05f)
+                            )
+                        )
+                    )
+                    .border(
+                        width = 1.dp,
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.5f),
+                                Color(0xFF00B0FF).copy(alpha = 0.3f), // Cyan neon accent
+                                Color.White.copy(alpha = 0.1f)
+                            )
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+            } else Modifier),
+        contentAlignment = Alignment.Center
     ) {
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (onBack != null) {
-                IconButton(onClick = onBack) {
+                IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.size(40.dp)
+                ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
-                        tint = Color.DarkGray
+                        tint = Color.White.copy(alpha = 0.9f),
+                        modifier = Modifier.size(24.dp)
                     )
                 }
-            } else {
+            } else if (showBackground) {
                 Spacer(modifier = Modifier.width(48.dp))
             }
             
             Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.DarkGray,
+                text = title.uppercase(),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.ExtraBold,
+                    letterSpacing = 4.sp,
+                    shadow = androidx.compose.ui.graphics.Shadow(
+                        color = Color(0xFF00B0FF).copy(alpha = 0.5f),
+                        offset = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        blurRadius = 8f
+                    )
+                ),
+                color = Color.White,
                 modifier = Modifier.weight(1f),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
             
             // Balance the row
-            Spacer(modifier = Modifier.width(48.dp))
+            if (showBackground) {
+                Spacer(modifier = Modifier.width(48.dp))
+            }
+        }
+        
+        // Cyber-corner decoration
+        if (showBackground) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(4.dp)
+                    .size(10.dp, 2.dp)
+                    .background(Color(0xFF00B0FF).copy(alpha = 0.6f))
+            )
         }
     }
 }

@@ -23,6 +23,23 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     private var pieces = mutableListOf<PuzzlePiece>()
     
+    // Hint State
+    private var hintPiece: PuzzlePiece? = null
+    private var hintTargetX: Float = 0f
+    private var hintTargetY: Float = 0f
+    private var hintPaint = Paint().apply {
+        color = Color.GREEN
+        style = Paint.Style.STROKE
+        strokeWidth = 10f
+        strokeJoin = Paint.Join.ROUND
+        strokeCap = Paint.Cap.ROUND
+        pathEffect = android.graphics.DashPathEffect(floatArrayOf(50f, 20f), 0f)
+    }
+    
+    // Animation for Hint (Ghost Flying)
+    private var hintAnimValue = 0f
+    private var hintAnimator: android.animation.ValueAnimator? = null
+    
     // Grid dimensions (calculated from pieces)
     private var gridRows = 0
     private var gridCols = 0
@@ -37,7 +54,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     // Puzzle boundaries for clamping drag
     private var puzzleBounds = android.graphics.RectF()
     
-    // 暴露图片的实际渲染高度，用于调整白色边框
+    // 暴露图片的实际渲染宽高，用于调整白色边框
+    var actualImageWidth: Float = 0f
+        private set
     var actualImageHeight: Float = 0f
         private set
 
@@ -48,11 +67,23 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     var onPuzzleComplete: ((timeInSeconds: Int) -> Unit)? = null
     
     // Callback for score changes (merge: +score, unmerge: -score)
-    var onScoreChange: ((scoreDelta: Int) -> Unit)? = null
+    // scoreDelta: Change in game score (can be negative)
+    // coinDelta: Coins to award (always >= 0, only for NEW connections)
+    var onScoreChange: ((scoreDelta: Int, coinDelta: Int) -> Unit)? = null
     
+    // Callback for content size updates
+    var onContentSizeChanged: ((width: Float, height: Float) -> Unit)? = null
+
+    // Callback for selection state (isSelected, isMergedGroup)
+    var onPieceSelected: ((Boolean, Boolean) -> Unit)? = null
+
     // Track which groups have been scored (to prevent duplicate scoring)
     // Key: groupId, Value: score earned for this merge
     private val scoredGroups = mutableMapOf<Int, Int>()
+
+    // Track UNIQUE connections that have already paid out coins
+    // Key: "idA-idB" (smaller diff first)
+    private val paidConnections = mutableSetOf<String>()
     
     // Timer
     private var startTime: Long = 0
@@ -61,6 +92,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     
     // Track if level is already completed to prevent duplicate win triggers
     private var isLevelCompleted = false
+
+    // Tutorial Mode (larger snap distance)
+    var isTutorialMode: Boolean = false
+    var currentTutorialStep: Int = 0 // 0: Swap 2 and 4, 1: Double tap
+    var onTutorialStepCompleted: ((Int) -> Unit)? = null
 
     // Handler for delayed callbacks
     private val handler = Handler(Looper.getMainLooper())
@@ -72,6 +108,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         super.onSizeChanged(w, h, oldw, oldh)
         particleSystem.setDimensions(w, h)
         updateLayout(w, h)
+        
+        // Auto-trigger hint for tutorial mode (after layout is complete)
+        if (isTutorialMode && pieces.isNotEmpty()) {
+            postDelayed({ showHint() }, 500)
+        }
     }
 
     private fun updateLayout(viewWidth: Int, viewHeight: Int) {
@@ -111,15 +152,22 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             availableHeight / totalOriginalHeight
         )
         
+        
         val finalWidth = totalOriginalWidth * scale
         val finalHeight = totalOriginalHeight * scale
         
-        // 保存图片的实际渲染高度，用于调整白色边框
+        // 保存图片的实际渲染宽高，用于调整白色边框
+        actualImageWidth = finalWidth
         actualImageHeight = finalHeight
+        
+        // Notify parent about the actual content size
+        post {
+            onContentSizeChanged?.invoke(finalWidth, finalHeight)
+        }
         
         // 修改：让图片从顶部开始对齐，而不是居中，这样白色边框可以紧贴上边缘
         val offsetX = (viewWidth - finalWidth) / 2  // 水平居中
-        val offsetY = 0f  // 从顶部开始，紧贴上边缘
+        val offsetY = (viewHeight - finalHeight) / 2 // 垂直居中 (之前是0，导致无法居中，改为居中更好，配合wrap_content)
         
         // Define puzzle bounds
         puzzleBounds.set(offsetX, offsetY, offsetX + finalWidth, offsetY + finalHeight)
@@ -149,6 +197,7 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
     fun setPieces(newPieces: List<PuzzlePiece>) {
         pieces.clear()
         scoredGroups.clear()  // Reset score tracking for new game
+        paidConnections.clear() // Reset coin tracking
         isLevelCompleted = false  // Reset completion flag for new game
         
         // Infer grid dimensions first to enable shuffling
@@ -165,11 +214,54 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     slots.add(Pair(r, c))
                 }
             }
-            slots.shuffle()
+            
+            // Shuffle until we get a non-solved state (if possible)
+            if (isTutorialMode && gridRows == 2 && gridCols == 2) {
+                // User requirement: 1 at (0,0); 4 at (0,1); 2 at (1,0); 3 at (1,1)
+                // The incoming pieces are [P1(ID0), P4(ID3), P2(ID1), P3(ID2)] from GameScreen
+                slots.clear()
+                slots.add(Pair(0, 0)) // P1
+                slots.add(Pair(0, 1)) // P4
+                slots.add(Pair(1, 0)) // P2
+                slots.add(Pair(1, 1)) // P3
+            } else if (newPieces.size > 1) {
+                var attempt = 0
+                do {
+                    slots.shuffle()
+                    attempt++
+                    
+                    // Check if current slot assignment matches the solved state
+                    var isSolved = true
+                    for (i in newPieces.indices) {
+                        if (i < slots.size) {
+                            val targetRow = newPieces[i].id / gridCols
+                            val targetCol = newPieces[i].id % gridCols
+                            if (slots[i].first != targetRow || slots[i].second != targetCol) {
+                                isSolved = false
+                                break
+                            }
+                        }
+                    }
+                } while (isSolved && attempt < 100) // Prevent infinite loop just in case
+            } else {
+                slots.shuffle()
+            }
             
             // Assign shuffled slots to pieces (updating their CURRENT position)
             newPieces.forEachIndexed { index, piece ->
-                if (index < slots.size) {
+                if (isTutorialMode && newPieces.size == 4) {
+                    // Explicitly map IDs to user-requested coordinates
+                    // ID 0 (P1) -> (0,0)
+                    // ID 3 (P4) -> (0,1)
+                    // ID 1 (P2) -> (1,0)
+                    // ID 2 (P3) -> (1,1)
+                    when (piece.id) {
+                        0 -> { piece.row = 0; piece.col = 0 }
+                        3 -> { piece.row = 0; piece.col = 1 }
+                        1 -> { piece.row = 1; piece.col = 0 }
+                        2 -> { piece.row = 1; piece.col = 1 }
+                    }
+                } else if (index < slots.size) {
                     piece.row = slots[index].first
                     piece.col = slots[index].second
                     // piece.groupId is already unique from slicer
@@ -188,6 +280,11 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         // Trigger layout update if we already have dimensions
         if (width > 0 && height > 0) {
             updateLayout(width, height)
+            
+            // Auto-trigger hint for tutorial mode (free, no coin cost)
+            if (isTutorialMode) {
+                post { showHint() }
+            }
         }
         invalidate()
     }
@@ -212,16 +309,128 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 piece.currentY + piece.height
             )
             canvas.drawBitmap(piece.bitmap, null, dstRect, null)
+            
+            // Draw Tutorial Piece Index (1, 4, 2, 3 logic)
+            if (isTutorialMode && pieces.size == 4) {
+                val indexText = (piece.id + 1).toString()
+                val textPaint = android.graphics.Paint().apply {
+                    color = android.graphics.Color.WHITE
+                    textSize = 48f
+                    textAlign = android.graphics.Paint.Align.CENTER
+                    isFakeBoldText = true
+                    setShadowLayer(8f, 0f, 0f, android.graphics.Color.BLACK)
+                }
+                val centerX = piece.currentX + piece.width / 2
+                val centerY = piece.currentY + piece.height / 2 + 16f
+                canvas.drawText(indexText, centerX, centerY, textPaint)
+            }
         }
         
         // Update and draw particles
         particleSystem.update()
         particleSystem.draw(canvas)
         
+        // Draw Hint
+        hintPiece?.let { piece ->
+            // interpolate position based on hintAnimValue
+            // 0..0.2: Stay at source (wait)
+            // 0.2..0.8: Fly to target
+            // 0.8..1.0: Stay at target (wait)
+            
+            val t = hintAnimValue
+            val flyProgress = when {
+                t < 0.2f -> 0f
+                t > 0.8f -> 1f
+                else -> (t - 0.2f) / 0.6f
+            }
+            // Use AccelerateDecelerate interpolator logic simply with smoothStep or similar if needed, 
+            // but linear on the progress window is fine for now, or minimal easing.
+            // let's add simple easing:
+            val easedProgress = flyProgress * flyProgress * (3 - 2 * flyProgress) 
+            
+            val currentX = piece.currentX
+            val currentY = piece.currentY
+            
+            val ghostX = currentX + (hintTargetX - currentX) * easedProgress
+            val ghostY = currentY + (hintTargetY - currentY) * easedProgress
+            
+            // 1. Calculate color interpolation (Red -> Green)
+            // simple linear interpolation for RGB
+            val startColor = Color.RED
+            val endColor = Color.GREEN
+            val fraction = easedProgress
+            
+            // Manual ARGB evaluation to ensure smooth transition
+            val r = (Color.red(startColor) + fraction * (Color.red(endColor) - Color.red(startColor))).toInt()
+            val g = (Color.green(startColor) + fraction * (Color.green(endColor) - Color.green(startColor))).toInt()
+            val b = (Color.blue(startColor) + fraction * (Color.blue(endColor) - Color.blue(startColor))).toInt()
+            val animatedColor = Color.rgb(r, g, b)
+            
+            // 2. Prepare Interpolated Paint
+            val movingDashPaint = Paint().apply {
+                color = animatedColor
+                style = Paint.Style.STROKE
+                strokeWidth = 8f  // Slightly thicker for visibility
+                pathEffect = android.graphics.DashPathEffect(floatArrayOf(20f, 10f), 0f)
+                isAntiAlias = true
+            }
+
+            // 3. Draw static SOURCE frame (Red) at piece's current location
+            val sourcePaint = Paint().apply {
+                color = Color.RED
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                pathEffect = android.graphics.DashPathEffect(floatArrayOf(10f, 10f), 0f)
+                alpha = 180
+            }
+            val rSource = android.graphics.RectF(
+                currentX,
+                currentY,
+                currentX + piece.width,
+                currentY + piece.height
+            )
+            canvas.drawRect(rSource, sourcePaint)
+
+            // 4. Draw Ghost at interpolated position (User requested to KEEP this)
+            val rGhost = android.graphics.RectF(
+                ghostX,
+                ghostY,
+                ghostX + piece.width,
+                ghostY + piece.height
+            )
+            
+            // Draw semi-transparent piece bitmap
+            val ghostPaint = Paint().apply { alpha = 180 } // Increased opacity slightly
+            canvas.drawBitmap(piece.bitmap, null, rGhost, ghostPaint)
+            
+            // 5. Draw the Moving Dashed Box (The Core Visual)
+            canvas.drawRect(rGhost, movingDashPaint)
+            
+            // 6. Draw static TARGET frame (Green) as destination guide
+             val targetPaint = Paint().apply {
+                color = Color.GREEN
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                pathEffect = android.graphics.DashPathEffect(floatArrayOf(10f, 10f), 0f)
+                alpha = 180 // Increased visibility as requested
+            }
+            val rTarget = android.graphics.RectF(
+                hintTargetX,
+                hintTargetY,
+                hintTargetX + piece.width,
+                hintTargetY + piece.height
+            )
+            canvas.drawRect(rTarget, targetPaint)
+            
+            invalidate() // Keep animating
+        }
+        
         // Keep animating if there are active particles or in fireworks mode
         if (particleSystem.isActive()) {
             invalidate()
         }
+
+        // Tutorial hint is now triggered via showHint() in setPieces, not custom ghost
     }
 
 
@@ -237,38 +446,51 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     y >= it.currentY && y <= it.currentY + it.height 
                 }
                 
+                
             if (candidate != null) {
-                val groupPieces = pieces.filter { it.groupId == candidate.groupId }
-                if (groupPieces.size > 1) {
-                    val groupId = candidate.groupId
-                    
-                    // Check if this group was scored, and deduct points if so
-                    // When unmerging, we deduct the total score for this group
-                    // This prevents cheating by repeatedly merging/unmerging
-                    val scoreToDeduct = scoredGroups.remove(groupId)
-                    if (scoreToDeduct != null && scoreToDeduct > 0) {
-                        onScoreChange?.invoke(-scoreToDeduct)
-                    }
-                    
-                    // Unmerge: Assign a new unique ID to EACH piece
-                    // Revert each piece to its own ID as groupId
-                    // Also clear any score tracking for individual pieces (they're now separate)
-                    groupPieces.forEach { piece ->
-                        piece.groupId = piece.id
-                        // Also bring them to front slightly to indicate change?
-                        piece.zIndex += 100
-                    }
-                    // Re-sort z-indices
-                    pieces.sortBy { it.zIndex }
-                    pieces.forEachIndexed { index, p -> p.zIndex = index }
-                    
-                    invalidate()
-                    return true
-                }
+                selectedPiece = candidate
+                unmergeSelectedGroup()
+                return true
             }
             return false
         }
     })
+
+    fun unmergeSelectedGroup() {
+        val candidate = selectedPiece ?: return
+        val groupId = candidate.groupId
+        val groupPieces = pieces.filter { it.groupId == groupId }
+        
+        if (groupPieces.size > 1) {
+            // Deduct score
+            val scoreToDeduct = scoredGroups.remove(groupId)
+            if (scoreToDeduct != null && scoreToDeduct > 0) {
+                onScoreChange?.invoke(-scoreToDeduct, 0)
+            }
+            
+            // Unmerge logic
+            groupPieces.forEach { piece ->
+                piece.groupId = piece.id
+                // Slight offset ("Explode") to visually separate
+                // This prevents "stuck" feeling by ensuring they are physically apart
+                piece.currentX += (Math.random().toFloat() - 0.5f) * 20f
+                piece.currentY += (Math.random().toFloat() - 0.5f) * 20f
+                 
+                // Bring to front
+                piece.zIndex += 100
+            }
+            // Re-sort z-indices
+            pieces.sortBy { it.zIndex }
+            pieces.forEachIndexed { index, p -> p.zIndex = index }
+            
+            // Clear selection logic to update UI
+            selectedPiece = null 
+            onPieceSelected?.invoke(false, false)
+            
+            soundManager.playSound(SoundType.REVERT, 0.8f) // Use revert sound for unmerge
+            invalidate()
+        }
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (gestureDetector.onTouchEvent(event)) {
@@ -280,6 +502,12 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                // Clear hint on interaction
+                hintPiece = null
+                hintAnimator?.cancel()
+                hintAnimator = null
+                invalidate()
+                
                 // Find the top-most piece under the finger
                 val candidate = pieces.sortedByDescending { it.zIndex }
                     .firstOrNull { 
@@ -292,6 +520,10 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     
                     bringGroupToFront(candidate.groupId)
                     
+                    // Check if merged
+                    val groupSize = pieces.count { it.groupId == candidate.groupId }
+                    onPieceSelected?.invoke(true, groupSize > 1)
+                    
                     // Record start positions for snap-back
                     dragStartStates.clear()
                     pieces.filter { it.groupId == candidate.groupId }.forEach { 
@@ -301,6 +533,10 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                     lastTouchX = x
                     lastTouchY = y
                     invalidate()
+                } else {
+                    // Tapped background - deselect
+                    selectedPiece = null
+                    onPieceSelected?.invoke(false, false)
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -356,6 +592,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 selectedPiece?.let { piece ->
                     
                     handleActionUp(piece)
+                    
+                    // Tutorial Check: Any successful move in tutorial mode advances to step 1
+                    if (isTutorialMode && currentTutorialStep == 0) {
+                        android.util.Log.d("TutorialDebug", "ACTION_UP: Advancing tutorial to step 1")
+                        currentTutorialStep = 1
+                        onTutorialStepCompleted?.invoke(1)
+                    }
                     
                     // Check Win Condition
                     checkForWin()
@@ -764,6 +1007,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         if (areGridCellsInBounds(currentCells) && areGridCellsFree(currentCells, excludeGroups)) {
             // 3. 移动到最近的网格对齐位置
             moveGroupToGridCells(group, currentCells)
+
+            // Tutorial Check: Any successful move completes step 0
+            if (isTutorialMode && currentTutorialStep == 0) {
+                android.util.Log.d("TutorialDebug", "Move completed, advancing to step 1")
+                currentTutorialStep = 1
+                onTutorialStepCompleted?.invoke(1)
+            }
             return true
         }
 
@@ -848,10 +1098,10 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 val currentCorrectRow = current.id / gridCols
                 val currentCorrectCol = current.id % gridCols
 
-                // Stricter threshold to prevent accidental snapping of distant pieces
-                // Using 15% of width/height as the snap distance
-                val snapThresholdX = current.width * 0.15f
-                val snapThresholdY = current.height * 0.15f
+                // Level S (Tutorial) has a more generous snap threshold
+                val snapFactor = if (isTutorialMode) 0.35f else 0.15f
+                val snapThresholdX = current.width * snapFactor
+                val snapThresholdY = current.height * snapFactor
                 
                 for (target in otherPieces) {
                     val targetCorrectRow = target.id / gridCols
@@ -933,7 +1183,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             
             // Show floating text
             val textColor = android.graphics.Color.rgb(255, 215, 0) // Gold
-            particleSystem.addFloatingText(centerX, centerY, "+$totalMergedEdges", textColor)
+            
+            // ⚠️ 关键修复: 显示实际得分（基础2分/边，Buff期间翻倍为4分/边）
+            val isBuffActive = site.aiok.onepic.data.LevelProgressManager.isDoubleCoinsActive(context)
+            val baseDisplayScore = totalMergedEdges * 2
+            val finalDisplayScore = if (isBuffActive) baseDisplayScore * 2 else baseDisplayScore
+            
+            particleSystem.addFloatingText(centerX, centerY, "+$finalDisplayScore", textColor)
             
             // Bring merged group to front
             bringGroupToFront(movedPiece.groupId)
@@ -1126,7 +1382,9 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
         }
         
         // Calculate merged edges count
+        // Calculate merged edges count AND coin rewards
         var mergedEdges = 0
+        var newPaidEdges = 0
         
         // Check connections between the *moved* source group and the *stationary* target group
         // Note: After merging, they are technically in the same group, but we want to count
@@ -1145,6 +1403,13 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
                 
                 if (isHorizontalNeighbor || isVerticalNeighbor) {
                     mergedEdges++
+                    
+                    // Check if this specific edge has been paid out before
+                    val edgeKey = if (sPiece.id < tPiece.id) "${sPiece.id}-${tPiece.id}" else "${tPiece.id}-${sPiece.id}"
+                    if (!paidConnections.contains(edgeKey)) {
+                        paidConnections.add(edgeKey)
+                        newPaidEdges++
+                    }
                 }
             }
         }
@@ -1162,12 +1427,187 @@ class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(contex
             val newTotalScore = oldSourceScore + oldTargetScore + mergedEdges
             scoredGroups[targetGroupId] = newTotalScore
             
-            // Only award points for the NEW edges (mergedEdges)
-            onScoreChange?.invoke(mergedEdges)
+            // Invoke callback: 
+            // scoreDelta = mergedEdges * 2 (2 points per edge as requested)
+            // coinDelta = newPaidEdges * 2 (doubled for better economy, only for fresh connections)
+            onScoreChange?.invoke(mergedEdges * 2, newPaidEdges * 2)
         }
         
         return mergedEdges
     }
 
+    // Hint Methods
+
+    /**
+     * Finds and visualizes a hint (two adjacent pieces that should be swapped).
+     */
+    /**
+     * Shows a hint by highlighting a misplaced piece and its correct absolute destination.
+     * Logic: Find the first piece that is not at its correct absolute grid position.
+     */
+    fun showHint() {
+        // Clear previous hint
+        hintPiece = null
+        
+        // Find all pieces that are NOT in their correct absolute slot
+        val misplaced = pieces.filter { piece ->
+            val targetRow = piece.id / gridCols
+            val targetCol = piece.id % gridCols
+            piece.row != targetRow || piece.col != targetCol
+        }
+        
+        if (misplaced.isNotEmpty()) {
+            val cellW = if (pieces.isNotEmpty()) pieces[0].width else 100f
+            val cellH = if (pieces.isNotEmpty()) pieces[0].height else 100f
+            
+            // Debug log all misplaced pieces
+            android.util.Log.d("HintDebug", "=== Misplaced pieces: ${misplaced.size} ===")
+            misplaced.forEach { piece ->
+                val tRow = piece.id / gridCols
+                val tCol = piece.id % gridCols
+                android.util.Log.d("HintDebug", "Piece ID=${piece.id}: current(${piece.row},${piece.col}) target($tRow,$tCol)")
+            }
+            
+            // Filter: only pieces where current grid position != target grid position
+            val validHints = misplaced.filter { piece ->
+                val targetRow = piece.id / gridCols
+                val targetCol = piece.id % gridCols
+                // Must have different grid position (not just pixel distance)
+                piece.row != targetRow || piece.col != targetCol
+            }
+            
+            android.util.Log.d("HintDebug", "Valid hints after filter: ${validHints.size}")
+            
+            val candidateList = if (validHints.isNotEmpty()) validHints else misplaced
+            
+            // In tutorial mode, select piece 2 (ID 1) to match text "Drag piece 2 to position 4"
+            val selection = if (isTutorialMode) {
+                candidateList.find { it.id == 1 } ?: candidateList.random()
+            } else {
+                candidateList.random()
+            }
+            hintPiece = selection
+            
+            val selTargetRow = selection.id / gridCols
+            val selTargetCol = selection.id % gridCols
+            android.util.Log.d("HintDebug", "Selected: ID=${selection.id} from(${selection.row},${selection.col}) to($selTargetRow,$selTargetCol)")
+            
+            // Debug log intermediate values
+            android.util.Log.d("HintDebug", "puzzleBounds: left=${puzzleBounds.left}, top=${puzzleBounds.top}, cellW=$cellW, cellH=$cellH")
+            
+            if (isTutorialMode && selection.id != 3) {
+                // Tutorial: Only swap to piece 4's position if we're NOT selecting piece 4 itself
+                val piece4 = pieces.find { it.id == 3 } // Piece 4 has ID 3
+                if (piece4 != null) {
+                    hintTargetX = piece4.currentX
+                    hintTargetY = piece4.currentY
+                } else {
+                    // Fallback to correct grid position using piece's own position as reference
+                    val colDiff = selTargetCol - selection.col
+                    val rowDiff = selTargetRow - selection.row
+                    hintTargetX = selection.currentX + colDiff * cellW
+                    hintTargetY = selection.currentY + rowDiff * cellH
+                }
+            } else {
+                // Normal mode OR tutorial mode when piece4 is selected:
+                // Calculate target using absolute grid position to avoid self-reference
+                hintTargetX = puzzleBounds.left + selTargetCol * cellW
+                hintTargetY = puzzleBounds.top + selTargetRow * cellH
+            }
+            
+            android.util.Log.d("HintDebug", "Source: (${selection.currentX}, ${selection.currentY}), Target: ($hintTargetX, $hintTargetY)")
+            android.util.Log.d("HintDebug", "Grid: from(${selection.row},${selection.col}) to($selTargetRow,$selTargetCol) → diff=(${selTargetRow - selection.row},${selTargetCol - selection.col})")
+            
+            soundManager.playSound(SoundType.SNAP, 0.4f)
+            
+            // Start Animation Loop
+            hintAnimator?.cancel()
+            hintAnimator = android.animation.ValueAnimator.ofFloat(0f, 1f).apply {
+                duration = 2000 
+                repeatCount = android.animation.ValueAnimator.INFINITE
+                repeatMode = android.animation.ValueAnimator.RESTART
+                interpolator = android.view.animation.AccelerateDecelerateInterpolator()
+                addUpdateListener { 
+                    hintAnimValue = it.animatedValue as Float
+                    invalidate()
+                }
+                start()
+            }
+            
+            invalidate()
+        }
+    }
+    
+    private fun calculateSwapImprovement(p1: PuzzlePiece, p2: PuzzlePiece): Int {
+        // Calculate current bonds (neighbors that are physically adjacent AND correctly related in ID)
+        val currentBonds = getBondScore(p1) + getBondScore(p2)
+        
+        // Save state
+        val r1 = p1.row; val c1 = p1.col
+        val r2 = p2.row; val c2 = p2.col
+        
+        // Swap Logical Positions (Grid)
+        p1.row = r2; p1.col = c2
+        p2.row = r1; p2.col = c1
+        
+        val newBonds = getBondScore(p1) + getBondScore(p2)
+        
+        // Revert
+        p1.row = r1; p1.col = c1
+        p2.row = r2; p2.col = c2
+        
+        // Priority: Increase in valid Neighbor Bonds (Merges) ONLY
+        val bondImprovement = newBonds - currentBonds
+        
+        // Removed fallback to absolute score to ensure hints ALWAYS lead to a snap/merge.
+        return bondImprovement
+    }
+    
+    private fun getBondScore(p: PuzzlePiece): Int {
+        var bonds = 0
+        val myId = p.id
+        val myCorrectRow = myId / gridCols
+        val myCorrectCol = myId % gridCols
+        
+        // Check 4 directions for Logic Neighbors
+        // We look at the pieces currently at (p.row ± 1, p.col ± 1)
+        
+        val directions = listOf(
+            Pair(-1, 0), Pair(1, 0), Pair(0, -1), Pair(0, 1)
+        )
+        
+        for (dir in directions) {
+            val neighborRow = p.row + dir.first
+            val neighborCol = p.col + dir.second
+            
+            // Find piece at this grid location
+            // Note: In a dense grid, there should be exactly one.
+            val neighbor = pieces.find { it.row == neighborRow && it.col == neighborCol }
+            
+            if (neighbor != null && neighbor.groupId != p.groupId) {
+                val nId = neighbor.id
+                val nCorrectRow = nId / gridCols
+                val nCorrectCol = nId % gridCols
+                
+                // Check if they are True Neighbors in the Solution
+                val isTrueNeighbor = 
+                    (dir.first == 0 && dir.second == 1 && myCorrectRow == nCorrectRow && myCorrectCol == nCorrectCol - 1) || // Right
+                    (dir.first == 0 && dir.second == -1 && myCorrectRow == nCorrectRow && myCorrectCol == nCorrectCol + 1) || // Left
+                    (dir.first == 1 && dir.second == 0 && myCorrectCol == nCorrectCol && myCorrectRow == nCorrectRow - 1) || // Bottom
+                    (dir.first == -1 && dir.second == 0 && myCorrectCol == nCorrectCol && myCorrectRow == nCorrectRow + 1)   // Top
+                
+                if (isTrueNeighbor) {
+                    bonds++
+                }
+            }
+        }
+        return bonds
+    }
+    
+    private fun getAbsoluteScore(p: PuzzlePiece): Int {
+        val correctRow = p.id / gridCols
+        val correctCol = p.id % gridCols
+        return if (p.row == correctRow && p.col == correctCol) 1 else 0
+    }
 }
 

@@ -1,0 +1,534 @@
+package site.aiok.onepic.ui.components
+
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import site.aiok.onepic.R
+import androidx.compose.ui.res.stringResource
+import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalContext
+
+@Composable
+fun LevelCompleteDialog(
+    stars: Int,
+    timeInSeconds: Int,
+    scoreGained: Int = 0,
+    levelTitle: String? = null,
+    storyText: String? = null,
+    onDoubleReward: (() -> Unit)? = null, // Callback for watching ad to double reward
+    onDismiss: () -> Unit
+) {
+    val scale = remember { Animatable(0.8f) }
+    val alpha = remember { Animatable(0f) }
+    
+    var showStars by remember { mutableStateOf(false) }
+    var doubleRewardClaimed by remember { mutableStateOf(false) }
+    val scoreAnimation = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+    
+    LaunchedEffect(Unit) {
+        scope.launch {
+            scale.animateTo(
+                targetValue = 1f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            )
+        }
+        scope.launch {
+            alpha.animateTo(1f, animationSpec = tween(400))
+        }
+        
+        kotlinx.coroutines.delay(400)
+        showStars = true
+        
+        kotlinx.coroutines.delay(600)
+        scoreAnimation.animateTo(
+            targetValue = scoreGained.toFloat(),
+            animationSpec = tween(1000, easing = FastOutSlowInEasing)
+        )
+    }
+    
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.4f)), // Semi-transparent overlay
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // Main Card
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .graphicsLayer {
+                            scaleX = scale.value
+                            scaleY = scale.value
+                            this.alpha = alpha.value
+                        }
+                        .shadow(24.dp, RoundedCornerShape(32.dp))
+                        .border(
+                            1.dp, 
+                            Brush.verticalGradient(
+                                listOf(Color.White.copy(alpha = 0.6f), Color.White.copy(alpha = 0.1f))
+                            ),
+                            RoundedCornerShape(32.dp)
+                        )
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(
+                            Brush.verticalGradient(
+                                listOf(
+                                    Color.White.copy(alpha = 0.95f),
+                                    Color.White.copy(alpha = 0.85f),
+                                    Color(0xFFF0F0F0).copy(alpha = 0.9f)
+                                )
+                            )
+                        )
+                        .padding(horizontal = 24.dp, vertical = 20.dp)
+                ) {
+                    val scrollState = rememberScrollState()
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.verticalScroll(scrollState)
+                    ) {
+                    // Celebration Emoji
+                    Text(
+                        text = "🎊",
+                        fontSize = 48.sp,
+                        modifier = Modifier.graphicsLayer { 
+                            translationY = -10f * (1f - alpha.value)
+                        }
+                    )
+
+                    // Success Message
+                    Text(
+                        text = when(stars) {
+                            3 -> stringResource(R.string.perfect)
+                            2 -> stringResource(R.string.great)
+                            else -> stringResource(R.string.keep_going)
+                        },
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 26.sp,
+                            textAlign = TextAlign.Center,
+                            brush = Brush.verticalGradient(listOf(Color(0xFFD84315), Color(0xFFFF8A65)))
+                        )
+                    )
+
+                    if (!levelTitle.isNullOrBlank()) {
+                        Text(
+                            text = levelTitle,
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                            color = Color.Black.copy(alpha = 0.6f)
+                        )
+                    }
+
+                    // Stars Row
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    ) {
+                        for (i in 1..3) {
+                            DialogStarIcon(
+                                filled = i <= stars,
+                                show = showStars,
+                                delay = (i - 1) * 150L
+                            )
+                        }
+                    }
+
+                    // Stats Section
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Black.copy(alpha = 0.03f), RoundedCornerShape(20.dp))
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Time
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("⏱️", fontSize = 20.sp, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                text = formatTime(timeInSeconds),
+                                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                                color = Color(0xFF424242)
+                            )
+                        }
+
+                        // Score / Coins
+                        if (scoreGained > 0) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 4.dp)
+                            ) {
+                                Text("🪙", fontSize = 24.sp, modifier = Modifier.padding(end = 8.dp))
+                                val multiplier = if (doubleRewardClaimed) 2 else 1
+                                val displayValue by animateIntAsState(
+                                    targetValue = (scoreAnimation.value * multiplier).toInt(),
+                                    animationSpec = spring(stiffness = Spring.StiffnessLow),
+                                    label = "scoreDisplay"
+                                )
+                                
+                                Text(
+                                    text = "+$displayValue",
+                                    style = MaterialTheme.typography.headlineMedium.copy(
+                                        fontWeight = FontWeight.Black,
+                                        fontSize = 32.sp
+                                    ),
+                                    color = Color(0xFFFFA000),
+                                    modifier = Modifier.scale(if (doubleRewardClaimed) 1.1f else 1.0f)
+                                )
+                                    Text(
+                                        text = " pts",
+                                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = Color(0xFFFFA000).copy(alpha = 0.7f)
+                                    )
+                                }
+                            }
+
+                            // X2 Multiplier Badge (Condition-based)
+                            val isBuffActive = site.aiok.onepic.data.LevelProgressManager.isDoubleCoinsActive(LocalContext.current)
+                            if (isBuffActive) {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(top = 4.dp)
+                                        .background(
+                                            Brush.horizontalGradient(listOf(Color(0xFFFFD700), Color(0xFFFFA000))),
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                                ) {
+                                    Text(
+                                        text = "X2 MULTIPLIER",
+                                        color = Color.Black,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Black,
+                                        letterSpacing = 0.5.sp
+                                    )
+                                }
+                            }
+                            
+                            // Double Reward Ad Button - Gold coin theme
+                            if (onDoubleReward != null && scoreGained > 0 && !doubleRewardClaimed) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                
+                                // Floating coins animation from score to button
+                                Box(modifier = Modifier.fillMaxWidth().height(40.dp)) {
+                                    // Coin 1 (left)
+                                    FloatingCoin(delayMs = 0, xOffset = -20f)
+                                    // Coin 2 (center)
+                                    FloatingCoin(delayMs = 400, xOffset = 0f)
+                                    // Coin 3 (right)
+                                    FloatingCoin(delayMs = 800, xOffset = 20f)
+                                }
+                                
+                                // Pulse animation to attract attention
+                                val infiniteTransition = rememberInfiniteTransition(label = "pulse")
+                                val scale by infiniteTransition.animateFloat(
+                                    initialValue = 0.97f,
+                                    targetValue = 1.03f,
+                                    animationSpec = infiniteRepeatable(
+                                        animation = tween(800, easing = FastOutSlowInEasing),
+                                        repeatMode = RepeatMode.Reverse
+                                    ),
+                                    label = "buttonScale"
+                                )
+                                val glowAlpha by infiniteTransition.animateFloat(
+                                    initialValue = 0.3f,
+                                    targetValue = 0.6f,
+                                    animationSpec = infiniteRepeatable(
+                                        animation = tween(1000, easing = FastOutSlowInEasing),
+                                        repeatMode = RepeatMode.Reverse
+                                    ),
+                                    label = "glow"
+                                )
+                                
+                                // Gold gradient button matching coin colors
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .graphicsLayer { scaleX = scale; scaleY = scale }
+                                        .shadow(8.dp, RoundedCornerShape(16.dp), spotColor = Color(0xFFFFD700).copy(alpha = glowAlpha))
+                                        .background(
+                                            Brush.horizontalGradient(
+                                                listOf(Color(0xFFFFD700), Color(0xFFFFA000))
+                                            ),
+                                            RoundedCornerShape(16.dp)
+                                        )
+                                        .border(2.dp, Color.White.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+                                        .clickable {
+                                            doubleRewardClaimed = true
+                                            onDoubleReward()
+                                        }
+                                        .padding(vertical = 12.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    if (doubleRewardClaimed) {
+                                        Text(
+                                            text = "✓ 2X CLAIMED! (+${scoreGained * 2})",
+                                            fontWeight = FontWeight.Black,
+                                            fontSize = 16.sp,
+                                            color = Color(0xFF1B5E20)
+                                        )
+                                    } else {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                        Text("🪙", fontSize = 20.sp)
+                                        Spacer(Modifier.width(8.dp))
+                                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                            // 呼吸动效：缩放奖励数字
+                                            val breathingTransition = rememberInfiniteTransition(label = "breathing")
+                                            val breathingScale by breathingTransition.animateFloat(
+                                                initialValue = 1f,
+                                                targetValue = 1.15f,
+                                                animationSpec = infiniteRepeatable(
+                                                    animation = tween(1000, easing = FastOutSlowInEasing),
+                                                    repeatMode = RepeatMode.Reverse
+                                                ),
+                                                label = "scoreScale"
+                                            )
+
+                                            Text(
+                                                text = "+$scoreGained → +${scoreGained * 2}",
+                                                fontWeight = FontWeight.Black,
+                                                fontSize = 18.sp,
+                                                color = Color(0xFF3E2723),
+                                                modifier = Modifier.graphicsLayer {
+                                                    scaleX = breathingScale
+                                                    scaleY = breathingScale
+                                                }
+                                            )
+                                            Text(
+                                                text = "🎬 Watch Ad to Double",
+                                                fontWeight = FontWeight.Medium,
+                                                fontSize = 12.sp,
+                                                color = Color(0xFF5D4037)
+                                            )
+                                        }
+                                        Spacer(Modifier.width(8.dp))
+                                        
+
+                                        val fingerScale by fingerTransition.animateFloat(
+                                            initialValue = 1f,
+                                            targetValue = 0.85f,
+                                            animationSpec = infiniteRepeatable(
+                                                animation = tween(400, easing = FastOutSlowInEasing),
+                                                repeatMode = RepeatMode.Reverse
+                                            ),
+                                            label = "fingerTap"
+                                        )
+                                        val fingerY by fingerTransition.animateFloat(
+                                            initialValue = 0f,
+                                            targetValue = 3f,
+                                            animationSpec = infiniteRepeatable(
+                                                animation = tween(400, easing = FastOutSlowInEasing),
+                                                repeatMode = RepeatMode.Reverse
+                                            ),
+                                            label = "fingerY"
+                                        )
+                                        Text(
+                                            "👆", 
+                                            fontSize = 22.sp,
+                                            modifier = Modifier
+                                                .offset(y = fingerY.dp)
+                                                .graphicsLayer { scaleX = fingerScale; scaleY = fingerScale }
+
+                            } else if (doubleRewardClaimed) {
+                                // Show "Claimed" badge after reward
+                                Box(
+                                    modifier = Modifier
+                                        .padding(top = 8.dp)
+                                        .background(Color(0xFF4CAF50), RoundedCornerShape(8.dp))
+                                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                                ) {
+                                    Text(
+                                        text = "✓ 2X Claimed!",
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            }
+                        }
+
+                    if (!storyText.isNullOrBlank()) {
+                        Text(
+                            text = "“ $storyText ”",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                                textAlign = TextAlign.Center
+                            ),
+                            color = Color(0xFF757575),
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(20.dp))
+            
+            IconButton(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(Color.White.copy(alpha = 0.15f), CircleShape)
+                    .border(1.dp, Color.White.copy(alpha = 0.3f), CircleShape)
+            ) {
+                Icon(
+                    Icons.Default.Close, 
+                    contentDescription = "Close", 
+                    tint = Color.White, 
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+@Composable
+fun DialogStarIcon(filled: Boolean, show: Boolean, delay: Long) {
+    val scale = remember { Animatable(0f) }
+    
+    LaunchedEffect(show) {
+        if (show) {
+            kotlinx.coroutines.delay(delay)
+            scale.animateTo(
+                targetValue = 1f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            )
+        }
+    }
+    
+    Box(
+        modifier = Modifier
+            .size(48.dp)
+            .scale(scale.value),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Star,
+            contentDescription = null,
+            tint = if (filled) Color(0xFFFFD700) else Color(0xFFE0E0E0),
+            modifier = Modifier.size(48.dp)
+        )
+        if (filled) {
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                tint = Color.White.copy(alpha = 0.3f),
+                modifier = Modifier.size(40.dp).padding(4.dp)
+            )
+        }
+    }
+}
+
+fun calculateStars(timeInSeconds: Int, rows: Int, cols: Int, previousBestTime: Int = Int.MAX_VALUE): Int {
+    val pieces = rows * cols
+    // Star Strategy: Absolute Time Thresholds
+    // 3 Stars: Average < 5s per piece (Expert)
+    // 2 Stars: Average < 10s per piece (Casual)
+    // 1 Star: Just Complete (Relaxed)
+    
+    val threeStarThreshold = pieces * 5
+    val twoStarThreshold = pieces * 10
+    
+    return when {
+        timeInSeconds <= threeStarThreshold -> 3
+        timeInSeconds <= twoStarThreshold -> 2
+        else -> 1
+    }
+}
+
+fun formatTime(seconds: Int): String {
+    val mins = seconds / 60
+    val secs = seconds % 60
+    return if (mins > 0) {
+        String.format("%d:%02d", mins, secs)
+    } else {
+        String.format("%d\"", secs)
+    }
+}
+
+@Composable
+fun BoxScope.FloatingCoin(delayMs: Long, xOffset: Float) {
+    val coinProgress = remember { Animatable(0f) }
+    
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(delayMs)
+        while (true) {
+            coinProgress.snapTo(0f)
+            coinProgress.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(1000, easing = LinearOutSlowInEasing)
+            )
+            kotlinx.coroutines.delay(200)
+        }
+    }
+    
+    // Coin moves from top-center to bottom-center with fade
+    val yOffset = coinProgress.value * 22f // Reduced distance to look closer
+    val coinAlpha = if (coinProgress.value < 0.2f) coinProgress.value * 5f
+                    else if (coinProgress.value > 0.8f) (1f - coinProgress.value) * 5f
+                    else 1f
+    val coinScale = 0.8f + coinProgress.value * 0.4f // Slightly larger base scale
+    
+    Text(
+        text = "🪙",
+        fontSize = 22.sp, // Increased size
+        modifier = Modifier
+            .align(Alignment.TopCenter)
+            .offset(x = xOffset.dp, y = yOffset.dp)
+            .graphicsLayer {
+                alpha = coinAlpha * 0.8f
+                scaleX = coinScale
+                scaleY = coinScale
+            }
+    )
+}

@@ -1,27 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Yıldız Bulmacası</string>
+
+    <!-- Intro Story -->
+    <string name="intro_prologue">Yıl 2077. Dünya\'nın enerjisi tükenmiş, bir zamanlar büyük uygarlık yok olmanın eşiğinde.\n\n\'Nuh Projesi\'nin Komutanısınız. Tek umudumuz, galaksiyi geçebilecek bir gemi inşa etmek için dünyaya dağılmış ilkel enerji çekirdeklerini toplamak.\n\nHer tamamlanan yapboz, warp motorlarını ateşlemek için dijital güç sağlar. Enerjiyi toplayın, planları yeniden oluşturun ve insanlığı yıldızların ötesinde yeni yuvamıza götürün.</string>
+    <string name="intro_button">Yolculuğa başla</string>
     
-    <!-- Common -->
+    <!-- Default strings (fallback to English) -->
     <string name="close">Kapat</string>
     <string name="cancel">İptal</string>
     <string name="confirm">Onayla</string>
     <string name="settings">Ayarlar</string>
     <string name="about">Hakkında</string>
-    
-    <!-- Settings -->
     <string name="sound_effects">Ses efektleri</string>
     <string name="sound_effects_desc">Oyun ses efektlerini aç/kapat</string>
     <string name="language">Dil</string>
     <string name="language_chinese">中文</string>
     <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_thai">ไทย</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_polish">Polski</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_dutch">Nederlands</string>
+    <string name="language_hindi">हिन्दी</string>
+    
+    <!-- Check-in Visual Labels -->
+    <string name="check_in_sync_required">DAILY_SYNCHRONIZATION_REQUIRED</string>
+    <string name="check_in_energy_active">ENERGY_SOURCE_ACTIVE</string>
+    <string name="check_in_energy_activate">ACTIVATE_STELLAR_ENERGY</string>
+    <string name="check_in_days_suffix">%1$d DAYS</string>
+    <string name="check_in_pending">PENDING</string>
+    <string name="check_in_station_log">STATION_LOG: RECENT_30_DAYS</string>
+    <string name="today_earned">TODAY_EARNED</string>
+    
+    <!-- Double Coins Buff -->
+    <string name="buff_double_coins_active">DOUBLE_COINS: ACTIVE</string>
+    <string name="buff_overclocking">OVERCLOCKING_SYSTEM_COLLECTOR...</string>
+    <string name="buff_ready">COIN_COLLECTOR: READY</string>
+    <string name="buff_waiting">STATUS: WAITING_FOR_DEPLOYMENT</string>
+    <string name="buff_activate">ACTIVATE</string>
+    <string name="buff_duration_rule">DURATION RULE: 3 MINS BASE + 1 MIN PER CONSECUTIVE DAY</string>
+
+    <!-- Ascended / Fragment Screen -->
+    <string name="asc_project_title">PROJECT EXODUS: INTEGRITY</string>
+    <string name="asc_status_synthesizing">STATUS: SYNTHESIZING</string>
+    <string name="asc_fragments_count">%1$d / %2$d FRAGMENTS</string>
+    <string name="asc_tab_memories">Anılar</string>
+    <string name="asc_tab_blueprint">Plan</string>
+    <string name="asc_memory_title">Kodlanmış bellek</string>
+    <string name="asc_memory_desc">Hikâyeyi okumak için kilidi açın.</string>
+    
+    <!-- Blueprint Modules -->
+    <string name="mod_0">Kuantum omurga</string>
+    <string name="mod_1">Füzyon reaktörü kalbi</string>
+    <string name="mod_2">Nöro-Link kokpit</string>
+    <string name="mod_3">Kriyostaz salonu</string>
+    <string name="mod_4">Biyo-kubbe</string>
+    <string name="mod_5">Void kalkanları</string>
+    <string name="mod_6">Hiper sensörler</string>
+    <string name="mod_7">İyon iticiler</string>
+    <string name="mod_8">İletişim kulesi</string>
+    <string name="mod_9">Genesis kütüphanesi</string>
+    <string name="mod_10">Warp sürücü</string>
+    <string name="mod_11">Fırlatma anahtarı</string>
+    <string name="mod_12">Exodus Projesi</string>
+    <string name="mod_status_online">ÇEVRİMİÇİ</string>
+    <string name="mod_status_constructing">YAPIMDA</string>
+    <string name="mod_detail_online">Durum: Modül inşa edildi ve entegre edildi\nBütünlük: %100\nErişim: Stratejik varlık açıldı</string>
+    <string name="mod_detail_constructing">Durum: Sentez devam ediyor\n\nToplam ilerleme: %1$d/10 parça\n\n- Klasik matris: %2$d/5\n- Yükselen bağ: %3$d/5\n\nHedef: Yapısal stabilizasyon</string>
+    <string name="mod_close">KAPAT</string>
+
+    <!-- Global HUD -->
+    <string name="hud_buff_active">ÇİFT PARA: AKTİF</string>
+    <string name="hud_buff_warming">SİSTEM ISINIYOR...</string>
+    <string name="hud_buff_hint_prepare">OYUN BAŞLANGICI İÇİN HAZIRLAN</string>
+    <string name="hud_buff_hint_overclock">OVERCLOCK TOPLAYICI</string>
+
+    <!-- Specific Level Titles -->
+    <string name="level_tutorial_title">Uyanış: Köken</string>
+    <string name="level_tutorial_story">Sonsuz Yolcu Dijital Tapınak\'ta uyanır, ilk görevine hazırlanır.</string>
+    <string name="level_tutorial_title_asc">Uyanış: Köken (Genişletilmiş)</string>
+    <string name="level_tutorial_story_asc">Komutanın ilk gelişmiş simülasyon görevi.</string>
     <string name="clear_data">Verileri temizle</string>
     <string name="clear_data_desc">Tüm oyun ilerlemesini sıfırla</string>
     <string name="clear_data_confirm_title">Verileri temizle</string>
     <string name="clear_data_confirm_message">Tüm oyun verilerini silmek istediğinizden emin misiniz?\n\nBu şunları silecek:\n• Tüm seviye ilerlemesi\n• Yıldızlar ve paralar\n• Giriş kayıtları\n• En iyi süreler\n\nBu işlem geri alınamaz!</string>
     <string name="clear_data_confirm">Temizle</string>
-    
-    <!-- About -->
     <string name="about_title">OnePic Hakkında</string>
     <string name="version">Sürüm</string>
     <string name="build_number">Yapı numarası</string>
@@ -30,8 +104,6 @@
     <string name="app_description_title">Uygulama açıklaması</string>
     <string name="app_description">OnePic, birden fazla oyun modu ve zengin seviye zorlukları sunan güzel bir bulmaca oyunudur. Bulmaca parçalarını sürükleyip birleştirerek güzel resim bulmacalarını tamamlayın.</string>
     <string name="changelog_title">Değişiklik günlüğü</string>
-    
-    <!-- Personal Center -->
     <string name="personal_center">Kişisel merkez</string>
     <string name="puzzle_master">Bulmaca ustası</string>
     <string name="completed">Tamamlandı</string>
@@ -43,13 +115,10 @@
     <string name="completion_rate">Tamamlanma oranı</string>
     <string name="classic">Klasik</string>
     <string name="gallery">Galeri</string>
-    
-    <!-- Bottom Navigation -->
     <string name="nav_home">Ana sayfa</string>
+    <string name="nav_galaxy">Ascension</string>
     <string name="nav_checkin">Giriş</string>
     <string name="nav_personal_center">Profil</string>
-    
-    <!-- Check-in Screen -->
     <string name="daily_check_in">Günlük giriş</string>
     <string name="checked_in_today">Bugün giriş yapıldı</string>
     <string name="earned">Kazanıldı</string>
@@ -61,22 +130,18 @@
     <string name="check_in_reward_title">💡 Giriş ödülleri</string>
     <string name="check_in_reward_desc">Günlük 10-50 para kazanın\nDaha fazla ardışık gün = daha fazla ödül!</string>
     <string name="week_check_in_history">7 günlük giriş geçmişi</string>
-    
-    <!-- Level Complete Dialog -->
     <string name="perfect">Mükemmel!</string>
     <string name="great">Harika!</string>
     <string name="keep_going">Devam et!</string>
     <string name="points">puan</string>
-    
-    <!-- Changelog Items -->
+    <string name="ad_to_double_short">İzleyerek iki katına çıkar</string>
+    <string name="ad_double_claimed">2× alındı!</string>
     <string name="changelog_v1_0_0">v1.0.0 (2026-01-22)</string>
     <string name="changelog_item_1">• İlk sürüm</string>
     <string name="changelog_item_2">• Klasik ve Galeri modları</string>
     <string name="changelog_item_3">• Günlük giriş özelliği</string>
     <string name="changelog_item_4">• Ses efektleri ve dokunsal geri bildirim</string>
     <string name="changelog_item_5">• Çok dilli destek (Çince/İngilizce)</string>
-    
-    <!-- Content Descriptions -->
     <string name="cd_avatar">Avatar</string>
     <string name="cd_check_in">Giriş</string>
     <string name="cd_checked_in">Giriş yapıldı</string>
@@ -84,7 +149,14 @@
     <string name="cd_next">Sonraki</string>
     <string name="cd_scroll_to_current">Mevcut seviyeye kaydır</string>
     
-    <!-- Week Days -->
+    <!-- Tutorial -->
+    <string name="tut_welcome">Hoş geldiniz, Komutan!</string>
+    <string name="tut_step_1">Değiştirmek için 2 numaralı parçayı 4 numaralı konuma sürükleyin!</string>
+    <string name="tut_step_double_tap">Birleşik parçaları ayırmak için çift dokunun!</string>
+    <string name="tut_drag">Birleştirmek için parçaları sürükleyin</string>
+    <string name="tut_double_tap">Ayırmak için çift dokunun</string>
+    <string name="tut_node_title">Yeni başlayan rehberi</string>
+    
     <string name="weekday_sunday">Paz</string>
     <string name="weekday_monday">Pzt</string>
     <string name="weekday_tuesday">Sal</string>
@@ -92,4 +164,48 @@
     <string name="weekday_thursday">Per</string>
     <string name="weekday_friday">Cum</string>
     <string name="weekday_saturday">Cmt</string>
+    <!-- Guide -->
+    <string name="guide_gallery_hint">💡 Komutan, temel eğitim tamamlandı. Gerçek yolculuğa başlamak için aşağıdaki \"Yükseliş\"e dokunun!</string>
+    <string name="guide_chapter1_hint">💡 Gelişmiş simülasyon tamamlandı! Senkronizasyon stabil. Bölüm 1 \"Köken\" artık aktif. Konuşlandırmaya hazır!</string>
+    <string name="edit_nickname">Takma adı düzenle</string>
+    <string name="enter_nickname">Yeni takma ad girin</string>
+    <string name="save">Kaydet</string>
+    <string name="nickname_too_short">Takma ad en az 2 karakter olmalıdır</string>
+    <string name="nickname_too_long">Takma ad 12 karakteri aşamaz</string>
+    <string name="hint_use_free">Günlük ücretsiz ipucu kullanıldı! ✨</string>
+    <string name="hint_confirm_title">İpucu kullan?</string>
+    <string name="hint_confirm_msg">İpucu için 100 para harcansın mı?\nBakiye: %1$d 🪙</string>
+    <string name="hint_confirm_yes">Evet (-100)</string>
+    <string name="hint_not_enough">Yeterli para yok!</string>
+    <string name="ad_reward_toast">+%1$d 🪙 kazanmak için videoyu tam izleyin</string>
+    <string name="ad_reward_received">Ödül alındı: +%1$d 🪙</string>
+    <string name="ad_wait_cooldown">Lütfen %1$d:%2$02d bekleyin</string>
+
+    <!-- Chapter Names -->
+    <string name="chapter_1">Bölüm 1: Kuantum omurga · Uyanışın omurgası</string>
+    <string name="chapter_2">Bölüm 2: Füzyon çekirdeği · Sonsuz kıvılcım</string>
+    <string name="chapter_3">Bölüm 3: Nöral kokpit · Bilinç aynası</string>
+    <string name="chapter_4">Bölüm 4: Kış uykusu salonu · Sonsuz kış rüyası</string>
+    <string name="chapter_5">Bölüm 5: Ekoloji döngüsü · Zümrüt umut</string>
+    <string name="chapter_6">Bölüm 6: Void kalkanı · Göğe uzanan kanat</string>
+    <string name="chapter_7">Bölüm 7: Hiper-duyusal radar · Hakikat gözü</string>
+    <string name="chapter_8">Bölüm 8: İyon iticisi · Göğü yaran akış</string>
+    <string name="chapter_9">Bölüm 9: Yıldız kulesi · Kozmik rezonans</string>
+    <string name="chapter_10">Bölüm 10: Uygarlık tohum deposu · Bellek tapınağı</string>
+    <string name="chapter_11">Bölüm 11: Eğrilik motoru · Uzay-zaman yankısı</string>
+    <string name="chapter_12">Bölüm 12: Fırlatma anahtarı · Son giriş</string>
+    <string name="chapter_coming_soon">YAKINDA...</string>
+    <string name="ad_label">Reklam</string>
+    <string name="share_app">Uygulamayı Paylaş</string>
+    <string name="share_message">OnePic\'e göz atın! Google Play\'de harika bir bulmaca oyunu: https://play.google.com/store/apps/details?id=site.aiok.onepic</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="daily_reminder">Günlük Hatırlatıcı</string>
+    <string name="daily_reminder_channel_name">Bulmaca Hatırlatıcıları</string>
+    <string name="daily_reminder_channel_desc">Bulmacaları tamamlamak için günlük hatırlatıcılar.</string>
+    <string name="daily_reminder_title_1">Bulmaca Vakti!</string>
+    <string name="daily_reminder_msg_1">Beyninin bir molaya ihtiyacı var. Geri gel ve bir bulmaca çöz! 🧩</string>
+    <string name="daily_reminder_title_2">Komutan, Yeni Zorluklar Bekliyor!</string>
+    <string name="daily_reminder_msg_2">Parçaları bekletme! Bugün daha fazla hafıza kilidini aç. 🚀</string>
+    <string name="daily_reminder_title_3">Yıldız Enerjisi Düşük!</string>
+    <string name="daily_reminder_msg_3">Ark\'ın yolu aydınlatmak için enerjine ihtiyacı var. Şimdi göreve katıl! ✨</string>
 </resources>
