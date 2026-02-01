@@ -12,7 +12,7 @@ object LevelRepository {
         levelId = "tutorial_0", 
         title = context.getString(site.aiok.onepic.R.string.level_tutorial_title), 
         difficulty = "Tutorial", 
-        imageSource = ImageSource.Asset("gallery_levels/level_00_A_TheOrigin.jpg"), 
+        imageSource = ImageSource.Asset("gallery_levels/level_00_A_TheOrigin.webp"), 
         rows = 2, 
         cols = 2,
         storyText = context.getString(site.aiok.onepic.R.string.level_tutorial_story),
@@ -139,7 +139,7 @@ object LevelRepository {
                 val obj = jsonArray.getJSONObject(i)
                 val id = i + 1
                 val levelId = "g_${id}_A"
-                val filenameA = obj.optString("filename_a", "")
+                val filenameA = obj.optString("filename_a", "").replace(".jpg", ".webp")
                 
                 // Story / Title
                 val title = obj.optString("title", "Level $id")
@@ -192,7 +192,7 @@ object LevelRepository {
                 val virtualId = 60 + originalId // 61..120
                 val levelId = "g_${virtualId}_B_Virtual" 
                 
-                val filenameB = obj.optString("filename_b", "")
+                val filenameB = obj.optString("filename_b", "").replace(".jpg", ".webp")
                 val title = obj.optString("title", "Level $originalId") + " (Ascended)"
                 
                 // CRITICAL: Use the Sci-Fi Log from project_exodus_story for Ascended Levels
@@ -200,7 +200,7 @@ object LevelRepository {
                 
                 val moduleName = determineModuleName(virtualId) // Modules 7-12
                 val integrity = "Quantum Integrity (200%)"
-
+ 
                  val imageSource = if (filenameB.isNotEmpty()) {
                     ImageSource.Asset("gallery_levels/$filenameB")
                 } else {
@@ -269,12 +269,12 @@ object LevelRepository {
 
     fun getBlueprintAsset(moduleIndex: Int): String {
         val num = String.format("%02d", moduleIndex + 1)
-        return "blueprint/bp_$num.png"
+        return "blueprint/bp_$num.webp"
     }
 
     fun getRenderAsset(moduleIndex: Int): String {
         val num = String.format("%02d", moduleIndex + 1)
-        return if (moduleIndex < 12) "blueprint_renders/render_$num.png" else "blueprint/final_render.png"
+        return if (moduleIndex < 12) "blueprint_renders/render_$num.webp" else "blueprint/final_render.webp"
     }
 
     private fun determineIntegrity(id: Int): String {
@@ -293,7 +293,7 @@ object LevelRepository {
                 levelId = "tutorial_0_B",
                 title = context.getString(site.aiok.onepic.R.string.level_tutorial_title_asc),
                 difficulty = "Training+",
-                imageSource = ImageSource.Asset("gallery_levels/level_00_B_TheOrigin.jpg"),
+                imageSource = ImageSource.Asset("gallery_levels/level_00_B_TheOrigin.webp"),
                 rows = 3,
                 cols = 3,
                 storyText = context.getString(site.aiok.onepic.R.string.level_tutorial_story_asc),
@@ -310,7 +310,7 @@ object LevelRepository {
         
         val i = id - 1
         val obj = jsonArray.getJSONObject(i)
-        val filenameB = obj.optString("filename_b", "")
+        val filenameB = obj.optString("filename_b", "").replace(".jpg", ".webp")
         if (filenameB.isEmpty()) return null
         
         val title = obj.optString("title", "Level $id") + " (Ascended)"
