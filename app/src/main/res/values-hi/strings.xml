@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Starry Puzzle</string>
+    <string name="app_name">स्टार पहेली</string>
     
     <!-- Common -->
     <string name="close">बंद करें</string>
