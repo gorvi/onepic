@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnePic</string>
+    <string name="app_name">Starry Puzzle</string>
     
     <!-- Common -->
     <string name="close">닫기</string>
