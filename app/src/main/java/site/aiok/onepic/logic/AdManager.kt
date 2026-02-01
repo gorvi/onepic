@@ -27,6 +27,11 @@ object AdManager {
     private var isRewardedLoading = false
 
     fun initialize(context: Context) {
+        // 配置测试设备 ID (哪怕在 Release 包中也能看到这台设备的测试广告)
+        val testDeviceIds = listOf("1CB3C55D387EADF2F5F2F7C7973617E9")
+        val configuration = com.google.android.gms.ads.RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+        MobileAds.setRequestConfiguration(configuration)
+
         MobileAds.initialize(context) {
             loadInterstitial(context)
             loadRewarded(context)

@@ -33,7 +33,7 @@ object AdConfig {
         const val NATIVE_HOME = "ca-app-pub-6888206339207009/2121621366" // 原生广告1
         const val NATIVE_GALAXY = "ca-app-pub-6888206339207009/6803463791" // 原生广告2
         const val NATIVE_3 = "ca-app-pub-6888206339207009/5223562896" // 原生广告3
-        const val INTERSTITIAL = "" // TODO: Add production interstitial ID if needed
+        const val INTERSTITIAL = "ca-app-pub-6888206339207009/2011872352"
     }
 
     // --- Test IDs (Google Official Demo IDs) ---

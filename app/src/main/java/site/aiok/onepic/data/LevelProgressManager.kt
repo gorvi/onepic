@@ -480,7 +480,7 @@ object LevelProgressManager {
 
     fun getNickname(context: Context): String {
         val prefs = getPrefs(context)
-        return prefs.getString(KEY_USER_NICKNAME, null) ?: "指挥官"
+        return prefs.getString(KEY_USER_NICKNAME, null) ?: "Commander"
     }
 
     fun saveNickname(context: Context, nickname: String) {
