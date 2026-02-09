@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Nasiona Drzewa Świata",
+    "story_text": "Nasiona Drzewa Świata dryfują przez pustkę, rozpoczynając odyseję wszystkich rzeczy.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Sanktuarium Światła",
+    "story_text": "Sanktuarium, w którym przeplatają się światło i zieleń, gdzie wszystkie istoty znajdują wytchnienie dla swoich dusz.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Las o świcie",
+    "story_text": "Świt przebija się przez mgłę, budząc prastary las.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Szepty bursztynu",
+    "story_text": "Gdy pory roku płyną, bursztynowe liście szepczą opowieści o przeszłości.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Szmaragdowy zen",
+    "story_text": "Bambus kołysze się łagodnie, oferując chwilę zen w zielonej krainie.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Tarasy w chmurach",
+    "story_text": "Szmaragdowe fale spływają po zboczu góry, warstwa za warstwą.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "Ogniste wydmy",
+    "story_text": "Palące słońce kształtuje wydmy, a jednak życie budzi się na tej jałowej ziemi.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Krawędź wieczności",
+    "story_text": "Gdzie kończy się ląd i morze, zaczyna się nowa podróż w nieznane.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Wilczy duch",
+    "story_text": "Głęboko na śnieżnych równinach duchowy wilk w milczeniu strzeże czystości.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Księżycowy Lis",
+    "story_text": "Blask księżyca rzuca srebrzystą poświatę, gdy duchowy lis wędruje przez północny las.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Tęczowy feniks",
+    "story_text": "Opalizujące skrzydła przecinają błękitne niebo, zostawiając tęczowy ślad.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Mędrzec panda",
+    "story_text": "Ponad morzem chmur mędrzec panda medytuje nad starożytną mądrością.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Tygrysi las",
+    "story_text": "W cieniu plam światła siła czai się w cierpliwym milczeniu.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Dusza Ganeśi",
+    "story_text": "Przekraczając rzekę czasu, dusza słonia postrzega prawdę świata.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Król lasu",
+    "story_text": "Król lasu stoi tutaj, a wszystkie stworzenia wstrzymują oddech pod jego spojrzeniem.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Gromoptak",
+    "story_text": "Strażnik w zenicie przegląda majestatyczną przestrzeń ziemi poniżej.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "Pradawne rzeźby",
+    "story_text": "Rzeźby pogrzebane przez czas zapisują szepty przodków.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Piramidy Drogi Gwiazd",
+    "story_text": "Geometryczny cud w palącej pustyni, milczący od tysiącleci.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Brama światła Petry",
+    "story_text": "Na kamiennej ścianie ciepło cywilizacji pulsuje w czerwonej skale.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Zaginione Machu Picchu",
+    "story_text": "Miasto na szczytach spowitych chmurami, zagubione w fałdach czasu i przestrzeni.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Kamienny smok",
+    "story_text": "Kamienny smok wije się wzdłuż grzbietu górskiego, strzegąc prastarej ziemi.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Arena bohaterów",
+    "story_text": "Arena w ruinach odbija echa heroicznych eposów minionych dni.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Kopuła światła",
+    "story_text": "Święte światło pod kopułą było świadkiem wzlotów i upadków niezliczonych cywilizacji.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Nieskończona biblioteka",
+    "story_text": "Spirala wiedzy sięgająca nieba, starożytne zwoje przechowujące utracone prawdy.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Ogrody snów",
+    "story_text": "Ogród zawieszony między niebem a ziemią, zagubiona symfonia natury.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Wieża proroka",
+    "story_text": "Gigantyczny monolit na szczycie góry prowadzi zagubionych przez czerwona pustynię.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Żagle nieba",
+    "story_text": "Białe żagle w porcie kierują się ku nieznanym horyzontom.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Cyber Bio Wieża",
+    "story_text": "Neon i pnącza splatają się w przyszłej wieży—natura oddycha w epoce cyberpunku.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Arka czasu",
+    "story_text": "Megamiasto wznoszące się nad zmierzchowym morzem, arka niosąca sam czas.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Delfiny pulsujące światłem",
+    "story_text": "Piękne postacie w morzu, tańczące w głębokich fioletowych pulsach.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "Fluorescencyjny koral",
+    "story_text": "W głębinach oceanu rafy koralowe tkają kaleidoskopowy ogród marzeń.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "Drzemka lodowego smoka",
+    "story_text": "Pod lodowatymi prądami śpi strażnik prastarego lodowego smoka.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Wrak widmo",
+    "story_text": "Wrak porzucony przez fale, cicho opowiadający ostatni rozdział epoki żagli.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Kosmiczny wieloryb",
+    "story_text": "Na granicy morza i gwiazd wielki wieloryb niesie naprzód iskrę cywilizacji.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Kraken pustki",
+    "story_text": "W otchłani między rzeczywistością a iluzją macki tkają sieć danych.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Meduza widmo",
+    "story_text": "Wstęgi światła w ciemności, jak ogniki migoczące o północy.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Atlantyda",
+    "story_text": "Zapieczętowana Atlantyda odsłania ponownie swą dawną chwałę w głębinach morza.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "Kuźnia jądra",
+    "story_text": "Otwory termalne głęboko w skorupie rodzą kwiaty życia przekraczające wyobraźnię.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Ogień i lód",
+    "story_text": "Czerwona lawa wlewa się w lodowate wody—ostateczny pojedynek ognia i wody.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Zakazane życie",
+    "story_text": "W zakazanej strefie życia prastary porządek wciąż cicho się obraca.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Feniks nirwany",
+    "story_text": "Powstając z popiołów starego świata, feniks zyskuje wieczne życie w płomieniach.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Gwiezdny smok",
+    "story_text": "Strażnik czasu, strzegący granicy snów po orbitach gwiazd.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Niebiańska zasłona",
+    "story_text": "Gwiezdny pył jako nić, zorza jako pióropusz—ona jest wiecznym echem epoki snów.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Spirala czasu",
+    "story_text": "Czas rozpuszcza się we snach, a spiralne schody wiodą do wieczności.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Odwrócony wodospad",
+    "story_text": "Grawitacja to tylko przelotna chmura—wodospad płynie teraz ku oceanowi na niebie.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Kryształowy labirynt",
+    "story_text": "W tańcu światła i cienia kryształowy labirynt odbija wewnętrzne głębie duszy.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Biblioteka w chmurach",
+    "story_text": "Legendarna biblioteka na niebie, gdzie wszystkie historie wzbijają się w lot.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Wyspa grawitacji",
+    "story_text": "Na krawędzi, gdzie grawitacja zawodzi, pływające wyspy dryfują cicho przez morze chmur.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Wymiar zegarowy",
+    "story_text": "Przemysłowy hymn kół zębatych i pary, obracający się w nieskończoność w wymiarze snów.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Matka Ziemia: Głęboki błękit",
+    "story_text": "Na dalekich brzegach gwiazd nazywaliśmy to kiedyś domem—jedyny głęboki błękit.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Czerwony pionier",
+    "story_text": "Pod rdzawo-czerwonym pyłem iskra cywilizacji zapala się na karmazynowej gwieździe.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Pierścienie mrozu",
+    "story_text": "Lodowate pierścienie—wielki ślad kosmosu pozostawiony w pustce.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "Podwójny zachód słońca",
+    "story_text": "Bliźniacze słońca zachodzą razem, rzucając nakładające się cienie na obce niebo.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Bezsenna gwiazda",
+    "story_text": "Biliony świateł zbiegają się w strumienie, kodując przyszłość na tej bezsennej gwieździe.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "Supernowa",
+    "story_text": "Gwiazda kończy w najwyższym blasku—najgwałtowniejsza śmierć w kosmosie i zarazem odrodzenie.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Morze galaktyk",
+    "story_text": "Gwiazdy zbierają się w wirujące morze galaktyk, każda fala to epos cywilizacji.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Filary stworzenia",
+    "story_text": "Wieże stworzenia przebijają mgławicę—cicha kolebka karmiąca gwiazdy i cuda.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Horyzont zdarzeń",
+    "story_text": "W ostatecznej pułapce grawitacji nawet światło nie ucieknie przeznaczonej zagładzie.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Tranzyt przez tunel czasoprzestrzenny",
+    "story_text": "Czasoprzestrzeń fałduje się, skracając ogromne odległości, pozwalając nam swobodnie skakać między gwiazdami.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Oko wszechświata",
+    "story_text": "Na krawędzi ostatecznego horyzontu wszechświat otwiera swe zimne, a jednak wspaniałe oko.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "بذور شجرة العالم",
+    "story_text": "تنجرف بذور شجرة العالم عبر الفراغ، لتبدأ رحلة كل الأشياء.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "ملاذ الضوء",
+    "story_text": "ملاذ حيث يتشابك الضوء والخضرة، حيث تجد كل الكائنات الراحة لأرواحها.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "غابة الفجر",
+    "story_text": "يخترق الفجر الضباب، ويوقظ الغابة القديمة.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "همسات العنبر",
+    "story_text": "مع مرور الفصول، تهمس أوراق العنبر بحكايات الماضي.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "زن الزمرد",
+    "story_text": "يتمايل الخيزران بلطف، مما يوفر لحظة من الزن في المملكة الخضراء.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "مدرجات السحب",
+    "story_text": "تتساقط أمواج الزمرد على منحدر الجبل، طبقة فوق طبقة.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "الكثبان المشتعلة",
+    "story_text": "تصهر الشمس الحارقة الكثبان الرملية، ومع ذلك تتحرك الحياة داخل هذه الأرض القاحلة.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "حافة الخلود",
+    "story_text": "حيث تنتهي الأرض والبحر، تبدأ رحلة جديدة نحو المجهول.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "روح الذئب",
+    "story_text": "في أعماق سهول الثلج، تحرس روح الذئب النقاء بصمت.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "ثعلب القمري",
+    "story_text": "يرسل ضوء القمر توهجًا فضيًا بينما يتجول ثعلب الروح عبر غابة منتصف الليل.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "قوس قزح فينيكس",
+    "story_text": "قطعت الأجنحة المتقزحة السماء عبر السماء الزرقاء، تاركة وراءها أثر قوس قزح.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "الباندا سيج",
+    "story_text": "فوق بحر الغيوم، يتأمل حكيم الباندا في الحكمة القديمة.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "غابة النمر",
+    "story_text": "تحت الظلال المرقطة، تكمن القوة في الصبر الصامت.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "روح غانيشا",
+    "story_text": "عبر نهر الزمن، تدرك روح الفيل حقيقة العالم.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "ملك الغابة",
+    "story_text": "يقف هنا ملك الغابة، وكل المخلوقات تحبس أنفاسها تحت بصره.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "ثندربيرد",
+    "story_text": "يقوم الحارس الموجود في القمة بمسح المساحة المهيبة للأرض بالأسفل.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "المنحوتات القديمة",
+    "story_text": "المنحوتات المدفونة عبر الزمن تسجل همسات الأجداد.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "طريق النجوم الهرم",
+    "story_text": "أعجوبة هندسية في الصحراء الحارقة، تقف صامتة لآلاف السنين.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "بوابة البتراء المضيئة",
+    "story_text": "على الجدار الحجري، ينبض دفء الحضارة داخل الصخر الأحمر.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "فقدت ماتشو بيتشو",
+    "story_text": "المدينة الواقعة على القمة المغطاة بالغيوم، ضائعة في ثنايا الزمان والمكان.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "التنين الحجري",
+    "story_text": "ينطلق التنين الحجري على طول سلسلة الجبال ويحرس الأرض القديمة.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "ساحة البطل",
+    "story_text": "الساحة في حالة خراب تحاكي الملاحم البطولية للأيام الماضية.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "قبة النور",
+    "story_text": "شهد الضوء المقدس الموجود أسفل القبة صعود وسقوط عدد لا يحصى من الحضارات.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "المكتبة اللانهائية",
+    "story_text": "دوامة من المعرفة تصل نحو السماء، مخطوطات قديمة تحمل حقائق مفقودة.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "حدائق الاحلام",
+    "story_text": "حديقة معلقة بين السماء والأرض، سيمفونية الطبيعة المفقودة.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "النبي سباير",
+    "story_text": "المنوليث العملاق الموجود أعلى الجبل يرشد الضائعين عبر الصحراء الحمراء.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "أشرعة السماء",
+    "story_text": "الأشرعة البيضاء في الميناء تحدد المسار لآفاق مجهولة.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "سايبر بيو سباير",
+    "story_text": "يتشابك النيون والكروم في البرج المستقبلي، حيث تتنفس الطبيعة في عصر السايبربانك.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "تابوت الزمن",
+    "story_text": "مدينة ضخمة تحلق فوق بحر الشفق، السفينة التي تحمل الزمن نفسه.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "توهج نبض الدلافين",
+    "story_text": "شخصيات رشيقة في البحر، ترقص ضمن نبضات بنفسجية عميقة.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "المرجان الفلورسنت",
+    "story_text": "في أعماق المحيط، تنسج الشعاب المرجانية حديقة أحلام متلونة.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "نوم التنين الجليدي",
+    "story_text": "تحت التيارات المتجمدة، ينام حارس تنين الجليد القديم.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "حطام سفينة شبح",
+    "story_text": "الحطام الذي تركته الأمواج، يروي بهدوء الفصل الأخير من عصر الشراع.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "الحوت الكوني",
+    "story_text": "على حدود البحر والنجوم، يحمل الحوت العظيم شرارة الحضارة إلى الأمام.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "باطلة كراكن",
+    "story_text": "في الهاوية بين الواقع والوهم، تنسج المجسات شبكة من البيانات.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "قنديل البحر الوهمي",
+    "story_text": "شعاع من الضوء في الظلام، مثل نار خرافية تومض في منتصف الليل.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "أتلانتس",
+    "story_text": "يكشف أتلانتس المختوم عن مجده السابق مرة أخرى في أعماق البحار.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "صياغة الأساسية",
+    "story_text": "فالفتحات الحرارية في أعماق القشرة تولد أزهار حياة تفوق الخيال.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "النار والجليد",
+    "story_text": "تصب الحمم الحمراء في المياه الجليدية، وهي المبارزة النهائية بين النار والماء.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "الحياة المحرمة",
+    "story_text": "في منطقة الحياة المحرمة، لا يزال النظام القديم يدور بهدوء.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "نيرفانا فينيكس",
+    "story_text": "بعد صعوده من جمر العالم القديم، يكتسب طائر الفينيق الحياة الأبدية من خلال النيران.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "نجمة التنين",
+    "story_text": "رقيب الزمن، يحرس حدود الأحلام في مدارات النجوم.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "الحجاب السماوي",
+    "story_text": "غبار النجوم كخيط، والشفق كعمود - إنها الصدى الأبدي لعصر الأحلام.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "دوامة الوقت",
+    "story_text": "يذوب الزمن في الأحلام، ويؤدي السلم الحلزوني إلى الأبدية.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "الشلال المقلوب",
+    "story_text": "الجاذبية ليست سوى سحابة عابرة، فالشلال يتدفق الآن نحو محيط في السماء.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "المتاهة الكريستالية",
+    "story_text": "وسط رقصة الضوء والظل، تعكس المتاهة الكريستالية أعماق الروح الداخلية.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "المكتبة السحابية",
+    "story_text": "المكتبة الأسطورية في السماء، حيث تحلق كل القصص.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "جزيرة الجاذبية",
+    "story_text": "على الحافة حيث تفشل الجاذبية، تنجرف الجزر العائمة بصمت عبر بحر السحب.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "البعد الساعة",
+    "story_text": "نشيد صناعي من التروس والبخار، يدور إلى ما لا نهاية في بعد الأحلام.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "الأرض الأم: الأزرق العميق",
+    "story_text": "على شواطئ النجوم البعيدة، كنا نسمي هذا المنزل ذات مرة - اللون الأزرق العميق الوحيد.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "الرائد الأحمر",
+    "story_text": "تحت الغبار الأحمر الصدأ، تشتعل شرارة الحضارة على النجم القرمزي.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "حلقات الصقيع",
+    "story_text": "حلقات متجمدة – بصمة كبيرة للكون تركت في الفراغ.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "غروب ثنائي",
+    "story_text": "تجتمع شمسان معًا، وتلقيان بظلال متداخلة عبر سماء غريبة.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "نجم بلا نوم",
+    "story_text": "تتلاقى تريليونات الأضواء في تيارات، لتشكل المستقبل على هذا النجم الذي لا ينام.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "المستعر الأعظم",
+    "story_text": "وينتهي النجم بتألق نهائي، وهو أعنف موت في الكون، وأيضًا ولادة جديدة.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "بحر جالاكسي",
+    "story_text": "تتجمع النجوم في بحر دوار من المجرات، وكل موجة تمثل ملحمة حضارية.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "أركان الخلق",
+    "story_text": "أبراج الخلق تخترق السديم - مهد صامت يغذي النجوم والعجائب.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "أفق الحدث",
+    "story_text": "في فخ الجاذبية النهائي، حتى الضوء لا يمكنه الهروب من هلاكه المقدر.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "عبور الثقب الدودي",
+    "story_text": "يطوي الزمكان ليختصر المسافات الشاسعة، مما يسمح لنا بالقفز بحرية بين النجوم.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "عين الكون",
+    "story_text": "عند حافة الأفق الأخير، يفتح الكون عينه الباردة والكبيرة.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

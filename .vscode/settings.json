@@ -1,0 +1,13 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".*\\.swift$",
+        "cmd": "bash \"${workspaceFolder}/scripts/install_ios.sh\"",
+        "isAsync": true,
+        "message": "改完代码自动安装中…",
+        "messageAfter": "已安装到模拟器。"
+      }
+    ]
+  }
+}

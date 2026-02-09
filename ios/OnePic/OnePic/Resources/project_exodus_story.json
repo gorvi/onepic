@@ -1,0 +1,962 @@
+[
+    {
+        "level_id": 1,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "First alloy synthesized. The foundation of our future is laid.",
+        "status": "Quantum Keel: 10% Integrity",
+        "motivation": "A journey of a light-year begins with a single weld."
+    },
+    {
+        "level_id": 2,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Keel segment alpha stabilized. It's heavier than hope.",
+        "status": "Quantum Keel: 20% Integrity",
+        "motivation": "Stand firm, Architect. Gravity is just a suggestion."
+    },
+    {
+        "level_id": 3,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Micro-fractures sealed. The spine must not break.",
+        "status": "Quantum Keel: 30% Integrity",
+        "motivation": "Every piece matters. Do not falter."
+    },
+    {
+        "level_id": 4,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Resonance tests passed. It sings in the void.",
+        "status": "Quantum Keel: 40% Integrity",
+        "motivation": "The void is cold, but our will is iron."
+    },
+    {
+        "level_id": 5,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Structural stabilizers aligned. The spine is holding.",
+        "status": "Quantum Keel: 50% Integrity",
+        "motivation": "Stay focused. The weight of hope is heavy."
+    },
+    {
+        "level_id": 6,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Mid-section welded. We are building a giant.",
+        "status": "Quantum Keel: 60% Integrity",
+        "motivation": "Build strong. Build for eternity."
+    },
+    {
+        "level_id": 7,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Shock absorbers installed. Ready for turbulence.",
+        "status": "Quantum Keel: 70% Integrity",
+        "motivation": "Perfection is not optional. It is survival."
+    },
+    {
+        "level_id": 8,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Keel integrity at 80%. It looks like a ship now.",
+        "status": "Quantum Keel: 80% Integrity",
+        "motivation": "We are the architects of tomorrow."
+    },
+    {
+        "level_id": 9,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Final stress test initiated. Holding firm.",
+        "status": "Quantum Keel: 90% Integrity",
+        "motivation": "Almost there. The backbone is forming."
+    },
+    {
+        "level_id": 10,
+        "module_name": "Quantum Keel",
+        "module_name_zh": "量子龙骨",
+        "log": "Quantum Keel complete. Phase 1 successful.",
+        "status": "MODULE ONLINE: Quantum Keel Complete",
+        "motivation": "Great work. Now, let's give this giant a heart."
+    },
+    {
+        "level_id": 11,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Core containment field active. It's hungry.",
+        "status": "Fusion Reactor Heart: 10% Integrity",
+        "motivation": "Light the fire that will never go out."
+    },
+    {
+        "level_id": 12,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Plasma injectors calibrated. The heat is rising.",
+        "status": "Fusion Reactor Heart: 20% Integrity",
+        "motivation": "Powering the dreams of billions."
+    },
+    {
+        "level_id": 13,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Magnetic confinement stable. A star in a bottle.",
+        "status": "Fusion Reactor Heart: 30% Integrity",
+        "motivation": "Control the chaos. Harness the star."
+    },
+    {
+        "level_id": 14,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Ignition sequence primmer synchronized.",
+        "status": "Fusion Reactor Heart: 40% Integrity",
+        "motivation": "Energy is life. Don't let it fade."
+    },
+    {
+        "level_id": 15,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Cooling systems online. Preventing meltdown.",
+        "status": "Fusion Reactor Heart: 50% Integrity",
+        "motivation": "Feel the heat? That is progress."
+    },
+    {
+        "level_id": 16,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "First spark achieved. It breathes fire.",
+        "status": "Fusion Reactor Heart: 60% Integrity",
+        "motivation": "Brighter than the darkness around us."
+    },
+    {
+        "level_id": 17,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Energy output nominal. The heartbeat begins.",
+        "status": "Fusion Reactor Heart: 70% Integrity",
+        "motivation": "Steady hands. The core is volatile."
+    },
+    {
+        "level_id": 18,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Shielding reinforced. Containing the sun.",
+        "status": "Fusion Reactor Heart: 80% Integrity",
+        "motivation": "Functioning within parameters. Keep going."
+    },
+    {
+        "level_id": 19,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Reactor harmonics synchronized. Beautiful.",
+        "status": "Fusion Reactor Heart: 90% Integrity",
+        "motivation": "The pulse of the Ark strengthens."
+    },
+    {
+        "level_id": 20,
+        "module_name": "Fusion Reactor Heart",
+        "module_name_zh": "聚变核心",
+        "log": "Fusion Reactor online. Infinite power secured.",
+        "status": "MODULE ONLINE: Fusion Reactor Heart Complete",
+        "motivation": "Unlimited power. Now we can move."
+    },
+    {
+        "level_id": 21,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Neural interface mapped. Mind meets machine.",
+        "status": "Neuro-Link Cockpit: 10% Integrity",
+        "motivation": "Where the mind goes, the ship follows."
+    },
+    {
+        "level_id": 22,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Haptic feedback sensors distributed.",
+        "status": "Neuro-Link Cockpit: 20% Integrity",
+        "motivation": "See beyond the horizon."
+    },
+    {
+        "level_id": 23,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Pilot seat installed. The throne of the navigator.",
+        "status": "Neuro-Link Cockpit: 30% Integrity",
+        "motivation": "You are the brain of this beast."
+    },
+    {
+        "level_id": 24,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Viewscreens polished. A window to the abyss.",
+        "status": "Neuro-Link Cockpit: 40% Integrity",
+        "motivation": "clarity of purpose. Clarity of vision."
+    },
+    {
+        "level_id": 25,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Flight controls linked to the cortex.",
+        "status": "Neuro-Link Cockpit: 50% Integrity",
+        "motivation": "The stars are calling. Can you hear them?"
+    },
+    {
+        "level_id": 26,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Emergency override systems codified.",
+        "status": "Neuro-Link Cockpit: 60% Integrity",
+        "motivation": "Focus. The universe is watching."
+    },
+    {
+        "level_id": 27,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Navigation AI 'OnePic' integrated.",
+        "status": "Neuro-Link Cockpit: 70% Integrity",
+        "motivation": "One thought, one destination."
+    },
+    {
+        "level_id": 28,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Life support for the bridge operational.",
+        "status": "Neuro-Link Cockpit: 80% Integrity",
+        "motivation": "Prepare to take the helm."
+    },
+    {
+        "level_id": 29,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "System latency reduced to zero.",
+        "status": "Neuro-Link Cockpit: 90% Integrity",
+        "motivation": "Connection established."
+    },
+    {
+        "level_id": 30,
+        "module_name": "Neuro-Link Cockpit",
+        "module_name_zh": "神经链接驾驶舱",
+        "log": "Cockpit operational. The mind is the pilot.",
+        "status": "MODULE ONLINE: Neuro-Link Cockpit Complete",
+        "motivation": "We are ready to see the universe."
+    },
+    {
+        "level_id": 31,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Chamber 1 constructed. For the dreamers.",
+        "status": "Cryostasis Hall: 10% Integrity",
+        "motivation": "Guardians of the sleeping."
+    },
+    {
+        "level_id": 32,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Cryo-fluid synthetics produced.",
+        "status": "Cryostasis Hall: 20% Integrity",
+        "motivation": "Silence is safety."
+    },
+    {
+        "level_id": 33,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Vital monitoring arrays wide-networked.",
+        "status": "Cryostasis Hall: 30% Integrity",
+        "motivation": "They trust us with their lives."
+    },
+    {
+        "level_id": 34,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Power redundancy for stasis pods secured.",
+        "status": "Cryostasis Hall: 40% Integrity",
+        "motivation": "A long sleep for a new dawn."
+    },
+    {
+        "level_id": 35,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Thaw protocols written with care.",
+        "status": "Cryostasis Hall: 50% Integrity",
+        "motivation": "Preserve the past to save the future."
+    },
+    {
+        "level_id": 36,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Capacity expanded to 5 million souls.",
+        "status": "Cryostasis Hall: 60% Integrity",
+        "motivation": "Quiet. The future is resting."
+    },
+    {
+        "level_id": 37,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Dream-suppression fields active.",
+        "status": "Cryostasis Hall: 70% Integrity",
+        "motivation": "Every pod is a universe of dreams."
+    },
+    {
+        "level_id": 38,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Safety locks verify 100% seal.",
+        "status": "Cryostasis Hall: 80% Integrity",
+        "motivation": "Watch over them, Architect."
+    },
+    {
+        "level_id": 39,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "The sleepers will be safe here.",
+        "status": "Cryostasis Hall: 90% Integrity",
+        "motivation": "Safe passage for all."
+    },
+    {
+        "level_id": 40,
+        "module_name": "Cryostasis Hall",
+        "module_name_zh": "休眠大厅",
+        "log": "Cryostasis Hall sealed. Evolution paused.",
+        "status": "MODULE ONLINE: Cryostasis Hall Complete",
+        "motivation": "The passengers are secured."
+    },
+    {
+        "level_id": 41,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Hydroponics bay assembled. Green in the dark.",
+        "status": "The Bio-Dome: 10% Integrity",
+        "motivation": "Bring a piece of home with us."
+    },
+    {
+        "level_id": 42,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Atmospheric scrubbers online. Fresh air.",
+        "status": "The Bio-Dome: 20% Integrity",
+        "motivation": "Green is the color of hope."
+    },
+    {
+        "level_id": 43,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Water purification cycle established.",
+        "status": "The Bio-Dome: 30% Integrity",
+        "motivation": "Breathe. Build. Bloom."
+    },
+    {
+        "level_id": 44,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Seed vault integration complete.",
+        "status": "The Bio-Dome: 40% Integrity",
+        "motivation": "Life requires balance."
+    },
+    {
+        "level_id": 45,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Artificial sunlight arrays mounted.",
+        "status": "The Bio-Dome: 50% Integrity",
+        "motivation": "Nurture the seed of tomorrow."
+    },
+    {
+        "level_id": 46,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Micro-ecosystem bacterial balance achieved.",
+        "status": "The Bio-Dome: 60% Integrity",
+        "motivation": "A garden in the stars."
+    },
+    {
+        "level_id": 47,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "First sprout observed. Life finds a way.",
+        "status": "The Bio-Dome: 70% Integrity",
+        "motivation": "Sustain the cycle."
+    },
+    {
+        "level_id": 48,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Carbon cycle optimized for long-haul.",
+        "status": "The Bio-Dome: 80% Integrity",
+        "motivation": "Nature is our greatest technology."
+    },
+    {
+        "level_id": 49,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "The smell of rain synthesized.",
+        "status": "The Bio-Dome: 90% Integrity",
+        "motivation": "Growth is slow, but certain."
+    },
+    {
+        "level_id": 50,
+        "module_name": "The Bio-Dome",
+        "module_name_zh": "生态循环仓",
+        "log": "Bio-Dome flourishing. Earth, reborn.",
+        "status": "MODULE ONLINE: The Bio-Dome Complete",
+        "motivation": "We carry the forests with us."
+    },
+    {
+        "level_id": 51,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Emitter arrays positioned on the hull.",
+        "status": "Void Shields: 10% Integrity",
+        "motivation": "The void is hostile. Be ready."
+    },
+    {
+        "level_id": 52,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Force field harmonics calculated.",
+        "status": "Void Shields: 20% Integrity",
+        "motivation": "Protect what matters most."
+    },
+    {
+        "level_id": 53,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Meteorite deflection subroutines compiled.",
+        "status": "Void Shields: 30% Integrity",
+        "motivation": "Strength is an invisible wall."
+    },
+    {
+        "level_id": 54,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Radiation absorption mesh applied.",
+        "status": "Void Shields: 40% Integrity",
+        "motivation": "Nothing shall pass."
+    },
+    {
+        "level_id": 55,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Energy dispersion matrix active.",
+        "status": "Void Shields: 50% Integrity",
+        "motivation": "Deflect the darkness."
+    },
+    {
+        "level_id": 56,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Impact simulation: Success.",
+        "status": "Void Shields: 60% Integrity",
+        "motivation": "Safety through superiority."
+    },
+    {
+        "level_id": 57,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Shield regeneration capacitors charged.",
+        "status": "Void Shields: 70% Integrity",
+        "motivation": "Armor the hope."
+    },
+    {
+        "level_id": 58,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Hull integrity reinforced x100.",
+        "status": "Void Shields: 80% Integrity",
+        "motivation": "Stand against the storm."
+    },
+    {
+        "level_id": 59,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Invisible armor wrapping the Ark.",
+        "status": "Void Shields: 90% Integrity",
+        "motivation": "Unbreakable."
+    },
+    {
+        "level_id": 60,
+        "module_name": "Void Shields",
+        "module_name_zh": "虚空护盾",
+        "log": "Void Shields active. We are invincible.",
+        "status": "MODULE ONLINE: Void Shields Complete",
+        "motivation": "Safe from the cosmic winds."
+    },
+    {
+        "level_id": 61,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Deep space telescope lens ground.",
+        "status": "Hyper-Sensors: 10% Integrity",
+        "motivation": "Knowledge is the first step."
+    },
+    {
+        "level_id": 62,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Spectrometers tuned to extra-solar frequencies.",
+        "status": "Hyper-Sensors: 20% Integrity",
+        "motivation": "Piercing the veil of the unknown."
+    },
+    {
+        "level_id": 63,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Gravitational wave detectors mounted.",
+        "status": "Hyper-Sensors: 30% Integrity",
+        "motivation": "Look closer."
+    },
+    {
+        "level_id": 64,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Dark matter scanners online.",
+        "status": "Hyper-Sensors: 40% Integrity",
+        "motivation": "The truth is out there."
+    },
+    {
+        "level_id": 65,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Long-range telemetry array deployed.",
+        "status": "Hyper-Sensors: 50% Integrity",
+        "motivation": "Eyes on the prize."
+    },
+    {
+        "level_id": 66,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Signal noise filtration improved.",
+        "status": "Hyper-Sensors: 60% Integrity",
+        "motivation": "Mapping the path to salvation."
+    },
+    {
+        "level_id": 67,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "First image of Destination Alpha captured.",
+        "status": "Hyper-Sensors: 70% Integrity",
+        "motivation": "See the invisible."
+    },
+    {
+        "level_id": 68,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Nebula mapping protocols active.",
+        "status": "Hyper-Sensors: 80% Integrity",
+        "motivation": "Nothing can hide from us."
+    },
+    {
+        "level_id": 69,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Blind spots eliminated.",
+        "status": "Hyper-Sensors: 90% Integrity",
+        "motivation": "Awareness is survival."
+    },
+    {
+        "level_id": 70,
+        "module_name": "Hyper-Sensors",
+        "module_name_zh": "超感雷达",
+        "log": "Hyper-Sensors calibrated. We see everything.",
+        "status": "MODULE ONLINE: Hyper-Sensors Complete",
+        "motivation": "The path is clear."
+    },
+    {
+        "level_id": 71,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Ionization chamber assembled.",
+        "status": "Ion Thrusters: 10% Integrity",
+        "motivation": "Momentum is key."
+    },
+    {
+        "level_id": 72,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Magnetic nozzles focused.",
+        "status": "Ion Thrusters: 20% Integrity",
+        "motivation": "Push forward, always."
+    },
+    {
+        "level_id": 73,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Xenon fuel tanks pressurized.",
+        "status": "Ion Thrusters: 30% Integrity",
+        "motivation": "Speed is life."
+    },
+    {
+        "level_id": 74,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Thrust vectoring gimbals greased.",
+        "status": "Ion Thrusters: 40% Integrity",
+        "motivation": "Leave the past behind."
+    },
+    {
+        "level_id": 75,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Sub-light velocity simulated.",
+        "status": "Ion Thrusters: 50% Integrity",
+        "motivation": "Steady acceleration."
+    },
+    {
+        "level_id": 76,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Exhaust manifold heat-shielded.",
+        "status": "Ion Thrusters: 60% Integrity",
+        "motivation": "Forward. Only forward."
+    },
+    {
+        "level_id": 77,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Acceleration curves smoothed.",
+        "status": "Ion Thrusters: 70% Integrity",
+        "motivation": "Feel the drift."
+    },
+    {
+        "level_id": 78,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Braking thrusters installed. Stopping is hard.",
+        "status": "Ion Thrusters: 80% Integrity",
+        "motivation": "Precision in motion."
+    },
+    {
+        "level_id": 79,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Engine test fire: Blue flame achieved.",
+        "status": "Ion Thrusters: 90% Integrity",
+        "motivation": "Blue fire, bright future."
+    },
+    {
+        "level_id": 80,
+        "module_name": "Ion Thrusters",
+        "module_name_zh": "离子推进器",
+        "log": "Ion Thrusters nominal. We have movement.",
+        "status": "MODULE ONLINE: Ion Thrusters Complete",
+        "motivation": "We are no longer static."
+    },
+    {
+        "level_id": 81,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Subspace transceiver core synthesized.",
+        "status": "Communication Spire: 10% Integrity",
+        "motivation": "Speak to the stars."
+    },
+    {
+        "level_id": 82,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Antenna array extended. Listening.",
+        "status": "Communication Spire: 20% Integrity",
+        "motivation": "Connection is unbreakable."
+    },
+    {
+        "level_id": 83,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Encryption keys generated.",
+        "status": "Communication Spire: 30% Integrity",
+        "motivation": "Listen carefully."
+    },
+    {
+        "level_id": 84,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Universal translator database loaded.",
+        "status": "Communication Spire: 40% Integrity",
+        "motivation": "Voices across the void."
+    },
+    {
+        "level_id": 85,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Distress beacon functionality tested.",
+        "status": "Communication Spire: 50% Integrity",
+        "motivation": "Sending hope."
+    },
+    {
+        "level_id": 86,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Inter-ship comms network live.",
+        "status": "Communication Spire: 60% Integrity",
+        "motivation": "Never silence the truth."
+    },
+    {
+        "level_id": 87,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Message to Earth archives recorded.",
+        "status": "Communication Spire: 70% Integrity",
+        "motivation": "A signal in the dark."
+    },
+    {
+        "level_id": 88,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Signal boosters amplified.",
+        "status": "Communication Spire: 80% Integrity",
+        "motivation": "Calling home."
+    },
+    {
+        "level_id": 89,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "The silence of space is broken.",
+        "status": "Communication Spire: 90% Integrity",
+        "motivation": "We are heard."
+    },
+    {
+        "level_id": 90,
+        "module_name": "Communication Spire",
+        "module_name_zh": "星语塔",
+        "log": "Communication Spire active. We are not alone.",
+        "status": "MODULE ONLINE: Communication Spire Complete",
+        "motivation": "United by signal."
+    },
+    {
+        "level_id": 91,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Data crystal storage banks racked.",
+        "status": "Genesis Library: 10% Integrity",
+        "motivation": "Knowledge is the true treasure."
+    },
+    {
+        "level_id": 92,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "All of human literature uploaded.",
+        "status": "Genesis Library: 20% Integrity",
+        "motivation": "Remember who we are."
+    },
+    {
+        "level_id": 93,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "DNA sequencing of all Earth species stored.",
+        "status": "Genesis Library: 30% Integrity",
+        "motivation": "Culture is our soul."
+    },
+    {
+        "level_id": 94,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Art history archives digitized.",
+        "status": "Genesis Library: 40% Integrity",
+        "motivation": "Do not forget."
+    },
+    {
+        "level_id": 95,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Scientific theorems preserved.",
+        "status": "Genesis Library: 50% Integrity",
+        "motivation": "Learning for the future."
+    },
+    {
+        "level_id": 96,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Music of the spheres recorded.",
+        "status": "Genesis Library: 60% Integrity",
+        "motivation": "The sum of us."
+    },
+    {
+        "level_id": 97,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "History lessons for the new world.",
+        "status": "Genesis Library: 70% Integrity",
+        "motivation": "Wisdom is eternal."
+    },
+    {
+        "level_id": 98,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Server cooling optimized.",
+        "status": "Genesis Library: 80% Integrity",
+        "motivation": "A library for the stars."
+    },
+    {
+        "level_id": 99,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Redundancy 99.9%. Knowledge is safe.",
+        "status": "Genesis Library: 90% Integrity",
+        "motivation": "Preserving the spark."
+    },
+    {
+        "level_id": 100,
+        "module_name": "Genesis Library",
+        "module_name_zh": "文明火种库",
+        "log": "Genesis Library sealed. We remember.",
+        "status": "MODULE ONLINE: Genesis Library Complete",
+        "motivation": "We carry our history."
+    },
+    {
+        "level_id": 101,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Space-time distortion coils wound.",
+        "status": "Warp Drive: 10% Integrity",
+        "motivation": "Beyond the speed of light."
+    },
+    {
+        "level_id": 102,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Dark matter injector synced.",
+        "status": "Warp Drive: 20% Integrity",
+        "motivation": "Bend the rules."
+    },
+    {
+        "level_id": 103,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Reality anchors stabilization check.",
+        "status": "Warp Drive: 30% Integrity",
+        "motivation": "Distance is an illusion."
+    },
+    {
+        "level_id": 104,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Warp bubble geometry calculated.",
+        "status": "Warp Drive: 40% Integrity",
+        "motivation": "Faster than thought."
+    },
+    {
+        "level_id": 105,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Relativity compensators active.",
+        "status": "Warp Drive: 50% Integrity",
+        "motivation": "The universe is small."
+    },
+    {
+        "level_id": 106,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Tachyon burst emitters aligned.",
+        "status": "Warp Drive: 60% Integrity",
+        "motivation": "Warp speed ahead."
+    },
+    {
+        "level_id": 107,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Folding space... simulation pass.",
+        "status": "Warp Drive: 70% Integrity",
+        "motivation": "Breaking the barrier."
+    },
+    {
+        "level_id": 108,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Event horizon safety locks on.",
+        "status": "Warp Drive: 80% Integrity",
+        "motivation": "Time is relative."
+    },
+    {
+        "level_id": 109,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "The fabric of the universe bends.",
+        "status": "Warp Drive: 90% Integrity",
+        "motivation": "Impossible is nothing."
+    },
+    {
+        "level_id": 110,
+        "module_name": "Warp Drive",
+        "module_name_zh": "曲率引擎",
+        "log": "Warp Drive operational. Einstein was right.",
+        "status": "MODULE ONLINE: Warp Drive Complete",
+        "motivation": "The stars are within reach."
+    },
+    {
+        "level_id": 111,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "System wide diagnostics: Green.",
+        "status": "The Launch Key: 10% Integrity",
+        "motivation": "This is it."
+    },
+    {
+        "level_id": 112,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Captain's clearance code verified.",
+        "status": "The Launch Key: 20% Integrity",
+        "motivation": "The final step."
+    },
+    {
+        "level_id": 113,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Countdown protocols initiated.",
+        "status": "The Launch Key: 30% Integrity",
+        "motivation": "Destiny awaits."
+    },
+    {
+        "level_id": 114,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Fuel lines fully pressurized.",
+        "status": "The Launch Key: 40% Integrity",
+        "motivation": "No turning back."
+    },
+    {
+        "level_id": 115,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Passenger manifest confirmed.",
+        "status": "The Launch Key: 50% Integrity",
+        "motivation": "For humanity."
+    },
+    {
+        "level_id": 116,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Launch trajectory plotted.",
+        "status": "The Launch Key: 60% Integrity",
+        "motivation": "Press the button."
+    },
+    {
+        "level_id": 117,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "OnePic AI final handshake.",
+        "status": "The Launch Key: 70% Integrity",
+        "motivation": "Ready or not."
+    },
+    {
+        "level_id": 118,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Safety locks disengaged.",
+        "status": "The Launch Key: 80% Integrity",
+        "motivation": "The end of the beginning."
+    },
+    {
+        "level_id": 119,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "Ignition sequence ready.",
+        "status": "The Launch Key: 90% Integrity",
+        "motivation": "Launch."
+    },
+    {
+        "level_id": 120,
+        "module_name": "The Launch Key",
+        "module_name_zh": "启动密钥",
+        "log": "The Launch Key turned. The Ark breathes.",
+        "status": "MODULE ONLINE: The Launch Key Complete",
+        "motivation": "Take the helm, Savior. The stars await."
+    }
+]

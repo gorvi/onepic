@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "iOS: 构建",
+      "type": "shell",
+      "command": "xcodebuild",
+      "args": [
+        "-project", "ios/OnePic/OnePic.xcodeproj",
+        "-scheme", "OnePic",
+        "-destination", "generic/platform=iOS Simulator",
+        "-derivedDataPath", "ios/OnePic/build",
+        "-configuration", "Debug",
+        "build"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "silent", "panel": "shared" },
+      "problemMatcher": ["$xcodebuild"]
+    },
+    {
+      "label": "iOS: 安装到已启动模拟器",
+      "dependsOn": "iOS: 构建",
+      "type": "shell",
+      "command": "xcrun",
+      "args": [
+        "simctl", "install", "booted",
+        "${workspaceFolder}/ios/OnePic/build/Build/Products/Debug-iphonesimulator/OnePic.app"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "silent", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: 构建并安装到模拟器",
+      "dependsOn": "iOS: 安装到已启动模拟器",
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}

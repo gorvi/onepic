@@ -55,3 +55,8 @@
 - **Language**: Always respond in Chinese (Simplified).
 - **Constants**: UPPER_CASE_WITH_UNDERSCORES.
 - **Functions**: camelCase.
+
+## iOS：修改完成后自动安装
+- 当本次对话中**修改了** `ios/OnePic/` 下的 Swift 或 iOS 工程相关文件后，**在完成所有代码修改的最后一步**，必须执行一次安装到模拟器，无需用户手动操作。
+- 执行方式：在项目根目录运行 `./scripts/install_ios.sh`（或运行任务「iOS: 构建并安装到模拟器」），将应用构建并安装到当前已启动的 iOS 模拟器。
+- 若用户未启动模拟器，安装步骤会失败，可告知用户「请先启动一个 iOS 模拟器后再试」；若仅修改了非 iOS 代码（如仅 Android），则不必执行安装。

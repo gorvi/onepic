@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "世界樹の種",
+    "story_text": "世界樹の種が虚空に浮かび、万物のオデッセイが始まります。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "光の聖域",
+    "story_text": "光と緑が交錯する聖なる場所で、全ての生命が魂を休めます。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "夜明けの密林",
+    "story_text": "朝焼けが霧を突き抜け、古の密林を呼び覚まします。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "琥珀の囁き",
+    "story_text": "季節が流れる中、琥珀色の落ち葉が過去の物語を囁きます。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "翡翠の禅境",
+    "story_text": "竹が静かに揺れ、緑豊かな世界でしばしの禅の心を見いだします。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "雲上の棚田",
+    "story_text": "山の斜面をエメラルド色の波が幾重にも重なりながら流れ落ちます。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "烈火の砂丘",
+    "story_text": "灼熱の太陽が砂丘を鍛えますが、この荒涼とした地にも生命の鼓動が宿ります。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "永遠の崖",
+    "story_text": "陸と海が交わる果てに、未知への新たな旅が始まります。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "スノー・スピリット・ウルフ",
+    "story_text": "雪原の奥深くで、精霊の狼が静かに純潔を守り続けています。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "ムーンライト・フォックス",
+    "story_text": "月光が銀色の輝きを放ち、精霊の狐が真夜中の森を彷徨います。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "レインボーフェニックス",
+    "story_text": "虹色の翼が青空を切り裂き、虹の跡を残した。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "パンダセージ",
+    "story_text": "雲海の上で、パンダ賢者は古代の知恵について瞑想します。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "タイガーフォレスト",
+    "story_text": "まだらの影の下には、静かな忍耐の中に力が潜んでいます。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "ガネーシャの魂",
+    "story_text": "時間の川を渡り、象の魂は世界の真実を認識します。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "森の王様",
+    "story_text": "森の王がここに立っており、すべての生き物が彼の視線の下で息を止めています。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "サンダーバード",
+    "story_text": "天頂に立つ番兵は、眼下に広がる雄大な大地を監視します。",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "古代の彫刻",
+    "story_text": "時間の経過とともに埋もれた彫刻には、先祖たちのささやきが記録されています。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "スターロードピラミッド",
+    "story_text": "灼熱の砂漠に何千年も沈黙して佇む幾何学模様の驚異。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "ペトラ ライト ゲート",
+    "story_text": "石垣の上では、赤い岩の中に文明の温もりが脈打っています。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "失われたマチュピチュ",
+    "story_text": "雲に覆われた山頂の都市は、時空の襞に迷い込んだ。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "ストーンドラゴン",
+    "story_text": "石竜は山の尾根に沿って曲がりくねり、古代の土地を守っています。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "ヒーローズアリーナ",
+    "story_text": "廃墟となった闘技場には、過ぎ去った日々の英雄的な叙事詩がこだまする。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "光のドーム",
+    "story_text": "ドームの下の神聖な光は、数え切れないほどの文明の興亡を目撃してきました。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "無限の図書館",
+    "story_text": "空に向かって伸びる知識の螺旋、失われた真実を収めた古代の巻物。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "ドリーム ガーデンズ",
+    "story_text": "天と地の間に浮かぶ庭園、失われた自然の交響曲。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "プロフェット・スパイア",
+    "story_text": "山の頂上にある巨大な一枚岩が、道に迷った人々を赤い砂漠に導きます。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "スカイセイルズ",
+    "story_text": "港の白い帆が未知の地平線へ針路を定めます。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "サイバーバイオスパイア",
+    "story_text": "ネオンと蔓が未来の尖塔で絡み合い、サイバーパンク時代に自然が息づいています。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "時の箱舟",
+    "story_text": "黄昏の海にそびえる巨大都市、時を運ぶ箱舟。",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "グローパルスドルフィンズ",
+    "story_text": "海の中で優雅な姿が、深い紫色の脈動の中で踊っています。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "蛍光コーラル",
+    "story_text": "深海にはサンゴ礁が織りなす万華鏡のような夢の庭園。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "アイスドラゴンの眠り",
+    "story_text": "極寒の海流の下で、古代のアイスドラゴンの番兵が眠っている。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "幽霊船の難破船",
+    "story_text": "帆走時代の最終章を静かに告げる、波に打ち捨てられた残骸。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "宇宙クジラ",
+    "story_text": "海と星の境界で、大クジラは文明の火花を運びます。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "ヴォイドクラーケン",
+    "story_text": "現実と幻想の間の深淵で、触手がデータの網を織り成します。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "幻のクラゲ",
+    "story_text": "暗闇の中で光るストリーマーは、真夜中に揺らめく妖精の火のように。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "アトランティス",
+    "story_text": "封印されていたアトランティスが深海の中で再びかつての栄光を現す。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "コアフォージ",
+    "story_text": "地殻の奥深くにある熱噴出孔は、想像を超える生命の花を生み出します。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "火と氷",
+    "story_text": "赤い溶岩が氷水に流れ込み、火と水の究極の決闘が繰り広げられます。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "禁断の生活",
+    "story_text": "人生の禁断の領域では、古代の秩序が今も静かに回転しています。",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "ニルヴァーナ・フェニックス",
+    "story_text": "旧世界の残り火から立ち上がったフェニックスは、炎を通して永遠の命を獲得します。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "スタードラゴン",
+    "story_text": "星の軌道を通して夢の境界を守る、時の監視者。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "天空のベール",
+    "story_text": "糸のようなスターダスト、羽毛のようなオーロラ、彼女は夢見る時代の永遠のエコーです。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "時のらせん",
+    "story_text": "夢の中で時間は溶け、螺旋階段は永遠へと続く。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "逆さ滝",
+    "story_text": "重力はつかの間の雲にすぎません。滝は今、空の海に向かって流れています。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "クリスタルメイズ",
+    "story_text": "光と影のダンスの中で、クリスタルの迷路は魂の奥底を映し出します。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "クラウドライブラリ",
+    "story_text": "あらゆる物語が飛び立つ、伝説の天空図書館。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "グラビティアイランド",
+    "story_text": "重力が効かなくなったその果てで、浮かぶ島々が雲海の中を静かに漂っています。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "時計じかけの次元",
+    "story_text": "夢の次元で果てしなく回転する、歯車と蒸気の産業賛歌。",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "母なる地球：ディープブルー",
+    "story_text": "星の彼方の岸で、私たちはかつてこの場所を故郷と呼んでいました。それは唯一の深い青です。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "レッドパイオニア",
+    "story_text": "赤く錆びた塵の下で、文明の火花が深紅の星に点火する。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "フロストリング",
+    "story_text": "極寒の環――虚空に残された宇宙の壮大な痕跡。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "バイナリサンセット",
+    "story_text": "双子の太陽が沈み、異星人の空に重なり合う影を落とします。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "眠れぬ星",
+    "story_text": "数兆の光が流れとなって集まり、この眠れぬ星の未来をコード化します。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "超新星",
+    "story_text": "星は究極の輝きで終わります。それは宇宙で最も激しい死であり、また再生でもあります。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "銀河の海",
+    "story_text": "星々が渦巻く銀河の海に集まり、それぞれの波が文明の叙事詩を表します。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "創造の柱",
+    "story_text": "創造の塔が星雲を貫き、星と驚異を育む静かなゆりかごです。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "イベントホライズン",
+    "story_text": "重力の究極の罠では、光ですらその運命から逃れることはできません。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "ワームホールトランジット",
+    "story_text": "時空が折り畳まれて広大な距離が縮まり、私たちは星々の間を自由に飛び越えることができます。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "宇宙の目",
+    "story_text": "最後の地平線の端で、宇宙は冷たくも壮大な目を開きます。",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]

@@ -1,24 +1,18 @@
-//
-//  ContentView.swift
-//  OnePic
-//
-//  Created by gaohongwei on 2026/2/2.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isIntroFinished = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if isIntroFinished {
+            MainTabView()
+                .transition(.opacity)
+        } else {
+            IntroView(onStartJourney: {
+                withAnimation {
+                    isIntroFinished = true
+                }
+            })
         }
-        .padding()
     }
-}
-
-#Preview {
-    ContentView()
 }

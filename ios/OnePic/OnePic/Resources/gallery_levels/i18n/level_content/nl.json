@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "description": "Zaden van de Wereldboom",
+    "story_text": "De zaden van de Wereldboom drijven door de leegte en beginnen de odyssee van alle dingen.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_01_B_WorldTreeSeeds.jpg",
+    "filename_a": "level_01_A_WorldTreeSeeds.jpg"
+  },
+  {
+    "id": 2,
+    "description": "Heiligdom van Licht",
+    "story_text": "Een heiligdom waar licht und groen samenkomen, waar alle wezens rust vinden voor hun ziel.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_02_B_SanctuaryOfLight.jpg",
+    "filename_a": "level_02_A_SanctuaryOfLight.jpg"
+  },
+  {
+    "id": 3,
+    "description": "Dauwbos",
+    "story_text": "De dageraad breekt door de mist en wekt het eeuwenoude bos.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_03_B_DawnForest.jpg",
+    "filename_a": "level_03_A_DawnForest.jpg"
+  },
+  {
+    "id": 4,
+    "description": "Gefluister van Amber",
+    "story_text": "Terwijl de seizoenen verstrijken, fluisteren amberbladeren verhalen uit het verleden.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_04_B_WhispersOfAmber.jpg",
+    "filename_a": "level_04_A_WhispersOfAmber.jpg"
+  },
+  {
+    "id": 5,
+    "description": "Smaragd Zen",
+    "story_text": "Bamboe zwaait zachtjes en biedt een moment van zen in het groene rijk.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_05_B_EmeraldZen.jpg",
+    "filename_a": "level_05_A_EmeraldZen.jpg"
+  },
+  {
+    "id": 6,
+    "description": "Wolkenterrassen",
+    "story_text": "Smaragdgroene golven stromen laag over laag langs de berghelling.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_06_B_RiceTerraces.jpg",
+    "filename_a": "level_06_A_RiceTerraces.jpg"
+  },
+  {
+    "id": 7,
+    "description": "Brandende duinen",
+    "story_text": "De brandende zon smeedt de duinen, maar toch roert het leven zich in dit dorre land.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_07_B_DesertDunes.jpg",
+    "filename_a": "level_07_A_DesertDunes.jpg"
+  },
+  {
+    "id": 8,
+    "description": "Rand van de eeuwigheid",
+    "story_text": "Waar land en zee eindigen, begint een nieuwe reis naar het onbekende.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_08_B_EdgeOfEternity.jpg",
+    "filename_a": "level_08_A_EdgeOfEternity.jpg"
+  },
+  {
+    "id": 9,
+    "description": "Geestwolf",
+    "story_text": "Diep in de sneeuwvlaktes bewaakt de geestwolf stilletjes de zuiverheid.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_09_B_SpiritWolf.jpg",
+    "filename_a": "level_09_A_SpiritWolf.jpg"
+  },
+  {
+    "id": 10,
+    "description": "Maanvos",
+    "story_text": "Maanlicht werpt een zilveren gloed terwijl de geestvos door het middernachtelijke bos dwaalt.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_10_B_LunarFox.jpg",
+    "filename_a": "level_10_A_LunarFox.jpg"
+  },
+  {
+    "id": 11,
+    "description": "Regenboog Feniks",
+    "story_text": "Iriserende vleugels snijden door de blauwe lucht en laten een regenboogspoor achter.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_11_B_RainbowPhoenix.jpg",
+    "filename_a": "level_11_A_RainbowPhoenix.jpg"
+  },
+  {
+    "id": 12,
+    "description": "Panda Salie",
+    "story_text": "Boven de zee van wolken mediteert de panda-wijze op eeuwenoude wijsheid.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_12_B_PandaSage.jpg",
+    "filename_a": "level_12_A_PandaSage.jpg"
+  },
+  {
+    "id": 13,
+    "description": "Tijger bos",
+    "story_text": "Onder gevlekte schaduwen schuilt macht in stil geduld.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_13_B_TigerForest.jpg",
+    "filename_a": "level_13_A_TigerForest.jpg"
+  },
+  {
+    "id": 14,
+    "description": "Ganesha-ziel",
+    "story_text": "Terwijl ze de rivier van de tijd doorkruist, neemt de olifantenziel de waarheid van de wereld waar.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_14_B_GaneshaSoul.jpg",
+    "filename_a": "level_14_A_GaneshaSoul.jpg"
+  },
+  {
+    "id": 15,
+    "description": "Bos Koning",
+    "story_text": "De koning van het bos staat hier en alle wezens houden hun adem in onder zijn blik.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_15_B_ForestKing.jpg",
+    "filename_a": "level_15_A_ForestKing.jpg"
+  },
+  {
+    "id": 16,
+    "description": "Dondervogel",
+    "story_text": "De schildwacht op het zenit overziet de majestueuze uitgestrektheid van het land beneden.",
+    "tags": [
+      "nature"
+    ],
+    "filename_b": "level_16_B_Thunderbird.jpg",
+    "filename_a": "level_16_A_Thunderbird.jpg"
+  },
+  {
+    "id": 17,
+    "description": "Oude gravures",
+    "story_text": "Gravures die door de tijd zijn begraven, registreren het gefluister van voorouders.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_17_B_AncientCarvings.jpg",
+    "filename_a": "level_17_A_AncientCarvings.jpg"
+  },
+  {
+    "id": 18,
+    "description": "Piramides van Star Road",
+    "story_text": "Een geometrisch wonder in de verzengende woestijn, dat millennia lang stil stond.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_18_B_StarRoadPyramids.jpg",
+    "filename_a": "level_18_A_StarRoadPyramids.jpg"
+  },
+  {
+    "id": 19,
+    "description": "Petra Lichtpoort",
+    "story_text": "Op de stenen muur pulseert de warmte van de beschaving in de rode rotsen.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_19_B_PetraLightGate.jpg",
+    "filename_a": "level_19_A_PetraLightGate.jpg"
+  },
+  {
+    "id": 20,
+    "description": "Verloren Machu Picchu",
+    "story_text": "De stad op de in wolken gehulde top, verloren in de plooien van tijd en ruimte.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_20_B_LostMachuPicchu.jpg",
+    "filename_a": "level_20_A_LostMachuPicchu.jpg"
+  },
+  {
+    "id": 21,
+    "description": "Stenen Draak",
+    "story_text": "De stenen draak slingert langs de bergrug en bewaakt het oude land.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_21_B_StoneDragon.jpg",
+    "filename_a": "level_21_A_StoneDragon.jpg"
+  },
+  {
+    "id": 22,
+    "description": "Heldenarena",
+    "story_text": "De arena in puin echoot de heroïsche heldendichten van vervlogen tijden.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_22_B_HerosArena.jpg",
+    "filename_a": "level_22_A_HerosArena.jpg"
+  },
+  {
+    "id": 23,
+    "description": "Koepel van Licht",
+    "story_text": "Het heilige licht onder de koepel is getuige geweest van de opkomst en ondergang van talloze beschavingen.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_23_B_DomeOfLight.jpg",
+    "filename_a": "level_23_A_DomeOfLight.jpg"
+  },
+  {
+    "id": 24,
+    "description": "Oneindige bibliotheek",
+    "story_text": "Een spiraal van kennis die naar de hemel reikt, oude boekrollen die verloren waarheden bevatten.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_24_B_InfiniteLibrary.jpg",
+    "filename_a": "level_24_A_InfiniteLibrary.jpg"
+  },
+  {
+    "id": 25,
+    "description": "Droomtuinen",
+    "story_text": "Een tuin tussen hemel en aarde, een verloren symfonie van de natuur.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_25_B_DreamGardens.jpg",
+    "filename_a": "level_25_A_DreamGardens.jpg"
+  },
+  {
+    "id": 26,
+    "description": "Profeet Spire",
+    "story_text": "De gigantische monoliet bovenop de berg leidt de verlorenen door de rode woestijn.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_26_B_ProphetSpire.jpg",
+    "filename_a": "level_26_A_ProphetSpire.jpg"
+  },
+  {
+    "id": 27,
+    "description": "Hemel zeilen",
+    "story_text": "Witte zeilen in de haven zetten koers naar onbekende horizonten.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_27_B_SkySails.jpg",
+    "filename_a": "level_27_A_SkySails.jpg"
+  },
+  {
+    "id": 28,
+    "description": "Cyber ​​Bio Spire",
+    "story_text": "Neon en wijnranken zijn met elkaar verweven in de toekomstige torenspits: de natuur ademt in een cyberpunktijdperk.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_28_B_CyberBioSpire.jpg",
+    "filename_a": "level_28_A_CyberBioSpire.jpg"
+  },
+  {
+    "id": 29,
+    "description": "Ark van de tijd",
+    "story_text": "Een megastad die boven de schemerige zee zweeft, de ark die de tijd zelf draagt.",
+    "tags": [
+      "civilization"
+    ],
+    "filename_b": "level_29_B_ArkOfTime.jpg",
+    "filename_a": "level_29_A_ArkOfTime.jpg"
+  },
+  {
+    "id": 30,
+    "description": "Glow Pulse-dolfijnen",
+    "story_text": "Sierlijke figuren in de zee, dansend in diep violette pulsen.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_30_B_GlowPulseDolphins.jpg",
+    "filename_a": "level_30_A_GlowPulseDolphins.jpg"
+  },
+  {
+    "id": 31,
+    "description": "Fluorescerend koraal",
+    "story_text": "In de diepten van de oceaan weven koraalriffen een caleidoscopische droomtuin.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_31_B_FluorescentCoral.jpg",
+    "filename_a": "level_31_A_FluorescentCoral.jpg"
+  },
+  {
+    "id": 32,
+    "description": "IJsdraak slaapt",
+    "story_text": "Onder ijskoude stromingen slaapt de schildwacht van de oude ijsdraak.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_32_B_IceDragonEmbryo.jpg",
+    "filename_a": "level_32_A_IceDragonEmbryo.jpg"
+  },
+  {
+    "id": 33,
+    "description": "Spookschipbreuk",
+    "story_text": "Wrakstukken achtergelaten door de golven, die stilletjes het laatste hoofdstuk van het zeiltijdperk vertellen.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_33_B_GhostShipwreck.jpg",
+    "filename_a": "level_33_A_GhostShipwreck.jpg"
+  },
+  {
+    "id": 34,
+    "description": "Kosmische walvis",
+    "story_text": "Op de grens van de zee en de sterren draagt ​​de grote walvis de vonk van de beschaving voort.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_34_A_MechaWhale.jpg",
+    "filename_b": "level_34_B_CosmicWhale.jpg"
+  },
+  {
+    "id": 35,
+    "description": "Leegte Kraken",
+    "story_text": "In de kloof tussen werkelijkheid en illusie weven tentakels een web van gegevens.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_a": "level_35_A_CyberKraken.jpg",
+    "filename_b": "level_35_B_VoidKraken.jpg"
+  },
+  {
+    "id": 36,
+    "description": "Fantoomkwallen",
+    "story_text": "Stromen van licht in de duisternis, als een sprookjesvuur dat rond middernacht flikkert.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_36_B_PhantomJellyfish.jpg",
+    "filename_a": "level_36_A_PhantomJellyfish.jpg"
+  },
+  {
+    "id": 37,
+    "description": "Atlantis",
+    "story_text": "Het verzegelde Atlantis onthult opnieuw zijn vroegere glorie in de diepe zee.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_37_B_Atlantis.jpg",
+    "filename_a": "level_37_A_Atlantis.jpg"
+  },
+  {
+    "id": 38,
+    "description": "Kern smederij",
+    "story_text": "Thermische ventilatieopeningen diep in de korst zorgen voor bloemen van leven die de verbeelding te boven gaan.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_38_B_CoreForge.jpg",
+    "filename_a": "level_38_A_CoreForge.jpg"
+  },
+  {
+    "id": 39,
+    "description": "Vuur en ijs",
+    "story_text": "Rode lava stroomt in ijskoude wateren: het ultieme duel van vuur en water.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_39_B_FireAndIce.jpg",
+    "filename_a": "level_39_A_FireAndIce.jpg"
+  },
+  {
+    "id": 40,
+    "description": "Verboden leven",
+    "story_text": "In de verboden zone van het leven draait de oude orde nog steeds stilletjes om.",
+    "tags": [
+      "abyss"
+    ],
+    "filename_b": "level_40_B_ForbiddenLife.jpg",
+    "filename_a": "level_40_A_ForbiddenLife.jpg"
+  },
+  {
+    "id": 41,
+    "description": "Nirvana Phoenix",
+    "story_text": "De feniks herrijst uit de sintels van de oude wereld en verkrijgt het eeuwige leven door middel van vlammen.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_41_B_NirvanaPhoenix.jpg",
+    "filename_a": "level_41_A_NirvanaPhoenix.jpg"
+  },
+  {
+    "id": 42,
+    "description": "Ster Draak",
+    "story_text": "De wachter van de tijd, die de grens van dromen bewaakt door de banen van sterren.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_42_B_StarDragon.jpg",
+    "filename_a": "level_42_A_StarDragon.jpg"
+  },
+  {
+    "id": 43,
+    "description": "Hemelse sluier",
+    "story_text": "Sterrenstof als draad, aurora als pluim – zij is de eeuwige echo van het droomtijdperk.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_43_B_CelestialVeil.jpg",
+    "filename_a": "level_43_A_CelestialVeil.jpg"
+  },
+  {
+    "id": 44,
+    "description": "Tijd spiraal",
+    "story_text": "De tijd lost op in dromen en de wenteltrap leidt naar de eeuwigheid.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_44_B_TimeSpiral.jpg",
+    "filename_a": "level_44_A_TimeSpiral.jpg"
+  },
+  {
+    "id": 45,
+    "description": "Omgekeerde waterval",
+    "story_text": "De zwaartekracht is slechts een vluchtige wolk: de waterval stroomt nu naar een oceaan in de lucht.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_45_B_InvertedWaterfall.jpg",
+    "filename_a": "level_45_A_InvertedWaterfall.jpg"
+  },
+  {
+    "id": 46,
+    "description": "Kristallen doolhof",
+    "story_text": "Te midden van de dans van licht en schaduw weerspiegelt het kristallen doolhof de innerlijke diepten van de ziel.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_46_B_CrystalMaze.jpg",
+    "filename_a": "level_46_A_CrystalMaze.jpg"
+  },
+  {
+    "id": 47,
+    "description": "Cloudbibliotheek",
+    "story_text": "De legendarische bibliotheek in de lucht, waar alle verhalen de lucht in vliegen.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_47_B_CloudLibrary.jpg",
+    "filename_a": "level_47_A_CloudLibrary.jpg"
+  },
+  {
+    "id": 48,
+    "description": "Zwaartekracht eiland",
+    "story_text": "Aan de rand waar de zwaartekracht faalt, drijven drijvende eilanden geruisloos door de zee van wolken.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_48_B_GravityIsland.jpg",
+    "filename_a": "level_48_A_GravityIsland.jpg"
+  },
+  {
+    "id": 49,
+    "description": "Uurwerkafmeting",
+    "story_text": "Een industriële hymne van tandwielen en stoom, eindeloos draaiend in de dimensie van dromen.",
+    "tags": [
+      "dreams"
+    ],
+    "filename_b": "level_49_B_ClockworkDimension.jpg",
+    "filename_a": "level_49_A_ClockworkDimension.jpg"
+  },
+  {
+    "id": 50,
+    "description": "Moeder Aarde: Diepblauw",
+    "story_text": "Aan de verre oevers van de sterren noemden we dit ooit ons thuis: het enige diepblauwe.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_50_B_MotherEarth.jpg",
+    "filename_a": "level_50_A_MotherEarth.jpg"
+  },
+  {
+    "id": 51,
+    "description": "Rode Pionier",
+    "story_text": "Onder roestrood stof ontbrandt de vonk van de beschaving op de karmozijnrode ster.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_51_B_RedPioneer.jpg",
+    "filename_a": "level_51_A_RedPioneer.jpg"
+  },
+  {
+    "id": 52,
+    "description": "Vorstringen",
+    "story_text": "IJzige ringen – een grote afdruk van de kosmos die in de leegte is achtergelaten.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_52_B_FrostRings.jpg",
+    "filename_a": "level_52_A_FrostRings.jpg"
+  },
+  {
+    "id": 53,
+    "description": "Binaire zonsondergang",
+    "story_text": "Tweelingzonnen gaan samen onder en werpen overlappende schaduwen over een buitenaardse hemel.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_53_B_BinarySunset.jpg",
+    "filename_a": "level_53_A_BinarySunset.jpg"
+  },
+  {
+    "id": 54,
+    "description": "Slapeloze ster",
+    "story_text": "Biljoen lichtjes komen samen in stromen en coderen de toekomst van deze slapeloze ster.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_54_B_SleeplessStar.jpg",
+    "filename_a": "level_54_A_SleeplessStar.jpg"
+  },
+  {
+    "id": 55,
+    "description": "Supernova",
+    "story_text": "Een ster eindigt in ultieme schittering: de meest gewelddadige dood in de kosmos, en ook wedergeboorte.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_55_B_Supernova.jpg",
+    "filename_a": "level_55_A_Supernova.jpg"
+  },
+  {
+    "id": 56,
+    "description": "Galaxy Zee",
+    "story_text": "Sterren verzamelen zich in een kolkende zee van sterrenstelsels, waarbij elke golf een epos van beschaving is.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_56_B_GalaxySea.jpg",
+    "filename_a": "level_56_A_GalaxySea.jpg"
+  },
+  {
+    "id": 57,
+    "description": "Pijlers van de schepping",
+    "story_text": "Torens van de schepping doorboren de nevel – een stille wieg die sterren en wonderen koestert.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_57_B_PillarsOfCreation.jpg",
+    "filename_a": "level_57_A_PillarsOfCreation.jpg"
+  },
+  {
+    "id": 58,
+    "description": "Evenementhorizon",
+    "story_text": "In de ultieme val van de zwaartekracht kan zelfs licht niet ontsnappen aan zijn voorbestemde ondergang.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_58_B_EventHorizon.jpg",
+    "filename_a": "level_58_A_EventHorizon.jpg"
+  },
+  {
+    "id": 59,
+    "description": "Wormgatdoorvoer",
+    "story_text": "De ruimte-tijd vouwt zich op om grote afstanden te verkleinen, waardoor we vrijelijk tussen de sterren kunnen springen.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_59_B_Wormhole.jpg",
+    "filename_a": "level_59_A_Wormhole.jpg"
+  },
+  {
+    "id": 60,
+    "description": "Oog van het heelal",
+    "story_text": "Aan de rand van de laatste horizon opent het universum zijn koude maar grootse ogen.",
+    "tags": [
+      "cosmos"
+    ],
+    "filename_b": "level_60_B_EyeOfTheUniverse.jpg",
+    "filename_a": "level_60_A_EyeOfTheUniverse.jpg"
+  }
+]
