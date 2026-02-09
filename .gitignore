@@ -9,4 +9,6 @@ ios/**/*.xcuserstate
 *.xcresult/
 
 # 构建/临时输出
-build_output.txt
+build_output*.txt
+build_log*.txt
+build output*.txt
