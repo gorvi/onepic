@@ -176,10 +176,9 @@ class ParticleSystem: ObservableObject {
             return next.life > 0 ? next : nil
         }
         
-        if tickCount % 2 == 0 {
-            particles = particlesBacking
-            floatingTexts = floatingTextsBacking
-        }
+        particles = particlesBacking
+        floatingTexts = floatingTextsBacking
+        self.objectWillChange.send()
     }
     
     var isActive: Bool {

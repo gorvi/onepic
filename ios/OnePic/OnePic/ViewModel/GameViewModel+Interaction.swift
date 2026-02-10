@@ -64,6 +64,13 @@ extension GameViewModel {
             PlatformUtils.vibrateSuccess()
             normalizeAllPiecesToGrid()
             logInteractionState(prefix: "📋 合并后")
+            
+            // Tutorial Check: Any successful move in tutorial mode advances to step 1
+            if isTutorialMode && tutorialStep == 0 {
+                print("🎓 Tutorial: Advancing to step 1")
+                tutorialStep = 1
+            }
+            
             checkForWin()
             return
         }
@@ -94,7 +101,14 @@ extension GameViewModel {
              print("✅ Moving to Free Grid Space 替换成功")
              // 使用已校验的 intendedCells 落子，避免用 getCurrentGridPosition 产生浮点偏差
              moveGroupToGridCells(group: movedGroup, cells: intendedCells)
-             if checkNeighborSnapping(movedPiece: leadPiece) { normalizeAllPiecesToGrid(); logInteractionState(prefix: "📋 落子+合并后"); checkForWin(); return }
+             let merged = checkNeighborSnapping(movedPiece: leadPiece)
+             
+             // Tutorial Check
+             if isTutorialMode && tutorialStep == 0 && merged {
+                 tutorialStep = 1
+             }
+             
+             if merged { normalizeAllPiecesToGrid(); logInteractionState(prefix: "📋 落子+合并后"); checkForWin(); return }
              normalizeAllPiecesToGrid()
              logInteractionState(prefix: "📋 落子后")
              checkForWin()
@@ -113,7 +127,13 @@ extension GameViewModel {
             // A. Try PUSH first (Chain Push)
             if tryPushInteraction(movedGroup: movedGroup, targets: overlapTargets, dragDx: dragDx, dragDy: dragDy) {
                 print("✅ Push Success 挤压成功")
-                _ = checkAllGroupsForSnappingUntilStable()
+                let merged = checkAllGroupsForSnappingUntilStable()
+                
+                // Tutorial Check
+                if isTutorialMode && tutorialStep == 0 && merged {
+                    tutorialStep = 1
+                }
+                
                 normalizeAllPiecesToGrid()
                 logInteractionState(prefix: "📋 挤压后")
                 checkForWin()
@@ -124,7 +144,13 @@ extension GameViewModel {
         // B. Try SMART SWAP second (Grid-based vacancy filling, works even without precise overlap)
         if trySwapInteraction(movedGroup: movedGroup, dragDx: dragDx, dragDy: dragDy) {
             print("✅ Swap Success 替换成功")
-            _ = checkAllGroupsForSnappingUntilStable()
+            let merged = checkAllGroupsForSnappingUntilStable()
+            
+            // Tutorial Check
+            if isTutorialMode && tutorialStep == 0 && (merged || isTutorialMode) { // Tutorial special: swap counts
+                tutorialStep = 1
+            }
+            
             normalizeAllPiecesToGrid()
             logInteractionState(prefix: "📋 替换后")
             checkForWin()
@@ -134,7 +160,13 @@ extension GameViewModel {
         // B'. Intent-based swap: 按释放位置所在格子尝试交换（远距离拖拽兜底，如右下→第二行第一格）
         if tryIntentBasedSwap(movedGroup: movedGroup) {
             print("✅ Swap Success (Intent-based) 替换成功")
-            _ = checkAllGroupsForSnappingUntilStable()
+            let merged = checkAllGroupsForSnappingUntilStable()
+            
+            // Tutorial Check
+            if isTutorialMode && tutorialStep == 0 && (merged || isTutorialMode) {
+                tutorialStep = 1
+            }
+            
             normalizeAllPiecesToGrid()
             logInteractionState(prefix: "📋 意图替换后")
             checkForWin()
@@ -261,6 +293,13 @@ extension GameViewModel {
             particleSystem.emit(x: centerX, y: centerY, count: particleCount, colors: colors)
             let displayScore = totalMergedEdges * 2
             particleSystem.addFloatingText(x: centerX, y: centerY, text: "+\(displayScore)", color: .yellow)
+            
+            // Tutorial Check: If we merged in tutorial level, advance to next step and clear the hint
+            if isTutorialMode && tutorialStep == 0 {
+                print("🎓 Tutorial: Auto-advancing to step 1 after merge")
+                tutorialStep = 1
+                clearHint() // Remove the ghost animation now that they've done it
+            }
         }
         
         return hasMergedAny

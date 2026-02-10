@@ -35,9 +35,14 @@ class GameViewModel: ObservableObject {
     @Published var boardWidth: CGFloat = 0
     @Published var boardHeight: CGFloat = 0
     
-    // Interaction State
-    // Trigger for top bar score animation (increment to trigger)
     @Published var scoreEventCount: Int = 0
+    
+    // MARK: - Tutorial State (Android Parity)
+    /// 是否处于教学模式
+    @Published var isTutorialMode: Bool = false
+    /// 当前教学步骤
+    @Published var tutorialStep: Int = 0
+    
     var dragStartLocation: CGPoint = .zero
     var draggedGroupId: Int? = nil
     var initialPiecePositions: [Int: CGPoint] = [:] // id -> (x, y) Android: dragStartStates
@@ -542,11 +547,21 @@ class GameViewModel: ObservableObject {
         hintAnimProgress = 0
     }
 
-    /// 看激励广告得 AD_REWARD_COINS 金币（AdManager 未接入时 mock 直接发奖）
+    /// 看激励广告得 AD_REWARD_COINS 金币
     func requestCoinsFromAd() {
         AdManager.shared.showRewarded { [weak self] in
             LevelProgressManager.shared.addCoins(Self.AD_REWARD_COINS)
             self?.objectWillChange.send()
+        }
+    }
+    
+    /// 结算时看激励广告金币翻倍
+    func rewardCoinsDouble() {
+        AdManager.shared.showRewarded { [weak self] in
+            guard let self = self else { return }
+            // 翻倍奖励：再加一份当前局的分数
+            LevelProgressManager.shared.addCoins(self.score)
+            self.objectWillChange.send()
         }
     }
     

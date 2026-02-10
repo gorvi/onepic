@@ -107,9 +107,10 @@ struct LevelNodeView: View {
                 
                 Group {
                     if index == 0 {
-                        Text("S")
-                            .font(.system(size: 40, weight: .black))
+                        Image(systemName: "graduationcap.fill")
+                            .font(.system(size: 32))
                             .foregroundColor(.white)
+                            .shadow(color: Color.cyan.opacity(0.8), radius: 8)
                     } else if showLock {
                         LockShakeBreatheModifier(
                             isShaking: isShaking,

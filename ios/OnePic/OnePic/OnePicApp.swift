@@ -3,15 +3,21 @@ import SwiftUI
 import UIKit
 #endif
 
+import OSLog
+
 @main
 struct OnePicApp: App {
     @Environment(\.scenePhase) private var scenePhase
+    
+    private let logger = Logger(subsystem: "site.aiok.OnePic", category: "AppLifeCycle")
 
     init() {
+        print("🚀 [DEBUG] OnePicApp Init: Starting application...")
+        NSLog("🚀 [NSLog] OnePicApp Init: Starting application...")
+        logger.log("🚀 [OSLog] OnePicApp Init: This is a system-level log that should bypass filters.")
+        
         // Initialize AdManager (mocked or real)
         _ = AdManager.shared
-        // Initialize SoundManager properties if needed
-        // SoundManager.shared.preload() // if implemented
     }
     
     @State private var showIntro = !UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
@@ -38,6 +44,7 @@ struct OnePicApp: App {
             .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .active {
                     setWindowBackgroundBlack()
+                    AdManager.shared.showAppOpenAdIfAvailable()
                 }
             }
         }

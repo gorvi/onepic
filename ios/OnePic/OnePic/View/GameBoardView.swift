@@ -113,55 +113,52 @@ struct GameBoardView: View {
                         .zIndex(600)
                 }
                 
-                // 整版拖拽层：必须填满全屏才能捕获所有区域触摸（Android 为整 View 接收 onTouchEvent）
-                Color.clear
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // 整版交互层：改用 SimultaneousGesture，并限制感应范围仅限拼图区
+                if !showWinOverlay {
+                    Color.clear
+                        .frame(width: viewModel.boardWidth, height: viewModel.boardHeight)
                     .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { value in
-                                let pieceId: Int?
-                                if let id = activeDragPieceId {
-                                    pieceId = id
-                                } else if let id = viewModel.pieceIdAtLocation(x: value.startLocation.x, y: value.startLocation.y) {
-                                    activeDragPieceId = id
-                                    pieceId = id
-                                } else {
-                                    pieceId = nil
-                                }
-                                if let id = pieceId {
-                                    viewModel.onDragChanged(pieceId: id, translation: value.translation)
-                                }
-                            }
-                            .onEnded { value in
-                                if let pieceId = activeDragPieceId {
-                                    let isTap = hypot(value.translation.width, value.translation.height) < 15
-                                    let loc = value.startLocation
-                                    
-                                    if isTap {
-                                        let now = Date()
-                                        if let lastTime = lastTapTime, let lastLoc = lastTapLocation,
-                                           now.timeIntervalSince(lastTime) < 0.4,
-                                           hypot(loc.x - lastLoc.x, loc.y - lastLoc.y) < 50 {
-                                            if let tappedId = viewModel.pieceIdAtLocation(x: loc.x, y: loc.y) {
-                                                viewModel.unmergeGroup(pieceId: tappedId)
-                                            }
-                                            lastTapTime = nil
-                                            lastTapLocation = nil
-                                        } else {
-                                            lastTapTime = now
-                                            lastTapLocation = loc
-                                        }
-                                    } else {
-                                        lastTapTime = nil
-                                        lastTapLocation = nil
-                                        viewModel.onDragEnded(pieceId: pieceId)
-                                    }
-                                    activeDragPieceId = nil
-                                }
-                            }
+                    .position(
+                        x: viewModel.boardOffsetX + viewModel.boardWidth / 2,
+                        y: viewModel.boardOffsetY + viewModel.boardHeight / 2 + 20
                     )
-                    .zIndex(500)
+                    .gesture(
+                        TapGesture(count: 2)
+                            .onEnded { _ in
+                                if let loc = lastTapLocation {
+                                    print("🎓 DEBUG: SIMULTANEOUS NATIVE DOUBLE TAP at \(loc)")
+                                    if let tappedId = viewModel.pieceIdAtLocation(x: loc.x, y: loc.y) {
+                                        viewModel.unmergeGroup(pieceId: tappedId)
+                                    }
+                                }
+                            }
+                            .simultaneously(with: 
+                                DragGesture(minimumDistance: 0)
+                                    .onChanged { value in
+                                        lastTapLocation = value.startLocation
+                                        let pieceId: Int?
+                                        if let id = activeDragPieceId {
+                                            pieceId = id
+                                        } else if let id = viewModel.pieceIdAtLocation(x: value.startLocation.x, y: value.startLocation.y) {
+                                            activeDragPieceId = id
+                                            pieceId = id
+                                        } else {
+                                            pieceId = nil
+                                        }
+                                        if let id = pieceId {
+                                            viewModel.onDragChanged(pieceId: id, translation: value.translation)
+                                        }
+                                    }
+                                    .onEnded { value in
+                                        if let pieceId = activeDragPieceId {
+                                            viewModel.onDragEnded(pieceId: pieceId)
+                                            activeDragPieceId = nil
+                                        }
+                                    }
+                            )
+                    )
+                    .zIndex(2500)
+                }
                 
                 // 3. UI Overlay - 重构为更平衡的布局
                 VStack(spacing: 8) { 
@@ -347,6 +344,18 @@ struct GameBoardView: View {
                         .foregroundColor(.white)
                         .zIndex(500)
                 }
+                
+                // Tutorial Overlay (Android parity: 文字提示)
+                if viewModel.isTutorialMode && viewModel.tutorialStep < 2 && !viewModel.isLevelCompleted {
+                    TutorialOverlayView(step: viewModel.tutorialStep)
+                        .padding(.top, 140) // 避开状态栏
+                        .id("tutorial-step-\(viewModel.tutorialStep)") // 强制刷新
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .move(edge: .top)),
+                            removal: .opacity.combined(with: .scale(scale: 0.8))
+                        ))
+                        .zIndex(3000)
+                }
 
                 // Win Overlay（延迟 1.5 秒显示，对齐 Android：先让用户看完整拼图+烟花）
                 // Win Overlay（延迟 1.5 秒显示）
@@ -464,9 +473,19 @@ struct GameBoardView: View {
                         .animation(.spring(response: 0.45, dampingFraction: 0.75), value: winPopupScale)
                     }
                     .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .zIndex(2000)
                 }
             }
+            
+            // 底部横幅广告
+            VStack {
+                Spacer()
+                BannerAdView(adUnitID: AdConfig.bannerGameId)
+                    .frame(height: 50)
+                    .background(Color.black.opacity(0.1))
+            }
+            .edgesIgnoringSafeArea(.bottom)
+            .zIndex(6000) // 确保在最顶层
+            
             .onAppear {
                 tabBarVisibility.hideTabBar = true
                 viewModel.loadLevel(levelConfig, viewSize: geometry.size, mainLevelIndexForAscended: mainLevelIndexForAscended)

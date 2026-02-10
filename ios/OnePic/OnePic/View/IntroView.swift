@@ -188,33 +188,33 @@ struct RocketLaunchControl: View {
                 // --- DECOUPLED PHYSICS ASSEMBLY (Zero-Drift Model) ---
                 ZStack(alignment: .top) {
                     
-                    // 1. INTEGRATED FLAMES (Must be Background Layer)
-                    Group {
-                        if isWaiting && !isLaunching {
-                            // Idle State (Powerful Organic Breathing)
-                            EngineFlame(width: 14, height: 100, color: .cyan, timeOffset: 0)
-                                .offset(y: 72)
-                            EngineFlame(width: 6, height: 45, color: .cyan, timeOffset: 1.5)
-                                .offset(x: -18, y: 72)
-                            EngineFlame(width: 6, height: 45, color: .cyan, timeOffset: 3.0)
-                                .offset(x: 18, y: 72)
-                        }
-                        
-                        if isLaunching {
-                            // Launch State (Absolute Anchor Locking + Recess for Glow Sealing)
-                            Group {
-                                PulseWave().offset(y: 74)
-                                PulseWave().offset(x: -18, y: 74)
-                                PulseWave().offset(x: 18, y: 74)
-                                
-                                LaunchThrust(width: 32, height: 220 * flameScale).offset(y: 74)
-                                LaunchThrust(width: 10, height: 130 * flameScale).offset(x: -18, y: 74)
-                                LaunchThrust(width: 10, height: 130 * flameScale).offset(x: 18, y: 74)
-                            }
-                            .clipped() // Prevent blur bleed above the nozzle line
-                        }
+                // 1. INTEGRATED FLAMES (Must be Background Layer)
+                Group {
+                    if isWaiting && !isLaunching {
+                        // Idle State (Powerful Organic Breathing)
+                        EngineFlame(width: 14, height: 60, color: .cyan, timeOffset: 0)
+                            .offset(y: 72)
+                        EngineFlame(width: 6, height: 30, color: .cyan, timeOffset: 1.5)
+                            .offset(x: -18, y: 72)
+                        EngineFlame(width: 6, height: 30, color: .cyan, timeOffset: 3.0)
+                            .offset(x: 18, y: 72)
                     }
-                    .scaleEffect(rocketScale, anchor: .top)
+                    
+                    if isLaunching {
+                        // Launch State (Absolute Anchor Locking + Recess for Glow Sealing)
+                        Group {
+                            PulseWave().offset(y: 74)
+                            PulseWave().offset(x: -18, y: 74)
+                            PulseWave().offset(x: 18, y: 74)
+                            
+                            LaunchThrust(width: 28, height: 160 * flameScale).offset(y: 74)
+                            LaunchThrust(width: 8, height: 100 * flameScale).offset(x: -18, y: 74)
+                            LaunchThrust(width: 8, height: 100 * flameScale).offset(x: 18, y: 74)
+                        }
+                        .clipped() // Prevent blur bleed above the nozzle line
+                    }
+                }
+                .scaleEffect(rocketScale, anchor: .top)
                     
                     // 2. SHIP BODY (Must be Foreground Layer to hide flame base)
                     ZStack(alignment: .top) {
@@ -289,12 +289,17 @@ struct EngineFlame: View {
         
         Capsule()
             .fill(LinearGradient(
-                colors: [.white, color, .clear],
+                stops: [
+                    .init(color: .white, location: 0),
+                    .init(color: color.opacity(0.8), location: 0.3),
+                    .init(color: color.opacity(0.4), location: 0.6),
+                    .init(color: .clear, location: 1.0)
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             ))
             .frame(width: width * pulse, height: height * (0.9 + 0.1 * pulse))
-            .blur(radius: width / 4)
+            .blur(radius: width / 3)
     }
 }
 
@@ -325,13 +330,14 @@ struct LaunchThrust: View {
                 .fill(LinearGradient(
                     stops: [
                         .init(color: .white, location: 0),
-                        .init(color: .white.opacity(0.8), location: 0.2),
-                        .init(color: .clear, location: 0.8)
+                        .init(color: .white.opacity(0.8), location: 0.15),
+                        .init(color: .white.opacity(0.2), location: 0.5),
+                        .init(color: .clear, location: 0.9)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
                 ))
-                .frame(width: width * 0.4, height: height * 0.7)
+                .frame(width: width * 0.4, height: height * 0.8)
                 .blur(radius: 1)
         }
     }

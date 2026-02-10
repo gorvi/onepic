@@ -179,6 +179,13 @@ struct HomeView: View {
                                         .padding(.bottom, 100) // Extra padding to ensure it's comfortably visible at scroll end
                                 }
                             }
+                            Spacer().frame(height: 30)
+                            
+                            // 首页原生广告（全息风格）
+                            AdMobNativeAdView(scene: .home)
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 40)
+                            
                             Spacer().frame(height: 200)
                         }
                         .frame(maxWidth: .infinity)

@@ -61,6 +61,12 @@ struct GalaxyView: View {
                                             onLocateLevel?(level.levelId)
                                         })
                                     }
+                                    
+                                    // 按间隔插入原生广告 (对齐 Android 混排逻辑)
+                                    if index % 10 == 0 && index > 0 {
+                                        AdMobNativeAdView(scene: .galaxy)
+                                            .padding(.vertical, 8)
+                                    }
                                 }
                             }
                             .padding(16)
