@@ -32,13 +32,6 @@ struct LevelNodeView: View {
     @State private var locatePulseOpacity: Double = 0
     @State private var locateIconOpacity: Double = 0
     
-    @State private var rotationSatellite1: Double = 0
-    @State private var rotationSatellite2: Double = 0
-    
-    @State private var breatheScale: CGFloat = 1.0
-    
-    @State private var cometRotation: Double = 0
-    
     var body: some View {
         let colors = ThemeUtils.getStageColors(stageIndex: stageIndex)
         
@@ -276,8 +269,7 @@ struct LevelNodeView: View {
                                 ascendedLevel: ascended,
                                 isUnlocked: true,
                                 isCompleted: isAscendedCompleted,
-                                stars: ascendedStars,
-                                pulseScale: animDriver.pulseScale
+                                stars: ascendedStars
                             )
                         }
                         .buttonStyle(.plain)
@@ -287,8 +279,7 @@ struct LevelNodeView: View {
                             ascendedLevel: ascended,
                             isUnlocked: false,
                             isCompleted: isAscendedCompleted,
-                            stars: ascendedStars,
-                            pulseScale: animDriver.pulseScale
+                            stars: ascendedStars
                         )
                     }
                 }
@@ -427,7 +418,7 @@ private struct LockShakeBreatheModifier<Content: View>: View {
 }
 
 private struct AscendedSatelliteView: View {
-    let ascendedLevel: LevelConfig; let isUnlocked: Bool; let isCompleted: Bool; let stars: Int; let pulseScale: CGFloat; @State private var rotationAngle: Double = 0
+    let ascendedLevel: LevelConfig; let isUnlocked: Bool; let isCompleted: Bool; let stars: Int; @State private var rotationAngle: Double = 0
     var body: some View {
         VStack(spacing: 4) {
             ZStack {
@@ -435,7 +426,10 @@ private struct AscendedSatelliteView: View {
                 Circle().fill(LinearGradient(colors: [Color(hex: 0x8E24AA), Color(hex: 0x311B92), Color.black], startPoint: .topLeading, endPoint: .bottomTrailing))
                 ImageUtils.loadImage(source: ascendedLevel.imageSource).resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle()).overlay(Color.black.opacity(0.3)).clipShape(Circle())
                 if isCompleted { Image(systemName: "star.fill").font(.system(size: 18)).foregroundColor(Color(hex: 0xFFD700)) }
-                else if isUnlocked { Image(systemName: "paperplane.fill").font(.system(size: 14)).foregroundColor(.white) }
+                else if isUnlocked { 
+                    MiniRocketView(scale: 0.5)
+                        .offset(y: -5)
+                }
                 else { Image(systemName: "lock.fill").font(.system(size: 12)).foregroundColor(.white.opacity(0.5)) }
             }.frame(width: 40, height: 40).scaleEffect(isUnlocked ? SharedAnimationDriver.shared.pulseScale : 1.0).overlay(Circle().stroke(isCompleted ? Color(hex: 0xFFD700) : Color.white, lineWidth: isCompleted ? 3 : 2)).shadow(radius: isCompleted ? 12 : 8)
             if isCompleted {

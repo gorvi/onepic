@@ -8,11 +8,23 @@ extension Notification.Name {
 class LevelProgressManager: ObservableObject {
     static let shared = LevelProgressManager()
     private init() {
-        self.currentLanguage = UserDefaults.standard.string(forKey: Self.selectedLanguageKey) ?? "en"
+        // 语言优先级: 用户手动设置 > 系统语言 > 英语
+        if let savedLang = UserDefaults.standard.string(forKey: Self.selectedLanguageKey) {
+            self.currentLanguage = savedLang
+        } else {
+            self.currentLanguage = Self.detectSystemLanguage()
+        }
+        self.coins = UserDefaults.standard.integer(forKey: coinsKey)
     }
     
     @Published var currentLanguage: String
     @Published var checkInVersion: Int = 0
+    @Published var coins: Int = 0
+    
+    // Buff 状态订阅
+    @Published var buffRemainingSeconds: Int = 0
+    @Published var isBuffActive: Bool = false
+    @Published var isWarmUpActive: Bool = false
     
     /// 关卡完成时暂存待播放解锁动画的下一关 ID，在用户返回 Home 时触发（参考 Android pendingUnlockedLevels）
     var pendingUnlockLevelIdForAnimation: String?
@@ -41,12 +53,18 @@ class LevelProgressManager: ObservableObject {
     private let userAvatarStorageKey = "user_avatar_path"
     private static let selectedLanguageKey = "selected_language"
     private let explorerIdKey = "user_explorer_id"
+    private let adViewCountKey = "ad_view_count"
+    private let lastAdViewDateKey = "last_ad_view_date"
+    private let lastAdTimeKey = "last_ad_time"
+    private let buffEndTimeKey = "double_coins_end_time"
+    private let buffWarmUpEndTimeKey = "buff_warm_up_end_time"
+    private let adCooldownSeconds: Double = 60
     
     // MARK: - Level Unlocking
     
     func isLevelUnlocked(levelId: String) -> Bool {
         // Tutorial is always unlocked
-        if levelId == "tutorial" { return true }
+        if levelId == "tutorial_0" { return true }
         
         let unlocked = UserDefaults.standard.stringArray(forKey: unlockedLevelsKey) ?? []
         return unlocked.contains(levelId)
@@ -65,14 +83,11 @@ class LevelProgressManager: ObservableObject {
     private let completedLevelsKey = "completed_levels"
     
     func isLevelCompleted(_ levelId: String) -> Bool {
-        // Handle Tutorial special case
-        if levelId == "tutorial_0" || levelId == "tutorial" {
-            let completed = UserDefaults.standard.stringArray(forKey: completedLevelsKey) ?? []
-            return completed.contains("tutorial_0") || completed.contains("tutorial")
-        }
+        // Standardize Tutorial ID
+        let normalizedId = (levelId == "tutorial") ? "tutorial_0" : levelId
         
         let completed = UserDefaults.standard.stringArray(forKey: completedLevelsKey) ?? []
-        return completed.contains(levelId)
+        return completed.contains(normalizedId)
     }
     
     func markLevelCompleted(_ levelId: String) {
@@ -94,10 +109,10 @@ class LevelProgressManager: ObservableObject {
         }
     }
     
-    /// 语义化查询接口：通过索引和类型检查通关状态 (对齐 Android)
+    /// 语义化查询接口：通过索引 and 类型检查通关状态 (对齐 Android)
     func isCompleted(index: Int, isAscended: Bool) -> Bool {
         if isAscended {
-            // Ascended data is stored as a Set of main level indices in completedAscendedKey
+            // Ascended data is stored as a Set of main level ids in completedAscendedKey
             return getCompletedAscendedLevels().contains(index)
         } else {
             // Main level ID can be "tutorial_0" or "g_{index}_A"
@@ -157,22 +172,79 @@ class LevelProgressManager: ObservableObject {
     // MARK: - Coins
     
     func getCoins() -> Int {
-        return UserDefaults.standard.integer(forKey: coinsKey)
+        return coins
     }
     
     func addCoins(_ amount: Int) {
-        let current = getCoins()
-        UserDefaults.standard.set(current + amount, forKey: coinsKey)
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+            
+            // 如果 Buff 激活且不是通过广告获得的金币（可选，对齐 Android: saveTotalMergeScore 翻倍），则翻倍
+            // Android 逻辑主要针对游戏内合并得分翻倍。
+            let isDoubled = self.isDoubleCoinsActive()
+            let finalAmount = isDoubled ? amount * 2 : amount
+            
+            print("💰 addCoins: amount=\(amount) isDoubled=\(isDoubled) finalAmount=\(finalAmount) oldCoins=\(self.coins)")
+            
+            self.coins += finalAmount
+            UserDefaults.standard.set(self.coins, forKey: self.coinsKey)
+            NotificationCenter.default.post(name: .levelProgressDidChange, object: nil)
+        }
     }
     
     func consumeCoins(_ amount: Int) -> Bool {
-        let current = getCoins()
-        if current >= amount {
-            UserDefaults.standard.set(current - amount, forKey: coinsKey)
+        if coins >= amount {
+            DispatchQueue.main.async {
+                self.objectWillChange.send()
+                self.coins -= amount
+                UserDefaults.standard.set(self.coins, forKey: self.coinsKey)
+                NotificationCenter.default.post(name: .levelProgressDidChange, object: nil)
+            }
             return true
         }
         return false
     }
+    
+    // MARK: - Ad Rewards (Android Parity: Diminishing & Cooldown)
+    
+    func getAdRewardCoins() -> Int {
+        let count = getAdViewCountToday()
+        // Android 逻辑：100 -> 80 -> 60 -> 40 -> 20 -> 10 (最低)
+        return max(10, 100 - (count * 20))
+    }
+
+    func getAdViewCountToday() -> Int {
+        let today = getCurrentDateString()
+        let lastDate = UserDefaults.standard.string(forKey: lastAdViewDateKey) ?? ""
+        if lastDate != today {
+            return 0
+        }
+        return UserDefaults.standard.integer(forKey: adViewCountKey)
+    }
+    
+    func canWatchAd() -> Bool {
+        let lastTime = UserDefaults.standard.double(forKey: lastAdTimeKey)
+        let now = Date().timeIntervalSince1970
+        return now - lastTime >= adCooldownSeconds
+    }
+    
+    func getAdCooldownRemaining() -> Int {
+        let lastTime = UserDefaults.standard.double(forKey: lastAdTimeKey)
+        let now = Date().timeIntervalSince1970
+        let elapsed = now - lastTime
+        return max(0, Int(adCooldownSeconds - elapsed))
+    }
+
+    func recordAdView() {
+        let today = getCurrentDateString()
+        var count = getAdViewCountToday()
+        count += 1
+        UserDefaults.standard.set(today, forKey: lastAdViewDateKey)
+        UserDefaults.standard.set(count, forKey: adViewCountKey)
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: lastAdTimeKey)
+        NotificationCenter.default.post(name: .levelProgressDidChange, object: nil)
+    }
+    
     // MARK: - Legacy / Helper Access
     
     struct UserProgress {
@@ -303,7 +375,7 @@ class LevelProgressManager: ObservableObject {
         if let id = UserDefaults.standard.object(forKey: explorerIdKey) as? Int {
             return id
         }
-        // Generate random 6-digit ID
+        // Generate random 6-digit id
         let newId = Int.random(in: 100000...999999)
         UserDefaults.standard.set(newId, forKey: explorerIdKey)
         return newId
@@ -320,5 +392,106 @@ class LevelProgressManager: ObservableObject {
         self.currentLanguage = code
         LevelRepository.shared.resetCache()
         NotificationCenter.default.post(name: .levelProgressDidChange, object: nil)
+    }
+    
+    /// 检测系统语言并映射到应用支持的语言代码
+    static func detectSystemLanguage() -> String {
+        // 应用支持的语言列表
+        let supportedLanguages: Set<String> = [
+            "en", "zh", "zh-HK", "zh-TW",
+            "ru", "es", "pt", "fr", "de",
+            "vi", "tr", "ko", "it",
+            "ar", "th", "nl", "pl",
+            "sv", "hi", "ja"
+        ]
+        
+        // 获取系统首选语言（如 "zh-Hans-CN", "en-US", "ja-JP"）
+        guard let preferredLang = Locale.preferredLanguages.first else {
+            return "en"
+        }
+        
+        // 中文特殊处理
+        if preferredLang.hasPrefix("zh") {
+            if preferredLang.contains("Hant") {
+                // 繁体中文
+                if preferredLang.contains("HK") || preferredLang.contains("MO") {
+                    return "zh-HK"
+                }
+                return "zh-TW"
+            }
+            // 简体中文（zh-Hans 或其他 zh 变体）
+            return "zh"
+        }
+        
+        // 尝试匹配基础语言代码（如 "en-US" → "en"）
+        let baseCode = String(preferredLang.prefix(2))
+        if supportedLanguages.contains(baseCode) {
+            return baseCode
+        }
+        
+        return "en"
+    }
+    // MARK: - Double Coins Buff (Android Parity)
+    
+    func activateDoubleCoinsBuff(durationSeconds: Int) {
+        let now = Date().timeIntervalSince1970
+        let warmUpEnd = now + 10 // 10s 预热
+        let buffEnd = warmUpEnd + Double(durationSeconds)
+        
+        UserDefaults.standard.set(warmUpEnd, forKey: buffWarmUpEndTimeKey)
+        UserDefaults.standard.set(buffEnd, forKey: buffEndTimeKey)
+        
+        print("⚡️ Buff激活: now=\(now) warmUpEnd=\(warmUpEnd) buffEnd=\(buffEnd) duration=\(durationSeconds)s key1=\(buffWarmUpEndTimeKey) key2=\(buffEndTimeKey)")
+        
+        updateBuffState()
+        NotificationCenter.default.post(name: .levelProgressDidChange, object: nil)
+    }
+    
+    func isDoubleCoinsActive() -> Bool {
+        let now = Date().timeIntervalSince1970
+        let warmUpEnd = UserDefaults.standard.double(forKey: buffWarmUpEndTimeKey)
+        let buffEnd = UserDefaults.standard.double(forKey: buffEndTimeKey)
+        let active = now >= warmUpEnd && now < buffEnd
+        // 诊断日志（仅在激活期间输出）
+        if warmUpEnd > 0 || buffEnd > 0 {
+            print("🔍 isDoubleCoinsActive: now=\(now) warmUpEnd=\(warmUpEnd) buffEnd=\(buffEnd) active=\(active)")
+        }
+        return active
+    }
+    
+    func isBuffWarmingUp() -> Bool {
+        let now = Date().timeIntervalSince1970
+        let warmUpEnd = UserDefaults.standard.double(forKey: buffWarmUpEndTimeKey)
+        return now < warmUpEnd && warmUpEnd > 0
+    }
+    
+    func getDoubleCoinsRemainingSeconds() -> Int {
+        let now = Date().timeIntervalSince1970
+        let buffEnd = UserDefaults.standard.double(forKey: buffEndTimeKey)
+        return max(0, Int(buffEnd - now))
+    }
+    
+    func getWarmUpRemainingSeconds() -> Int {
+        let now = Date().timeIntervalSince1970
+        let warmUpEnd = UserDefaults.standard.double(forKey: buffWarmUpEndTimeKey)
+        return max(0, Int(warmUpEnd - now))
+    }
+    
+    func updateBuffState() {
+        DispatchQueue.main.async {
+            self.isBuffActive = self.isDoubleCoinsActive()
+            self.isWarmUpActive = self.isBuffWarmingUp()
+            
+            if self.isWarmUpActive {
+                self.buffRemainingSeconds = self.getWarmUpRemainingSeconds()
+            } else if self.isBuffActive {
+                self.buffRemainingSeconds = self.getDoubleCoinsRemainingSeconds()
+            } else {
+                self.buffRemainingSeconds = 0
+            }
+            
+            // 🚨 关键修复：显式发送信号，确保即使在快速连续更新中也能通知到 Observer
+            self.objectWillChange.send()
+        }
     }
 }

@@ -11,6 +11,7 @@ struct MoreView: View {
     
     @State private var showEditNicknameAlert = false
     @State private var nicknameInput = ""
+    @FocusState private var isNicknameInputFocused: Bool
     
     @State private var soundEnabled = true // Connect to SoundManager in real implementation
     
@@ -18,6 +19,8 @@ struct MoreView: View {
     @State private var showLanguageSheet = false
     
     @Environment(\.presentationMode) var presentationMode
+    
+    private let avatarFileName = "user_avatar.jpg"
 
     var body: some View {
         ZStack {
@@ -25,6 +28,12 @@ struct MoreView: View {
             SharedGalaxyBackground(atmosphereTheme: "profile", visitorManager: visitorManager)
                 .ignoresSafeArea()
             
+            // 2. Nickname Edit Overlay
+            if showEditNicknameAlert {
+                nicknameEditOverlay
+                    .zIndex(2000)
+            }
+
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     // Header
@@ -75,19 +84,9 @@ struct MoreView: View {
                 }
                 .padding(20)
             }
+            .allowsHitTesting(!showEditNicknameAlert)
         }
         .navigationBarHidden(true)
-        .alert(TRANS.get("edit_nickname", "Edit Nickname"), isPresented: $showEditNicknameAlert) {
-            TextField(TRANS.get("enter_nickname", "Enter nickname"), text: $nicknameInput)
-            Button(TRANS.get("cancel", "Cancel"), role: .cancel) { }
-            Button(TRANS.get("save", "Save")) {
-                let trimmed = nicknameInput.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !trimmed.isEmpty {
-                    LevelProgressManager.shared.saveNickname(trimmed)
-                    nickname = trimmed
-                }
-            }
-        }
         .sheet(isPresented: $showAboutSheet) {
             AboutView()
         }
@@ -100,9 +99,12 @@ struct MoreView: View {
                 if let data = try? await newItem?.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
                     avatarImage = Image(uiImage: uiImage)
-                    // TODO: In real app, save data to a local file and store path in LevelProgressManager
+                    persistAvatarImage(uiImage)
                 }
             }
+        }
+        .onAppear {
+            loadPersistedAvatar()
         }
     }
     
@@ -145,6 +147,9 @@ struct MoreView: View {
                 Button(action: {
                     nicknameInput = nickname
                     showEditNicknameAlert = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        isNicknameInputFocused = true
+                    }
                 }) {
                     HStack(spacing: 8) {
                         Text(nickname)
@@ -207,12 +212,151 @@ struct MoreView: View {
         .foregroundColor(.white.opacity(0.2))
         .padding(.vertical, 32)
     }
+    
+    // MARK: - Custom Views
+    
+    private var nicknameEditOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.5)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    isNicknameInputFocused = false
+                    withAnimation { showEditNicknameAlert = false }
+                }
+            
+            VStack(spacing: 24) {
+                Text(TRANS.get("edit_nickname", "Edit Nickname"))
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+                
+                VStack(alignment: .trailing, spacing: 4) {
+                    TextField(TRANS.get("enter_nickname", "Enter nickname"), text: $nicknameInput)
+                        .padding()
+                        .background(Color.white.opacity(0.1))
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white.opacity(0.2), lineWidth: 1))
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.default)
+                        .focused($isNicknameInputFocused)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            saveNicknameAndDismiss()
+                        }
+                        .onTapGesture {
+                            isNicknameInputFocused = true
+                        }
+                        .onChange(of: nicknameInput) { _, newValue in
+                            if newValue.count > 12 {
+                                nicknameInput = String(newValue.prefix(12))
+                            }
+                        }
+                    
+                    Text("\(nicknameInput.count)/12")
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .foregroundColor(nicknameInput.count >= 12 ? .red : .white.opacity(0.4))
+                        .padding(.trailing, 4)
+                }
+                
+                HStack(spacing: 16) {
+                    Button(action: {
+                        isNicknameInputFocused = false
+                        withAnimation { showEditNicknameAlert = false }
+                    }) {
+                        Text(TRANS.get("cancel", "Cancel"))
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.white.opacity(0.1))
+                            .cornerRadius(16)
+                    }
+                    
+                    Button(action: {
+                        saveNicknameAndDismiss()
+                    }) {
+                        Text(TRANS.get("save", "Save"))
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(LinearGradient(colors: [Color(hex: 0x2979FF), Color(hex: 0x00E676)], startPoint: .leading, endPoint: .trailing).opacity(0.6))
+                            .cornerRadius(16)
+                    }
+                }
+            }
+            .padding(24)
+            .background(
+                RoundedRectangle(cornerRadius: 28)
+                    .fill(.ultraThinMaterial)
+                    .overlay(RoundedRectangle(cornerRadius: 28).stroke(Color.white.opacity(0.1), lineWidth: 1))
+            )
+            .padding(.horizontal, 40)
+            .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
+            .onTapGesture {
+                // absorb tap so background dismiss does not trigger
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                isNicknameInputFocused = true
+            }
+        }
+        .transition(.opacity.combined(with: .scale(scale: 0.95)))
+    }
+    
+    // MARK: - Avatar Persistence
+    
+    private func persistAvatarImage(_ image: UIImage) {
+        guard let data = image.jpegData(compressionQuality: 0.88),
+              let url = avatarStorageURL() else {
+            return
+        }
+        
+        do {
+            try data.write(to: url, options: .atomic)
+            LevelProgressManager.shared.saveAvatarPath(url.path)
+        } catch {
+            print("❌ MoreView: Failed to save avatar image: \(error)")
+        }
+    }
+    
+    private func loadPersistedAvatar() {
+        guard let path = LevelProgressManager.shared.getAvatarPath() else { return }
+        let url = URL(fileURLWithPath: path)
+        guard FileManager.default.fileExists(atPath: path),
+              let image = UIImage(contentsOfFile: url.path) else {
+            return
+        }
+        avatarImage = Image(uiImage: image)
+    }
+    
+    private func avatarStorageURL() -> URL? {
+        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return nil
+        }
+        return dir.appendingPathComponent(avatarFileName)
+    }
+    
+    private func saveNicknameAndDismiss() {
+        let trimmed = nicknameInput.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            LevelProgressManager.shared.saveNickname(trimmed)
+            nickname = trimmed
+        }
+        isNicknameInputFocused = false
+        withAnimation { showEditNicknameAlert = false }
+    }
 }
 
 // MARK: - About View
 
 struct AboutView: View {
     @Environment(\.dismiss) var dismiss
+    @State private var clickCount = 0
+    @State private var showAdMobIdAlert = false
+    @State private var deviceId = ""
     
     var body: some View {
         ZStack {
@@ -221,15 +365,25 @@ struct AboutView: View {
             VStack(spacing: 24) {
                 Spacer()
                 
-                // Icon Mock
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(LinearGradient(colors: [Color(hex: 0x2979FF), Color(hex: 0x00E676)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(width: 80, height: 80)
+                // App Icon Logo
+                Image("AppIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 88, height: 88)
+                    .cornerRadius(20)
                     .overlay(
-                        Image(systemName: "circle.dotted.circle.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.white)
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
                     )
+                    .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                    .onTapGesture {
+                        clickCount += 1
+                        if clickCount >= 10 {
+                            deviceId = AdMobIdUtils.getTestDeviceId()
+                            showAdMobIdAlert = true
+                            clickCount = 0
+                        }
+                    }
                 
                 VStack(spacing: 8) {
                     Text(TRANS.get("app_name", "OnePic"))
@@ -262,6 +416,14 @@ struct AboutView: View {
                 .padding(.horizontal, 40)
                 .padding(.bottom, 40)
             }
+        }
+        .alert("AdMob Test Device ID", isPresented: $showAdMobIdAlert) {
+            Button("Copy", action: {
+                UIPasteboard.general.string = deviceId
+            })
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(deviceId + "\n\nCopy this ID to AdManager.swift to enable test ads.")
         }
     }
 }

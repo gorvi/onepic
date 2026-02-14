@@ -44,10 +44,10 @@ struct GalaxyView: View {
                         if selectedTab == 0 {
                             // Memories List Content
                             LazyVStack(spacing: 16) {
-                                ForEach(levels, id: \.levelId) { level in
+                                ForEach(Array(levels.enumerated()), id: \.element.levelId) { offset, level in
                                     let isUnlocked = checkLevelUnlocked(level)
-                                    let index = Int(level.levelId.filter { $0.isNumber }) ?? 0
-                                    let isPlayed = LevelProgressManager.shared.isCompleted(index: index, isAscended: level.isAscended)
+                                    let numericId = Int(level.levelId.filter { $0.isNumber }) ?? 0
+                                    let isPlayed = LevelProgressManager.shared.isCompleted(index: numericId, isAscended: level.isAscended)
                                     
                                     if isUnlocked {
                                         NavigationLink(destination: GameBoardView(levelConfig: level)) {
@@ -62,8 +62,9 @@ struct GalaxyView: View {
                                         })
                                     }
                                     
-                                    // 按间隔插入原生广告 (对齐 Android 混排逻辑)
-                                    if index % 10 == 0 && index > 0 {
+                                    // 按物理条目间隔插入原生广告 (对齐 Android 混排逻辑)
+                                    // 每 10 个条目后插入一个广告
+                                    if (offset + 1) % 10 == 0 && offset < levels.count - 1 {
                                         AdMobNativeAdView(scene: .galaxy)
                                             .padding(.vertical, 8)
                                     }
@@ -88,7 +89,15 @@ struct GalaxyView: View {
                                         }
                                         .padding(.vertical, 10)
                                     } else {
-                                        BlueprintRow(entry: entry, completedCount: getCompletedCount(for: entry))
+                                    BlueprintRow(entry: entry, completedCount: getCompletedCount(for: entry))
+                                    
+                                    // 对齐 Android: 每 4 个模块插入一个原生广告 (Blueprint View parity)
+                                    // getBlueprintThemes() 返回 13 个 entry (0..12)
+                                    // 使用 index 加 1 来判断
+                                    if let idx = blueprintedThemes.firstIndex(where: { $0.id == entry.id }), (idx + 1) % 4 == 0 && idx < blueprintedThemes.count - 1 {
+                                        AdMobNativeAdView(scene: .galaxy)
+                                            .padding(.vertical, 8)
+                                    }
                                     }
                                 }
                             }
@@ -139,9 +148,8 @@ struct GalaxyView: View {
     private func getUnlockedCount(for entry: BlueprintThemeEntry) -> Int {
         var count = 0
         for lid in entry.levelIds {
-            let index = Int(lid.filter { $0.isNumber }) ?? 0
             // Main level is counted if unlocked
-            if index == 1 || LevelProgressManager.shared.isLevelUnlocked(levelId: lid) {
+            if LevelProgressManager.shared.isLevelUnlocked(levelId: lid) {
                 count += 1
             }
         }
@@ -169,9 +177,9 @@ struct GalaxyView: View {
             // Ascended levels match corresponding Main level completion
             return LevelProgressManager.shared.isCompleted(index: index, isAscended: false)
         } else {
-            // Level 1 is always unlocked by default if not strictly handled
-            if index == 1 { return true }
+            // Use the centralized logic from LevelProgressManager (which handles tutorial_0 visibility)
             return LevelProgressManager.shared.isLevelUnlocked(levelId: level.levelId)
+                || (index == 1 && LevelProgressManager.shared.isLevelCompleted("tutorial_0"))
         }
     }
 }

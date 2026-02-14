@@ -7,6 +7,10 @@ import UIKit
 // Since `pieces` is @Published var, this is correct and will trigger UI update.
 
 struct PuzzlePiece: Identifiable {
+    enum Edge {
+        case top, bottom, left, right
+    }
+    
     let id: Int
     var currentX: CGFloat
     var currentY: CGFloat
@@ -20,4 +24,5 @@ struct PuzzlePiece: Identifiable {
     var groupId: Int = -1
     var row: Int
     var col: Int
+    var hiddenEdges: Set<Edge> = []
 }

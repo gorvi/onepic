@@ -9,7 +9,7 @@ struct BannerAdView: UIViewRepresentable {
     let adUnitID: String
     
     func makeUIView(context: Context) -> BannerView {
-        // 使用 AdSizeBanner (V11+)
+        // 使用 AdSizeBanner (SDK 13.0.0 Swift 直接导入)
         let bannerView = BannerView(adSize: AdSizeBanner)
         bannerView.adUnitID = adUnitID
         

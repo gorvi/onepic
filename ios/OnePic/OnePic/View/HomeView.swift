@@ -94,20 +94,9 @@ struct HomeView: View {
     /// 进入拼图前记录的硬币/星星，用于返回时播放「新增」动画
     @State private var totalCoinsBeforeGame: Int? = nil
     @State private var totalStarsBeforeGame: Int? = nil
-    /// 返回时得分递增动画：从 returnCoinsFrom 到 returnCoinsTo，进度 0~1
-    @State private var returnCoinsFrom: Int? = nil
-    @State private var returnCoinsTo: Int? = nil
-    @State private var returnCoinsProgress: Double = 0
-    /// 返回时星星飞入：新增几颗、飞行进度 0~1
-    @State private var flyingStarCount: Int = 0
-    @State private var starFlyProgress: Double = 0
-    /// 返回时金币飞入：显示几枚图标（最多 5 枚）、飞行进度 0~1
-    @State private var flyingCoinCount: Int = 0
-    @State private var coinFlyProgress: Double = 0
-    /// 返回时星星数字递增（与飞星同步）
-    @State private var returnStarsFrom: Int? = nil
-    @State private var returnStarsTo: Int? = nil
-    @State private var returnStarsProgress: Double = 0
+    /// 返回时金币/星星动画（含飞入、最后一帧、+N 标签触发）
+    @State private var coinAnim = RewardReturnAnimationState()
+    @State private var starAnim = RewardReturnAnimationState()
     /// 定时器驱动逐格递增（由 ReturnTicker 驱动，保证电表跳动可见）
     @StateObject private var returnTicker = ReturnTicker()
     /// 加完后在总数旁显示「+N」，持续一段时间
@@ -117,18 +106,9 @@ struct HomeView: View {
     @State private var coinAreaFrame: CGRect = .zero
     /// 收集完成后金币区抖动偏移
     @State private var coinsShakeOffset: CGFloat = 0
-    /// 最后一帧金币淡出，让最后一帧消失更快
-    @State private var lastFrameCoinFadeOut: Bool = false
-    /// 是否已进入金币最后一帧（用于可靠触发 onChange）
-    @State private var didEnterLastFrame: Bool = false
     /// 星星区域 frame（与金币一致：飞向实际位置）
     @State private var starAreaFrame: CGRect = .zero
     @State private var starsShakeOffset: CGFloat = 0
-    @State private var lastFrameStarFadeOut: Bool = false
-    @State private var didEnterStarLastFrame: Bool = false
-    /// 用于金币/星星消失后即时显示 +N（在淡出时设置，不等到 cleanup）
-    @State private var pendingCoinsDeltaForLabel: Int? = nil
-    @State private var pendingStarsDeltaForLabel: Int? = nil
     
     /// 返回动画时长（放慢以便看清飞入）
     private static let returnAnimationDuration: Double = 1.5
@@ -153,7 +133,19 @@ struct HomeView: View {
                                 .padding(.top, 150)
                                 .padding(.bottom, 60)
                                 .padding(.bottom, 60)
-                            ForEach(Array(levels.enumerated().reversed()), id: \.element.levelId) { index, level in
+                            let enumeratedLevels = Array(levels.enumerated().reversed())
+                            ForEach(0..<enumeratedLevels.count, id: \.self) { visualIndex in
+                                let index = enumeratedLevels[visualIndex].offset
+                                let level = enumeratedLevels[visualIndex].element
+                                
+                                // 原生广告：放在 LevelRowItem 前面渲染，
+                                // 因为 iOS 是手动反转数据(高index在上)，"前面渲染"= 视觉上方 = 章节边界处
+                                // 章节: 1-5, 6-10, 11-15... → 广告在 index 5, 10, 15... 上方
+                                if index % 5 == 0 && index > 0 && index < levels.count - 1 {
+                                    AdMobNativeAdView(scene: .home)
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 30)
+                                }
                                 
                                 LevelRowItem(
                                     index: index,
@@ -168,23 +160,18 @@ struct HomeView: View {
                                 )
                                 .id(level.levelId)
                                 
-                                // Insert Chapter Title BELOW the lowest level of each sector (entry point from bottom)
+                                // Chapter Title Logic
                                 if index > 0 && (index - 1) % 5 == 0 {
                                     ChapterTitleView(stageIndex: (index - 1) / 5 + 1)
-                                        .padding(.vertical, 30)
+                                        .padding(.top, 30)
+                                        .padding(.bottom, 10)
                                 } else if index == 0 {
-                                    // Tutorial Chapter Footer (at absolute bottom)
                                     ChapterTitleView(stageIndex: 0)
                                         .padding(.top, 30)
-                                        .padding(.bottom, 100) // Extra padding to ensure it's comfortably visible at scroll end
+                                        .padding(.bottom, 20)
                                 }
                             }
                             Spacer().frame(height: 30)
-                            
-                            // 首页原生广告（全息风格）
-                            AdMobNativeAdView(scene: .home)
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, 40)
                             
                             Spacer().frame(height: 200)
                         }
@@ -292,11 +279,11 @@ struct HomeView: View {
                     Spacer().allowsHitTesting(false)
                 }
                 // 返回时新增金币从屏幕中部「飞」到左上角
-                if flyingCoinCount > 0 {
+                if coinAnim.flyingCount > 0 {
                     flyingCoinsOverlay(geometry: geometry)
                 }
                 // 返回时新增星星从屏幕中部「飞」到右上角星星处
-                if flyingStarCount > 0 {
+                if starAnim.flyingCount > 0 {
                     flyingStarsOverlay(geometry: geometry)
                 }
             }
@@ -321,35 +308,35 @@ struct HomeView: View {
     /// 顶部栏显示的硬币数（返回时用定时器逐格递增，触发电表跳动）
     private func displayCoins(geometry: GeometryProxy) -> Int {
         if let stepped = returnTicker.steppedCoins { return stepped }
-        guard let from = returnCoinsFrom, let to = returnCoinsTo else {
-            return LevelProgressManager.shared.getCoins()
+        guard let from = coinAnim.from, let to = coinAnim.to else {
+            return levelManager.coins
         }
-        return from + Int(round(Double(to - from) * returnCoinsProgress))
+        return from + Int(round(Double(to - from) * coinAnim.progress))
     }
     
     /// 顶部栏显示的星星数（返回时用定时器逐格递增，触发电表跳动）
     private func displayStars(geometry: GeometryProxy) -> Int {
         if let stepped = returnTicker.steppedStars { return stepped }
-        guard let from = returnStarsFrom, let to = returnStarsTo else {
+        guard let from = starAnim.from, let to = starAnim.to else {
             return LevelProgressManager.shared.progress.totalStars
         }
-        return from + Int(round(Double(to - from) * returnStarsProgress))
+        return from + Int(round(Double(to - from) * starAnim.progress))
     }
     
     /// 金币飞入进度（由 returnTicker 逐格时同步计算）
     private var coinFlyProgressValue: Double {
-        if let c = returnTicker.steppedCoins, let f = returnCoinsFrom, let t = returnCoinsTo, t > f {
+        if let c = returnTicker.steppedCoins, let f = coinAnim.from, let t = coinAnim.to, t > f {
             return Double(c - f) / Double(t - f)
         }
-        return coinFlyProgress
+        return coinAnim.flyProgress
     }
     
     /// 星星飞入进度（由 returnTicker 逐格时同步计算）
     private var starFlyProgressValue: Double {
-        if let s = returnTicker.steppedStars, let f = returnStarsFrom, let t = returnStarsTo, t > f {
+        if let s = returnTicker.steppedStars, let f = starAnim.from, let t = starAnim.to, t > f {
             return Double(s - f) / Double(t - f)
         }
-        return starFlyProgress
+        return starAnim.flyProgress
     }
     
     /// 飞行动画用轻量金币（单圆+渐变），减少绘制提升流畅度
@@ -365,58 +352,35 @@ struct HomeView: View {
             .frame(width: size, height: size)
     }
     
-    /// easeOut：后半段减速，飞入更自然
-    private static func easeOut(_ t: Double) -> Double {
-        guard t > 0, t < 1 else { return t }
-        return 1 - pow(1 - t, 1.4)
-    }
-    
-    /// 返回时新增金币从屏幕中部飞向首页金币位置（带弧线）；最后一帧一枚金币在金币区下方
-    private static let coinFlyLastFrameThreshold: Double = 0.96
-    private static let coinFlyTargetBelowOffset: CGFloat = 18
+    /// 返回奖励飞入动画公共参数
+    private static let rewardFlyLastFrameThreshold: Double = 0.96
+    private static let rewardFlyTargetBelowOffset: CGFloat = 18
     
     private func flyingCoinsOverlay(geometry: GeometryProxy) -> some View {
         let startX = geometry.size.width * 0.5
         let startY = geometry.size.height * 0.35
-        let hasTarget = coinAreaFrame.width > 0 && coinAreaFrame.height > 0
-        let endX = hasTarget ? coinAreaFrame.midX : 70
-        let endY = hasTarget ? coinAreaFrame.midY : 55
-        let lastFrameY = hasTarget ? coinAreaFrame.maxY + Self.coinFlyTargetBelowOffset : endY + Self.coinFlyTargetBelowOffset
-        let arcAmplitude: CGFloat = 24
-        let isLastFrame = coinFlyProgressValue >= Self.coinFlyLastFrameThreshold
-        return ZStack {
-            if isLastFrame {
-                flyingCoinShape(size: 28)
-                    .position(x: endX, y: lastFrameY)
-                    .scaleEffect(1)
-                    .opacity(lastFrameCoinFadeOut ? 0 : 1)
-                    .animation(.easeOut(duration: 0.12), value: lastFrameCoinFadeOut)
-            } else {
-                ForEach(0..<flyingCoinCount, id: \.self) { i in
-                    let stagger = Double(i) * 0.14
-                    let rawP = min(1, max(0, coinFlyProgressValue * 1.12 - stagger))
-                    let p = Self.easeOut(rawP)
-                    let x = startX + (endX - startX) * p
-                    let yOffset = arcAmplitude * sin(p * .pi)
-                    let y = startY + (endY - startY) * p + yOffset
-                    let scale = 0.45 + 0.55 * p
-                    let opacity = rawP < 0.06 ? Double(rawP) / 0.06 : (rawP > 0.94 ? Double(1 - rawP) / 0.06 : 1)
-                    flyingCoinShape(size: 28)
-                        .position(x: x, y: y)
-                        .scaleEffect(scale)
-                        .opacity(opacity)
-                }
-            }
+        
+        return RewardFlyOverlay(
+            count: coinAnim.flyingCount,
+            progress: coinFlyProgressValue,
+            start: CGPoint(x: startX, y: startY),
+            targetFrame: coinAreaFrame,
+            fallbackTarget: CGPoint(x: 70, y: 55),
+            lastFrameThreshold: Self.rewardFlyLastFrameThreshold,
+            lastFrameBelowOffset: Self.rewardFlyTargetBelowOffset,
+            lastFrameFadeOut: coinAnim.lastFrameFadeOut
+        ) {
+            flyingCoinShape(size: 28)
         }
         .onChange(of: coinFlyProgressValue) { _, progress in
-            if !didEnterLastFrame && progress >= Self.coinFlyLastFrameThreshold {
-                didEnterLastFrame = true
+            if !coinAnim.didEnterLastFrame && progress >= Self.rewardFlyLastFrameThreshold {
+                coinAnim.didEnterLastFrame = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-                    withAnimation(.easeOut(duration: 0.12)) { lastFrameCoinFadeOut = true }
+                    withAnimation(.easeOut(duration: 0.12)) { coinAnim.lastFrameFadeOut = true }
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                        if let c = pendingCoinsDeltaForLabel, c > 0 { showCoinsDeltaLabel = c }
+                        if let c = coinAnim.pendingDeltaForLabel, c > 0 { showCoinsDeltaLabel = c }
                     }
-                    if pendingCoinsDeltaForLabel != nil { triggerCoinsShakeAndSound() }
+                    if coinAnim.pendingDeltaForLabel != nil { triggerCounterShakeAndSound(offset: $coinsShakeOffset) }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                         withAnimation(.easeOut(duration: 0.3)) {
                             showCoinsDeltaLabel = nil
@@ -430,83 +394,47 @@ struct HomeView: View {
         .allowsHitTesting(false)
     }
     
-    /// 触发金币区抖动并播收集音效
-    private func triggerCoinsShakeAndSound() {
+    /// 触发统计区域抖动并播收集音效（金币/星星复用）
+    private func triggerCounterShakeAndSound(offset: Binding<CGFloat>) {
         SoundManager.shared.playCoinCollect()
         let steps: [CGFloat] = [6, -6, 5, -5, 3, -3, 0]
         for (i, x) in steps.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.04) {
                 withAnimation(.easeInOut(duration: 0.04)) {
-                    coinsShakeOffset = x
+                    offset.wrappedValue = x
                 }
             }
         }
     }
-    
-    /// 触发星星区抖动并播收集音效（与金币一致效果）
-    private func triggerStarsShakeAndSound() {
-        SoundManager.shared.playCoinCollect()
-        let steps: [CGFloat] = [6, -6, 5, -5, 3, -3, 0]
-        for (i, x) in steps.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.04) {
-                withAnimation(.easeInOut(duration: 0.04)) {
-                    starsShakeOffset = x
-                }
-            }
-        }
-    }
-    
-    /// 星星飞入最后一帧阈值、目标下方偏移（与金币一致）
-    private static let starFlyLastFrameThreshold: Double = 0.96
-    private static let starFlyTargetBelowOffset: CGFloat = 18
     
     /// 返回时新增星星从屏幕中部飞向首页星星位置（弧线、easeOut）；最后一帧一枚在星星区下方并淡出（与金币一致效果）
     private func flyingStarsOverlay(geometry: GeometryProxy) -> some View {
         let startX = geometry.size.width * 0.5
         let startY = geometry.size.height * 0.35
-        let hasTarget = starAreaFrame.width > 0 && starAreaFrame.height > 0
-        let endX = hasTarget ? starAreaFrame.midX : (geometry.size.width - 70)
-        let endY = hasTarget ? starAreaFrame.midY : 55
-        let lastFrameY = hasTarget ? starAreaFrame.maxY + Self.starFlyTargetBelowOffset : endY + Self.starFlyTargetBelowOffset
-        let arcAmplitude: CGFloat = 24
-        let isLastFrame = starFlyProgressValue >= Self.starFlyLastFrameThreshold
-        return ZStack {
-            if isLastFrame {
-                Image(systemName: "star.fill")
-                    .font(.system(size: 22))
-                    .foregroundStyle(LinearGradient(colors: [.yellow, .orange], startPoint: .top, endPoint: .bottom))
-                    .position(x: endX, y: lastFrameY)
-                    .scaleEffect(1)
-                    .opacity(lastFrameStarFadeOut ? 0 : 1)
-                    .animation(.easeOut(duration: 0.12), value: lastFrameStarFadeOut)
-            } else {
-                ForEach(0..<flyingStarCount, id: \.self) { i in
-                    let stagger = Double(i) * 0.14
-                    let rawP = min(1, max(0, starFlyProgressValue * 1.12 - stagger))
-                    let p = Self.easeOut(rawP)
-                    let x = startX + (endX - startX) * p
-                    let yOffset = arcAmplitude * sin(p * .pi)
-                    let y = startY + (endY - startY) * p + yOffset
-                    let scale = 0.45 + 0.55 * p
-                    let opacity = rawP < 0.06 ? Double(rawP) / 0.06 : (rawP > 0.94 ? Double(1 - rawP) / 0.06 : 1)
-                    Image(systemName: "star.fill")
-                        .font(.system(size: 22))
-                        .foregroundStyle(LinearGradient(colors: [.yellow, .orange], startPoint: .top, endPoint: .bottom))
-                        .position(x: x, y: y)
-                        .scaleEffect(scale)
-                        .opacity(opacity)
-                }
-            }
+        
+        return RewardFlyOverlay(
+            count: starAnim.flyingCount,
+            progress: starFlyProgressValue,
+            start: CGPoint(x: startX, y: startY),
+            targetFrame: starAreaFrame,
+            fallbackTarget: CGPoint(x: geometry.size.width - 70, y: 55),
+            lastFrameThreshold: Self.rewardFlyLastFrameThreshold,
+            lastFrameBelowOffset: Self.rewardFlyTargetBelowOffset,
+            lastFrameFadeOut: starAnim.lastFrameFadeOut
+        ) {
+            Image(systemName: "star.fill")
+                .font(.system(size: 22))
+                .foregroundStyle(LinearGradient(colors: [.yellow, .orange], startPoint: .top, endPoint: .bottom))
         }
         .onChange(of: starFlyProgressValue) { _, progress in
-            if !didEnterStarLastFrame && progress >= Self.starFlyLastFrameThreshold {
-                didEnterStarLastFrame = true
+            if !starAnim.didEnterLastFrame && progress >= Self.rewardFlyLastFrameThreshold {
+                starAnim.didEnterLastFrame = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-                    withAnimation(.easeOut(duration: 0.12)) { lastFrameStarFadeOut = true }
+                    withAnimation(.easeOut(duration: 0.12)) { starAnim.lastFrameFadeOut = true }
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                        if let s = pendingStarsDeltaForLabel, s > 0 { showStarsDeltaLabel = s }
+                        if let s = starAnim.pendingDeltaForLabel, s > 0 { showStarsDeltaLabel = s }
                     }
-                    if pendingStarsDeltaForLabel != nil { triggerStarsShakeAndSound() }
+                    if starAnim.pendingDeltaForLabel != nil { triggerCounterShakeAndSound(offset: $starsShakeOffset) }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                         withAnimation(.easeOut(duration: 0.3)) {
                             showCoinsDeltaLabel = nil
@@ -578,41 +506,40 @@ struct HomeView: View {
     private func handleTransitionBackFromGame() {
         progressVersion += 1
         let pm = LevelProgressManager.shared
-        let currentCoins = pm.getCoins()
+        // 关键点：直接使用最新的 levelManager.coins
+        let currentCoins = pm.coins
         let currentStars = pm.progress.totalStars
         
-        // 返回时得分/星星「新增」动画：定时器逐格递增（电表跳动）+ 飞入 + 加完后显示 +N
-        // 仅用存储的 current - before 作为增量，且只进入一次（立即清空 before，防止 onChange 二次触发导致重复动画）
         if let beforeCoins = totalCoinsBeforeGame, let beforeStars = totalStarsBeforeGame {
             totalCoinsBeforeGame = nil
             totalStarsBeforeGame = nil
+            
+            // 增量计算：包含了游戏得分 + 游戏期间看的广告奖励
             var deltaCoins = currentCoins - beforeCoins
             let deltaStars = currentStars - beforeStars
-            // 校验：若 delta 多于本局应得（score），修正存储并限制显示（解决多计金币导致的 +N 虚高）
-            if let cap = pm.lastGameCoinScore, deltaCoins > cap {
-                pm.addCoins(-(deltaCoins - cap))
-                deltaCoins = cap
-            }
+            
+            // [REM] 移除暴力校验逻辑。该逻辑曾将 deltaCoins > cap (仅统计得分) 判定为非法增量并扣除。
+            // 现在 deltaCoins 包含合法的广告奖励（如 100），不应被强制修正。
             pm.lastGameCoinScore = nil
-            returnCoinsFrom = beforeCoins
-            returnCoinsTo = beforeCoins + deltaCoins
-            returnStarsFrom = beforeStars
-            returnStarsTo = currentStars
+            coinAnim.from = beforeCoins
+            coinAnim.to = beforeCoins + deltaCoins
+            starAnim.from = beforeStars
+            starAnim.to = currentStars
             if deltaCoins > 0 {
-                returnCoinsProgress = 0
-                flyingCoinCount = min(deltaCoins, 5)
-                coinFlyProgress = 0
-                lastFrameCoinFadeOut = false
-                didEnterLastFrame = false
-                pendingCoinsDeltaForLabel = deltaCoins
+                coinAnim.progress = 0
+                coinAnim.flyingCount = min(deltaCoins, 5)
+                coinAnim.flyProgress = 0
+                coinAnim.lastFrameFadeOut = false
+                coinAnim.didEnterLastFrame = false
+                coinAnim.pendingDeltaForLabel = deltaCoins
             }
             if deltaStars > 0 {
-                returnStarsProgress = 0
-                flyingStarCount = deltaStars
-                starFlyProgress = 0
-                lastFrameStarFadeOut = false
-                didEnterStarLastFrame = false
-                pendingStarsDeltaForLabel = deltaStars
+                starAnim.progress = 0
+                starAnim.flyingCount = deltaStars
+                starAnim.flyProgress = 0
+                starAnim.lastFrameFadeOut = false
+                starAnim.didEnterLastFrame = false
+                starAnim.pendingDeltaForLabel = deltaStars
             }
             returnTicker.start(
                 fromCoins: beforeCoins, toCoins: currentCoins,
@@ -620,33 +547,19 @@ struct HomeView: View {
                 interval: Self.tickInterval
             )
             DispatchQueue.main.asyncAfter(deadline: .now() + Self.returnAnimationCleanupDelay) {
-                if showCoinsDeltaLabel == nil, let c = pendingCoinsDeltaForLabel, c > 0 {
+                if showCoinsDeltaLabel == nil, let c = coinAnim.pendingDeltaForLabel, c > 0 {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) { showCoinsDeltaLabel = c }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { withAnimation(.easeOut(duration: 0.3)) { showCoinsDeltaLabel = nil } }
                 }
-                if showStarsDeltaLabel == nil, let s = pendingStarsDeltaForLabel, s > 0 {
+                if showStarsDeltaLabel == nil, let s = starAnim.pendingDeltaForLabel, s > 0 {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) { showStarsDeltaLabel = s }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { withAnimation(.easeOut(duration: 0.3)) { showStarsDeltaLabel = nil } }
                 }
                 returnTicker.stop()
                 totalCoinsBeforeGame = nil
                 totalStarsBeforeGame = nil
-                returnCoinsFrom = nil
-                returnCoinsTo = nil
-                returnCoinsProgress = 0
-                returnStarsFrom = nil
-                returnStarsTo = nil
-                returnStarsProgress = 0
-                flyingStarCount = 0
-                starFlyProgress = 0
-                flyingCoinCount = 0
-                coinFlyProgress = 0
-                lastFrameCoinFadeOut = false
-                didEnterLastFrame = false
-                lastFrameStarFadeOut = false
-                didEnterStarLastFrame = false
-                pendingCoinsDeltaForLabel = nil
-                pendingStarsDeltaForLabel = nil
+                coinAnim.reset()
+                starAnim.reset()
             }
         }
         
@@ -725,81 +638,6 @@ struct HomeView: View {
     }
 }
 
-/// 返回时逐格递增驱动：定时器每格更新 steppedCoins/steppedStars，触发电表跳动
-/// 大增量时限制最大步数，避免几十个金币/星星时步数过多导致卡顿（最多 5 次刷新）
-private let returnTickerMaxSteps = 5
-
-final class ReturnTicker: ObservableObject {
-    @Published var steppedCoins: Int? = nil
-    @Published var steppedStars: Int? = nil
-    private var timer: Timer?
-    private var fromCoins = 0, toCoins = 0, fromStars = 0, toStars = 0
-    private var stepCoins = 1, stepStars = 1
-    
-    func start(fromCoins: Int, toCoins: Int, fromStars: Int, toStars: Int, interval: Double) {
-        stop()
-        self.fromCoins = fromCoins
-        self.toCoins = toCoins
-        self.fromStars = fromStars
-        self.toStars = toStars
-        let deltaCoins = max(0, toCoins - fromCoins)
-        let deltaStars = max(0, toStars - fromStars)
-        stepCoins = deltaCoins <= returnTickerMaxSteps ? 1 : max(1, (deltaCoins + returnTickerMaxSteps - 1) / returnTickerMaxSteps)
-        stepStars = deltaStars <= returnTickerMaxSteps ? 1 : max(1, (deltaStars + returnTickerMaxSteps - 1) / returnTickerMaxSteps)
-        steppedCoins = fromCoins
-        steppedStars = fromStars
-        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            self?.tick()
-        }
-        RunLoop.main.add(timer!, forMode: .common)
-    }
-    
-    private func tick() {
-        var coins = steppedCoins ?? fromCoins
-        var stars = steppedStars ?? fromStars
-        if coins < toCoins { coins = min(coins + stepCoins, toCoins) }
-        if stars < toStars { stars = min(stars + stepStars, toStars) }
-        steppedCoins = coins
-        steppedStars = stars
-        if coins >= toCoins && stars >= toStars {
-            timer?.invalidate()
-            timer = nil
-        }
-    }
-    
-    func stop() {
-        timer?.invalidate()
-        timer = nil
-        steppedCoins = nil
-        steppedStars = nil
-    }
-}
-
-/// 电表式数字跳动：数值变化时轻量缩放，减轻卡顿
-struct TickingNumberView: View {
-    let value: Int
-    @State private var tickScale: CGFloat = 1.0
-    @State private var lastValue: Int = -1
-    
-    var body: some View {
-        Text("\(value)")
-            .contentTransition(.numericText())
-            .scaleEffect(tickScale)
-            .onChange(of: value) { _, newVal in
-                guard lastValue >= 0 && newVal != lastValue else {
-                    lastValue = newVal
-                    return
-                }
-                lastValue = newVal
-                tickScale = 1.2
-                withAnimation(.easeOut(duration: 0.18)) {
-                    tickScale = 1.0
-                }
-            }
-            .onAppear { lastValue = value }
-    }
-}
-
 struct LevelRowItem: View {
     let index: Int
     let level: LevelConfig
@@ -830,23 +668,28 @@ struct LevelRowItem: View {
     
     var body: some View {
         let isCompleted = LevelProgressManager.shared.isLevelCompleted(level.levelId)
+        let mainStars = LevelProgressManager.shared.getStars(for: level.levelId)
         let ascendedLevel = LevelRepository.shared.getAscendedLevel(mainIndex: index)
         let isAscendedUnlocked = isCompleted
-        let isAscendedCompleted = LevelProgressManager.shared.getCompletedAscendedLevels().contains(index)
+        let isAscendedCompleted = LevelProgressManager.shared.isCompleted(index: index, isAscended: true)
         let ascendedStars = LevelProgressManager.shared.getAscendedLevelStars(mainLevelId: index)
         
         // Match logic for _A (main) and _B (ascended)
         let mainHighlighted = highlightedLevelId == level.levelId
         let ascendedHighlighted = (ascendedLevel?.levelId != nil) && (highlightedLevelId == ascendedLevel?.levelId)
         
+        let isPreviousCompleted = index == 0 || (previousLevel.map { LevelProgressManager.shared.isLevelCompleted($0.levelId) } ?? false)
+        let isLocked = index > 0 && !isPreviousCompleted
+        let isNextToPlay = !isCompleted && isPreviousCompleted
+        
         VStack(spacing: 0) {
             ZStack {
                 LevelNodeView(
                     index: index,
                     level: level,
-                    isLocked: (index > 0 && (previousLevel.map { !LevelProgressManager.shared.isLevelCompleted($0.levelId) } ?? true)) || (level.levelId == pendingUnlockLevelIdForDisplay && !shouldAnimateUnlock),
+                    isLocked: isLocked || (level.levelId == pendingUnlockLevelIdForDisplay && !shouldAnimateUnlock),
                     isCompleted: isCompleted,
-                    isNextToPlay: !isCompleted && (index == 0 || (previousLevel.map { LevelProgressManager.shared.isLevelCompleted($0.levelId) } ?? false)),
+                    isNextToPlay: isNextToPlay,
                     stageIndex: stageIndex,
                     shouldAnimateUnlock: shouldAnimateUnlock,
                     ascendedLevel: nil,
@@ -854,7 +697,7 @@ struct LevelRowItem: View {
                     isAscendedCompleted: false,
                     ascendedStars: 0,
                     onAscendedClick: nil,
-                    isNew: !isCompleted && (index == 0 || (previousLevel.map { LevelProgressManager.shared.isLevelCompleted($0.levelId) } ?? false)),
+                    isNew: isNextToPlay,
                     isHighlighted: mainHighlighted
                 )
                 .offset(x: offsetX).padding(.vertical, 10).contentShape(Rectangle()).onTapGesture { onLevelTap() }.frame(maxWidth: .infinity)
@@ -872,12 +715,41 @@ struct LevelRowItem: View {
                     .buttonStyle(.plain).contentShape(Circle()).padding(12).offset(x: offsetX + 72, y: -48).zIndex(200)
                 }
             }.frame(maxWidth: .infinity).zIndex(ascendedLevel != nil && isCompleted ? 100 : 0)
+            if isCompleted && index > 0 {
+                MainLevelStarsBadgeView(stars: mainStars)
+                    .offset(x: offsetX)
+                    .padding(.top, -4)
+                    .padding(.bottom, 4)
+            }
             if index > 0 {
                 let midX = (previousOffsetX + offsetX) / 2
                 PathConnectorView(stageIndex: stageIndex, isCompleted: LevelProgressManager.shared.isLevelCompleted(previousLevel?.levelId ?? "")).offset(x: midX).padding(.vertical, -10)
             }
         }.frame(maxWidth: .infinity)
         // .drawingGroup() removed: Avoid re-rasterizing entire row on every animation frame
+    }
+}
+
+private struct MainLevelStarsBadgeView: View {
+    let stars: Int
+    
+    var body: some View {
+        HStack(spacing: 3) {
+            ForEach(0..<3, id: \.self) { i in
+                Image(systemName: "star.fill")
+                    .font(.system(size: 8, weight: .bold))
+                    .foregroundColor(i < stars ? Color(localHex: 0xFFD700) : Color.white.opacity(0.28))
+            }
+        }
+        .padding(.horizontal, 7)
+        .padding(.vertical, 3)
+        .background(Color.clear)
+        .overlay(
+            Capsule()
+                .stroke(Color(localHex: 0x7FC8FF).opacity(0.35), lineWidth: 0.8)
+        )
+        .clipShape(Capsule())
+        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 1)
     }
 }
 
@@ -900,6 +772,7 @@ private struct AscendedSatelliteBadgeView: View {
     
     private let ascendedColors: [Color] = [Color(localHex: 0x8E24AA), Color(localHex: 0x311B92)]
     @ObservedObject private var animDriver = SharedAnimationDriver.shared
+    private let completedRingColor = Color(localHex: 0x4CAF50)
 
     var body: some View {
         VStack(spacing: 4) {
@@ -945,14 +818,24 @@ private struct AscendedSatelliteBadgeView: View {
                             .scaleEffect(starAppearProgress)
                             .opacity(starAppearProgress)
                         if starAppearProgress < 1 {
-                            Image(systemName: "paperplane.fill")
-                                .font(.system(size: 14))
-                                .foregroundColor(.white)
+                            MiniRocketView(scale: 0.5)
+                                .offset(y: -5)
                                 .opacity(1 - starAppearProgress)
                         }
-                    } else if isUnlocked { Image(systemName: "paperplane.fill").font(.system(size: 14)).foregroundColor(.white) }
+                    } else if isUnlocked { 
+                        MiniRocketView(scale: 0.5)
+                            .offset(y: -5)
+                    }
                     else { Image(systemName: "lock.fill").font(.system(size: 12)).foregroundColor(.white.opacity(0.5)) }
-                }.frame(width: 40, height: 40).overlay(Circle().stroke(isCompleted ? Color(localHex: 0xFFD700) : (isHighlighted ? Color(localHex: 0xFFD700) : Color.white), lineWidth: (isCompleted || isHighlighted) ? 3 : 2))
+                }
+                .frame(width: 40, height: 40)
+                .overlay(
+                    Circle()
+                        .stroke(
+                            isCompleted ? completedRingColor : (isHighlighted ? Color(localHex: 0xFFD700) : Color.white),
+                            lineWidth: (isCompleted || isHighlighted) ? 3 : 2
+                        )
+                )
                 
                 if isUnlocked && !isCompleted {
                     Text("NEW")
@@ -980,9 +863,8 @@ private struct AscendedSatelliteBadgeView: View {
             .scaleEffect(shouldPulse ? 1.25 : 1.0)
             .shadow(color: isHighlighted ? Color(localHex: 0xFFD700).opacity(0.6) : ascendedColors[0].opacity(0.8), radius: isHighlighted ? 15 : 12)
             
-            if isCompleted {
-                HStack(spacing: 2) { ForEach(0..<3, id: \.self) { i in Image(systemName: "star.fill").font(.system(size: 6)).foregroundColor(i < stars ? Color(localHex: 0xFFD700) : Color.white.opacity(0.3)) } }
-                .padding(.horizontal, 4).padding(.vertical, 2).background(LinearGradient(colors: [Color(localHex: 0xFFD700).opacity(0.9), Color(localHex: 0xFFA000).opacity(0.8)], startPoint: .leading, endPoint: .trailing)).cornerRadius(4)
+            if isCompleted || stars > 0 {
+                MainLevelStarsBadgeView(stars: stars)
             }
         }.onAppear {
             // Shared Animation Driver handles rotation/pulse

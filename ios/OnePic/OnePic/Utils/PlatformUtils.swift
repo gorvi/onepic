@@ -2,20 +2,17 @@ import UIKit
 
 struct PlatformUtils {
     static func vibrate(style: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
-        let generator = UIImpactFeedbackGenerator(style: style)
-        generator.prepare()
-        generator.impactOccurred()
+        // 全局禁用震動
+        return
     }
     
     static func vibrateSuccess() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.success)
+        // 全局禁用震動
+        return
     }
     
     static func vibrateError() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.error)
+        // 全局禁用震動
+        return
     }
 }

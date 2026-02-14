@@ -9,6 +9,29 @@ struct GridCell: Hashable, Equatable {
 
 extension GameViewModel {
     
+    /// 更新所有碎片的隱藏邊狀態。
+    /// 當兩個碎片屬於同一個 groupId 且在解答網格中物理相鄰時，隱藏它們之間的邊。
+    func updateHiddenEdges() {
+        for i in 0..<pieces.count {
+            var hidden = Set<PuzzlePiece.Edge>()
+            let p = pieces[i]
+            
+            // 遍歷所有其他碎片，尋找同組且相鄰的
+            for other in pieces where other.groupId == p.groupId && other.id != p.id {
+                // 解答中的位置
+                let pr = p.id / cols, pc = p.id % cols
+                let or = other.id / cols, oc = other.id % cols
+                
+                // 檢查四個方向
+                if pr == or && pc == oc - 1 { hidden.insert(.right) }
+                if pr == or && pc == oc + 1 { hidden.insert(.left) }
+                if pr == or + 1 && pc == oc { hidden.insert(.top) }
+                if pr == or - 1 && pc == oc { hidden.insert(.bottom) }
+            }
+            pieces[i].hiddenEdges = hidden
+        }
+    }
+    
     // MARK: - Debug Logging
     
     /// 输出当前所有组、组内图片、行列、坐标等详细状态
@@ -63,6 +86,7 @@ extension GameViewModel {
             SoundManager.shared.playSnap()
             PlatformUtils.vibrateSuccess()
             normalizeAllPiecesToGrid()
+            updateHiddenEdges()
             logInteractionState(prefix: "📋 合并后")
             
             // Tutorial Check: Any successful move in tutorial mode advances to step 1
@@ -108,7 +132,13 @@ extension GameViewModel {
                  tutorialStep = 1
              }
              
-             if merged { normalizeAllPiecesToGrid(); logInteractionState(prefix: "📋 落子+合并后"); checkForWin(); return }
+             if merged { 
+                 normalizeAllPiecesToGrid()
+                 updateHiddenEdges()
+                 logInteractionState(prefix: "📋 落子+合并后")
+                 checkForWin()
+                 return 
+             }
              normalizeAllPiecesToGrid()
              logInteractionState(prefix: "📋 落子后")
              checkForWin()
@@ -135,6 +165,7 @@ extension GameViewModel {
                 }
                 
                 normalizeAllPiecesToGrid()
+                updateHiddenEdges()
                 logInteractionState(prefix: "📋 挤压后")
                 checkForWin()
                 return
@@ -152,6 +183,7 @@ extension GameViewModel {
             }
             
             normalizeAllPiecesToGrid()
+            updateHiddenEdges()
             logInteractionState(prefix: "📋 替换后")
             checkForWin()
             return
@@ -168,6 +200,7 @@ extension GameViewModel {
             }
             
             normalizeAllPiecesToGrid()
+            updateHiddenEdges()
             logInteractionState(prefix: "📋 意图替换后")
             checkForWin()
             return
@@ -178,8 +211,15 @@ extension GameViewModel {
         if isValidPlacement(group: movedGroup) {
              print("✅ Valid Placement (Grid Snap) 替换成功")
              _ = tryGridSnap(group: movedGroup)
-             if checkNeighborSnapping(movedPiece: leadPiece) { normalizeAllPiecesToGrid(); logInteractionState(prefix: "📋 有效落子+合并后"); checkForWin(); return }
+             if checkNeighborSnapping(movedPiece: leadPiece) { 
+                 normalizeAllPiecesToGrid()
+                 updateHiddenEdges()
+                 logInteractionState(prefix: "📋 有效落子+合并后")
+                 checkForWin()
+                 return 
+             }
              normalizeAllPiecesToGrid()
+             updateHiddenEdges()
              logInteractionState(prefix: "📋 有效落子后")
              checkForWin()
              return
@@ -188,8 +228,15 @@ extension GameViewModel {
         // D. Android Step 6: 尝试 Grid Snap 兜底（即使 placement 不完美）
         if tryGridSnap(group: movedGroup) {
              print("✅ Grid Snap (fallback) 替换成功")
-             if checkNeighborSnapping(movedPiece: leadPiece) { normalizeAllPiecesToGrid(); logInteractionState(prefix: "📋 兜底落子+合并后"); checkForWin(); return }
+             if checkNeighborSnapping(movedPiece: leadPiece) { 
+                 normalizeAllPiecesToGrid()
+                 updateHiddenEdges()
+                 logInteractionState(prefix: "📋 兜底落子+合并后")
+                 checkForWin()
+                 return 
+             }
              normalizeAllPiecesToGrid()
+             updateHiddenEdges()
              logInteractionState(prefix: "📋 兜底落子后")
              checkForWin()
              return
@@ -209,6 +256,7 @@ extension GameViewModel {
         var keepChecking = true
         var totalMergedEdges = 0
         var lastMergeSource: PuzzlePiece?
+        var lastSurvivorGroupId: Int? = nil
         
         print("🔍 checkNeighborSnapping for Group \(movedPiece.groupId) 组内块=\(pieces.filter {$0.groupId == movedPiece.groupId}.map {$0.id})")
         
@@ -270,29 +318,57 @@ extension GameViewModel {
                             continue
                         }
                         
-                        print("✅ MATCH: 拼图块 \(current.id) 与邻居 \(target.id) 合并")
-                        let edges = mergeGroups(source: current, target: target, expectedX: expectedX, expectedY: expectedY)
-                        totalMergedEdges += edges
-                        lastMergeSource = current
-                        hasMergedAny = true
-                        keepChecking = true
-                        break searchLoop
-                    }
+            
+            print("✅ MATCH: 拼图块 \(current.id) 与邻居 \(target.id) 合并")
+            let edges = mergeGroups(source: current, target: target, expectedX: expectedX, expectedY: expectedY)
+            totalMergedEdges += edges
+            lastMergeSource = current
+            // Capture survivor group ID (target's group) for scoring
+            lastSurvivorGroupId = target.groupId
+            hasMergedAny = true
+            keepChecking = true
+            break searchLoop
                 }
             }
         }
+    }
         
         if totalMergedEdges > 0, let source = lastMergeSource {
             let centerX = source.currentX + source.width / 2
             let centerY = source.currentY + source.height / 2
+            
+            // 🚨 关键修复：检查双倍 Buff 状态（对齐 Android 逻辑）
+            let isBuffActive = LevelProgressManager.shared.isDoubleCoinsActive()
+            let multiplier = isBuffActive ? 2 : 1
+            
+            // 基础得分：每条边 2 分
+            let baseScore = totalMergedEdges * 2
+            // 应用 Buff 倍率用于 UI 显示
+            let displayScore = baseScore * multiplier
+            
             let particleCount = min(24, 6 + totalMergedEdges * 6)
             let colors: [Color] = totalMergedEdges > 1
                 ? [Color(hex: 0x00FFFF), Color(hex: 0xFF00FF), Color(hex: 0xFFFF00)]
                 : [.red, .yellow, .blue, .green]
             SoundManager.shared.playSnap()
             particleSystem.emit(x: centerX, y: centerY, count: particleCount, colors: colors)
-            let displayScore = totalMergedEdges * 2
-            particleSystem.addFloatingText(x: centerX, y: centerY, text: "+\(displayScore)", color: .yellow)
+            
+            // 飘字显示翻倍后的得分，颜色区分是否双倍
+            particleSystem.addFloatingText(
+                x: centerX, 
+                y: centerY, 
+                text: "+\(displayScore)", 
+                color: isBuffActive ? .orange : .yellow
+            )
+            
+            // Note: Score update is handled inside mergeGroups to ensure 'paidConnections' check
+            // We only handle visual feedback here (particles, text)
+            
+            // Android parity: Record score for unmerge (使用翻倍后的值)
+            if let survivorGroupId = lastSurvivorGroupId {
+                self.scoredGroups[survivorGroupId, default: 0] += displayScore
+            }
+
             
             // Tutorial Check: If we merged in tutorial level, advance to next step and clear the hint
             if isTutorialMode && tutorialStep == 0 {
@@ -829,7 +905,19 @@ extension GameViewModel {
             targetEdges.formUnion(newEdgeKeys)
             paidEdgesByGroup[targetGroupId] = targetEdges
             if newPaidEdges > 0 {
+                // 🚨 关键修复：检查 Buff 状态以计算实际显示的得分（对齐 Android sessionCoins）
+                let isBuffActive = LevelProgressManager.shared.isDoubleCoinsActive()
+                let multiplier = isBuffActive ? 2 : 1
+                let actualDisplayScore = mergeScore * multiplier
+                
+                // addCoins 传入基础分数，内部会根据 Buff 状态翻倍
                 LevelProgressManager.shared.addCoins(mergeScore)
+                
+                // sessionScore 累加翻倍后的值（用于结算界面显示）
+                self.sessionScore += actualDisplayScore
+                
+                print("💰 mergeGroups: baseScore=\(mergeScore) isBuffActive=\(isBuffActive) actualDisplayScore=\(actualDisplayScore) sessionScore=\(self.sessionScore)")
+                
                 // Trigger top bar bounce
                 scoreEventCount += 1
             }

@@ -12,3 +12,5 @@ ios/**/*.xcuserstate
 build_output*.txt
 build_log*.txt
 build output*.txt
+ios/OnePic/build_*.txt
+ios/OnePic/build_*.log

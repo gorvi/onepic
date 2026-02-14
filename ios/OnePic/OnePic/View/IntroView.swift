@@ -192,11 +192,11 @@ struct RocketLaunchControl: View {
                 Group {
                     if isWaiting && !isLaunching {
                         // Idle State (Powerful Organic Breathing)
-                        EngineFlame(width: 14, height: 60, color: .cyan, timeOffset: 0)
+                        EngineFlame(width: 14, height: 60, timeOffset: 0)
                             .offset(y: 72)
-                        EngineFlame(width: 6, height: 30, color: .cyan, timeOffset: 1.5)
+                        EngineFlame(width: 6, height: 30, timeOffset: 1.5)
                             .offset(x: -18, y: 72)
-                        EngineFlame(width: 6, height: 30, color: .cyan, timeOffset: 3.0)
+                        EngineFlame(width: 6, height: 30, timeOffset: 3.0)
                             .offset(x: 18, y: 72)
                     }
                     
@@ -281,7 +281,6 @@ struct RocketLaunchControl: View {
 struct EngineFlame: View {
     let width: CGFloat
     let height: CGFloat
-    let color: Color
     let timeOffset: Double
     
     var body: some View {
@@ -291,8 +290,9 @@ struct EngineFlame: View {
             .fill(LinearGradient(
                 stops: [
                     .init(color: .white, location: 0),
-                    .init(color: color.opacity(0.8), location: 0.3),
-                    .init(color: color.opacity(0.4), location: 0.6),
+                    .init(color: Color(hex: 0xFFEB3B), location: 0.2), // Bright Yellow
+                    .init(color: Color(hex: 0xFF5722).opacity(0.8), location: 0.5), // Orange Red
+                    .init(color: Color(hex: 0xBF360C).opacity(0.4), location: 0.8), // Deep Red
                     .init(color: .clear, location: 1.0)
                 ],
                 startPoint: .top,
@@ -303,42 +303,90 @@ struct EngineFlame: View {
     }
 }
 
+struct FlameShape: Shape {
+    var timer: Double
+    var isCore: Bool = false
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let width = rect.width
+        let height = rect.height
+        
+        // 頂部圓角（連接火箭處）
+        path.move(to: CGPoint(x: 0, y: width / 2))
+        path.addArc(center: CGPoint(x: width / 2, y: width / 2), radius: width / 2, startAngle: .degrees(180), endAngle: .degrees(0), clockwise: false)
+        
+        // 兩側向下拉伸
+        let leftControl = height * 0.4
+        let rightControl = height * 0.4
+        
+        // 底部隨機抖動尖端
+        let jitter = sin(timer * 20) * (isCore ? 3 : 8)
+        let bottomCenter = CGPoint(x: width / 2 + jitter * 0.2, y: height + jitter)
+        
+        path.addLine(to: CGPoint(x: width, y: rect.minY + width / 2))
+        
+        // 右側曲線
+        path.addCurve(to: bottomCenter,
+                      control1: CGPoint(x: width, y: height * 0.6),
+                      control2: CGPoint(x: width * 0.8, y: height * 0.8))
+        
+        // 左側曲線
+        path.addCurve(to: CGPoint(x: 0, y: rect.minY + width / 2),
+                      control1: CGPoint(x: width * 0.2, y: height * 0.8),
+                      control2: CGPoint(x: 0, y: height * 0.6))
+        
+        path.closeSubpath()
+        return path
+    }
+    
+    var animatableData: Double {
+        get { timer }
+        set { timer = newValue }
+    }
+}
+
 struct LaunchThrust: View {
     let width: CGFloat
     let height: CGFloat
+    @State private var timer: Double = 0
     
     var body: some View {
-        ZStack(alignment: .top) {
-            // 3. Outer Electronic Dispersion Halo
-            Capsule()
-                .fill(Color(hex: 0x00B0FF).opacity(0.3))
-                .frame(width: width * 2.5, height: height * 0.9)
-                .blur(radius: 15)
+        TimelineView(.animation) { timeline in
+            let t = timeline.date.timeIntervalSinceReferenceDate
             
-            // 2. High-Energy Plasma Flow
-            Capsule()
-                .fill(LinearGradient(
-                    colors: [Color(hex: 0x00E5FF), Color(hex: 0x00B0FF), .clear],
-                    startPoint: .top,
-                    endPoint: .bottom
-                ))
-                .frame(width: width * 1.2, height: height)
-                .blur(radius: 4)
-            
-            // 1. Core Kernel
-            Capsule()
-                .fill(LinearGradient(
-                    stops: [
-                        .init(color: .white, location: 0),
-                        .init(color: .white.opacity(0.8), location: 0.15),
-                        .init(color: .white.opacity(0.2), location: 0.5),
-                        .init(color: .clear, location: 0.9)
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                ))
-                .frame(width: width * 0.4, height: height * 0.8)
-                .blur(radius: 1)
+            ZStack(alignment: .top) {
+                // 3. Outer Heat Glow (More organic blur)
+                FlameShape(timer: t)
+                    .fill(Color(hex: 0xFF5722).opacity(0.15))
+                    .frame(width: width * 4.0, height: height * 0.95)
+                    .blur(radius: 25)
+                
+                // 2. Main Flame (Jagged Tapered)
+                FlameShape(timer: t)
+                    .fill(LinearGradient(
+                        colors: [Color(hex: 0xFFEB3B), Color(hex: 0xFF5722), .clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ))
+                    .frame(width: width * 1.6, height: height)
+                    .blur(radius: 4)
+                
+                // 1. Core Kernel (Intense Piercing)
+                FlameShape(timer: t, isCore: true)
+                    .fill(LinearGradient(
+                        stops: [
+                            .init(color: .white, location: 0),
+                            .init(color: .white.opacity(0.95), location: 0.1),
+                            .init(color: Color(hex: 0xFFEB3B).opacity(0.25), location: 0.5),
+                            .init(color: .clear, location: 0.95)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ))
+                    .frame(width: width * 0.7, height: height * 0.9)
+                    .blur(radius: 1.5)
+            }
         }
     }
 }

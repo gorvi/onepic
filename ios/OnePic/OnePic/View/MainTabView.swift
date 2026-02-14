@@ -27,32 +27,37 @@ struct MainTabView: View {
             }
             .allowsHitTesting(false)
             
-            ZStack(alignment: .bottom) {
-                // Tab content：底层先铺满黑色，避免透明 TabBar 下透出导航/系统白底
-                Group {
-                    switch selection {
-                    case 0: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
-                    case 1: GalaxyView(visitorManager: visitorManager, onLocateLevel: { levelId in
-                        targetLevelId = levelId
-                        selection = 0
-                    })
-                    case 2: CheckInView(visitorManager: visitorManager)
-                    case 3: MoreView(visitorManager: visitorManager)
-                    default: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
+            ZStack(alignment: .top) { // 改为 .top，确保悬浮窗默认在顶部
+                // Tab content
+                ZStack(alignment: .bottom) { // 内部保留 .bottom 用于 TabBar
+                    Group {
+                        switch selection {
+                        case 0: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
+                        case 1: GalaxyView(visitorManager: visitorManager, onLocateLevel: { levelId in
+                            targetLevelId = levelId
+                            selection = 0
+                        })
+                        case 2: CheckInView(visitorManager: visitorManager)
+                        case 3: MoreView(visitorManager: visitorManager)
+                        default: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.ignoresSafeArea())
+                    .environmentObject(tabBarVisibility)
+                    
+                    if !tabBarVisibility.hideTabBar {
+                        MainTabBar(selection: $selection)
+                            .id("\(progressManager.currentLanguage)_\(progressManager.checkInVersion)")
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.ignoresSafeArea())
-                .background(Color.black.ignoresSafeArea())
-                .environmentObject(tabBarVisibility)
                 
-                // Global Interaction Overlay (Covering all tabs, below TabBar)
+                // Global Interaction Overlay
                 CelestialVisitorInteractionOverlay(manager: visitorManager).ignoresSafeArea()
                 
-                if !tabBarVisibility.hideTabBar {
-                    MainTabBar(selection: $selection)
-                        .id("\(progressManager.currentLanguage)_\(progressManager.checkInVersion)")
-                }
+                // 3. 全局双倍收益悬浮窗 (Floating Buff Window)
+                FloatingBuffWindow()
+                    .zIndex(100)
             }
         }
     }

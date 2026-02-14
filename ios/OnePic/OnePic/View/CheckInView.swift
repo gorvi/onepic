@@ -2,9 +2,9 @@ import SwiftUI
 
 struct CheckInView: View {
     @ObservedObject var visitorManager: CelestialVisitorManager
+    @ObservedObject var levelManager = LevelProgressManager.shared
     @State private var hasCheckedInToday = LevelProgressManager.shared.hasCheckedInToday()
     @State private var consecutiveDays = LevelProgressManager.shared.getConsecutiveDays()
-    @State private var totalCoins = LevelProgressManager.shared.getCoins()
     @State private var coinsEarnedToday = 0
     
     // Animation States
@@ -45,7 +45,6 @@ struct CheckInView: View {
             }
         }
         .onAppear {
-            totalCoins = LevelProgressManager.shared.getCoins()
             hasCheckedInToday = LevelProgressManager.shared.hasCheckedInToday()
             consecutiveDays = LevelProgressManager.shared.getConsecutiveDays()
             coinsEarnedToday = LevelProgressManager.shared.getCheckInRewardToday()
@@ -70,7 +69,7 @@ struct CheckInView: View {
             // Coin Display
             HStack(spacing: 8) {
                 CoinIconView(size: 20)
-                Text("\(totalCoins)")
+                Text("\(levelManager.coins)")
                     .font(.system(size: 18, weight: .bold))
                     .monospacedDigit()
                     .foregroundColor(Color(hex: 0xFFD700))
@@ -218,13 +217,16 @@ struct CheckInView: View {
         
         let (reward, streak) = LevelProgressManager.shared.performCheckIn()
         
+        // 激活双倍金币 Buff (对齐 Android: 180s + consecutiveDays * 60s)
+        let duration = 180 + (streak * 60)
+        LevelProgressManager.shared.activateDoubleCoinsBuff(durationSeconds: duration)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                 cardScale = 1.0
                 hasCheckedInToday = true
                 consecutiveDays = streak
                 coinsEarnedToday = reward
-                totalCoins = LevelProgressManager.shared.getCoins()
                 showSuccessEffect = true
             }
         }

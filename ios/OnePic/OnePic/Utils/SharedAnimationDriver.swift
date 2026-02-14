@@ -18,18 +18,47 @@ class SharedAnimationDriver: ObservableObject {
     @Published var shimmerOffset: CGFloat = -2.0
     
     private var displayLink: CADisplayLink?
+    private var powerStateObserver: NSObjectProtocol?
     private let startTime: Date
     
     private init() {
         self.startTime = Date()
         startAnimations()
+        observePowerStateChanges()
     }
     
     private func startAnimations() {
         // Use CADisplayLink for continuous, synchronized updates that work for late-appearing views
         let link = CADisplayLink(target: self, selector: #selector(updateFrame))
+        applyPreferredFrameRate(to: link)
         link.add(to: .current, forMode: .common)
         self.displayLink = link
+    }
+    
+    /// 降低动画刷新频率以减少主页长时间驻留时的功耗
+    private func applyPreferredFrameRate(to link: CADisplayLink) {
+        let isLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+        #if os(iOS)
+        if #available(iOS 15.0, *) {
+            let fps = isLowPower ? 20 : 30
+            link.preferredFrameRateRange = CAFrameRateRange(minimum: Float(fps), maximum: Float(fps), preferred: Float(fps))
+        } else {
+            link.preferredFramesPerSecond = isLowPower ? 20 : 30
+        }
+        #else
+        link.preferredFramesPerSecond = isLowPower ? 20 : 30
+        #endif
+    }
+    
+    private func observePowerStateChanges() {
+        powerStateObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.NSProcessInfoPowerStateDidChange,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self, let link = self.displayLink else { return }
+            self.applyPreferredFrameRate(to: link)
+        }
     }
     
     @objc private func updateFrame() {
@@ -63,5 +92,8 @@ class SharedAnimationDriver: ObservableObject {
     
     deinit {
         displayLink?.invalidate()
+        if let powerStateObserver {
+            NotificationCenter.default.removeObserver(powerStateObserver)
+        }
     }
 }

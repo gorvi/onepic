@@ -11,12 +11,18 @@ class GameViewModel: ObservableObject {
     // MARK: - State
     @Published var pieces: [PuzzlePiece] = []
     @Published var isLevelCompleted: Bool = false
-    /// 分数与金币同一来源：本局得分 = 当前金币 - 开局时金币（只维护金币，分数由此推导）
-    var score: Int { LevelProgressManager.shared.getCoins() - coinsAtGameStart }
-    /// 本局开局时金币数，用于推导 score
-    private var coinsAtGameStart: Int = 0
-    /// 本局通关获得的星星数（1–3），用于胜利弹窗展示
+    /// 通关获得的星星数
     @Published var completionStars: Int = 0
+    /// 实时总金币数
+    @Published var totalCoins: Int = 0
+    
+    /// 本局得分（通过合并获得的金币）
+    @Published var sessionScore: Int = 0
+    /// 兼容性：UI 目前还在使用 score，改为指向 sessionScore
+    var score: Int { sessionScore }
+    
+    /// 本局开局时金币数（用于内部追踪，不影响显示）
+    private var coinsAtGameStart: Int = 0
     
     // MARK: - Configuration
     var levelConfig: LevelConfig?
@@ -37,6 +43,8 @@ class GameViewModel: ObservableObject {
     
     @Published var scoreEventCount: Int = 0
     
+    var levelManager = LevelProgressManager.shared
+    
     // MARK: - Tutorial State (Android Parity)
     /// 是否处于教学模式
     @Published var isTutorialMode: Bool = false
@@ -46,7 +54,7 @@ class GameViewModel: ObservableObject {
     var dragStartLocation: CGPoint = .zero
     var draggedGroupId: Int? = nil
     var initialPiecePositions: [Int: CGPoint] = [:] // id -> (x, y) Android: dragStartStates
-    var initialPieceRowCol: [Int: (row: Int, col: Int)] = [:] // id -> (row, col) Android: PieceState 含 row/col
+    var initialPieceRowCol: [Int: (row: Int, col: Int)] = [:] // id -> (row: Int, col: Int) Android: PieceState 含 row/col
     
     /// Android parity: Track score per group for unmerge deduction
     var scoredGroups: [Int: Int] = [:]
@@ -79,7 +87,14 @@ class GameViewModel: ObservableObject {
         self.levelConfig = config
         self.mainLevelIndexForAscended = mainLevelIndexForAscended
         self.isLevelCompleted = false
-        self.coinsAtGameStart = LevelProgressManager.shared.getCoins()
+        
+        self.coinsAtGameStart = levelManager.getCoins()
+        self.sessionScore = 0
+        
+        // 初始化教学模式状态
+        self.isTutorialMode = (config.levelId == "tutorial_0" || config.levelId == "c1")
+        self.tutorialStep = 0
+        
         self.completionStars = 0
         self.levelStartTime = Date()
         self.elapsedSeconds = 0
@@ -147,6 +162,11 @@ class GameViewModel: ObservableObject {
         // Randomize
         scramblePieces()
         
+        // 教学模式下自动展示第一步提示（幽灵动画）
+        if isTutorialMode {
+            executeHintSequence()
+        }
+        
         print("🧩 After Scramble:")
         for p in pieces {
             let isBottomLeft = (p.row >= rows - 2 && p.col <= 1)
@@ -188,6 +208,15 @@ class GameViewModel: ObservableObject {
             pieces[i].height = cellHeight
         }
         syncPositionsFromGrid()
+        
+        // 关键修复：布局重算后刷新 Hint 目标，避免首帧/尺寸变更后目标框漂移
+        if let hintId = hintPieceId,
+           let hintPiece = pieces.first(where: { $0.id == hintId }) {
+            hintTarget = computeHintTargetTopLeft(for: hintPiece)
+            if isTutorialMode, let target = hintTarget {
+                print("🎯 HintRelayout: piece=\(hintPiece.id) target=(\(Int(target.x)),\(Int(target.y))) piecePos=(\(Int(hintPiece.currentX)),\(Int(hintPiece.currentY)))")
+            }
+        }
     }
     
     // MARK: - Coordinate Conversion (Android 一致：左上角坐标系)
@@ -449,10 +478,12 @@ class GameViewModel: ObservableObject {
         
         // Android parity: Deduct score for this group before unmerging（从金币中扣回，与分数同一来源）
         if let scoreToDeduct = scoredGroups.removeValue(forKey: groupId), scoreToDeduct > 0 {
-            let pm = LevelProgressManager.shared
-            let currentEarned = pm.getCoins() - coinsAtGameStart
+            let currentEarned = levelManager.getCoins() - coinsAtGameStart
             let deduct = min(scoreToDeduct, max(0, currentEarned))
-            if deduct > 0 { pm.addCoins(-deduct) }
+            if deduct > 0 { 
+                levelManager.addCoins(-deduct)
+                self.sessionScore = max(0, self.sessionScore - deduct)
+            }
         }
         // 拆分时移除该组已付边，以便再次合并能加回金币
         if let edges = paidEdgesByGroup.removeValue(forKey: groupId) {
@@ -475,7 +506,16 @@ class GameViewModel: ObservableObject {
                 pieces[idx].zIndex = i
             }
         }
+        
+        updateHiddenEdges()
         SoundManager.shared.playRevert()
+        
+        // 教学模式：双击拆卡后推进到 step 2，使提示词消失
+        if isTutorialMode && tutorialStep == 1 {
+            print("🎓 Tutorial: Advancing to step 2 after unmerge")
+            tutorialStep = 2
+        }
+        
         objectWillChange.send()
     }
     
@@ -483,13 +523,45 @@ class GameViewModel: ObservableObject {
 
     /// 当前金币是否足够使用一次提示
     var canAffordHint: Bool {
-        LevelProgressManager.shared.getCoins() >= Self.HINT_COST
+        levelManager.getCoins() >= Self.HINT_COST
     }
 
     /// Android parity: Show hint by highlighting a misplaced piece and animating ghost to target；使用前扣 HINT_COST 金币
     func showHint() {
-        guard canAffordHint else { return }
-        LevelProgressManager.shared.addCoins(-Self.HINT_COST)
+        if canAffordHint {
+            // 金币足够：直接消耗并展示
+            executeHintSequence()
+        } else {
+            // 金币不足：展示激励视频
+            print("💰 Not enough coins for hint. Requesting Ad...")
+            // 检查冷却与广告就绪
+            if levelManager.canWatchAd() && AdManager.shared.isRewardedReady {
+                AdManager.shared.showRewarded { [weak self] in
+                    guard let self = self else { return }
+                    let reward = self.levelManager.getAdRewardCoins()
+                    // 1. 发放奖励
+                    self.levelManager.addCoins(reward)
+                    self.levelManager.recordAdView()
+                    // 2. 自动消耗并展示提示 (Seamless UX)
+                    self.executeHintSequence()
+                    print("💰 Ad Reward for Hint: \(reward) coins added.")
+                }
+            } else if !levelManager.canWatchAd() {
+                let remaining = levelManager.getAdCooldownRemaining()
+                print("⚠️ Ad Cooldown: Please wait \(remaining)s")
+            } else {
+                print("⚠️ Rewarded Ad not ready yet.")
+                AdManager.shared.loadRewarded()
+            }
+        }
+    }
+    
+    /// 执行提示逻辑（扣费 + 动画）
+    private func executeHintSequence() {
+        // 教学模式下不扣除金币
+        if !isTutorialMode {
+            levelManager.addCoins(-Self.HINT_COST)
+        }
         objectWillChange.send()
 
         hintTimer?.invalidate()
@@ -514,12 +586,14 @@ class GameViewModel: ObservableObject {
             selection = misplaced.randomElement() ?? misplaced[0]
         }
         
-        let targetRow = selection.id / cols
-        let targetCol = selection.id % cols
-        let targetCenter = gridCenter(row: targetRow, col: targetCol)
+        let targetTopLeft = computeHintTargetTopLeft(for: selection)
         
         hintPieceId = selection.id
-        hintTarget = targetCenter
+        hintTarget = targetTopLeft
+        if isTutorialMode {
+            let p4 = pieces.first(where: { $0.id == 3 })
+            print("🎯 HintInit: select=\(selection.id) from=(\(Int(selection.currentX)),\(Int(selection.currentY))) target=(\(Int(targetTopLeft.x)),\(Int(targetTopLeft.y))) piece4=(\(Int(p4?.currentX ?? -1)),\(Int(p4?.currentY ?? -1)))")
+        }
         hintAnimProgress = 0
         SoundManager.shared.playSnap()
         
@@ -546,12 +620,37 @@ class GameViewModel: ObservableObject {
         hintTarget = nil
         hintAnimProgress = 0
     }
+    
+    /// Android parity: 返回提示目标的左上角坐标
+    private func computeHintTargetTopLeft(for selection: PuzzlePiece) -> CGPoint {
+        let isTutorial = levelConfig?.levelId == "tutorial_0" || levelConfig?.levelId == "c1"
+        let targetRow = selection.id / cols
+        let targetCol = selection.id % cols
+        
+        if isTutorial, selection.id != 3, let piece4 = pieces.first(where: { $0.id == 3 }) {
+            return CGPoint(x: piece4.currentX, y: piece4.currentY)
+        }
+        return gridTopLeft(row: targetRow, col: targetCol)
+    }
 
-    /// 看激励广告得 AD_REWARD_COINS 金币
+    /// 看激励广告得动态奖励金币
     func requestCoinsFromAd() {
-        AdManager.shared.showRewarded { [weak self] in
-            LevelProgressManager.shared.addCoins(Self.AD_REWARD_COINS)
-            self?.objectWillChange.send()
+        let pm = levelManager
+        guard pm.canWatchAd() else {
+            let remaining = pm.getAdCooldownRemaining()
+            print("⚠️ Ad Cooldown: \(remaining)s remaining")
+            return
+        }
+        
+        if pm.canWatchAd() && AdManager.shared.isRewardedReady {
+            AdManager.shared.showRewarded { [weak self] in
+                guard let self = self else { return }
+                let reward = pm.getAdRewardCoins()
+                pm.addCoins(reward)
+                pm.recordAdView()
+                self.objectWillChange.send()
+                print("💰 Ad Reward: \(reward) coins added.")
+            }
         }
     }
     
@@ -560,7 +659,8 @@ class GameViewModel: ObservableObject {
         AdManager.shared.showRewarded { [weak self] in
             guard let self = self else { return }
             // 翻倍奖励：再加一份当前局的分数
-            LevelProgressManager.shared.addCoins(self.score)
+            let currentScore = self.sessionScore
+            self.levelManager.addCoins(currentScore)
             self.objectWillChange.send()
         }
     }
@@ -623,7 +723,8 @@ class GameViewModel: ObservableObject {
         elapsedTimer = nil
     }
     
-    private func startElapsedTimer() {
+    /// 启动关卡计时器（每秒更新 elapsedSeconds）
+    func startElapsedTimer() {
         elapsedTimer?.invalidate()
         elapsedTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, !self.isLevelCompleted else { return }
@@ -663,7 +764,7 @@ class GameViewModel: ObservableObject {
             }
         }
         // 金币已在每次合并时通过 addCoins(coinGain) 加过，此处不再重复加 score，否则会加双倍
-        LevelProgressManager.shared.lastGameCoinScore = score  // 记录本局应得金币，用于返回时校验显示
+        LevelProgressManager.shared.lastGameCoinScore = sessionScore  // 记录本局应得金币，用于返回时校验显示
         SoundManager.shared.playWin()
         PlatformUtils.vibrateSuccess()
     }
