@@ -8,13 +8,14 @@ import GoogleMobileAds
  */
 struct AdMobNativeAdView: View {
     let scene: AdManager.NativeScene
+    private let adSlotHeight: CGFloat = 110
     @State private var nativeAd: NativeAd?
     @ObservedObject private var adManager = AdManager.shared
     
     @State private var isBreathing = false
 
     var body: some View {
-        Group {
+        ZStack {
             if let ad = nativeAd {
                 ZStack {
                     // 全息背景
@@ -37,16 +38,27 @@ struct AdMobNativeAdView: View {
                     NativeAdRepresentable(nativeAd: ad)
                         .padding(12)
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 110) // 对齐 Android 的紧凑型布局高度
                 .onAppear {
                     withAnimation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
                         isBreathing = true
                     }
                 }
             } else {
-                Color.clear.frame(height: 1)
+                // 固定占位：避免广告加载完成后触发列表整体重排（iOS 15 抖动）
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.white.opacity(0.05))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                    )
+                    .allowsHitTesting(false)
             }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: adSlotHeight) // 对齐 Android 的紧凑型布局高度
+        .transaction { tx in
+            // 禁止广告内容切换导致父级布局动画，防止首页元素上下跳动
+            tx.animation = nil
         }
         .onAppear {
             attemptToFetchAd()
@@ -61,6 +73,16 @@ struct AdMobNativeAdView: View {
                 attemptToFetchAd()
             }
         }
+        .onReceive(adManager.nativeHomeTokenPublisher) { _ in
+            if scene == .home {
+                attemptToFetchAd()
+            }
+        }
+        .onReceive(adManager.nativeGalaxyTokenPublisher) { _ in
+            if scene == .galaxy {
+                attemptToFetchAd()
+            }
+        }
     }
     
     private func attemptToFetchAd() {
@@ -68,9 +90,8 @@ struct AdMobNativeAdView: View {
         
         // 尝试从 Manager 获取（获取即消耗，Manager 会自动开始加载下一个）
         if let ad = adManager.getNativeAd(for: scene) {
-            withAnimation {
-                self.nativeAd = ad
-            }
+            // 这里不做动画，避免 iOS 15 将视图替换扩散为布局动画
+            self.nativeAd = ad
         }
     }
 }
@@ -83,66 +104,95 @@ private struct NativeAdRepresentable: UIViewRepresentable {
     
     func makeUIView(context: Context) -> NativeAdView {
         let nativeView = NativeAdView()
+        nativeView.backgroundColor = .clear
+        return nativeView
+    }
+    
+    func updateUIView(_ uiView: NativeAdView, context: Context) {
+        if uiView.bounds.width > 0, uiView.bounds.height > 0 {
+            configureIfNeeded(uiView, coordinator: context.coordinator)
+        } else {
+            // Some iOS 16/17 layout passes call update before size is resolved.
+            // Re-try on next main-loop tick so ad content can still be attached.
+            DispatchQueue.main.async { [nativeAd] in
+                guard uiView.bounds.width > 0, uiView.bounds.height > 0 else { return }
+                if context.coordinator.lastAdObjectID == ObjectIdentifier(nativeAd) { return }
+                context.coordinator.lastAdObjectID = ObjectIdentifier(nativeAd)
+                uiView.subviews.forEach { $0.removeFromSuperview() }
+                self.buildSubviews(in: uiView)
+                self.populate(uiView, with: nativeAd)
+            }
+        }
+    }
+    
+    private func configureIfNeeded(_ uiView: NativeAdView, coordinator: Coordinator) {
+        if coordinator.lastAdObjectID == ObjectIdentifier(nativeAd) { return }
+        coordinator.lastAdObjectID = ObjectIdentifier(nativeAd)
+        
+        uiView.subviews.forEach { $0.removeFromSuperview() }
+        buildSubviews(in: uiView)
+        populate(uiView, with: nativeAd)
+    }
+    
+    private func buildSubviews(in uiView: NativeAdView) {
         
         // 1. 标题 (Headline)
         let headline = UILabel()
         headline.font = .systemFont(ofSize: 16, weight: .bold)
         headline.textColor = .white
-        nativeView.headlineView = headline
-        nativeView.addSubview(headline)
+        uiView.headlineView = headline
+        uiView.addSubview(headline)
         
         // 2. 描述 (Body)
         let body = UILabel()
         body.font = .systemFont(ofSize: 12)
         body.textColor = .white.withAlphaComponent(0.7)
         body.numberOfLines = 2
-        nativeView.bodyView = body
-        nativeView.addSubview(body)
+        uiView.bodyView = body
+        uiView.addSubview(body)
         
         // 3. 图标 (Icon)
         let icon = UIImageView()
-        icon.layer.cornerRadius = 8 // 更圆润
+        icon.layer.cornerRadius = 8
         icon.clipsToBounds = true
-        nativeView.iconView = icon
-        nativeView.addSubview(icon)
+        uiView.iconView = icon
+        uiView.addSubview(icon)
         
-        // 4. 操作按钮 (Call to Action) - 渐变胶囊风格
-        let cta = GradientButton() // 使用自定义渐变按钮
+        // 4. CTA
+        let cta = GradientButton()
         cta.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         cta.setTitleColor(.white, for: .normal)
         cta.layer.cornerRadius = 16
         cta.clipsToBounds = true
+        uiView.callToActionView = cta
+        uiView.addSubview(cta)
         
-        nativeView.callToActionView = cta
-        nativeView.addSubview(cta)
-        
-        // 5. AdChoices View (必选)
+        // 5. AdChoices
         let adChoices = AdChoicesView()
-        nativeView.adChoicesView = adChoices
-        nativeView.addSubview(adChoices)
+        uiView.adChoicesView = adChoices
+        uiView.addSubview(adChoices)
         
-        // 6. 广告标识 (Ad Label)
+        // 6. Ad label
         let adLabel = UILabel()
         adLabel.text = "Ad"
         adLabel.font = .systemFont(ofSize: 10, weight: .bold)
         adLabel.textColor = UIColor.white
-        adLabel.backgroundColor = UIColor(hex: 0x00E676).withAlphaComponent(0.2) // 对齐 Android: #22000000 但带绿色调
+        adLabel.backgroundColor = UIColor(hex: 0x00E676).withAlphaComponent(0.2)
         adLabel.layer.borderColor = UIColor(hex: 0x00E676).withAlphaComponent(0.5).cgColor
         adLabel.layer.borderWidth = 0.5
         adLabel.layer.cornerRadius = 2
         adLabel.clipsToBounds = true
         adLabel.textAlignment = .center
-        nativeView.addSubview(adLabel)
-
-        // 7. 星级评分 (Star Rating)
+        uiView.addSubview(adLabel)
+        
+        // 7. 星级
         let starStack = UIStackView()
         starStack.axis = .horizontal
         starStack.spacing = 2
         starStack.alignment = .center
-        nativeView.starRatingView = starStack
-        nativeView.addSubview(starStack)
-
-        // 布局
+        uiView.starRatingView = starStack
+        uiView.addSubview(starStack)
+        
         headline.translatesAutoresizingMaskIntoConstraints = false
         body.translatesAutoresizingMaskIntoConstraints = false
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -152,52 +202,44 @@ private struct NativeAdRepresentable: UIViewRepresentable {
         starStack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            icon.leadingAnchor.constraint(equalTo: nativeView.leadingAnchor),
-            icon.topAnchor.constraint(equalTo: nativeView.topAnchor),
-            icon.widthAnchor.constraint(equalToConstant: 48),
-            icon.heightAnchor.constraint(equalToConstant: 48),
+            icon.leadingAnchor.constraint(equalTo: uiView.leadingAnchor),
+            icon.topAnchor.constraint(equalTo: uiView.topAnchor),
+            icon.widthAnchor.constraint(equalToConstant: 36),
+            icon.heightAnchor.constraint(equalToConstant: 36),
             
-            // Ad Label 放在 Icon 右侧顶部
-            adLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 12),
-            adLabel.topAnchor.constraint(equalTo: nativeView.topAnchor, constant: 4),
-            adLabel.widthAnchor.constraint(equalToConstant: 28),
-            adLabel.heightAnchor.constraint(equalToConstant: 16),
-
-            // Headline 紧跟 Ad Label
+            adLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8),
+            adLabel.topAnchor.constraint(equalTo: uiView.topAnchor, constant: 2),
+            adLabel.widthAnchor.constraint(equalToConstant: 24),
+            adLabel.heightAnchor.constraint(equalToConstant: 14),
+            
             headline.leadingAnchor.constraint(equalTo: adLabel.trailingAnchor, constant: 6),
             headline.centerYAnchor.constraint(equalTo: adLabel.centerYAnchor),
-            headline.trailingAnchor.constraint(lessThanOrEqualTo: adChoices.leadingAnchor, constant: -8),
+            headline.trailingAnchor.constraint(lessThanOrEqualTo: adChoices.leadingAnchor, constant: -6),
             
-            // AdChoices 放置在右上角
-            adChoices.topAnchor.constraint(equalTo: nativeView.topAnchor),
-            adChoices.trailingAnchor.constraint(equalTo: nativeView.trailingAnchor),
+            adChoices.topAnchor.constraint(equalTo: uiView.topAnchor),
+            adChoices.trailingAnchor.constraint(equalTo: uiView.trailingAnchor),
             
-            // Star Rating (放在 Headline 下方)
-            starStack.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
-            starStack.topAnchor.constraint(equalTo: adLabel.bottomAnchor, constant: 4),
-            starStack.heightAnchor.constraint(equalToConstant: 14),
-
-            // Body
-            body.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
-            body.trailingAnchor.constraint(equalTo: nativeView.trailingAnchor),
-            // 如果有星星，body 放在星星下面；否则放在 adLabel 下面 (将在 populate 中动态调整 constraint，这里给个默认)
-            body.topAnchor.constraint(equalTo: starStack.bottomAnchor, constant: 4),
+            starStack.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8),
+            starStack.topAnchor.constraint(equalTo: adLabel.bottomAnchor, constant: 2),
+            starStack.heightAnchor.constraint(equalToConstant: 12),
             
-            // CTA Button
-            cta.trailingAnchor.constraint(equalTo: nativeView.trailingAnchor),
-            cta.bottomAnchor.constraint(equalTo: nativeView.bottomAnchor),
-            cta.heightAnchor.constraint(equalToConstant: 32),
-            cta.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
-            cta.topAnchor.constraint(greaterThanOrEqualTo: body.bottomAnchor, constant: 8)
+            body.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8),
+            body.trailingAnchor.constraint(equalTo: uiView.trailingAnchor),
+            body.topAnchor.constraint(equalTo: starStack.bottomAnchor, constant: 2),
+            
+            cta.trailingAnchor.constraint(equalTo: uiView.trailingAnchor),
+            cta.bottomAnchor.constraint(equalTo: uiView.bottomAnchor),
+            cta.heightAnchor.constraint(equalToConstant: 28),
+            cta.widthAnchor.constraint(greaterThanOrEqualToConstant: 72),
+            cta.topAnchor.constraint(greaterThanOrEqualTo: body.bottomAnchor, constant: 6)
         ])
-        
-        // 绑定数据
-        populate(nativeView, with: nativeAd)
-        
-        return nativeView
     }
     
-    func updateUIView(_ uiView: NativeAdView, context: Context) {}
+    func makeCoordinator() -> Coordinator { Coordinator() }
+    
+    final class Coordinator {
+        var lastAdObjectID: ObjectIdentifier?
+    }
     
     private func populate(_ adView: NativeAdView, with nativeAd: NativeAd) {
         (adView.headlineView as? UILabel)?.text = nativeAd.headline

@@ -15,15 +15,6 @@ struct ParticleBackgroundView: View {
             Canvas(renderer: { context, size in
                 let now = timeline.date.timeIntervalSinceReferenceDate
                 
-                // Resolve Symbols
-                let circleSymbol = context.resolveSymbol(id: "shape_circle")
-                let ringSymbol = context.resolveSymbol(id: "shape_ring")
-                let squareSymbol = context.resolveSymbol(id: "shape_square")
-                let triangleSymbol = context.resolveSymbol(id: "shape_triangle")
-                let diamondSymbol = context.resolveSymbol(id: "shape_diamond")
-                let hexagonSymbol = context.resolveSymbol(id: "shape_hexagon")
-                let starSymbol = context.resolveSymbol(id: "shape_star")
-                
                 for p in particles {
                     // Stateless update based on Time
                     var currentX = p.x
@@ -70,64 +61,57 @@ struct ParticleBackgroundView: View {
                     let scaleFactor = (r * 2.0) / 100.0
                     pContext.scaleBy(x: scaleFactor, y: scaleFactor)
                     pContext.opacity = finalOpacity
-                    
-                    var resolvedSymbol: GraphicsContext.ResolvedSymbol?
+
+                    let particleColor = p.color
                     switch currentConfig.shape {
-                    case .circle: resolvedSymbol = circleSymbol
-                    case .ring: resolvedSymbol = ringSymbol
-                    case .square: resolvedSymbol = squareSymbol
-                    case .triangle: resolvedSymbol = triangleSymbol
-                    case .diamond: resolvedSymbol = diamondSymbol
-                    case .hexagon: resolvedSymbol = hexagonSymbol
-                    case .star: resolvedSymbol = starSymbol
-                    }
-                    if let symbol = resolvedSymbol {
-                        pContext.draw(symbol, at: .zero)
-                    }
-                }
-            }, symbols: {
-                Group {
-                    Circle().fill(.white).frame(width: 100, height: 100).tag("shape_circle")
-                    Circle().stroke(.white, lineWidth: 5).frame(width: 100, height: 100).tag("shape_ring")
-                    Rectangle().fill(.white).frame(width: 100, height: 100).tag("shape_square")
-                    Path { path in
-                        path.move(to: CGPoint(x: 50, y: 0))
-                        path.addLine(to: CGPoint(x: 100, y: 86.6))
-                        path.addLine(to: CGPoint(x: 0, y: 86.6))
-                        path.closeSubpath()
-                    }.fill(.white).frame(width: 100, height: 100).tag("shape_triangle")
-                    Path { path in
-                        path.move(to: CGPoint(x: 50, y: 0))
-                        path.addLine(to: CGPoint(x: 85, y: 50))
-                        path.addLine(to: CGPoint(x: 50, y: 100))
-                        path.addLine(to: CGPoint(x: 15, y: 50))
-                        path.closeSubpath()
-                    }.fill(.white).frame(width: 100, height: 100).tag("shape_diamond")
-                    Path { path in
+                    case .circle:
+                        pContext.fill(Path(ellipseIn: CGRect(x: -50, y: -50, width: 100, height: 100)), with: .color(particleColor))
+                    case .ring:
+                        pContext.stroke(Path(ellipseIn: CGRect(x: -50, y: -50, width: 100, height: 100)), with: .color(particleColor), lineWidth: 5)
+                    case .square:
+                        pContext.fill(Path(CGRect(x: -50, y: -50, width: 100, height: 100)), with: .color(particleColor))
+                    case .triangle:
+                        var tri = Path()
+                        tri.move(to: CGPoint(x: 0, y: -50))
+                        tri.addLine(to: CGPoint(x: 50, y: 36.6))
+                        tri.addLine(to: CGPoint(x: -50, y: 36.6))
+                        tri.closeSubpath()
+                        pContext.fill(tri, with: .color(particleColor))
+                    case .diamond:
+                        var diamond = Path()
+                        diamond.move(to: CGPoint(x: 0, y: -50))
+                        diamond.addLine(to: CGPoint(x: 35, y: 0))
+                        diamond.addLine(to: CGPoint(x: 0, y: 50))
+                        diamond.addLine(to: CGPoint(x: -35, y: 0))
+                        diamond.closeSubpath()
+                        pContext.fill(diamond, with: .color(particleColor))
+                    case .hexagon:
+                        var hex = Path()
                         for i in 0..<6 {
                             let angle = Angle.degrees(Double(i) * 60 - 30)
-                            let px = 50 + cos(angle.radians) * 50
-                            let py = 50 + sin(angle.radians) * 50
-                            if i == 0 { path.move(to: CGPoint(x: px, y: py)) }
-                            else { path.addLine(to: CGPoint(x: px, y: py)) }
+                            let px = cos(angle.radians) * 50
+                            let py = sin(angle.radians) * 50
+                            if i == 0 { hex.move(to: CGPoint(x: px, y: py)) }
+                            else { hex.addLine(to: CGPoint(x: px, y: py)) }
                         }
-                        path.closeSubpath()
-                    }.fill(.white).frame(width: 100, height: 100).tag("shape_hexagon")
-                    Path { path in
+                        hex.closeSubpath()
+                        pContext.fill(hex, with: .color(particleColor))
+                    case .star:
+                        var star = Path()
                         let points = 5
                         for i in 0..<points * 2 {
                             let radius = (i % 2 == 0) ? 50.0 : 20.0
                             let angle = Angle.degrees(Double(i) * (360.0 / Double(points * 2)) - 90)
-                            let px = 50 + cos(angle.radians) * radius
-                            let py = 50 + sin(angle.radians) * radius
-                            if i == 0 { path.move(to: CGPoint(x: px, y: py)) }
-                            else { path.addLine(to: CGPoint(x: px, y: py)) }
+                            let px = cos(angle.radians) * radius
+                            let py = sin(angle.radians) * radius
+                            if i == 0 { star.move(to: CGPoint(x: px, y: py)) }
+                            else { star.addLine(to: CGPoint(x: px, y: py)) }
                         }
-                        path.closeSubpath()
-                    }.fill(.white).frame(width: 100, height: 100).tag("shape_star")
+                        star.closeSubpath()
+                        pContext.fill(star, with: .color(particleColor))
+                    }
                 }
             })
-            .drawingGroup()
         }
         .background(
             ZStack {
@@ -161,7 +145,7 @@ struct ParticleBackgroundView: View {
         .onAppear {
             particles = (0..<currentConfig.count).map { _ in ThemedParticle(config: currentConfig) }
         }
-        .onChange(of: theme) { oldTheme, newTheme in
+        .onChangeCompat(of: theme) { newTheme in
             currentConfig = ParticleThemeUtils.getParticleTheme(theme: newTheme)
             particles = (0..<currentConfig.count).map { _ in ThemedParticle(config: currentConfig) }
         }

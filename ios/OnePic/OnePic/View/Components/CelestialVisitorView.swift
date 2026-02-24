@@ -117,6 +117,7 @@ class CelestialVisitorManager: ObservableObject {
     
     private var lastSpawnTime: TimeInterval = 0
     private var nextSpawnDelay: TimeInterval = 0
+    private var lastUpdateTime: TimeInterval?
     
     // Interaction State
     private var interactingVisitorId: UUID?
@@ -124,6 +125,12 @@ class CelestialVisitorManager: ObservableObject {
     
     init() {
         scheduleNextSpawn()
+    }
+    
+    func update(time: TimeInterval) {
+        let delta = (lastUpdateTime.map { time - $0 }) ?? 0
+        lastUpdateTime = time
+        update(time: time, deltaTime: delta)
     }
     
     func update(time: TimeInterval, deltaTime: Double) {
@@ -1134,10 +1141,12 @@ struct CelestialVisitorView: View {
         
         // Pec Arcs
         var leftPec = Path()
+        leftPec.move(to: CGPoint(x: 0, y: shoulderY + 2))
         leftPec.addCurve(to: CGPoint(x: -2, y: chestY), control1: CGPoint(x: -8, y: shoulderY + 4), control2: CGPoint(x: -8, y: chestY + 4))
         context.stroke(leftPec, with: .color(muscleLine), lineWidth: 0.8)
         
         var rightPec = Path()
+        rightPec.move(to: CGPoint(x: 0, y: shoulderY + 2))
         rightPec.addCurve(to: CGPoint(x: 2, y: chestY), control1: CGPoint(x: 8, y: shoulderY + 4), control2: CGPoint(x: 8, y: chestY + 4))
         context.stroke(rightPec, with: .color(muscleLine), lineWidth: 0.8)
 

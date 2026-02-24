@@ -7,7 +7,7 @@ struct CelestialVisitorInteractionOverlay: View {
     
     var body: some View {
         refinedBody
-            .onChange(of: draggingVisitorId) { oldId, newId in
+            .onChangeCompat(of: draggingVisitorId) { newId in
                 if newId == nil {
                     manager.forceRelease()
                 }

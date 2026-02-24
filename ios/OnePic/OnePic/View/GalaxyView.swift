@@ -17,7 +17,7 @@ struct GalaxyView: View {
     // Locate callback: switches to Home tab and scrolls to level
     var onLocateLevel: ((String) -> Void)?
     var body: some View {
-        NavigationStack {
+        CompatNavigationContainer {
             ZStack {
                 // 恢复正式星空背景
                 SharedGalaxyBackground(atmosphereTheme: "cosmos", visitorManager: visitorManager)
@@ -34,13 +34,20 @@ struct GalaxyView: View {
                     // Tab Switcher
                     SegmentedSwitch(selectedIndex: $selectedTab)
                         .padding(.vertical, 10)
-                        .onChange(of: selectedTab) { _ in
+                        .onChangeCompat(of: selectedTab) { _ in
                              // Reset scroll upon tab change via state
                              scrollOffset = 0
                         }
                     
-                    // Standard ScrollView with iOS 17+ Native Geometry Callback
+                    // Standard ScrollView (iOS 15+ fallback via PreferenceKey)
                     ScrollView {
+                        GeometryReader { geo in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: geo.frame(in: .named("galaxyScroll")).minY
+                            )
+                        }
+                        .frame(height: 0)
                         if selectedTab == 0 {
                             // Memories List Content
                             LazyVStack(spacing: 16) {
@@ -64,7 +71,7 @@ struct GalaxyView: View {
                                     
                                     // 按物理条目间隔插入原生广告 (对齐 Android 混排逻辑)
                                     // 每 10 个条目后插入一个广告
-                                    if (offset + 1) % 10 == 0 && offset < levels.count - 1 {
+                                    if AdManager.supportsNativeAds && (offset + 1) % 10 == 0 && offset < levels.count - 1 {
                                         AdMobNativeAdView(scene: .galaxy)
                                             .padding(.vertical, 8)
                                     }
@@ -94,7 +101,9 @@ struct GalaxyView: View {
                                     // 对齐 Android: 每 4 个模块插入一个原生广告 (Blueprint View parity)
                                     // getBlueprintThemes() 返回 13 个 entry (0..12)
                                     // 使用 index 加 1 来判断
-                                    if let idx = blueprintedThemes.firstIndex(where: { $0.id == entry.id }), (idx + 1) % 4 == 0 && idx < blueprintedThemes.count - 1 {
+                                    if AdManager.supportsNativeAds,
+                                       let idx = blueprintedThemes.firstIndex(where: { $0.id == entry.id }),
+                                       (idx + 1) % 4 == 0 && idx < blueprintedThemes.count - 1 {
                                         AdMobNativeAdView(scene: .galaxy)
                                             .padding(.vertical, 8)
                                     }
@@ -106,9 +115,9 @@ struct GalaxyView: View {
                     }
                     .contentShape(Rectangle())
                     .allowsHitTesting(true)
-                    .onScrollGeometryChange(for: CGFloat.self) { geo in
-                        geo.contentOffset.y
-                    } action: { oldValue, newValue in
+                    .coordinateSpace(name: "galaxyScroll")
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { minY in
+                        let newValue = -minY
                         // 增加阈值过滤，减少微小抖动导致的过度重绘，提升滑动性能
                         if abs(scrollOffset - newValue) > 0.5 {
                             scrollOffset = newValue
@@ -117,9 +126,7 @@ struct GalaxyView: View {
                 }
             }
             .coordinateSpace(name: "galaxy_outer") 
-            #if os(iOS)
-            .toolbar(.hidden, for: .navigationBar)
-            #endif
+            .hideNavigationBarCompat()
         }
         .makeTransparentBackground() 
     }

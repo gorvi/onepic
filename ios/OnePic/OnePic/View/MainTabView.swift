@@ -10,37 +10,51 @@ struct MainTabView: View {
     @State private var selection = 0
     @StateObject private var visitorManager = CelestialVisitorManager()
     @StateObject private var tabBarVisibility = TabBarVisibility()
-    @ObservedObject private var progressManager = LevelProgressManager.shared
     @State private var targetLevelId: String? = nil // For locate feature
+    @State private var tabBarLanguage: String = LevelProgressManager.shared.currentLanguage
+    @State private var tabBarCheckInVersion: Int = LevelProgressManager.shared.checkInVersion
     
     var body: some View {
         ZStack {
             // 全屏黑色背景，避免底部安全区露出白色
             Color.black.ignoresSafeArea()
-            // Invisible Updater to drive the animation logic centrally
-            TimelineView(.animation) { timelineContext in
-                let date = timelineContext.date.timeIntervalSinceReferenceDate
-                Color.clear
-                    .onChange(of: date) { oldDate, newDate in
-                        visitorManager.update(time: newDate, deltaTime: newDate - oldDate)
-                    }
+            // iOS 15 稳定模式：禁用全局时间线驱动，避免首页抖动
+            if AppRuntimePolicy.supportsRealtimeAnimationDriver {
+                TimelineView(.animation) { timelineContext in
+                    Color.clear
+                        .task(id: timelineContext.date.timeIntervalSinceReferenceDate) {
+                            visitorManager.update(time: timelineContext.date.timeIntervalSinceReferenceDate)
+                        }
+                }
+                .allowsHitTesting(false)
             }
-            .allowsHitTesting(false)
             
             ZStack(alignment: .top) { // 改为 .top，确保悬浮窗默认在顶部
                 // Tab content
                 ZStack(alignment: .bottom) { // 内部保留 .bottom 用于 TabBar
-                    Group {
-                        switch selection {
-                        case 0: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
-                        case 1: GalaxyView(visitorManager: visitorManager, onLocateLevel: { levelId in
-                            targetLevelId = levelId
-                            selection = 0
-                        })
-                        case 2: CheckInView(visitorManager: visitorManager)
-                        case 3: MoreView(visitorManager: visitorManager)
-                        default: HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
+                    ZStack {
+                        // Keep Home mounted to preserve scroll/state when switching tabs.
+                        HomeView(visitorManager: visitorManager, targetLevelId: $targetLevelId)
+                            .opacity(selection == 0 ? 1 : 0)
+                            .allowsHitTesting(selection == 0)
+                        
+                        Group {
+                            switch selection {
+                            case 1:
+                                GalaxyView(visitorManager: visitorManager, onLocateLevel: { levelId in
+                                    targetLevelId = levelId
+                                    selection = 0
+                                })
+                            case 2:
+                                CheckInView(visitorManager: visitorManager)
+                            case 3:
+                                MoreView(visitorManager: visitorManager)
+                            default:
+                                EmptyView()
+                            }
                         }
+                        .opacity(selection == 0 ? 0 : 1)
+                        .allowsHitTesting(selection != 0)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black.ignoresSafeArea())
@@ -48,16 +62,29 @@ struct MainTabView: View {
                     
                     if !tabBarVisibility.hideTabBar {
                         MainTabBar(selection: $selection)
-                            .id("\(progressManager.currentLanguage)_\(progressManager.checkInVersion)")
+                            .id("\(tabBarLanguage)_\(tabBarCheckInVersion)")
                     }
                 }
                 
                 // Global Interaction Overlay
-                CelestialVisitorInteractionOverlay(manager: visitorManager).ignoresSafeArea()
+                if AppRuntimePolicy.supportsVisitorOverlay {
+                    CelestialVisitorInteractionOverlay(manager: visitorManager).ignoresSafeArea()
+                }
                 
                 // 3. 全局双倍收益悬浮窗 (Floating Buff Window)
-                FloatingBuffWindow()
-                    .zIndex(100)
+                if AppRuntimePolicy.supportsFloatingBuffWindow {
+                    FloatingBuffWindow()
+                        .zIndex(100)
+                }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .levelProgressDidChange)) { _ in
+            let manager = LevelProgressManager.shared
+            if tabBarLanguage != manager.currentLanguage {
+                tabBarLanguage = manager.currentLanguage
+            }
+            if tabBarCheckInVersion != manager.checkInVersion {
+                tabBarCheckInVersion = manager.checkInVersion
             }
         }
     }
@@ -143,5 +170,3 @@ private struct TabBarItem: View {
         .buttonStyle(.plain)
     }
 }
-
-

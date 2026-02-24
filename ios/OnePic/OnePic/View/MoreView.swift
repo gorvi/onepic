@@ -7,7 +7,6 @@ struct MoreView: View {
     @State private var nickname = LevelProgressManager.shared.getNickname()
     @State private var avatarImage: Image? = nil
     @State private var showPhotosPicker = false
-    @State private var selectedItem: PhotosPickerItem? = nil
     
     @State private var showEditNicknameAlert = false
     @State private var nicknameInput = ""
@@ -93,14 +92,10 @@ struct MoreView: View {
         .sheet(isPresented: $showLanguageSheet) {
             LanguageSelectionSheet()
         }
-        .photosPicker(isPresented: $showPhotosPicker, selection: $selectedItem, matching: .images)
-        .onChange(of: selectedItem) { newItem in
-            Task {
-                if let data = try? await newItem?.loadTransferable(type: Data.self),
-                   let uiImage = UIImage(data: data) {
-                    avatarImage = Image(uiImage: uiImage)
-                    persistAvatarImage(uiImage)
-                }
+        .sheet(isPresented: $showPhotosPicker) {
+            LegacyPhotoPicker { image in
+                avatarImage = Image(uiImage: image)
+                persistAvatarImage(image)
             }
         }
         .onAppear {
@@ -203,7 +198,7 @@ struct MoreView: View {
     
     private var versionInfo: some View {
         VStack(spacing: 4) {
-            Text(TRANS.get("app_name", "OnePic") + " v1.0.1")
+            Text(TRANS.get("app_name", "Traveler Puzzle") + " v1.0.1")
                 .font(.system(size: 12, weight: .medium))
             Text(TRANS.get("mod_status_online", "ONLINE").uppercased())
                 .font(.system(size: 10, weight: .black))
@@ -247,7 +242,7 @@ struct MoreView: View {
                         .onTapGesture {
                             isNicknameInputFocused = true
                         }
-                        .onChange(of: nicknameInput) { _, newValue in
+                        .onChangeCompat(of: nicknameInput) { newValue in
                             if newValue.count > 12 {
                                 nicknameInput = String(newValue.prefix(12))
                             }
@@ -350,6 +345,50 @@ struct MoreView: View {
     }
 }
 
+private struct LegacyPhotoPicker: UIViewControllerRepresentable {
+    let onImagePicked: (UIImage) -> Void
+    @Environment(\.dismiss) private var dismiss
+    
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        config.selectionLimit = 1
+        config.filter = .images
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+    
+    final class Coordinator: NSObject, PHPickerViewControllerDelegate {
+        let parent: LegacyPhotoPicker
+        
+        init(parent: LegacyPhotoPicker) {
+            self.parent = parent
+        }
+        
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            guard let provider = results.first?.itemProvider,
+                  provider.canLoadObject(ofClass: UIImage.self) else {
+                parent.dismiss()
+                return
+            }
+            provider.loadObject(ofClass: UIImage.self) { object, _ in
+                DispatchQueue.main.async {
+                    if let image = object as? UIImage {
+                        self.parent.onImagePicked(image)
+                    }
+                    self.parent.dismiss()
+                }
+            }
+        }
+    }
+}
+
 // MARK: - About View
 
 struct AboutView: View {
@@ -365,37 +404,58 @@ struct AboutView: View {
             VStack(spacing: 24) {
                 Spacer()
                 
-                // App Icon Logo
-                Image("AppIcon")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 88, height: 88)
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                    )
-                    .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
-                    .onTapGesture {
-                        clickCount += 1
-                        if clickCount >= 10 {
-                            deviceId = AdMobIdUtils.getTestDeviceId()
-                            showAdMobIdAlert = true
-                            clickCount = 0
-                        }
+                // App Icon Logo (runtime asset + fallback symbol)
+                Group {
+                    if let appIcon = UIImage(named: "AppIcon") {
+                        Image(uiImage: appIcon)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        Image(systemName: "puzzlepiece.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(24)
+                            .foregroundColor(.white.opacity(0.9))
+                            .background(
+                                LinearGradient(
+                                    colors: [Color(hex: 0x2979FF), Color(hex: 0x00E676)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
                     }
+                }
+                .frame(width: 88, height: 88)
+                .cornerRadius(20)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                .onTapGesture {
+                    clickCount += 1
+                    if clickCount >= 10 {
+                        deviceId = AdMobIdUtils.getTestDeviceId()
+                        showAdMobIdAlert = true
+                        clickCount = 0
+                    }
+                }
                 
                 VStack(spacing: 8) {
-                    Text(TRANS.get("app_name", "OnePic"))
+                    Text(TRANS.get("app_name", "Traveler Puzzle"))
                         .font(.system(size: 24, weight: .black))
                         .foregroundColor(.white)
                     
                     Text("v1.0.1 " + TRANS.get("stable_build", "(Stable Build)"))
                         .font(.system(size: 14))
                         .foregroundColor(.white.opacity(0.4))
+                    
+                    Text("by Netrill")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.white.opacity(0.55))
                 }
                 
-                Text(TRANS.get("about_description", "Explore the infinite cosmos, one piece at a time. OnePic is a contemplative space journey where every merge reveals the hidden beauty of the galaxy. Created by AIOK with passion for minimalism and exploration."))
+                Text(TRANS.get("intro_prologue", "The year is 2077. Earth's energy is depleted, and the once-great civilization stands at the edge of extinction.\n\nYou are the Commander of the 'Ark Initiative.' Our only hope lies in collecting the primal energy cores scattered across the globe to forge a vessel capable of crossing the galaxy.\n\nEvery restored puzzle provides the digital power to ignite the warp engines. Gather the energy, reconstruct the blueprints, and lead humanity across the stars to find our new home."))
                     .font(.system(size: 16))
                     .foregroundColor(.white.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -444,6 +504,17 @@ struct LanguageSelectionSheet: View {
     @State private var currentLang = LevelProgressManager.shared.getSelectedLanguage()
 
     var body: some View {
+        Group {
+            if #available(iOS 16.0, *) {
+                sheetContent
+                    .presentationDetents([.medium, .large])
+            } else {
+                sheetContent
+            }
+        }
+    }
+    
+    private var sheetContent: some View {
         ZStack {
             // Deep Space Gradient
             LinearGradient(
@@ -508,7 +579,6 @@ struct LanguageSelectionSheet: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
     }
 }
 

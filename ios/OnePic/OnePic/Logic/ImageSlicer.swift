@@ -81,21 +81,18 @@ struct ImageSlicer {
         }
     }
     
-    /// 裁切：优先 CGImage.cropping，失败则用 UIGraphicsImageRenderer（WebP 等格式可能需后者）
+    /// 裁切：统一使用 UIGraphicsImageRenderer，规避部分系统版本下 cgImage.cropping 的条纹/黑块
     private static func renderSliceByDraw(from image: UIImage, rect: CGRect, cgImage: CGImage) -> UIImage {
         guard rect.width > 0, rect.height > 0 else {
             return createPlaceholder(width: 1, height: 1)
         }
-        if let cropped = cgImage.cropping(to: rect) {
-            return UIImage(cgImage: cropped, scale: 1, orientation: .up)
-        }
         let scale = image.scale
         let format = UIGraphicsImageRendererFormat.default()
-        format.scale = 1
+        format.scale = scale
         format.opaque = true
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: rect.width, height: rect.height), format: format)
         return renderer.image { _ in
-            image.draw(at: CGPoint(x: -rect.origin.x / scale, y: -rect.origin.y / scale))
+            image.draw(at: CGPoint(x: -rect.origin.x, y: -rect.origin.y))
         }
     }
     

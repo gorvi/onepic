@@ -150,20 +150,26 @@ struct TickingNumberView: View {
     @State private var lastValue: Int = -1
     
     var body: some View {
-        Text("\(value)")
-            .contentTransition(.numericText())
-            .scaleEffect(tickScale)
-            .onChange(of: value) { _, newVal in
-                guard lastValue >= 0 && newVal != lastValue else {
-                    lastValue = newVal
-                    return
-                }
-                lastValue = newVal
-                tickScale = 1.2
-                withAnimation(.easeOut(duration: 0.18)) {
-                    tickScale = 1.0
-                }
+        Group {
+            if #available(iOS 17.0, *) {
+                Text("\(value)")
+                    .contentTransition(.numericText())
+            } else {
+                Text("\(value)")
             }
-            .onAppear { lastValue = value }
+        }
+        .scaleEffect(tickScale)
+        .onChangeCompat(of: value) { newVal in
+            guard lastValue >= 0 && newVal != lastValue else {
+                lastValue = newVal
+                return
+            }
+            lastValue = newVal
+            tickScale = 1.2
+            withAnimation(.easeOut(duration: 0.18)) {
+                tickScale = 1.0
+            }
+        }
+        .onAppear { lastValue = value }
     }
 }

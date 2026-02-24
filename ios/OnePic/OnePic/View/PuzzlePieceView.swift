@@ -15,7 +15,6 @@ struct PuzzlePieceView: View {
                 Image(uiImage: piece.image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .drawingGroup() 
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.5))

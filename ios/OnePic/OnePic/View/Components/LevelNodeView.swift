@@ -295,7 +295,7 @@ struct LevelNodeView: View {
             // if !isLocked { startThumbShimmerTimer() } -> Driven by SharedAnimationDriver.shimmerOffset
             if shouldAnimateUnlock, !isLocked, visualLocked == nil { startUnlockSequence() }
         }
-        .onChange(of: shouldAnimateUnlock) { _, nowAnimating in
+        .onChangeCompat(of: shouldAnimateUnlock) { nowAnimating in
             if nowAnimating, !isLocked { startUnlockSequence() }
         }
     }

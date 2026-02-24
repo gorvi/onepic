@@ -6,6 +6,7 @@ struct GalaxyScaffold<Background: View, Content: View>: View {
     let showsParticles: Bool
     let background: () -> Background
     let content: () -> Content
+    @State private var lastTimelineDate: TimeInterval? = nil
     
     init(
         atmosphereTheme: String,
@@ -27,7 +28,6 @@ struct GalaxyScaffold<Background: View, Content: View>: View {
             
             if showsParticles {
                 ParticleBackgroundView(theme: atmosphereTheme)
-                    .drawingGroup() // 性能优化：减少重绘开销
             }
             
             if let visitorManager {
@@ -40,8 +40,10 @@ struct GalaxyScaffold<Background: View, Content: View>: View {
                         CelestialVisitorView(manager: visitorManager, layer: .foreground, currentTime: date)
                             .allowsHitTesting(false)
                     }
-                    .onChange(of: date) { oldDate, newDate in
-                        visitorManager.update(time: newDate, deltaTime: newDate - oldDate)
+                    .onChangeCompat(of: date) { newDate in
+                        let delta = (lastTimelineDate.map { newDate - $0 }) ?? 0
+                        visitorManager.update(time: newDate, deltaTime: delta)
+                        lastTimelineDate = newDate
                     }
                 }
             } else {

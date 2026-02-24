@@ -50,7 +50,7 @@ struct OnePicApp: App {
                 // Check for splash ad
                 checkForSplashAd()
             }
-            .onChange(of: scenePhase) { _, newPhase in
+            .onChangeCompat(of: scenePhase) { newPhase in
                 switch newPhase {
                 case .background:
                     setWindowBackgroundBlack()
@@ -61,7 +61,7 @@ struct OnePicApp: App {
                     setWindowBackgroundBlack()
                     
                     // Hot Start Logic: Only show splash if it's NOT the cold start and meet threshold
-                    if !isFirstLaunch {
+                    if !isFirstLaunch, AdManager.supportsNativeAds {
                         if AdManager.shared.canShowHotStartAd() && AdManager.shared.nativeAdOpen != nil {
                             print("🚀 OnePicApp: [Hot Start] Showing splash ad (Frequency cap met).")
                             withAnimation {
@@ -81,6 +81,12 @@ struct OnePicApp: App {
     
     private func checkForSplashAd() {
         guard isFirstLaunch else { return }
+        
+        guard AdManager.supportsNativeAds else {
+            print("ℹ️ OnePicApp: Native splash disabled on iOS 15.x")
+            isFirstLaunch = false
+            return
+        }
         
         // Initialize SDK
         _ = AdManager.shared

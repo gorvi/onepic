@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE5DC75B2F3062F400C679C8"
-               BuildableName = "OnePic.app"
-               BlueprintName = "OnePic"
+               BuildableName = "TravelerPuzzle.app"
+               BlueprintName = "TravelerPuzzle"
                ReferencedContainer = "container:OnePic.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE5DC75B2F3062F400C679C8"
-            BuildableName = "OnePic.app"
-            BlueprintName = "OnePic"
+            BuildableName = "TravelerPuzzle.app"
+            BlueprintName = "TravelerPuzzle"
             ReferencedContainer = "container:OnePic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE5DC75B2F3062F400C679C8"
-            BuildableName = "OnePic.app"
-            BlueprintName = "OnePic"
+            BuildableName = "TravelerPuzzle.app"
+            BlueprintName = "TravelerPuzzle"
             ReferencedContainer = "container:OnePic.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

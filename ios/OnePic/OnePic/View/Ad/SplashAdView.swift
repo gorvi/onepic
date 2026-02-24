@@ -83,7 +83,7 @@ struct SplashAdView: View {
                         Image("AppIcon") // If available in assets
                             .resizable()
                             .frame(width: 24, height: 24)
-                        Text("OnePic")
+                        Text("Traveler Puzzle")
                             .font(.system(size: 16, weight: .medium, design: .rounded))
                             .foregroundColor(.white.opacity(0.6))
                     }

@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct GameBoardView: View {
-    private let boardVisualOffsetY: CGFloat = 20
     @StateObject private var viewModel = GameViewModel()
+    @ObservedObject private var levelManager = LevelProgressManager.shared
     @State private var activeDragPieceId: Int?
     @State private var lastTapTime: Date?
     @State private var lastTapLocation: CGPoint?
@@ -20,6 +20,7 @@ struct GameBoardView: View {
     @State private var adCooldownRemaining: Int = 0
     @State private var showAdCooldownAlert = false
     @State private var adRefreshTimer: Timer? = nil
+    @State private var buffFxPulse = false
 
     let levelConfig: LevelConfig
     var mainLevelIndexForAscended: Int? = nil
@@ -56,6 +57,7 @@ struct GameBoardView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let boardVisualOffsetY: CGFloat = geometry.size.height <= 700 ? 8 : 20
             ZStack(alignment: .top) {
                 // 1. Background
                 Group {
@@ -218,13 +220,17 @@ struct GameBoardView: View {
             }
             .onAppear {
                 tabBarVisibility.hideTabBar = true
+                levelManager.updateBuffState()
+                withAnimation(.easeInOut(duration: 0.85).repeatForever(autoreverses: true)) {
+                    buffFxPulse = true
+                }
                 if viewModel.pieces.isEmpty {
                     viewModel.loadLevel(levelConfig, viewSize: geometry.size, mainLevelIndexForAscended: mainLevelIndexForAscended)
                 }
                 viewModel.startElapsedTimer()
                 startAdRefreshTimer()
             }
-            .onChange(of: viewModel.isLevelCompleted) { _, completed in
+            .onChangeCompat(of: viewModel.isLevelCompleted) { completed in
                 if completed {
                     handleLevelCompletion()
                 } else {
@@ -232,14 +238,14 @@ struct GameBoardView: View {
                     showAdRewardPopup = false
                 }
             }
-            .onChange(of: showWinOverlay) { _, showing in
+            .onChangeCompat(of: showWinOverlay) { showing in
                 if showing {
                     triggerWinAnimations()
                 } else {
                     resetWinAnimations()
                 }
             }
-            .onChange(of: geometry.size) { _, newSize in
+            .onChangeCompat(of: geometry.size) { newSize in
                 viewModel.updateLayout(viewSize: newSize)
             }
             .onDisappear {
@@ -259,7 +265,7 @@ struct GameBoardView: View {
             .allowsHitTesting(false)
         )
         .navigationBarHidden(true)
-        .toolbar(.hidden, for: .tabBar)
+        .hideTabBarCompat()
         .ignoresSafeArea(.container, edges: .bottom)
         
         // Final bottom banner ad
@@ -306,22 +312,38 @@ struct GameBoardView: View {
 
     @ViewBuilder
     private var statsRow: some View {
+        let isDoubleActive = levelManager.isBuffActive
         HStack {
             HStack(spacing: 8) {
                 HStack(spacing: 4) {
                     CoinIconView(size: 16)
                         .rotation3DEffect(.degrees(Double(viewModel.scoreEventCount) * 180), axis: (x: 0, y: 1, z: 0))
-                    Text("\(LevelProgressManager.shared.coins)")
+                    Text("\(levelManager.coins)")
                         .font(.system(size: 16, weight: .black)).monospacedDigit()
                         .foregroundStyle(.white)
                 }
+                if isDoubleActive {
+                    Text("x2")
+                        .font(.system(size: 11, weight: .black, design: .rounded))
+                        .foregroundStyle(Color(hex: 0xFFE082))
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(Color(hex: 0xFF8F00).opacity(0.26))
+                                .overlay(Capsule().stroke(Color(hex: 0xFFD54F), lineWidth: 1))
+                        )
+                        .scaleEffect(buffFxPulse ? 1.06 : 0.96)
+                        .shadow(color: Color(hex: 0xFFC107).opacity(buffFxPulse ? 0.75 : 0.25), radius: buffFxPulse ? 8 : 2)
+                }
                 if viewModel.score > 0 {
                     Text("(+\(viewModel.score))")
-                        .font(.system(size: 12, weight: .bold)).foregroundStyle(.green)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(isDoubleActive ? Color(hex: 0xFFD54F) : .green)
                 }
             }
             .padding(.horizontal, 14).frame(height: 38)
-            .background(statsBackground)
+            .background(statsBackground(isDoubleActive: isDoubleActive))
             
             Spacer()
             HStack(spacing: 4) {
@@ -344,11 +366,31 @@ struct GameBoardView: View {
     }
 
     @ViewBuilder
-    private var statsBackground: some View {
+    private func statsBackground(isDoubleActive: Bool) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 19).fill(.ultraThinMaterial)
+            if isDoubleActive {
+                RoundedRectangle(cornerRadius: 19)
+                    .fill(Color(hex: 0xFF6F00).opacity(0.18))
+            } else {
+                RoundedRectangle(cornerRadius: 19)
+                    .fill(.ultraThinMaterial)
+            }
             RoundedRectangle(cornerRadius: 19)
-                .stroke(isScoreAnimating ? Color.yellow : Color.white.opacity(0.2), lineWidth: 1.5)
+                .stroke(
+                    isDoubleActive
+                    ? LinearGradient(
+                        colors: [Color(hex: 0xFFE082), Color(hex: 0xFFB300), Color(hex: 0xFFE082)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                    : LinearGradient(
+                        colors: [isScoreAnimating ? Color.yellow : Color.white.opacity(0.2)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ),
+                    lineWidth: 1.5
+                )
+                .shadow(color: isDoubleActive ? Color(hex: 0xFFB300).opacity(0.35) : .clear, radius: isDoubleActive ? 8 : 0)
         }
     }
 
@@ -467,6 +509,7 @@ struct GameBoardView: View {
             if rem != adCooldownRemaining {
                 adCooldownRemaining = rem
             }
+            levelManager.updateBuffState()
         }
     }
     

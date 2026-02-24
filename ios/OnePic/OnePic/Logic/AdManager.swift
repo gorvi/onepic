@@ -9,14 +9,20 @@ import GoogleMobileAds
 class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     static let shared = AdManager()
     
+    // iOS 15.x 上 NativeAd 内部 WebView 容易触发 ViewportSizing 抖动，先禁用止血
+    static var supportsNativeAds: Bool {
+        AppRuntimePolicy.supportsNativeAds
+    }
+    
     // 广告实例
     private var interstitial: InterstitialAd?
     private var rewardedAd: RewardedAd?
     private var appOpenAd: AppOpenAd?
     
-    // 原生广告存储
-    private var nativeAdHome: NativeAd?
-    private var nativeAdGalaxy: NativeAd?
+    // 原生广告存储（Home/Galaxy 使用池，支持多个广告位复用消费）
+    private let nativePoolTargetCount = 3
+    private var nativeAdHomePool: [NativeAd] = []
+    private var nativeAdGalaxyPool: [NativeAd] = []
     var nativeAdOpen: NativeAd? // For Splash Screen, exposed internal for SplashView
     
     // Background tracking for Frequency Capping
@@ -32,10 +38,15 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     @Published var isNativeHomeReady = false
     @Published var isNativeGalaxyReady = false
     @Published var isNativeOpenReady = false
+    // Monotonic tokens: each successful native load bumps token so UI can react reliably.
+    @Published private(set) var nativeHomeToken: Int = 0
+    @Published private(set) var nativeGalaxyToken: Int = 0
 
     // Expose publishers for external use (workaround for singleton @Published dynamicMember lookup issues)
     var nativeHomeReadyPublisher: Published<Bool>.Publisher { $isNativeHomeReady }
     var nativeGalaxyReadyPublisher: Published<Bool>.Publisher { $isNativeGalaxyReady }
+    var nativeHomeTokenPublisher: Published<Int>.Publisher { $nativeHomeToken }
+    var nativeGalaxyTokenPublisher: Published<Int>.Publisher { $nativeGalaxyToken }
     
     override private init() {
         super.init()
@@ -62,9 +73,11 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
             DispatchQueue.main.async {
                 self.loadInterstitial()
                 self.loadRewarded()
-                self.loadNativeAd(for: .home)
-                self.loadNativeAd(for: .galaxy)
-                self.loadNativeAd(for: .appOpen) // Preload Native Open Ad
+                if Self.supportsNativeAds {
+                    self.loadNativeAd(for: .home)
+                    self.loadNativeAd(for: .galaxy)
+                    self.loadNativeAd(for: .appOpen) // Preload Native Open Ad
+                }
                 self.loadRewardedInterstitial()
             }
         }
@@ -80,7 +93,7 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     
     // MARK: - Native Ads (原生广告)
     
-    enum NativeScene {
+    enum NativeScene: Hashable {
         case home, galaxy, appOpen
         var adUnitID: String {
             switch self {
@@ -91,7 +104,27 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
         }
     }
     
+    private var nativeLoadInFlight: Set<NativeScene> = []
+    private var nativeRetryWorkItems: [NativeScene: DispatchWorkItem] = [:]
+    
     func loadNativeAd(for scene: NativeScene) {
+        guard Self.supportsNativeAds else { return }
+        nativeRetryWorkItems[scene]?.cancel()
+        nativeRetryWorkItems[scene] = nil
+        // Prevent request storms when multiple ad slots observe the same ready signal.
+        if nativeLoadInFlight.contains(scene) { return }
+        
+        switch scene {
+        case .home where nativeAdHomePool.count >= nativePoolTargetCount:
+            return
+        case .galaxy where nativeAdGalaxyPool.count >= nativePoolTargetCount:
+            return
+        case .appOpen where nativeAdOpen != nil:
+            return
+        default:
+            break
+        }
+        
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         let root = windowScene?.windows.first?.rootViewController
@@ -104,6 +137,8 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
             return
         }
         
+        nativeLoadInFlight.insert(scene)
+        
         let loader = AdLoader(adUnitID: scene.adUnitID,
                              rootViewController: validRoot,
                              adTypes: [.native],
@@ -115,18 +150,31 @@ class AdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     }
     
     func getNativeAd(for scene: NativeScene) -> NativeAd? {
+        guard Self.supportsNativeAds else { return nil }
         let ad: NativeAd?
         switch scene {
-        case .home: 
-            ad = nativeAdHome
-            nativeAdHome = nil
-            isNativeHomeReady = false
-            loadNativeAd(for: .home)
-        case .galaxy: 
-            ad = nativeAdGalaxy
-            nativeAdGalaxy = nil
-            isNativeGalaxyReady = false
-            loadNativeAd(for: .galaxy)
+        case .home:
+            if !nativeAdHomePool.isEmpty {
+                let current = nativeAdHomePool.removeFirst()
+                ad = current
+                isNativeHomeReady = !nativeAdHomePool.isEmpty
+                loadNativeAd(for: .home)
+            } else {
+                ad = nil
+                isNativeHomeReady = false
+                loadNativeAd(for: .home)
+            }
+        case .galaxy:
+            if !nativeAdGalaxyPool.isEmpty {
+                let current = nativeAdGalaxyPool.removeFirst()
+                ad = current
+                isNativeGalaxyReady = !nativeAdGalaxyPool.isEmpty
+                loadNativeAd(for: .galaxy)
+            } else {
+                ad = nil
+                isNativeGalaxyReady = false
+                loadNativeAd(for: .galaxy)
+            }
         case .appOpen:
             ad = nativeAdOpen
             // Don't auto-reload here immediately, we handle splash logic separately
@@ -327,21 +375,38 @@ extension AdManager: NativeAdLoaderDelegate {
         
         switch scene {
         case .home:
-            self.nativeAdHome = nativeAd
+            self.nativeAdHomePool.append(nativeAd)
             self.isNativeHomeReady = true
+            self.nativeHomeToken &+= 1
         case .galaxy:
-            self.nativeAdGalaxy = nativeAd
+            self.nativeAdGalaxyPool.append(nativeAd)
             self.isNativeGalaxyReady = true
+            self.nativeGalaxyToken &+= 1
         case .appOpen:
             self.nativeAdOpen = nativeAd
             self.isNativeOpenReady = true
         }
         
+        nativeLoadInFlight.remove(scene)
         adLoaders.removeValue(forKey: adLoader)
         print("✅ AdManager: Native Ad Loaded and assigned to \(scene)")
+        
+        // Keep filling pool in background for multi-slot pages.
+        if scene == .home || scene == .galaxy {
+            loadNativeAd(for: scene)
+        }
     }
     
     func adLoader(_ adLoader: AdLoader, didFailToReceiveAdWithError error: Error) {
         print("❌ AdManager: Native Ad failed: \(error.localizedDescription)")
+        if let scene = adLoaders[adLoader] {
+            nativeLoadInFlight.remove(scene)
+            let retry = DispatchWorkItem { [weak self] in
+                self?.loadNativeAd(for: scene)
+            }
+            nativeRetryWorkItems[scene] = retry
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: retry)
+        }
+        adLoaders.removeValue(forKey: adLoader)
     }
 }

@@ -479,19 +479,27 @@ class LevelProgressManager: ObservableObject {
     
     func updateBuffState() {
         DispatchQueue.main.async {
-            self.isBuffActive = self.isDoubleCoinsActive()
-            self.isWarmUpActive = self.isBuffWarmingUp()
-            
-            if self.isWarmUpActive {
-                self.buffRemainingSeconds = self.getWarmUpRemainingSeconds()
-            } else if self.isBuffActive {
-                self.buffRemainingSeconds = self.getDoubleCoinsRemainingSeconds()
+            let nextBuffActive = self.isDoubleCoinsActive()
+            let nextWarmUpActive = self.isBuffWarmingUp()
+            let nextRemaining: Int
+            if nextWarmUpActive {
+                nextRemaining = self.getWarmUpRemainingSeconds()
+            } else if nextBuffActive {
+                nextRemaining = self.getDoubleCoinsRemainingSeconds()
             } else {
-                self.buffRemainingSeconds = 0
+                nextRemaining = 0
             }
             
-            // 🚨 关键修复：显式发送信号，确保即使在快速连续更新中也能通知到 Observer
-            self.objectWillChange.send()
+            // 仅在值真正变化时赋值，避免全局视图频繁重绘导致首页抖动
+            if self.isBuffActive != nextBuffActive {
+                self.isBuffActive = nextBuffActive
+            }
+            if self.isWarmUpActive != nextWarmUpActive {
+                self.isWarmUpActive = nextWarmUpActive
+            }
+            if self.buffRemainingSeconds != nextRemaining {
+                self.buffRemainingSeconds = nextRemaining
+            }
         }
     }
 }

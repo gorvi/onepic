@@ -42,6 +42,26 @@ class GameViewModel: ObservableObject {
     @Published var boardHeight: CGFloat = 0
     
     @Published var scoreEventCount: Int = 0
+
+    private func layoutReserve(for viewWidth: CGFloat, viewHeight: CGFloat) -> (top: CGFloat, bottom: CGFloat, horizontalPadding: CGFloat) {
+        // Compact-height devices need larger reserve to avoid top/bottom UI overlap.
+        if viewHeight <= 700 {
+            return (top: 150, bottom: 145, horizontalPadding: 24)
+        }
+
+        // Large iPad portrait screens: shrink board and leave clear top controls area.
+        if viewWidth >= 900, viewHeight >= 1000 {
+            return (top: 170, bottom: 160, horizontalPadding: 44)
+        }
+
+        // General tablet screens: reserve more room than phones.
+        if viewWidth >= 700 {
+            return (top: 138, bottom: 132, horizontalPadding: 36)
+        }
+
+        // Phones (regular height).
+        return (top: 88, bottom: 118, horizontalPadding: 28)
+    }
     
     var levelManager = LevelProgressManager.shared
     
@@ -116,10 +136,11 @@ class GameViewModel: ObservableObject {
             return
         }
         
-        // 拼图区域布局：左右留白 + 上下预留，底部留出缩略图区域避免与主图重叠
-        let topBarReserve: CGFloat = 80
-        let bottomReserve: CGFloat = 116
-        let horizontalPadding: CGFloat = 28
+        // 拼图区域布局：根据屏幕高度动态预留，避免小屏操作区与拼图重叠
+        let reserve = layoutReserve(for: viewWidth, viewHeight: viewHeight)
+        let topBarReserve = reserve.top
+        let bottomReserve = reserve.bottom
+        let horizontalPadding = reserve.horizontalPadding
         let availableHeight = max(viewHeight - topBarReserve - bottomReserve, viewHeight * 0.5)
         let availableWidth = max(viewWidth - horizontalPadding * 2, viewWidth * 0.7)
         
@@ -183,9 +204,10 @@ class GameViewModel: ObservableObject {
         let sliceW = pieces[0].image.size.width
         let sliceH = pieces[0].image.size.height
         let imageRatio = (sliceW * CGFloat(cols)) / (sliceH * CGFloat(rows))
-        let topBarReserve: CGFloat = 80
-        let bottomReserve: CGFloat = 116
-        let horizontalPadding: CGFloat = 28
+        let reserve = layoutReserve(for: viewWidth, viewHeight: viewHeight)
+        let topBarReserve = reserve.top
+        let bottomReserve = reserve.bottom
+        let horizontalPadding = reserve.horizontalPadding
         let availableHeight = max(viewHeight - topBarReserve - bottomReserve, viewHeight * 0.5)
         let availableWidth = max(viewWidth - horizontalPadding * 2, viewWidth * 0.7)
         let contentRatio = availableWidth / availableHeight

@@ -84,6 +84,10 @@ struct HomeView: View {
     @State private var animatingAscendedUnlockMainIndex: Int? = nil
     @State private var pendingUnlockLevelIdForDisplay: String? = nil
     @State private var targetScrollId: String? = nil
+    @State private var locateScrollToken = UUID()
+    @State private var lastDirectScrollId: String? = nil
+    @State private var lastDirectScrollAt: TimeInterval = 0
+    @State private var lastProgressRefreshAt: TimeInterval = 0
     @State private var completedLevelsBeforeGame: Set<String> = []
     @State private var lastPlayedLevelIndex: Int? = nil
     @State private var highlightedLevelId: String? = nil
@@ -116,73 +120,37 @@ struct HomeView: View {
     /// 电表式每格间隔（秒），略放慢减轻卡顿
     private static let tickInterval: Double = 0.14
     
+    private func jitterLog(_ message: String) {
+        StabilityDiagnostics.jitter("HomeView", message)
+    }
+    
     var body: some View {
-        NavigationStack {
+        CompatNavigationContainer {
             GeometryReader { geometry in
             ZStack {
                 SharedGalaxyBackground(atmosphereTheme: "cosmos", visitorManager: visitorManager)
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         let _ = progressVersion
-                        LazyVStack(spacing: 0) {
-                            Text(TRANS.get("chapter_coming_soon", "Coming Soon"))
-                                .frame(maxWidth: .infinity)
-                                .font(.system(size: 14, weight: .medium))
-                                .tracking(2)
-                                .foregroundColor(.white.opacity(0.5))
-                                .padding(.top, 150)
-                                .padding(.bottom, 60)
-                                .padding(.bottom, 60)
-                            let enumeratedLevels = Array(levels.enumerated().reversed())
-                            ForEach(0..<enumeratedLevels.count, id: \.self) { visualIndex in
-                                let index = enumeratedLevels[visualIndex].offset
-                                let level = enumeratedLevels[visualIndex].element
-                                
-                                // 原生广告：放在 LevelRowItem 前面渲染，
-                                // 因为 iOS 是手动反转数据(高index在上)，"前面渲染"= 视觉上方 = 章节边界处
-                                // 章节: 1-5, 6-10, 11-15... → 广告在 index 5, 10, 15... 上方
-                                if index % 5 == 0 && index > 0 && index < levels.count - 1 {
-                                    AdMobNativeAdView(scene: .home)
-                                        .padding(.horizontal, 20)
-                                        .padding(.vertical, 30)
-                                }
-                                
-                                LevelRowItem(
-                                    index: index,
-                                    level: level,
-                                    previousLevel: index > 0 ? levels[index - 1] : nil,
-                                    shouldAnimateUnlock: animatingUnlockLevelId == level.levelId,
-                                    shouldAnimateAscendedUnlock: animatingAscendedUnlockMainIndex == index,
-                                    pendingUnlockLevelIdForDisplay: pendingUnlockLevelIdForDisplay,
-                                    highlightedLevelId: highlightedLevelId,
-                                    onLevelTap: { handleLevelTap(level: level, index: index) },
-                                    onAscendedTap: { handleAscendedTap(index: index) }
-                                )
-                                .id(level.levelId)
-                                
-                                // Chapter Title Logic
-                                if index > 0 && (index - 1) % 5 == 0 {
-                                    ChapterTitleView(stageIndex: (index - 1) / 5 + 1)
-                                        .padding(.top, 30)
-                                        .padding(.bottom, 10)
-                                } else if index == 0 {
-                                    ChapterTitleView(stageIndex: 0)
-                                        .padding(.top, 30)
-                                        .padding(.bottom, 20)
-                                }
+                        Group {
+                            if AppRuntimePolicy.useLazyHomeList {
+                                LazyVStack(spacing: 0) { levelListContent }
+                            } else {
+                                // iOS 15 稳定模式：避免 LazyVStack 在复杂节点下触发布局抖动
+                                VStack(spacing: 0) { levelListContent }
                             }
-                            Spacer().frame(height: 30)
-                            
-                            Spacer().frame(height: 200)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 20)
                     }
-                    .scrollContentBackground(.hidden)
-                    .onChange(of: targetScrollId) { _, newVal in
-                        if let id = newVal { withAnimation(.easeInOut(duration: 0.6)) { scrollProxy.scrollTo(id, anchor: .center) }; targetScrollId = nil }
+                    .hideScrollContentBackgroundCompat()
+                    .onChangeCompat(of: targetScrollId) { newVal in
+                        if let id = newVal {
+                            scrollToLevel(id: id, scrollProxy: scrollProxy, animated: true)
+                            targetScrollId = nil
+                        }
                     }
-                    .onChange(of: targetLevelId) { _, newVal in
+                    .onChangeCompat(of: targetLevelId) { newVal in
                         if let id = newVal { processLocate(id: id, scrollProxy: scrollProxy) }
                     }
                     .onAppear {
@@ -190,20 +158,8 @@ struct HomeView: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { processLocate(id: id, scrollProxy: scrollProxy) }
                             hasInitialScrolled = true
                         } else if !hasInitialScrolled {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                                let nextToPlay = levels.first { level in
-                                    guard let idx = levels.firstIndex(where: { $0.levelId == level.levelId }) else { return false }
-                                    let isUnlocked = idx == 0 || LevelProgressManager.shared.isLevelCompleted(levels[idx - 1].levelId)
-                                    let isCompleted = LevelProgressManager.shared.isLevelCompleted(level.levelId)
-                                    return isUnlocked && !isCompleted
-                                }
-                                if let target = nextToPlay {
-                                    scrollProxy.scrollTo(target.levelId, anchor: .center)
-                                } else if let last = levels.last {
-                                    scrollProxy.scrollTo(last.levelId, anchor: .center)
-                                }
-                                hasInitialScrolled = true
-                            }
+                            runInitialFocusSequence(scrollProxy: scrollProxy)
+                            hasInitialScrolled = true
                         }
                     }
                 }
@@ -292,17 +248,74 @@ struct HomeView: View {
             .onPreferenceChange(StarAreaFrameKey.self) { starAreaFrame = $0 }
             .background(Color.black)
             }
-            .toolbarBackground(.hidden, for: .navigationBar)
-            #if os(iOS)
-            .toolbar(.hidden, for: .navigationBar)
-            #endif
-            .onReceive(NotificationCenter.default.publisher(for: .levelProgressDidChange)) { _ in progressVersion += 1 }
-            .onChange(of: navigateToGame) { _, isNavigatingToGame in if !isNavigatingToGame { handleTransitionBackFromGame() } }
-            .navigationDestination(isPresented: $navigateToGame) {
+            .hideNavigationBarCompat()
+            .onReceive(NotificationCenter.default.publisher(for: .levelProgressDidChange)) { _ in
+                let now = Date().timeIntervalSince1970
+                guard now - lastProgressRefreshAt > 0.35 else { return }
+                lastProgressRefreshAt = now
+                progressVersion += 1
+            }
+            .onChangeCompat(of: navigateToGame) { isNavigatingToGame in if !isNavigatingToGame { handleTransitionBackFromGame() } }
+            .navigationDestinationCompat(isPresented: $navigateToGame) {
                 if let level = selectedLevel { GameBoardView(levelConfig: level, mainLevelIndexForAscended: mainLevelIndexForAscended) }
             }
         }
         .makeTransparentBackground()
+    }
+    
+    @ViewBuilder
+    private var levelListContent: some View {
+        Text(TRANS.get("chapter_coming_soon", "Coming Soon"))
+            .frame(maxWidth: .infinity)
+            .font(.system(size: 14, weight: .medium))
+            .foregroundColor(.white.opacity(0.5))
+            .padding(.top, 150)
+            .padding(.bottom, 60)
+            .padding(.bottom, 60)
+        
+        let enumeratedLevels = Array(levels.enumerated().reversed())
+        ForEach(0..<enumeratedLevels.count, id: \.self) { visualIndex in
+            let index = enumeratedLevels[visualIndex].offset
+            let level = enumeratedLevels[visualIndex].element
+            
+            // 章节广告位规则：
+            // 从第一章开始，仅在每章最后一关上方展示（1..5, 6..10, ... 的末关即 5,10,15...）
+            let shouldInsertNativeAd = AdManager.supportsNativeAds &&
+                index > 0 &&
+                index % 5 == 0
+            if shouldInsertNativeAd {
+                AdMobNativeAdView(scene: .home)
+                    // Stable identity helps SwiftUI reuse ad slots during list updates.
+                    .id("home_chapter_ad_\(index / 5)")
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 30)
+            }
+            
+            LevelRowItem(
+                index: index,
+                level: level,
+                previousLevel: index > 0 ? levels[index - 1] : nil,
+                shouldAnimateUnlock: animatingUnlockLevelId == level.levelId,
+                shouldAnimateAscendedUnlock: animatingAscendedUnlockMainIndex == index,
+                pendingUnlockLevelIdForDisplay: pendingUnlockLevelIdForDisplay,
+                highlightedLevelId: highlightedLevelId,
+                onLevelTap: { handleLevelTap(level: level, index: index) },
+                onAscendedTap: { handleAscendedTap(index: index) }
+            )
+            .id(level.levelId)
+            
+            if index > 0 && (index - 1) % 5 == 0 {
+                ChapterTitleView(stageIndex: (index - 1) / 5 + 1)
+                    .padding(.top, 30)
+                    .padding(.bottom, 10)
+            } else if index == 0 {
+                ChapterTitleView(stageIndex: 0)
+                    .padding(.top, 30)
+                    .padding(.bottom, 20)
+            }
+        }
+        Spacer().frame(height: 30)
+        Spacer().frame(height: 200)
     }
     
     /// 顶部栏显示的硬币数（返回时用定时器逐格递增，触发电表跳动）
@@ -372,7 +385,7 @@ struct HomeView: View {
         ) {
             flyingCoinShape(size: 28)
         }
-        .onChange(of: coinFlyProgressValue) { _, progress in
+        .onChangeCompat(of: coinFlyProgressValue) { progress in
             if !coinAnim.didEnterLastFrame && progress >= Self.rewardFlyLastFrameThreshold {
                 coinAnim.didEnterLastFrame = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
@@ -426,7 +439,7 @@ struct HomeView: View {
                 .font(.system(size: 22))
                 .foregroundStyle(LinearGradient(colors: [.yellow, .orange], startPoint: .top, endPoint: .bottom))
         }
-        .onChange(of: starFlyProgressValue) { _, progress in
+        .onChangeCompat(of: starFlyProgressValue) { progress in
             if !starAnim.didEnterLastFrame && progress >= Self.rewardFlyLastFrameThreshold {
                 starAnim.didEnterLastFrame = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
@@ -449,6 +462,7 @@ struct HomeView: View {
     }
     
     private func processLocate(id: String, scrollProxy: ScrollViewProxy) {
+        jitterLog("processLocate start id=\(id)")
         // We need to scroll to the root level ID (the one visible in the main list)
         // Main levels end in _A, Ascended levels end in _B.
         // Even if we are locating a _B level, the ScrollView only identifies the row by its _A id
@@ -474,7 +488,7 @@ struct HomeView: View {
             let allLevels = LevelRepository.shared.getAllGalleryLevels()
             if let backupTarget = allLevels.first(where: { $0.levelId == rootId }) {
                 print("📍 processLocate (Fallback): Scrolling to \(backupTarget.levelId)")
-                scrollProxy.scrollTo(backupTarget.levelId, anchor: .center)
+                scrollToLevelWithRetry(id: backupTarget.levelId, scrollProxy: scrollProxy, animated: true, attempts: [0.0, 0.28])
             } else {
                 print("❌ processLocate: Complete failure finding \(rootId)")
             }
@@ -483,10 +497,8 @@ struct HomeView: View {
         }
         
         print("📍 processLocate: Scrolling to \(target.levelId) for target \(id)")
-        // Use withAnimation for smooth scroll
-        withAnimation(.easeInOut(duration: 0.8)) {
-            scrollProxy.scrollTo(target.levelId, anchor: .center)
-        }
+        jitterLog("processLocate scroll target=\(target.levelId) from=\(id)")
+        scrollToLevelWithRetry(id: target.levelId, scrollProxy: scrollProxy, animated: true, attempts: [0.0, 0.28])
         
         // Highlight logic (pulse effect)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -502,8 +514,76 @@ struct HomeView: View {
             if self.targetLevelId == id { self.targetLevelId = nil } 
         }
     }
+
+    /// 首屏定位规则：优先教程关，其次可玩的未通关关卡，最后兜底最后一关
+    private func resolveInitialFocusLevelId() -> String? {
+        if !LevelProgressManager.shared.isLevelCompleted("tutorial_0") {
+            return "tutorial_0"
+        }
+        let nextToPlay = levels.first { level in
+            guard let idx = levels.firstIndex(where: { $0.levelId == level.levelId }) else { return false }
+            let isUnlocked = idx == 0 || LevelProgressManager.shared.isLevelCompleted(levels[idx - 1].levelId)
+            let isCompleted = LevelProgressManager.shared.isLevelCompleted(level.levelId)
+            return isUnlocked && !isCompleted
+        }
+        return nextToPlay?.levelId ?? levels.last?.levelId
+    }
+
+    /// 首次进入首页时执行一次聚焦序列：
+    /// - 教程未完成：单次延时无动画定位 tutorial_0（优先稳定，避免抖动）
+    /// - 其他情况：单次无动画定位下一可玩关卡
+    private func runInitialFocusSequence(scrollProxy: ScrollViewProxy) {
+        guard let initialId = resolveInitialFocusLevelId() else { return }
+        let delay: Double = 0
+        jitterLog("runInitialFocusSequence id=\(initialId) delay=\(delay)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            scrollToLevel(id: initialId, scrollProxy: scrollProxy, animated: false, throttleWindow: 0)
+        }
+    }
+
+    private func scrollToLevel(id: String, scrollProxy: ScrollViewProxy, animated: Bool, throttleWindow: TimeInterval = 0.7) {
+        let now = Date().timeIntervalSince1970
+        // Hard guard: avoid repeated non-animated auto scrolls causing visible vertical jitter.
+        if !animated,
+           lastDirectScrollId == id,
+           (now - lastDirectScrollAt) < 3.0 {
+            jitterLog("scrollToLevel skipped repeated auto id=\(id)")
+            return
+        }
+        if throttleWindow > 0,
+           lastDirectScrollId == id,
+           (now - lastDirectScrollAt) < throttleWindow {
+            jitterLog("scrollToLevel throttled id=\(id)")
+            return
+        }
+        lastDirectScrollId = id
+        lastDirectScrollAt = now
+        jitterLog("scrollToLevel id=\(id) animated=\(animated) throttle=\(throttleWindow)")
+        if animated {
+            withAnimation(.easeInOut(duration: 0.6)) {
+                scrollProxy.scrollTo(id, anchor: .center)
+            }
+        } else {
+            scrollProxy.scrollTo(id, anchor: .center)
+        }
+    }
+
+    /// iOS 15 上 locate 触发时可能首帧未完成，这里仅对 locate 场景做轻量重试
+    private func scrollToLevelWithRetry(id: String, scrollProxy: ScrollViewProxy, animated: Bool, attempts: [Double]) {
+        let token = UUID()
+        locateScrollToken = token
+        jitterLog("scrollToLevelWithRetry id=\(id) attempts=\(attempts)")
+        for delay in attempts {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                guard locateScrollToken == token else { return }
+                jitterLog("scrollToLevelWithRetry fire id=\(id) after=\(delay)")
+                scrollToLevel(id: id, scrollProxy: scrollProxy, animated: animated, throttleWindow: 0)
+            }
+        }
+    }
     
     private func handleTransitionBackFromGame() {
+        jitterLog("handleTransitionBackFromGame")
         progressVersion += 1
         let pm = LevelProgressManager.shared
         // 关键点：直接使用最新的 levelManager.coins
@@ -515,7 +595,7 @@ struct HomeView: View {
             totalStarsBeforeGame = nil
             
             // 增量计算：包含了游戏得分 + 游戏期间看的广告奖励
-            var deltaCoins = currentCoins - beforeCoins
+            let deltaCoins = currentCoins - beforeCoins
             let deltaStars = currentStars - beforeStars
             
             // [REM] 移除暴力校验逻辑。该逻辑曾将 deltaCoins > cap (仅统计得分) 判定为非法增量并扣除。
@@ -871,11 +951,11 @@ private struct AscendedSatelliteBadgeView: View {
             if isHighlighted { setupAnimation() }
             triggerStarAppearIfNeeded()
         }
-        .onChange(of: isHighlighted) { _, newVal in
+        .onChangeCompat(of: isHighlighted) { newVal in
             if newVal { setupAnimation() }
         }
-        .onChange(of: shouldPulse) { _, _ in triggerStarAppearIfNeeded() }
-        .onChange(of: isCompleted) { _, _ in triggerStarAppearIfNeeded() }
+        .onChangeCompat(of: shouldPulse) { _ in triggerStarAppearIfNeeded() }
+        .onChangeCompat(of: isCompleted) { _ in triggerStarAppearIfNeeded() }
     }
     
     /// 升级关卡完成后返回时：圆圈内播放「变成星星」动画（仅一次）

@@ -15,8 +15,7 @@ struct FloatingBuffWindow: View {
     @State private var rotation: Double = 0
     @State private var isGlowing: Bool = false
     
-    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
-    @State private var refreshID = UUID() // 强制 UI 刷新的 Hook
+    let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
     
     var body: some View {
         if progressManager.isBuffActive || progressManager.isWarmUpActive {
@@ -37,17 +36,9 @@ struct FloatingBuffWindow: View {
             }
             .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isExpanded)
             .onReceive(timer) { _ in
-                // 1. 更新数据模型状态
+                // 仅更新数据，不重建整个视图树，避免 iOS 15 上的布局抖动
                 progressManager.updateBuffState()
-                
-                // 2. 🚨 关键修复：更新内部刷新 ID 强制 SwiftUI 重绘视图树
-                // 解决 @ObservedObject 在某些嵌套布局中由于状态更新太快被合并导致的计时器“停滞”视觉错误
-                refreshID = UUID()
-                
-                // 3. 辅助信号发送
-                progressManager.objectWillChange.send()
             }
-            .id(refreshID) // 绑定唯一 ID 强制刷新
         } else {
             EmptyView()
         }

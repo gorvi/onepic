@@ -7,10 +7,9 @@ struct TransparentBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(Color.clear)
+            .hideScrollContentBackgroundCompat()
             #if os(iOS)
-            .scrollContentBackground(.hidden)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbarBackground(.hidden, for: .tabBar)
+            .modifier(CompatToolbarBackgroundModifier())
             #endif
             .onAppear {
                 #if os(iOS)
@@ -33,6 +32,20 @@ struct TransparentBackgroundModifier: ViewModifier {
             }
     }
 }
+
+#if os(iOS)
+private struct CompatToolbarBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbarBackground(.hidden, for: .tabBar)
+        } else {
+            content
+        }
+    }
+}
+#endif
 
 extension View {
     func makeTransparentBackground() -> some View {

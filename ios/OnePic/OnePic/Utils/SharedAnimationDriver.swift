@@ -6,6 +6,10 @@ import QuartzCore // Required for CADisplayLink
 class SharedAnimationDriver: ObservableObject {
     static let shared = SharedAnimationDriver()
     
+    private static var supportsRealtimeDriver: Bool {
+        AppRuntimePolicy.supportsRealtimeAnimationDriver
+    }
+    
     @Published var pulseScale: CGFloat = 1.0
     @Published var breatheRingScale: CGFloat = 1.0
     @Published var rotationSatellite1: Double = 0
@@ -23,8 +27,18 @@ class SharedAnimationDriver: ObservableObject {
     
     private init() {
         self.startTime = Date()
-        startAnimations()
-        observePowerStateChanges()
+        if Self.supportsRealtimeDriver {
+            startAnimations()
+            observePowerStateChanges()
+        } else {
+            // iOS 15 稳定模式：冻结共享动画驱动，避免高频发布引起界面抖动
+            pulseScale = 1.0
+            breatheRingScale = 1.0
+            rotationSatellite1 = 0
+            rotationSatellite2 = 0
+            rotation = 0
+            shimmerOffset = 0
+        }
     }
     
     private func startAnimations() {

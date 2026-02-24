@@ -7,7 +7,7 @@ struct TutorialOverlayView: View {
     // 获取多语言翻译
     private var currentText: String {
         if step == 0 {
-            let welcome = TRANS.get("tut_welcome", "Welcome to OnePic!")
+            let welcome = TRANS.get("tut_welcome", "Welcome to Traveler Puzzle!")
             let step1 = TRANS.get("tut_step_1", "Swap 2 and 4")
             return "🚀 \(welcome)\n👉 \(step1)"
         } else {
